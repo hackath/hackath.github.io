@@ -1,0 +1,644 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.3.0">
+
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.1/css/all.min.css">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css">
+
+<script class="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"skystarry.cn","root":"/","images":"/images","scheme":"Mist","version":"8.1.0","exturl":true,"sidebar":{"position":"right","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}};
+  </script>
+<meta name="description" content="本blog整理google自家的工具链，包括glags、glog、gtest、protocol-buffers">
+<meta property="og:type" content="article">
+<meta property="og:title" content="google tools">
+<meta property="og:url" content="https://skystarry.cn/2018/09/30/15.google/index.html">
+<meta property="og:site_name" content="skystarry">
+<meta property="og:description" content="本blog整理google自家的工具链，包括glags、glog、gtest、protocol-buffers">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2018-09-29T16:57:33.000Z">
+<meta property="article:modified_time" content="2020-12-09T01:10:09.586Z">
+<meta property="article:author" content="skystarry">
+<meta property="article:tag" content="工具链">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://skystarry.cn/2018/09/30/15.google/">
+
+
+<script class="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+<title>google tools | skystarry</title>
+  
+
+
+
+  <noscript>
+  <style>
+  body { margin-top: 2rem; }
+
+  .use-motion .menu-item,
+  .use-motion .sidebar,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header {
+    visibility: visible;
+  }
+
+  .use-motion .header,
+  .use-motion .site-brand-container .toggle,
+  .use-motion .footer { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle,
+  .use-motion .custom-logo-image {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line {
+    transform: scaleX(1);
+  }
+
+  .search-pop-overlay, .sidebar-nav { display: none; }
+  .sidebar-panel { display: block; }
+  </style>
+</noscript>
+
+<!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+<!-- hexo injector head_end end --></head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">skystarry</h1>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">我的博客</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <section class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Googletest-%E6%96%AD%E8%A8%80"><span class="nav-number">1.</span> <span class="nav-text">Googletest-断言</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%B8%83%E5%B0%94%E5%80%BC%E6%A3%80%E6%9F%A5"><span class="nav-number">1.1.</span> <span class="nav-text">布尔值检查</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%95%B0%E5%80%BC%E5%9E%8B%E6%95%B0%E6%8D%AE%E6%A3%80%E6%9F%A5"><span class="nav-number">1.2.</span> <span class="nav-text">数值型数据检查</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AD%97%E7%AC%A6%E4%B8%B2%E6%A3%80%E6%9F%A5"><span class="nav-number">1.3.</span> <span class="nav-text">字符串检查</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%BC%82%E5%B8%B8%E6%A3%80%E6%9F%A5"><span class="nav-number">1.4.</span> <span class="nav-text">异常检查</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%B5%AE%E7%82%B9%E5%9E%8B%E6%A3%80%E6%9F%A5"><span class="nav-number">1.5.</span> <span class="nav-text">浮点型检查</span></a></li></ol></li></ol></div>
+        </section>
+        <!--/noindex-->
+
+        <section class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="skystarry"
+      src="/img/skystarry.jpg">
+  <p class="site-author-name" itemprop="name">skystarry</p>
+  <div class="site-description" itemprop="description">Seek only light, freedom, and you.</div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">29</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">9</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">18</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author site-overview-item animated">
+      <span class="links-of-author-item">
+        <span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL1B1bmtMaQ==" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;PunkLi">GitHub</span>
+      </span>
+      <span class="links-of-author-item">
+        <span class="exturl" data-url="aHR0cHM6Ly93d3cuemhpaHUuY29tL3Blb3BsZS9saS1jaHVucGVuZw==" title="知乎 → https:&#x2F;&#x2F;www.zhihu.com&#x2F;people&#x2F;li-chunpeng">知乎</span>
+      </span>
+      <span class="links-of-author-item">
+        <span class="exturl" data-url="aHR0cHM6Ly9za3lzdGFycnkuZ2l0ZWUuaW8v" title="Wiki → https:&#x2F;&#x2F;skystarry.gitee.io&#x2F;">Wiki</span>
+      </span>
+      <span class="links-of-author-item">
+        <span class="exturl" data-url="aHR0cDovL211c2ljLjE2My5jb20vIy91c2VyL2hvbWU/aWQ9MjcyMTA3MDQw" title="网易云 → http:&#x2F;&#x2F;music.163.com&#x2F;#&#x2F;user&#x2F;home?id&#x3D;272107040">网易云</span>
+      </span>
+  </div>
+
+
+
+        </section>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+
+  <span class="exturl github-corner" data-url="aHR0cHM6Ly9naXRodWIuY29tL1B1bmtMaQ==" title="Follow me on GitHub" aria-label="Follow me on GitHub"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></span>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://skystarry.cn/2018/09/30/15.google/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/img/skystarry.jpg">
+      <meta itemprop="name" content="skystarry">
+      <meta itemprop="description" content="Seek only light, freedom, and you.">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="skystarry">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          google tools
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2018-09-30 00:57:33" itemprop="dateCreated datePublished" datetime="2018-09-30T00:57:33+08:00">2018-09-30</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">更新于</span>
+        <time title="修改时间：2020-12-09 09:10:09" itemprop="dateModified" datetime="2020-12-09T09:10:09+08:00">2020-12-09</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E7%BC%96%E7%A8%8B/" itemprop="url" rel="index"><span itemprop="name">编程</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <p>本blog整理google自家的工具链，包括glags、glog、gtest、protocol-buffers</p>
+<a id="more"></a>
+<h1 id="Googletest-断言"><a href="#Googletest-断言" class="headerlink" title="Googletest-断言"></a>Googletest-断言</h1><p><code>EXPECT_EQ(expected, actual)</code> is the same as <code>EXPECT_TRUE((expected) == (actual))</code></p>
+<ol>
+<li><code>EXPECT_*</code> 失败时，案例继续往下执行。</li>
+<li><code>ASSERT_*</code> 失败时，直接在当前函数中返回，当前函数中<code>ASSERT_*</code>后面的语句将不会执行。 </li>
+</ol>
+<h2 id="布尔值检查"><a href="#布尔值检查" class="headerlink" title="布尔值检查"></a>布尔值检查</h2><div class="table-container">
+<table>
+<thead>
+<tr>
+<th>Fatal assertion</th>
+<th>Nonfatal assertion</th>
+<th>Verifies</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>ASSERT_TRUE(condition);</td>
+<td>EXPECT_TRUE(condition);</td>
+<td>condition is true</td>
+</tr>
+<tr>
+<td>ASSERT_FALSE(condition);</td>
+<td>EXPECT_FALSE(condition);</td>
+<td>condition is false</td>
+</tr>
+</tbody>
+</table>
+</div>
+<h2 id="数值型数据检查"><a href="#数值型数据检查" class="headerlink" title="数值型数据检查"></a>数值型数据检查</h2><div class="table-container">
+<table>
+<thead>
+<tr>
+<th>Fatal assertion</th>
+<th>Nonfatal assertion</th>
+<th>Verifies</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>ASSERT_EQ(expected, actual);</td>
+<td>EXPECT_EQ(expected, actual);</td>
+<td>expected == actual</td>
+</tr>
+<tr>
+<td>ASSERT_NE(val1, val2);</td>
+<td>EXPECT_NE(val1, val2);</td>
+<td>val1 != val2</td>
+</tr>
+<tr>
+<td>ASSERT_LT(val1, val2);</td>
+<td>EXPECT_LT(val1, val2);</td>
+<td>val1 &lt; val2</td>
+</tr>
+<tr>
+<td>ASSERT_LE(val1, val2);</td>
+<td>EXPECT_LE(val1, val2);</td>
+<td>val1 &lt;= val2</td>
+</tr>
+<tr>
+<td>ASSERT_GT(val1, val2);</td>
+<td>EXPECT_GT(val1, val2);</td>
+<td>val1 &gt; val2</td>
+</tr>
+<tr>
+<td>ASSERT_GE(val1, val2);</td>
+<td>EXPECT_GE(val1, val2);</td>
+<td>val1 &gt;= val2</td>
+</tr>
+</tbody>
+</table>
+</div>
+<h2 id="字符串检查"><a href="#字符串检查" class="headerlink" title="字符串检查"></a>字符串检查</h2><div class="table-container">
+<table>
+<thead>
+<tr>
+<th>Fatal assertion</th>
+<th>Nonfatal assertion</th>
+<th>Verifies</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>ASSERT_STREQ(expected_str, actual_str);</td>
+<td>EXPECT_STREQ(expected_str, actual_str);</td>
+<td>the two C strings have the same content</td>
+</tr>
+<tr>
+<td>ASSERT_STRNE(str1, str2);</td>
+<td>EXPECT_STRNE(str1, str2);</td>
+<td>the two C strings have different content</td>
+</tr>
+<tr>
+<td>ASSERT_STRCASEEQ(expected_str, actual_str);</td>
+<td>EXPECT_STRCASEEQ(expected_str, actual_str);</td>
+<td>the two C strings have the same content, ignoring case</td>
+</tr>
+<tr>
+<td>ASSERT_STRCASENE(str1, str2);</td>
+<td>EXPECT_STRCASENE(str1, str2);</td>
+<td>the two C strings have different content, ignoring case</td>
+</tr>
+</tbody>
+</table>
+</div>
+<h2 id="异常检查"><a href="#异常检查" class="headerlink" title="异常检查"></a>异常检查</h2><div class="table-container">
+<table>
+<thead>
+<tr>
+<th>Fatal assertion</th>
+<th>Nonfatal assertion</th>
+<th>Verifies</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>ASSERT_THROW(statement, exception_type);</td>
+<td>EXPECT_THROW(statement, exception_type);</td>
+<td>statement throws an exception of the given type</td>
+</tr>
+<tr>
+<td>ASSERT_ANY_THROW(statement);</td>
+<td>EXPECT_ANY_THROW(statement);</td>
+<td>statement throws an exception of any type</td>
+</tr>
+<tr>
+<td>ASSERT_NO_THROW(statement);</td>
+<td>EXPECT_NO_THROW(statement);</td>
+<td>statement doesn’t throw any exception</td>
+</tr>
+</tbody>
+</table>
+</div>
+<h2 id="浮点型检查"><a href="#浮点型检查" class="headerlink" title="浮点型检查"></a>浮点型检查</h2><div class="table-container">
+<table>
+<thead>
+<tr>
+<th>Fatal assertion</th>
+<th>Nonfatal assertion</th>
+<th>Verifies</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>ASSERT_FLOAT_EQ(expected, actual);</td>
+<td>EXPECT_FLOAT_EQ(expected, actual);</td>
+<td>the two float values are almost equal</td>
+</tr>
+<tr>
+<td>ASSERT_DOUBLE_EQ(expected, actual);</td>
+<td>EXPECT_DOUBLE_EQ(expected, actual);</td>
+<td>the two double values are almost equal</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>对相近的两个数比较：</p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th>Fatal assertion</th>
+<th>Nonfatal assertion</th>
+<th>Verifies</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>ASSERT_NEAR(val1, val2, abs_error);</td>
+<td>EXPECT_NEAR(val1, val2, abs_error);</td>
+<td>the difference between val1 and val2 doesn’t exceed the given absolute error</td>
+</tr>
+</tbody>
+</table>
+</div>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          
+
+<div class="post-copyright">
+<ul>
+  <li class="post-copyright-author">
+      <strong>本文作者： </strong>skystarry
+  </li>
+  <li class="post-copyright-link">
+      <strong>本文链接：</strong>
+      <a href="https://skystarry.cn/2018/09/30/15.google/" title="google tools">https://skystarry.cn/2018/09/30/15.google/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <span class="exturl" data-url="aHR0cHM6Ly9jcmVhdGl2ZWNvbW1vbnMub3JnL2xpY2Vuc2VzL2J5LW5jLzQuMC8="><i class="fab fa-fw fa-creative-commons"></i>BY-NC</span> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+          <div class="post-tags">
+              <a href="/tags/%E5%B7%A5%E5%85%B7%E9%93%BE/" rel="tag"><i class="fa fa-tag"></i> 工具链</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2018/09/13/14.Lipschitz/" rel="prev" title="Lipschitz Condition">
+                  <i class="fa fa-chevron-left"></i> Lipschitz Condition
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2018/10/02/16.Bayesian-Theorem/" rel="next" title="Bayesian Theorem">
+                  Bayesian Theorem <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      const activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      const commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 2016 – 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fab fa-github"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">朋克李PunkLi</span>
+</div>
+  <div class="powered-by">由 <span class="exturl theme-link" data-url="aHR0cHM6Ly9oZXhvLmlv">Hexo</span> & <span class="exturl theme-link" data-url="aHR0cHM6Ly90aGVtZS1uZXh0LmpzLm9yZy9taXN0Lw==">NexT.Mist</span> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="//cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js"></script>
+<script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+</body>
+</html>

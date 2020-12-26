@@ -1,0 +1,737 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.3.0">
+
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.1/css/all.min.css">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css">
+
+<script class="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"skystarry.cn","root":"/","images":"/images","scheme":"Mist","version":"8.1.0","exturl":true,"sidebar":{"position":"right","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}};
+  </script>
+<meta name="description" content="Algorithm review of M.H.Alsuwaiyel, Algorithms design techniques and Analysis, Publishing House of Electronics Industry.">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Algorithm Review">
+<meta property="og:url" content="https://skystarry.cn/2018/11/20/21.Algorithm/index.html">
+<meta property="og:site_name" content="skystarry">
+<meta property="og:description" content="Algorithm review of M.H.Alsuwaiyel, Algorithms design techniques and Analysis, Publishing House of Electronics Industry.">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://skystarry.cn/img/algorithm_review/pic.png">
+<meta property="og:image" content="https://skystarry.cn/img/algorithm_review/pic2.png">
+<meta property="og:image" content="https://skystarry.cn/img/algorithm_review/pic3.png">
+<meta property="og:image" content="https://skystarry.cn/img/algorithm_review/pic4.png">
+<meta property="og:image" content="https://skystarry.cn/img/algorithm_review/pic5.png">
+<meta property="og:image" content="https://skystarry.cn/img/algorithm_review/pic6.png">
+<meta property="og:image" content="https://skystarry.cn/img/algorithm_review/pic7.png">
+<meta property="og:image" content="https://skystarry.cn/img/algorithm_review/pic8.png">
+<meta property="article:published_time" content="2018-11-19T18:27:02.000Z">
+<meta property="article:modified_time" content="2020-12-09T01:10:09.588Z">
+<meta property="article:author" content="skystarry">
+<meta property="article:tag" content="编程">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://skystarry.cn/img/algorithm_review/pic.png">
+
+
+<link rel="canonical" href="https://skystarry.cn/2018/11/20/21.Algorithm/">
+
+
+<script class="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+<title>Algorithm Review | skystarry</title>
+  
+
+
+
+  <noscript>
+  <style>
+  body { margin-top: 2rem; }
+
+  .use-motion .menu-item,
+  .use-motion .sidebar,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header {
+    visibility: visible;
+  }
+
+  .use-motion .header,
+  .use-motion .site-brand-container .toggle,
+  .use-motion .footer { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle,
+  .use-motion .custom-logo-image {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line {
+    transform: scaleX(1);
+  }
+
+  .search-pop-overlay, .sidebar-nav { display: none; }
+  .sidebar-panel { display: block; }
+  </style>
+</noscript>
+
+<!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+<!-- hexo injector head_end end --></head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">skystarry</h1>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">我的博客</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <section class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%88%86%E6%9E%90-Algorithmic-Analysis"><span class="nav-number">1.</span> <span class="nav-text">分析 Algorithmic Analysis</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Binary-Search"><span class="nav-number">1.1.</span> <span class="nav-text">Binary Search</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Merging-Two-Sorted-Lists"><span class="nav-number">1.2.</span> <span class="nav-text">Merging Two Sorted Lists</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Selection-Sort"><span class="nav-number">1.3.</span> <span class="nav-text">Selection Sort</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Insertion-Sort"><span class="nav-number">1.4.</span> <span class="nav-text">Insertion Sort</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Bottom-Up-Merge-Sorting"><span class="nav-number">1.5.</span> <span class="nav-text">Bottom-Up Merge Sorting</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%80%92%E5%BD%92-Techniques-Based-on-Recursion"><span class="nav-number">2.</span> <span class="nav-text">递归 Techniques Based on Recursion</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%BD%92%E7%BA%B3-induction"><span class="nav-number">2.1.</span> <span class="nav-text">归纳 induction</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Radix-Sort"><span class="nav-number">2.1.1.</span> <span class="nav-text">Radix Sort</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Generating-permutations"><span class="nav-number">2.1.2.</span> <span class="nav-text">Generating permutations</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Find-Majority"><span class="nav-number">2.1.3.</span> <span class="nav-text">Find Majority</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%88%86%E8%80%8C%E6%B2%BB%E4%B9%8B-Divide-and-Conquer"><span class="nav-number">2.2.</span> <span class="nav-text">分而治之 Divide and Conquer</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#The-Divide-and-Conquer-Paradigm"><span class="nav-number">2.2.1.</span> <span class="nav-text">The Divide and Conquer Paradigm</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Finding-kth-Smallest-Element"><span class="nav-number">2.2.2.</span> <span class="nav-text">Finding kth Smallest Element</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Quicksort"><span class="nav-number">2.2.3.</span> <span class="nav-text">Quicksort</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92-Dynamic-Programming"><span class="nav-number">2.3.</span> <span class="nav-text">动态规划 Dynamic Programming</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Longest-Common-Subsequence"><span class="nav-number">2.3.1.</span> <span class="nav-text">Longest Common Subsequence</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#The-Dynamic-Programming-Paradigm"><span class="nav-number">2.3.2.</span> <span class="nav-text">The Dynamic Programming Paradigm</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#All-Pairs-Shortest-Path"><span class="nav-number">2.3.3.</span> <span class="nav-text">All-Pairs Shortest Path</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Knapsack-Problem"><span class="nav-number">2.3.4.</span> <span class="nav-text">Knapsack Problem</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E8%B4%AA%E5%BF%83-The-Greedy-Approach"><span class="nav-number">3.</span> <span class="nav-text">贪心 The Greedy Approach</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#The-Fractional-Knapsack-Problem"><span class="nav-number">3.1.</span> <span class="nav-text">The Fractional Knapsack Problem</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Shortest-Path-Problem"><span class="nav-number">3.2.</span> <span class="nav-text">Shortest Path Problem</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#MST-Minimum-Cost-Spanning-Trees-Kruskal-Prim"><span class="nav-number">3.3.</span> <span class="nav-text">MST &#x2F; Minimum Cost Spanning Trees (Kruskal &#x2F; Prim)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Huffman-File-Compression"><span class="nav-number">3.4.</span> <span class="nav-text">Huffman &#x2F; File Compression</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Graph-Travel"><span class="nav-number">3.5.</span> <span class="nav-text">Graph Travel</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Depth-First-Search%EF%BC%88DFS%EF%BC%89"><span class="nav-number">3.5.1.</span> <span class="nav-text">Depth-First Search（DFS）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Breadth-First-Search%EF%BC%88BFS%EF%BC%89"><span class="nav-number">3.5.2.</span> <span class="nav-text">Breadth-First Search（BFS）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Finding-Articulation-Points-in-a-Graph"><span class="nav-number">3.5.3.</span> <span class="nav-text">Finding Articulation Points in a Graph</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%9B%9E%E6%BA%AF-Backtracking"><span class="nav-number">4.</span> <span class="nav-text">回溯 Backtracking</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%B6%82%E8%89%B2%E9%97%AE%E9%A2%98-3-Color-Problem"><span class="nav-number">4.1.</span> <span class="nav-text">涂色问题 3-Color Problem</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%AB%E7%9A%87%E5%90%8E-8-Queens-Problem"><span class="nav-number">4.2.</span> <span class="nav-text">八皇后 8-Queens Problem</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#The-General-Backtracking-Method"><span class="nav-number">4.3.</span> <span class="nav-text">The General Backtracking Method</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%88%86%E6%9E%9D%E7%95%8C%E9%99%90-Branch-and-Bound-TSPs"><span class="nav-number">4.4.</span> <span class="nav-text">分枝界限 Branch and Bound (TSPs)</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%9A%8F%E6%9C%BA-Randomized-Algorithms"><span class="nav-number">5.</span> <span class="nav-text">随机 Randomized Algorithms</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Randomized-Selection"><span class="nav-number">5.1.</span> <span class="nav-text">Randomized Selection</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Testing-String-Equality"><span class="nav-number">5.2.</span> <span class="nav-text">Testing String Equality</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Pattern-Matching"><span class="nav-number">5.3.</span> <span class="nav-text">Pattern Matching</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%80%BC%E8%BF%91-Approximation-Algorithms"><span class="nav-number">6.</span> <span class="nav-text">逼近 Approximation Algorithms</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Difference-Bounds"><span class="nav-number">6.1.</span> <span class="nav-text">Difference Bounds</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Planar-Graph-Coloring"><span class="nav-number">6.1.1.</span> <span class="nav-text">Planar Graph Coloring</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Counterexample-Knapsack-Problems"><span class="nav-number">6.1.2.</span> <span class="nav-text">Counterexample: Knapsack Problems</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Relative-Performance-Bounds"><span class="nav-number">6.2.</span> <span class="nav-text">Relative Performance Bounds</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#The-Bin-Packing-Problem"><span class="nav-number">6.2.1.</span> <span class="nav-text">The Bin Packing Problem</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%BD%91%E7%BB%9C%E6%B5%81-Network-Flow"><span class="nav-number">7.</span> <span class="nav-text">网络流 Network Flow</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Shortest-Path-Augmentation"><span class="nav-number">7.1.</span> <span class="nav-text">Shortest Path Augmentation:</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#MPLA-Minimum-path-length-augmentation"><span class="nav-number">7.2.</span> <span class="nav-text">MPLA | Minimum path length augmentation</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%8C%B9%E9%85%8D-Matching"><span class="nav-number">8.</span> <span class="nav-text">匹配 Matching</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BA%8C%E5%88%86%E5%9B%BE%E7%9A%84%E5%8C%88%E7%89%99%E5%88%A9%E6%A0%91%E6%96%B9%E6%B3%95-Hungarian-Tree-Method-for-Bipartite-Graphs"><span class="nav-number">8.1.</span> <span class="nav-text">二分图的匈牙利树方法 Hungarian Tree Method for Bipartite Graphs</span></a></li></ol></li></ol></div>
+        </section>
+        <!--/noindex-->
+
+        <section class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="skystarry"
+      src="/img/skystarry.jpg">
+  <p class="site-author-name" itemprop="name">skystarry</p>
+  <div class="site-description" itemprop="description">Seek only light, freedom, and you.</div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">29</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">9</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">18</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author site-overview-item animated">
+      <span class="links-of-author-item">
+        <span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL1B1bmtMaQ==" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;PunkLi">GitHub</span>
+      </span>
+      <span class="links-of-author-item">
+        <span class="exturl" data-url="aHR0cHM6Ly93d3cuemhpaHUuY29tL3Blb3BsZS9saS1jaHVucGVuZw==" title="知乎 → https:&#x2F;&#x2F;www.zhihu.com&#x2F;people&#x2F;li-chunpeng">知乎</span>
+      </span>
+      <span class="links-of-author-item">
+        <span class="exturl" data-url="aHR0cHM6Ly9za3lzdGFycnkuZ2l0ZWUuaW8v" title="Wiki → https:&#x2F;&#x2F;skystarry.gitee.io&#x2F;">Wiki</span>
+      </span>
+      <span class="links-of-author-item">
+        <span class="exturl" data-url="aHR0cDovL211c2ljLjE2My5jb20vIy91c2VyL2hvbWU/aWQ9MjcyMTA3MDQw" title="网易云 → http:&#x2F;&#x2F;music.163.com&#x2F;#&#x2F;user&#x2F;home?id&#x3D;272107040">网易云</span>
+      </span>
+  </div>
+
+
+
+        </section>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+
+  <span class="exturl github-corner" data-url="aHR0cHM6Ly9naXRodWIuY29tL1B1bmtMaQ==" title="Follow me on GitHub" aria-label="Follow me on GitHub"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></span>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://skystarry.cn/2018/11/20/21.Algorithm/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/img/skystarry.jpg">
+      <meta itemprop="name" content="skystarry">
+      <meta itemprop="description" content="Seek only light, freedom, and you.">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="skystarry">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Algorithm Review
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2018-11-20 02:27:02" itemprop="dateCreated datePublished" datetime="2018-11-20T02:27:02+08:00">2018-11-20</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">更新于</span>
+        <time title="修改时间：2020-12-09 09:10:09" itemprop="dateModified" datetime="2020-12-09T09:10:09+08:00">2020-12-09</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95/" itemprop="url" rel="index"><span itemprop="name">数据结构与算法</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <p>Algorithm review of M.H.Alsuwaiyel, Algorithms design techniques and Analysis, Publishing House of Electronics Industry.</p>
+<a id="more"></a>
+<h1 id="分析-Algorithmic-Analysis"><a href="#分析-Algorithmic-Analysis" class="headerlink" title="分析 Algorithmic Analysis"></a>分析 Algorithmic Analysis</h1><h2 id="Binary-Search"><a href="#Binary-Search" class="headerlink" title="Binary Search"></a>Binary Search</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">low←1; high←n; j←0;</span><br><span class="line">while (low &lt;&#x3D; high) and (j←0)</span><br><span class="line">    mid←(low+high)&#x2F;2;</span><br><span class="line">    if x &#x3D; A[mid] then j←mid;</span><br><span class="line">    else if x &lt; A[mid] then high←mid–1;</span><br><span class="line">    else low←mid+1;</span><br><span class="line">end while;</span><br><span class="line">return j;</span><br></pre></td></tr></table></figure>
+<p>The number of comparisons performed by the algorithm Binary Search on a sorted array of size n is at most $\lfloor log n \rfloor+1$</p>
+<h2 id="Merging-Two-Sorted-Lists"><a href="#Merging-Two-Sorted-Lists" class="headerlink" title="Merging Two Sorted Lists"></a>Merging Two Sorted Lists</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">s←p; t←q+1; k←p;</span><br><span class="line">while s &lt;= q and t &lt;= r</span><br><span class="line">    if A[s] &lt;= A[t] then </span><br><span class="line">        B[k]←A[s];</span><br><span class="line">        s←s+1;</span><br><span class="line">    else</span><br><span class="line">        B[k]←A[t];</span><br><span class="line">        t←t+1;</span><br><span class="line">     end if;</span><br><span class="line">   k←k+1;</span><br><span class="line"> end while;</span><br><span class="line"> if s=q+1 then B[k…r]←A[t…r]</span><br><span class="line"> else B[k…r]←A[s…q]</span><br><span class="line"> end if</span><br><span class="line"> A[p…r]←B[p…r]</span><br></pre></td></tr></table></figure>
+<p>此处需要分析</p>
+<h2 id="Selection-Sort"><a href="#Selection-Sort" class="headerlink" title="Selection Sort"></a>Selection Sort</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">for i←1 to n-1</span><br><span class="line">    k←i;</span><br><span class="line">    for j←i+1 to n</span><br><span class="line">        if A[j]&lt;A[k] then k←j;</span><br><span class="line">    end for;</span><br><span class="line">    if k != i then interchange A[i] and A[k];</span><br><span class="line">end for;</span><br></pre></td></tr></table></figure>
+<h2 id="Insertion-Sort"><a href="#Insertion-Sort" class="headerlink" title="Insertion Sort"></a>Insertion Sort</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">for i←2 to n</span><br><span class="line">    x←A[i];</span><br><span class="line">    j←i-1;</span><br><span class="line">    while (j&gt;0) and (A[j]&gt;x)</span><br><span class="line">        A[j+1]←A[j];</span><br><span class="line">        j←j-1;</span><br><span class="line">    end while;</span><br><span class="line">    A[j+1]←x;</span><br><span class="line">end for;</span><br></pre></td></tr></table></figure>
+<h2 id="Bottom-Up-Merge-Sorting"><a href="#Bottom-Up-Merge-Sorting" class="headerlink" title="Bottom-Up Merge Sorting"></a>Bottom-Up Merge Sorting</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">t←1;</span><br><span class="line">while t&lt;n</span><br><span class="line">    s←t; t←2s; i←0;</span><br><span class="line">    while i+tn</span><br><span class="line">        MERGE(A, i+1, i+s, i+t);</span><br><span class="line">        i←i+t;</span><br><span class="line">    end while;</span><br><span class="line">    if i+s&lt;n then MERGE(A, i+1, i+s, n);</span><br><span class="line">end while;</span><br></pre></td></tr></table></figure>
+<h1 id="递归-Techniques-Based-on-Recursion"><a href="#递归-Techniques-Based-on-Recursion" class="headerlink" title="递归 Techniques Based on Recursion"></a>递归 Techniques Based on Recursion</h1><h2 id="归纳-induction"><a href="#归纳-induction" class="headerlink" title="归纳 induction"></a>归纳 induction</h2><p>Given a problem with parameter n, designing an algorithm by induction is based on the fact that if we know how to solve the problem when presented with a parameter less than n, called the induction hypothesis, then our task reduces to extending that solution to include those instances with parameter n.</p>
+<h3 id="Radix-Sort"><a href="#Radix-Sort" class="headerlink" title="Radix Sort"></a>Radix Sort</h3><p>Let $L={a<em>1, a_2, …, a_n}$ be a list of n numbers each consisting of exactly $k$ digits. That is, each number is of the form $d_kd</em>{k-1}…d_1$, where each $d_i$ is a digit between 0 and 9.<br>In this problem, instead of applying induction on n, the number of objects, we use induction on k, the size of each integer.</p>
+<p>If the numbers are first distributed into the lists by their <strong>least significant digit</strong>, then a very efficient algorithm results.<br>Suppose that the numbers are sorted lexicographically according to their least <em>k-1</em> digits, i.e., digits $d<em>{k-1}, d</em>{k-2}, …, d_1$.<br>After sorting them on their <em>k</em>th digits, they will eventually be sorted.</p>
+<p><strong>First</strong>, distribute the numbers into 10 lists <em>$L_0, L_1, …, L_9$</em> according to digit <em>$d_1$</em> so that those numbers with <em>$d_1=0$</em> constitute list <em>$L_0$</em>, those with <em>$d_1=1$</em> constitute list <em>$L_1$</em> and so on.<br><strong>Next</strong>, the lists are coalesced in the order <em>$L_0, L_1, …, L_9$</em>.<br><strong>Then</strong>, they are distributed into 10 lists according to digit <em>$d_2$</em>, coalesced in order, and so on.</p>
+<p><strong>After</strong> distributing them according to <em>$d_k$</em> and collecting them in order, all numbers will be sorted.</p>
+<p><strong>Example</strong>: Sort A nondecreasingly. A[1…5]=7467，3275，6792，9134，1239</p>
+<p><strong>Input</strong>: A linked list of numbers $L={a_1, a_2, …, a_n}$ and <em>k</em>, the number of digits.<br><strong>Output</strong>: <em>L</em> sorted in nondecreasing order.<br><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">for j←1 to k</span><br><span class="line">    Prepare 10 empty lists L0, L1, …, L9;</span><br><span class="line">    while L is not empty</span><br><span class="line">        a←next element in L;</span><br><span class="line">        Delete a from L;</span><br><span class="line">        i←jth digit in a;</span><br><span class="line">        Append a to list Li;</span><br><span class="line">    end while;</span><br><span class="line">    L ←L0;</span><br><span class="line">  for i ←1 to 9</span><br><span class="line">      L←L, Li   //Append list Li to L</span><br><span class="line">  end for;</span><br><span class="line">end for;</span><br><span class="line">return L;</span><br></pre></td></tr></table></figure><br>Time Complexity: $\Theta(n)$<br>Space Complexity: $\Theta(n)$</p>
+<h3 id="Generating-permutations"><a href="#Generating-permutations" class="headerlink" title="Generating permutations"></a>Generating permutations</h3><p>Generating all permutations of the numbers 1, 2, …, n.<br>Based on the assumption that if we can generate all the permutations of n-1 numbers, then we can get algorithms for generating all the permutations of n numbers.</p>
+<p>Generate all the permutations of the numbers 2, 3, …, n and add the number 1 to the beginning of each permutation.<br>Generate all permutations of the numbers 1, 3, 4, …, n and add the number 2 to the beginning of each permutation.<br>Repeat this procedure until finally the permutations of 1, 2, …, n-1 are generated and the number n is added at the beginning of each permutation.</p>
+<p>Input: A positive integer n;<br>Output: All permutations of the numbers 1, 2, …, n;</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"> for j←1 to n</span><br><span class="line">     P[j]←j;</span><br><span class="line"> end for;</span><br><span class="line"> perm(1);</span><br><span class="line"></span><br><span class="line">perm(m)</span><br><span class="line"> if m=n then output P[1…n]</span><br><span class="line"> else</span><br><span class="line">     for j←m to n</span><br><span class="line">         interchange P[j] and P[m];</span><br><span class="line">            //Add one number at the beginning of the permutation</span><br><span class="line">         perm(m+1);</span><br><span class="line">            //Generate permutations for the left numbers</span><br><span class="line">         interchange P[j] and P[m];</span><br><span class="line">     end for;</span><br><span class="line"> end if;</span><br></pre></td></tr></table></figure>
+<p>Time Complexity: $\Theta(nn!)$<br>Space Complexity: $\Theta(n)$</p>
+<h3 id="Find-Majority"><a href="#Find-Majority" class="headerlink" title="Find Majority"></a>Find Majority</h3><p>Let A[1…n] be a sequence of integers. An integer a in A is called the majority if it appears more than $\lfloor n/2 \rfloor$ times in A.<br>For example:<br>Sequence 1, 3, 2, 3, 3, 4, 3: 3 is the majority element since 3 appears 4 times which is more than $\lfloor n/2 \rfloor$<br>Sequence 1, 3, 2, 3, 3, 4: 3 is not the majority element since 3 appears three times which is equal to $\lfloor n/2 \rfloor$, but not more than $\lfloor n/2 \rfloor$</p>
+<p>If two different elements in the original sequence are removed, then the majority in the original sequence remains the majority in the new sequence.<br>The above observation suggests the following procedure for finding an element that is candidate for being the majority.</p>
+<p>Let x=A[1] and set a counter to 1.<br>Starting from A[2], scan the elements one by one increasing the counter by one if the current element is equal to x and decreasing the counter by one if the current element is not equal to x.<br>If all the elements have been scanned and the counter is greater than zero, then return x as the candidate.<br>If the counter becomes 0 when comparing x with A[j], 1&lt; j &lt; n, then call procedure candidate recursively on the elements A[j+1…n].</p>
+<p>Input: An array A[1…n] of n elements;<br>Output: The majority element if it exists; otherwise none;<br><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"> x←candidate(1);</span><br><span class="line"> count←0;</span><br><span class="line"> for j←1 to n</span><br><span class="line">     if A[j]=x then count←count+1;</span><br><span class="line"> end for;</span><br><span class="line"> if count&gt; [n/2] then return x;</span><br><span class="line"> else return none;</span><br><span class="line"></span><br><span class="line">candidate(m)</span><br><span class="line"> j←m; x←A[m]; count←1;</span><br><span class="line"> while j&lt;n and count&gt;0</span><br><span class="line">     j ←j+1;</span><br><span class="line">     if A[j]=x then count ←count+1;</span><br><span class="line">     else count ←count-1;</span><br><span class="line"> end while;</span><br><span class="line"> if j=n then return x;</span><br><span class="line"> else return candidate(j+1);</span><br></pre></td></tr></table></figure></p>
+<h2 id="分而治之-Divide-and-Conquer"><a href="#分而治之-Divide-and-Conquer" class="headerlink" title="分而治之 Divide and Conquer"></a>分而治之 Divide and Conquer</h2><p>A divide-and-conquer algorithm divides the problem instance into a number of subinstances (in most cases 2), recursively solves each subinsance separately, and then combines the solutions to the subinstances to obtain the solution to the original problem instance.</p>
+<h3 id="The-Divide-and-Conquer-Paradigm"><a href="#The-Divide-and-Conquer-Paradigm" class="headerlink" title="The Divide and Conquer Paradigm"></a>The Divide and Conquer Paradigm</h3><p>The divide step: the input is partitioned into $p\geq1$ parts, each of size strictly less than n.<br>The conquer step: performing p recursive call(s) if the problem size is greater than some predefined threshold n0.<br>The combine step: the solutions to the p recursive call(s) are combined to obtain the desired output.</p>
+<ol>
+<li>If the size of the instance I is “small”, then solve the problem using a straightforward method and return the answer. Otherwise, continue to the next step;</li>
+<li>Divide the instance I into p subinstances I1, I2, …, Ip of approximately the same size;</li>
+<li>Recursively call the algorithm on each subinstance Ij, $1\leq j\leq p$, to obtain p partial solutions;</li>
+<li>Combine the results of the p partial solutions to obtain the solution to the original instance I. Return the solution of instance I.</li>
+</ol>
+<h3 id="Finding-kth-Smallest-Element"><a href="#Finding-kth-Smallest-Element" class="headerlink" title="Finding kth Smallest Element"></a>Finding kth Smallest Element</h3><p>The media of a sequence of n sorted numbers A[1…n] is the “middle” element.<br>If n is odd, then the middle element is the (n+1)/2th element in the sequence.<br>If n is even, then there are two middle elements occurring at positions n/2 and n/2+1. In this case, we will choose the n/2th smallest element.<br>Thus, in both cases, the median is the $\lceil n/2 \rceil$th smallest element.<br>The kth smallest element is a general case.</p>
+<p>Input: An array A[1…n] of n elements and an integer k, $1\leq k\leq n$;<br>Output: The kth smallest element in A;<br>select(A, 1, n, k);</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">select(A, low, high, k)</span><br><span class="line"> p←high-low+1;</span><br><span class="line"> if p&lt;44 then sort A and return (A[k]);</span><br><span class="line"> Let q=[p/5](向下取整). Divide A into q groups of 5 elements each. </span><br><span class="line">    If 5 does not divide p, then discard the remaining elements;</span><br><span class="line"> Sort each of the q groups individually and extract its media. </span><br><span class="line">    Let the set of medians be M.</span><br><span class="line"> mm←select(M, 1, q, [q/2](向上取整));</span><br><span class="line"> Partition A[low…high] into three arrays: </span><br><span class="line">    A1=&#123;a|a&lt;mm&#125;, A2=&#123;a|a=mm&#125;, A3=&#123;a|a&gt;mm&#125;;</span><br><span class="line"> case</span><br><span class="line">    |A1|&gt;=k: return select (A1, 1, |A1|, k);</span><br><span class="line">    |A1|+|A2|&gt;=k: return mm;</span><br><span class="line">    |A1|+|A2|&lt;k: return select(A3, 1, |A3|, k-|A1|-|A2|);</span><br><span class="line"> end case;</span><br></pre></td></tr></table></figure>
+<p>The kth smallest element in a set of n elements drawn from a linearly ordered set can be found in $\Theta(n)$ time.</p>
+<h3 id="Quicksort"><a href="#Quicksort" class="headerlink" title="Quicksort"></a>Quicksort</h3><p>Let A[low…high] be an array of n numbers, and x=A[low].<br>We consider the problem of rearranging the elements in A so that all elements less than or equal to x precede x which in turn precedes all elements greater than x.<br>After permuting the element in the array, x will be A[w] for some w, low&lt;=w&lt;=high. The action of rearrangement is also called splitting or partitioning around x, which is called the pivot or splitting element.</p>
+<p>We say that an element A[j] is in its proper position or correct position if it is neither smaller than the elements in A[low…j-1] nor larger than the elements in A[j+1…high].<br>After partitioning an array A using $x\in A$ as a pivot, x will be in its correct position.</p>
+<p>Input: An array of elements A[low…high];<br>Output: A with its elements rearranged, if necessary; w, the new position of the splitting element A[low];<br><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">split(A[...], w)</span><br><span class="line"> i←low;</span><br><span class="line"> x←A[low];</span><br><span class="line"> for j←low+1 to high</span><br><span class="line">     if A[j]&lt;=x then</span><br><span class="line">        i←i+1;</span><br><span class="line">         if i≠j then interchange A[i] and A[j];</span><br><span class="line">     end if;</span><br><span class="line"> end for;</span><br><span class="line"> interchange A[low] and A[i];</span><br><span class="line"> w←i;</span><br><span class="line">return A and w;</span><br></pre></td></tr></table></figure><br>The number of element comparisons performed by Algorithm SPLIT is exactly n-1. Thus, its time complexity is $\Theta(n)$.</p>
+<p>The only extra space used is that needed to hold its local variables. Therefore, the space complexity is $\Theta(1)$.</p>
+<p>Input: An array A[1…n] of n elements;<br>Output: The elements in A sorted in nondecreasing order;<br>quicksort(A, 1, n);<br><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">quicksort(A, low, high)</span><br><span class="line"> if low&lt;high then</span><br><span class="line">     SPLIT(A[low…high], w) //w is the new position of A[low];</span><br><span class="line">     quicksort(A, low, w-1);</span><br><span class="line">     quicksort(A, w+1, high);</span><br><span class="line"> end if;</span><br></pre></td></tr></table></figure><br>The average number of comparisons performed by Algorithm QUICKSORT to sort an array of n elements is $\Theta(nlogn)$.</p>
+<h2 id="动态规划-Dynamic-Programming"><a href="#动态规划-Dynamic-Programming" class="headerlink" title="动态规划 Dynamic Programming"></a>动态规划 Dynamic Programming</h2><p>An algorithm that employs the dynamic programming technique is not recursive by itself, but the underlying solution of the problem is usually stated in the form of a recursive function.<br>This technique resorts to evaluating the recurrence in a bottom-up manner, saving intermediate results that are used later on to compute the desired solution.<br>This technique applies to many combinatorial optimization problems to derive efficient algorithms.</p>
+<h3 id="Longest-Common-Subsequence"><a href="#Longest-Common-Subsequence" class="headerlink" title="Longest Common Subsequence"></a>Longest Common Subsequence</h3><p>Given two strings A and B of lengths n and m, respectively, over an alphabet $\sum$, determine the length of the longest subsequence that is common to both A and B.<br>A subsequence of $A=a<em>1a_2…a_n$ is a string of the form $a</em>{i1}a<em>{i2}…a</em>{ik}$, where each $i_j$ is between 1 and n and $1\leq i_1&lt;i_2&lt;…&lt;i_k\leq n$.</p>
+<p>Let $A=a_1a_2…a_n$ and $B=b_1b_2…b_m$.<br>Let L[i, j] denote the length of a longest common subsequence of $a_1a_2…a_i$ and $b_1b_2…b_j$. $0\leq i\leq n, 0\leq j\leq m$. When i or j be 0, it means the corresponding string is empty.<br>Naturally, if i=0 or j=0; the L[i, j]=0</p>
+<p>Suppose that both i and j are greater than 0. Then<br>If $a_i=b_j，L[i,j]=L[i-1,j-1]+1$<br>If $a_i\ne b_j，L[i,j]=max{L[i,j-1],L[i-1,j]}$<br>We get the following recurrence for computing the length of the longest common subsequence of A and B:</p>
+<script type="math/tex; mode=display">
+L[i,j]= 
+\begin{equation} 
+\left\{ 
+\begin{array}{lc} 
+0, && if\ i = 0 \ or \ j = 0\\
+L[i-1,j-1]+1, && if\ i>0,j>0, and\ a_i=b_j\\
+max\{L[i,j-1],L[i-1,j]\}, && if\ i>0,j>0, and\ a_i\ne b_j
+\end{array} 
+\right. 
+\end{equation}</script><p>We use an $(n+1)\times(m+1)$ table to compute the values of $L[i, j]$ for each pair of values of i and j, $0\leq i\leq n, 0\leq j\leq m$.<br>We only need to fill the table $L[0…n, 0…m]$ row by row using the previous formula.<br>Example: A=zxyxyz, B=xyyzx</p>
+<p><strong>Input</strong>: Two strings A and B of lengths n and m, respectively, over an alphabet $\sum$;<br><strong>Output</strong>: The length of the longest common subsequence of A and B.<br><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">for i←0 to n</span><br><span class="line">    L[i, 0]←0;</span><br><span class="line">end for;</span><br><span class="line">for j←0 to m</span><br><span class="line">    L[0, j]←0;</span><br><span class="line">end for;</span><br><span class="line">for i←1 to n</span><br><span class="line">    for j←1 to m</span><br><span class="line">        if ai=bj then L[i, j]←L[i-1, j-1]+1;</span><br><span class="line">      else L[i, j]←max&#123;L[i, j-1], L[i-1, j]&#125;;</span><br><span class="line">      end if;</span><br><span class="line">   end for;</span><br><span class="line">end for;</span><br><span class="line">return L[n, m];</span><br></pre></td></tr></table></figure><br>Time Complexity: $\Theta(nm)$<br>Space Complexity: $\Theta(\min{n,m})$</p>
+<h3 id="The-Dynamic-Programming-Paradigm"><a href="#The-Dynamic-Programming-Paradigm" class="headerlink" title="The Dynamic Programming Paradigm"></a>The Dynamic Programming Paradigm</h3><p>The idea of saving solutions to subproblems in order to avoid their recomputation is the basis of this powerful method.<br>This is usually the case in many combinatorial optimization problems in which the solution can be expressed in the form of a recurrence whose direct solution causes subinstances to be computed more than once.</p>
+<p>An important observation about the working of dynamic programming is that the algorithm computes an optimal solution to every subinstance of the original instance considered by the algorithm.<br>This argument illustrates an important principle in algorithm design called the principle of optimality: Given an optimal sequence of decisions, each subsequence must be an optimal sequence of decisions by itself.</p>
+<h3 id="All-Pairs-Shortest-Path"><a href="#All-Pairs-Shortest-Path" class="headerlink" title="All-Pairs Shortest Path"></a>All-Pairs Shortest Path</h3><p>$d<em>{i,j}^0=l[i,j]$<br>$d</em>{i,j}^1$ is the length of a shortest path from i to j that does not pass through any vertex except possibly vertex 1<br>$d<em>{i,j}^2$ is the length of a shortest path from i to j that does not pass through any vertex except possibly vertex 1 or vertex 2 or both<br>$d</em>{i,j}^n$ is the length of a shortest path from i to j, i.e. the distance from i to j</p>
+<p>We can compute $d_{i,j}^k$ recursively as follows:</p>
+<script type="math/tex; mode=display">
+d_{i,j}^k= 
+\begin{equation} 
+\left\{ 
+\begin{array}{lc} 
+l[i,j] && if\ k=0 \\
+\min\left\{d_{i,j}^{k-1},d_{i,k}^{k-1}+d_{k,j}^{k-1}\right\} && if\ 1\leq k\leq n
+\end{array} 
+\right. 
+\end{equation}</script><p>Here，We use <strong><em>Floyd Algorithm</em></strong> !<br>use n+1 matrices $D_0, D_1, D_2, …, D_n$ of dimension $n\times n$ to compute the lengths of the shortest constrained paths.<br>Initially, we set $D_0[i, i]=0, D_0[i, j]=l[i, j] if\ i\ne j$ and (i, j) is an edge in G; otherwise $D_0[i, j]=\infty $.<br>We then make n iterations such that after the kth iteration, $D_k[i, j]$ contains the value of a shortest length path from vertex <em>i</em> to vertex <em>j</em> that does not pass through any vertex numbered higher than k.</p>
+<p>Thus, in the kth iteration, we compute $D_k[i, j]$ using the formula</p>
+<script type="math/tex; mode=display">
+D_k[i, j]=\min\left\{D_{k-1}[i, j], D_{k-1}[i, k]+D_{k-1}[k, j]\right\}</script><p>Example:<br><img src="/img/algorithm_review/pic.png" alt=""><br>Input: An $n\times n$ matrix $l[1…n, 1…n]$ such that $l[i, j]$ is the length of the edge(i, j) in a directed graph G=({1, 2, …, n}, E);<br>Output: A matrix D with D[i, j]=the distance from <em>i</em> to <em>j</em><br><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">D←l;</span><br><span class="line">for k←1 to n</span><br><span class="line">    for i←1 to n</span><br><span class="line">        for j←1 to n</span><br><span class="line">            D[i, j]=min&#123;D[i, j], D[i, k]+D[k, j]);</span><br><span class="line">        end for;</span><br><span class="line">    end for;</span><br><span class="line">end for;</span><br></pre></td></tr></table></figure><br>Time Complexity: $\Theta(n^3)$<br>Space Complexity: $\Theta(n^2)$</p>
+<h3 id="Knapsack-Problem"><a href="#Knapsack-Problem" class="headerlink" title="Knapsack Problem"></a>Knapsack Problem</h3><p>Let $U={u_1, u_2, …, u_n}$ be a set of n items to be packed in a knapsack of size C. for $1\leq j\leq n$, let $s_j$ and $v_j$ be the size and value of the jth item, respectively, where C and sj, vj, 1jn, are all positive integers.</p>
+<p>The objective is to fill the knapsack with some items for U whose total size is at most C and such that their total value is maximum. Assume without loss of generality that the size of each item does not exceed C.</p>
+<p>More formally, given U of n items, we want to find a subset $S\in U$ such that</p>
+<script type="math/tex; mode=display">
+\sum_{u_i\in S}V_i</script><p>is maximized subject to the constraint</p>
+<script type="math/tex; mode=display">
+\sum_{u_i\in S}V_i \leq C</script><p>This version of the knapsack problem is sometimes referred to in the literature as the 0/1 knapsack problem. This is because the knapsack cannot contain more than one item of the same type.</p>
+<p>Let V[i, j] denote the value obtained by filling a knapsack of size j with items taken from the first i items {u1, u2, …, ui} in an optimal way. Here the range of i is from 0 to n and the range of j is from 0 to C. Thus, what we seek is the value V[n, C].<br>Obviously, V[0, j] is 0 for all values of j, as there is nothing in the knapsack. On the other hand, V[i, 0] is 0 for all values of i since nothing can be put in a knapsack of size 0.</p>
+<p>V[i, j], where i&gt;0 and j&gt;0, is the maximum of the following two quantities:<br>V[i-1, j]: The maximum value obtained by filling a knapsack of size j with items taken from ${u<em>1, u_2, …, u</em>{i-1}}$ only in an optimal way.<br>$V[i-1, j-s<em>i]+v_i$: The maximum value obtained by filling a knapsack of size $j-s_i$ with items taken from ${u_1, u_2, …, u</em>{i-1}}$ in an optimal way plus the value of item $u_i$. This case applies only if $j\geq s_i$ and it amounts to adding item $u_i$ to the knapsack.</p>
+<p>Then, we got the following recurrence for finding the value in an optimal packing:</p>
+<script type="math/tex; mode=display">
+V[i,j]= 
+\begin{equation} 
+\left\{ 
+\begin{array}{lc} 
+0 && if\ i=0\ or\ j=0 \\
+V[i-1,j] && if\ j<s_i \\
+\max\{V[i-1,j],V[i-1,j-s_i]+v_i\} && if\ j\geq s_i
+\end{array}
+\right.
+\end{equation}</script><p>Using dynamic programming to solve this integer programming problem is now straightforward. We use an $(n+1)\times (C+1)$ table to evaluate the values of V[i, j]. We only need to fill the table V[0…n, 0…C] row by row using the above formula.</p>
+<p>Example:<br>C=9<br>U={u1, u2, u3, u4}<br>Si=2, 3, 4, 5<br>Vi=3, 4, 5, 7</p>
+<p><strong>Input</strong>: A set of items $U={u<em>1, u_2, …, u_n}$ with sizes $s_1, s_2, …, s_n$ and values $v_1, v_2, …, v_n$ and a knapsack capacity C.<br><strong>Output</strong>: The maximum value of the function $\sum</em>{u<em>i\in S}v_i$ subject to $\sum</em>{u_i\in S}S_i\leq C$ for some subset of items $S\in U$.<br><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">for i←0 to n</span><br><span class="line">    V[i, 0]←0;</span><br><span class="line">end for;</span><br><span class="line">for j←0 to C</span><br><span class="line">    V[0, j]←0;</span><br><span class="line">end for;</span><br><span class="line">for i←1 to n</span><br><span class="line">    for j←1 to C</span><br><span class="line">        V[i, j]←V[i-1, j];</span><br><span class="line">       if si&lt;=j then V[i, j] ← max&#123;V[i, j], V[i-1, j-si]+vi&#125;;</span><br><span class="line">   end for;</span><br><span class="line">end for;</span><br><span class="line">return V[n, C];</span><br></pre></td></tr></table></figure><br>Time Complexity: $\Theta(nC)$<br>Space Complexity: $\Theta(C)$</p>
+<h1 id="贪心-The-Greedy-Approach"><a href="#贪心-The-Greedy-Approach" class="headerlink" title="贪心 The Greedy Approach"></a>贪心 The Greedy Approach</h1><p>As in the case of dynamic programming algorithms, greedy algorithms are usually designed to solve optimization problems in which a quantity is to be minimized or maximized.<br>Unlike dynamic programming algorithms, greedy algorithms typically consist of a n iterative procedure that tries to find a local optimal solution.<br>In some instances, these local optimal solutions translate to global optimal solutions. In others, they fail to give optimal solutions.</p>
+<p>A greedy algorithm makes a correct guess on the basis of little calculation without worrying about the future. Thus, it builds a solution step by step. Each step increases the size of the partial solution and is based on local optimization.<br>The choice make is that which produces the largest immediate gain while maintaining feasibility.<br>Since each step consists of little work based on a small amount of information, the resulting algorithms are typically efficient.</p>
+<h2 id="The-Fractional-Knapsack-Problem"><a href="#The-Fractional-Knapsack-Problem" class="headerlink" title="The Fractional Knapsack Problem"></a>The Fractional Knapsack Problem</h2><p>Given n items of sizes s1, s2, …, sn, and values v1, v2, …, vn and size C, the knapsack capacity, the objective is to find nonnegative real numbers x1, x2, …, xn that maximize the sum</p>
+<script type="math/tex; mode=display">
+\sum_{i=1}^{n}x_iv_i</script><p>subject to the constraint</p>
+<script type="math/tex; mode=display">
+\sum_{i=1}^{n}x_is_i\leq C</script><p>This problem can easily be solved using the following greedy strategy:<br>For each item compute yi=vi/si, the ratio of its value to its size.<br>Sort the items by decreasing ratio, and fill the knapsack with as much as possible from the first item, then the second, and so forth.<br>This problem reveals many of the characteristics of a greedy algorithm discussed above: The algorithm consists of a simple iterative procedure that selects that item which produces that largest immediate gain while maintaining feasibility.</p>
+<h2 id="Shortest-Path-Problem"><a href="#Shortest-Path-Problem" class="headerlink" title="Shortest Path Problem"></a>Shortest Path Problem</h2><p>Let G=(V, E) be a directed graph in which each edge has a nonnegative length, and a distinguished vertex s called the source. The single-source shortest path problem, or simply the shortest path problem, is to determine the distance from s to every other vertex in V, where the distance from vertex s to vertex x is defined as the length of a shortest path from s to x.<br>For simplicity, we will assume that V={1, 2, …, n} and s=1.<br>This problem can be solved using a greedy technique known as <strong><em>Dijkstra algorithm</em></strong>.</p>
+<p>The set of vertices is partitioned into two sets X and Y so that X is the set of vertices whose distance from the source has already been determined, while Y contains the rest vertices. Thus, initially X={1} and Y={2, 3, …, n}.<br>Associated with each vertex y in Y is a label $\lambda[y]$, which is the length of a shortest path that passes only through vertices in X. Thus, initially</p>
+<script type="math/tex; mode=display">
+\lambda[1]=0,\ \lambda[i]= 
+\begin{equation} 
+\left\{ 
+\begin{array}{lc} 
+length(1,i) && if\ (i,i)\in E \\
+\infty && if\ (1,i)\notin E
+\end{array}
+\right.
+\end{equation}\ ,\ \
+2\leq i\leq n</script><p>At each step, we select a vertex $y\in Y$ with minimum $\lambda$ and move it to X, and $\lambda$ of each vertex $w\in Y$ that is adjacent to y is updated indicating that a shorter path to w via y has been discovered.</p>
+<script type="math/tex; mode=display">
+\forall w\in Y\ and\ (y,w)\in E,\ \lambda[w]=\min\{\lambda[w],\lambda[y]+length(y,w)\}</script><p>The above process is repeated until Y is empty.<br>Finally, $lambda$ of each vertex in X is the distance from the source vertex to this one.<br>Example:<br><img src="/img/algorithm_review/pic2.png" alt=""><br><strong>Input</strong>: A weighted directed graph G=(V, E), where V={1, 2, …, n};<br><strong>Output</strong>: The distance from vertex 1 to every other vertex in G;<br><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">X=&#123;1&#125;; Y←V-&#123;1&#125;; λ[1]←0;</span><br><span class="line">for y←2 to n</span><br><span class="line">    if y is adjacent to 1 then λ[y]←length[1, y];</span><br><span class="line">    else λ[y]← ∞;</span><br><span class="line">    end if;</span><br><span class="line">end for;</span><br><span class="line">for j←1 to n-1</span><br><span class="line">    Let y∈Y be such that λ[y] is minimum;</span><br><span class="line">    X←X∪&#123;y&#125;;  // add vertex y to X</span><br><span class="line">    Y←Y-&#123;y&#125;;  // delete vertex y from Y</span><br><span class="line">   for each edge (y, w)</span><br><span class="line">       if w∈Y and λ[y]+length[y, w]&lt;λ[w] then</span><br><span class="line">           λ[w]←λ[y]+length[y, w];</span><br><span class="line">    end for;</span><br><span class="line">end for;</span><br></pre></td></tr></table></figure><br>Given a directed graph G with nonnegative weights on its edges and a source vertex s, Algorithm DIJKSTRA finds the length of the distance from s to every other vertex in $\Theta(n^2)$ time.</p>
+<h2 id="MST-Minimum-Cost-Spanning-Trees-Kruskal-Prim"><a href="#MST-Minimum-Cost-Spanning-Trees-Kruskal-Prim" class="headerlink" title="MST / Minimum Cost Spanning Trees (Kruskal / Prim)"></a>MST / Minimum Cost Spanning Trees (Kruskal / Prim)</h2><p>Let G=(V, E) be a connected undirected graph with weights on its edges.<br>A spanning tree (V, T) of G is a subgraph of G that is a tree.<br>If G is weighted and the sum of the weights of the edges in T is minimum, then (V, T) is called a minimum cost spanning tree or simply a minimum spanning tree.</p>
+<p>Kruskal’s algorithm works by maintaining a forest consisting of several spanning trees that are gradually merged until finally the forest consists of exactly one tree.<br>The algorithm starts by sorting the edges in nondecreasing order by weight.</p>
+<p>Next, starting from the forest (V, T) consisting of the vertices of the graph and none of its edges, the following step is repeated until (V, T) is transformed into a tree: Let (V, T) be the forest constructed so far, and let $e\in E-T$ be the current edge being considered. If adding e to T does not create a cycle, then include e in T; otherwise discard e.<br>This process will terminate after adding exactly n-1 edges.<br>Example:<br><img src="/img/algorithm_review/pic3.png" alt=""></p>
+<h2 id="Huffman-File-Compression"><a href="#Huffman-File-Compression" class="headerlink" title="Huffman / File Compression"></a>Huffman / File Compression</h2><p>Suppose we are given a file, which is a string of characters. We wish to compress the file as much as possible in such a way that the original file can easily be reconstructed.</p>
+<p>Let the set of characters in the file be C={c1, c2, …, cn}. Let also f(ci), $1\leq i \leq n$, be the frequency of character ci in the file, i.e., the number of times ci appears in the file. </p>
+<p>Using a fixed number of bits to represent each character, called the encoding of the character, the size of the file depends only on the number of characters in the file.<br>Since the frequency of some characters may be much larger than others, it is reasonable to use variable length encodings.</p>
+<p>Intuitively, those characters with large frequencies should be assigned short encodings, whereas long encodings may be assigned to those characters with small frequencies.<br>When the encodings vary in length, we stipulate that the encoding of one character must not be the prefix of the encoding of another character; such codes are called prefix codes.<br>For instance, if we assign the encodings 10 and 101 to the letters “a” and “b”, there will be an ambiguity as to whether 10 is the encoding of “a” or is the prefix of the encoding of the letter “b”.</p>
+<p>Once the prefix constraint is satisfied, the decoding becomes unambiguous; the sequence of bits is scanned until an encoding of some character is found.<br>One way to “parse” a given sequence of bits is to use a full binary tree, in which each internal node has exactly two branches labeled by 0 an 1. The leaves in this tree corresponding to the characters. Each sequence of 0’s and 1’s on a path from the root to a leaf corresponds to a character encoding.</p>
+<p>The algorithm presented is due to Huffman.<br>The algorithm consists of repeating the following procedure until C consists of only one character.<br>Let ci and cj be two characters with minimum frequencies.<br>Create a new node c whose frequency is the sum of the frequencies of ci and cj, and make ci and cj the children of c.<br>Let C=C-{ci, cj}∪{c}.</p>
+<p>Example:<br>C={a, b, c, d, e}<br>f (a)=20<br>f (b)=7<br>f (c)=10<br>f (d)=4<br>f (e)=18</p>
+<h2 id="Graph-Travel"><a href="#Graph-Travel" class="headerlink" title="Graph Travel"></a>Graph Travel</h2><p>In some cases, what is important is that the vertices are visited in a systematic order, regardless of the input graph. Usually, there are two methods of graph traversal:<br>Depth-first search<br>Breadth-first search</p>
+<h3 id="Depth-First-Search（DFS）"><a href="#Depth-First-Search（DFS）" class="headerlink" title="Depth-First Search（DFS）"></a>Depth-First Search（DFS）</h3><p>Let G=(V, E) be a directed or undirected graph.<br>First, all vertices are marked unvisited.<br>Next, a starting vertex is selected, say $v\in V$, and marked visited. Let w be any vertex that is adjacent to v. We mark w as visited and advance to another vertex, say x, that is adjacent to w and is marked unvisited. Again, we mark x as visited and advance to another vertex that is adjacent to x and is marked unvisited.</p>
+<p>This process of selecting an unvisited vertex adjacent to the current vertex continues as deep as possible until we find a vertex y whose adjacent vertices have all been marked visited.<br>At this point, we back up to the most recently visited vertex, say z, and visit an unvisited vertex that is adjacent to z, if any.<br>Continuing this way, we finally return back to the starting vertex v.<br>The algorithm for such a traversal can be written using recursion.</p>
+<p>Example:<br><img src="/img/algorithm_review/pic4.png" alt=""><br>When the search is complete, if all vertices are reachable from the start vertex, a spanning tree called the depth-first search spanning tree is constructed whose edges are those inspected in the forward direction, i.e., when exploring unvisited vertices.<br>As a result of the traversal, the edges of an undirected graph G are classified into the following two types:<br><strong>Tree edges</strong>: edges in the depth-first search tree.<br><strong>Back edges</strong>: all other edges.<br><strong>Input</strong>: An undirected graph G=(V, E);<br><strong>Output</strong>: Preordering of the vertices in the corresponding depth-first search tree.<br><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"> predfn←0;</span><br><span class="line"> for each vertex v∈V</span><br><span class="line">     Mark v unvisited;</span><br><span class="line"> end for;</span><br><span class="line"> for each vertex v∈V</span><br><span class="line">     if v is marked unvisited then dfs(v);</span><br><span class="line"> end for;</span><br><span class="line"></span><br><span class="line">dfs(v)</span><br><span class="line"> Mark v visited;</span><br><span class="line"> predfn←predfn+1;</span><br><span class="line"> for each edge (v, w)∈E</span><br><span class="line">     if w is marked unvisited then dfs(w);</span><br><span class="line"> end for;</span><br></pre></td></tr></table></figure></p>
+<h3 id="Breadth-First-Search（BFS）"><a href="#Breadth-First-Search（BFS）" class="headerlink" title="Breadth-First Search（BFS）"></a>Breadth-First Search（BFS）</h3><p>When we visit a vertex v, we next visit all vertices adjacent to v.<br>This method of traversal can be implemented by a queue to store unexamined vertices.</p>
+<h3 id="Finding-Articulation-Points-in-a-Graph"><a href="#Finding-Articulation-Points-in-a-Graph" class="headerlink" title="Finding Articulation Points in a Graph"></a>Finding Articulation Points in a Graph</h3><p>A vertex v in an undirected graph G with more than two vertices is called an <strong>articulation point</strong> if there exist two vertices u and w different from v such that any path between u and w must pass through v.<br>If G is connected, the removal of v and its incident edges will result in a disconnected subgraph of G.<br>A graph is called biconnected if it is connected and has no articulation points.</p>
+<p>To find the set of articulation points, we perform a depth-first search traversal on G.<br>During the traversal, we maintain two labels with each vertex $v\in V: \alpha[v] \ and\ \beta[v]$.<br>$\alpha[v]$ is simply predfn in the depth-first search algorithm. $\beta[v]$ is initialized to $\alpha[v]$, but may change later on during the traversal.</p>
+<p>For each vertex v visited, we let $\beta[v]$ be the minimum of the following:<br>$\alpha[v]$<br>$\alpha[u]$ for each vertex u such that (v, u) is a back edge<br>$\beta[w]$ for each vertex w such that (v, w) is a tree edge<br><strong>Thus, $\beta[v]$ is the smallest $\alpha$ that v can reach through back edges or tree edges.</strong></p>
+<p>The articulation points are determined as follows:<br>The root is an articulation point if and only if it has two or more children in the depth-first search tree.<br>A vertex v other than the root is an articulation point if and only if v has a child w with $\beta[w]\geq \alpha[v]$.</p>
+<p><strong>Input</strong>: A connected undirected graph G=(V, E);<br><strong>Output</strong>: Array A[1…count] containing the articulation points of G, if any.<br><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">Let s be the start vertex;</span><br><span class="line">for each vertex v∈V</span><br><span class="line">    Mark v unvisited;</span><br><span class="line">end for;</span><br><span class="line">predfn←0; count←0; rootdegree←0;</span><br><span class="line">dfs(s);</span><br></pre></td></tr></table></figure><br><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">dfs(v)</span><br><span class="line"> Mark v visited; artpoint←false; predfn←predfn+1;</span><br><span class="line"> α[v]←predfn; β[v]←predfn;</span><br><span class="line"> for each edge (v, w) ∈ E</span><br><span class="line">     if (v, w) is a tree edge then</span><br><span class="line">         dfs(w);</span><br><span class="line">         if v=s then</span><br><span class="line">             rootdegree ← rootdegree+1;</span><br><span class="line">             if rootdegree=2 then artpoint←true;</span><br><span class="line">         else</span><br><span class="line">           β[v]←min&#123;β[v], β[w]&#125;;</span><br><span class="line">           if β[w]&gt;=α[v] then artpoint←true;</span><br><span class="line">       end if;</span><br><span class="line">     else if (v, w) is a back edge then β[v]←min&#123;β[v], α[w]&#125;;</span><br><span class="line">     else do nothing; //w is the parent of v</span><br><span class="line">     end if;</span><br><span class="line"> end for;</span><br><span class="line"> if artpoint then </span><br><span class="line">     count←count +1;</span><br><span class="line">     A[count]←v;</span><br><span class="line"> end if;</span><br></pre></td></tr></table></figure><br>Example:<br><img src="/img/algorithm_review/pic5.png" alt=""></p>
+<h1 id="回溯-Backtracking"><a href="#回溯-Backtracking" class="headerlink" title="回溯 Backtracking"></a>回溯 Backtracking</h1><p>suitable for those problems that exhibit good average time complexity. This methodology is based on a methodic examination of the implicit state space induced by the problem instance under study. In the process of exploring the state space of the instance, some pruning takes place.</p>
+<p>In many real world problems, a solution can be obtained by exhaustively searching through a large but finite number of possibilities. Hence, the need arose for developing systematic techniques of searching, with the hope of cutting down the search space to possibly a much smaller space. </p>
+<p>Here, we present a general technique for organizing the search known as <strong>backtracking</strong>. This algorithm design technique can be described as an organized exhaustive search which often avoids searching all possibilities.</p>
+<h2 id="涂色问题-3-Color-Problem"><a href="#涂色问题-3-Color-Problem" class="headerlink" title="涂色问题 3-Color Problem"></a>涂色问题 3-Color Problem</h2><p>Given an undirected graph G=(V, E), it is required to color each vertex in V with one of three colors, say 1, 2, and 3, such that no two adjacent vertices have the same color. We call such a coloring legal; otherwise, if two adjacent vertices have the same color, it is illegal.<br>A coloring can be represented by an n-tuple (c1, c2, …, cn) such that ci∈{1, 2, 3}, $1\leq i\leq n$.<br>For example, (1, 2, 2, 3, 1) denotes a coloring of a graph with five vertices.</p>
+<p>There are $3^n$ possible colorings (legal and illegal) to color a graph with n vertices.<br>The set of all possible colorings can be represented by a complete ternary tree called the <strong>search tree</strong>. In this tree, each path from the root to a leaf node represents one coloring assignment.<br>An incomplete coloring of a graph is <strong>partial</strong> if no two adjacent colored vertices have the same color.<br>Backtracking works by generating the underlying tree one node at a time.<br>If the path from the root to the current node corresponds to a legal coloring, the process is terminated (unless more than one coloring is desired).</p>
+<p>If the length of this path is less than n and the corresponding coloring is partial, then one child of the current node is generated and is marked as the current node.<br>If, on the other hand, the corresponding path is not partial, then the current node is marked as a <strong>dead node</strong> and a new node corresponding to another color is generated.<br>If, however, all three colors have been tried with no success, the search backtracks to the parent node whose color is changed, and so on.</p>
+<p>Example:<br><img src="/img/algorithm_review/pic6.png" alt=""><br>There are two important observations to be noted, which generalize to all backtracking algorithms:<br>(1) The nodes are generated in a depth-first-search manner.<br>(2) There is no need to store the whole search tree; we only need to store the path from the root to the current active node. In fact, no physical nodes are generated at all; the whole tree is implicit. We only need to keep track of the color assignment.</p>
+<p><strong>Recursive Algorithm</strong><br><strong>Input</strong>: An undirected graph G=(V, E).<br><strong>Output</strong>: A 3-coloring c[1…n] of the vertices of G, where each c[j] is 1, 2, or 3.<br><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"> for k←1 to n</span><br><span class="line">     c[k]←0;</span><br><span class="line"> end for;</span><br><span class="line"> flag←false;</span><br><span class="line"> graphcolor(1);</span><br><span class="line"> if flag then output c;</span><br><span class="line"> else output “no solution”;</span><br><span class="line"></span><br><span class="line">graphcolor(k)</span><br><span class="line"> for color=1 to 3</span><br><span class="line">     c[k]←color;</span><br><span class="line">     if c is a legal coloring then set flag ←true and exit;</span><br><span class="line">     else if c is partial then graphcolor(k+1);</span><br><span class="line"> end for;</span><br></pre></td></tr></table></figure><br><strong>Iterative Algorithm</strong><br><strong>Input</strong>: An undirected graph G=(V, E).<br><strong>Output</strong>: A 3-coloring c[1…n] of the vertices of G, where each c[j] is 1, 2, or 3.<br><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">for k←1 to n</span><br><span class="line">    c[k]←0;</span><br><span class="line">end for;</span><br><span class="line">flag←false;</span><br><span class="line">k←1;</span><br><span class="line">while k&gt;=1</span><br><span class="line">    while c[k]&lt;=2</span><br><span class="line">        c[k]←c[k]+1;</span><br><span class="line">        if c is a legal coloring then set flag←true and exit from the two while loops;</span><br><span class="line">      else if c is partial then k←k+1;</span><br><span class="line">   end while;</span><br><span class="line">   c[k]←0;</span><br><span class="line">   k←k-1;</span><br><span class="line">end while;</span><br><span class="line">if flag then output c;</span><br><span class="line">else output “no solution”;</span><br></pre></td></tr></table></figure></p>
+<h2 id="八皇后-8-Queens-Problem"><a href="#八皇后-8-Queens-Problem" class="headerlink" title="八皇后 8-Queens Problem"></a>八皇后 8-Queens Problem</h2><p>How can we arrange 8 queens on an 8x8 chessboard so that no two queens can attack each other?<br>Two queens can attack each other if they are in the same row, column or diagonal.<br>The n-queens problem is defined similarly, where in this case we have n queens and an nxn chessboard for an arbitrary value of $n\geq 1$.</p>
+<p>Consider a chessboard of size 4x4. Since no two queens can be put in the same row, each queen is in a different row. Since there are four positions in each row, there are $4^4$ possible configurations.<br>Each possible configuration can be described by a vector with four components x=(x1, x2, x3, x4).<br>For example, the vector (2, 3, 4, 1) corresponds to a configuration.</p>
+<p><strong>Input</strong>: none;<br><strong>Output</strong>: A vector x[1…4] corresponding to the solution of the 4-queens problem.<br><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">for k←1 to 4</span><br><span class="line">    x[k]←0;</span><br><span class="line">end for;</span><br><span class="line">flag←false;</span><br><span class="line">k←1;</span><br><span class="line">while k&gt;=1</span><br><span class="line">    while x[k]&lt;=3</span><br><span class="line">        x[k]←x[k]+1;</span><br><span class="line">        if x is a legal placement then set flag←true and exit from the two while loops;</span><br><span class="line">      else if x is partial then k←k+1;</span><br><span class="line">   end while;</span><br><span class="line">   x[k]←0;</span><br><span class="line">   k←k-1;</span><br><span class="line">end while;</span><br><span class="line">if flag then output x;</span><br><span class="line">else output “no solution”;</span><br></pre></td></tr></table></figure></p>
+<h2 id="The-General-Backtracking-Method"><a href="#The-General-Backtracking-Method" class="headerlink" title="The General Backtracking Method"></a>The General Backtracking Method</h2><p>The general backtracking algorithm can be described as a systematic search method that can be applied to a class of search problems whose solution consists of a vector (x1, x2, … xi) satisfying some predefined constraints. Here, i is dependent on the problem formulation. In 3-Coloring and the 8-queens problems, i was fixed.<br>In some problems, i may vary from one solution to another.</p>
+<p>Consider a variant of the PARTITION problem defined as follows. Given a set of n integers X={x1, x2, …, xn} and an integer y, find a subset Y of X whose sum is equal to y.<br>For instance if X={10, 20, 30, 40, 50, 60}, and y=60, then there are three solutions of different lengths: {10, 20, 30}, {20, 40}, and {60}.<br>Actually, this problem can be formulated in another way so that the solution is a boolean vector of length n in the obvious way. The above three solutions may be expressed by the boolean vectors {1, 1, 1, 0, 0, 0}, {0, 1, 0, 1, 0, 0}, and {0, 0, 0, 0, 0, 1}.</p>
+<p>In backtracking, each xi in the solution vector belongs to a finite linearly ordered set Xi. Thus, the backtracking algorithm considers the elements of the cartesian product $X_1\times X_2\times…X_n$ in lexicographic order.<br>Initially, the algorithm starts with the empty vector. It then chooses the least element of X1 as x1. If (x1) is a partial solution, then algorithm proceeds by choosing the least element of X2 as x2. If (x1, x2) is a partial solution, then the least element of X3 is included; otherwise x2 is set to the next element in X2.<br>In general, suppose that the algorithm has detected the partial solution (x1, x2, …, xj). It then considers the vector v=(x1, x2, …, xj, xj+1). We have the following cases:</p>
+<ol>
+<li>If v represents a final solution to the problem, the algorithm records it as a solution and either terminates in case only one solution is desired or continues to find other solutions.</li>
+<li>If v represents a partial solution, the algorithm advances by choosing the least element in the set Xj+2.</li>
+<li>If v is neither a final nor a partial solution, we have two subcases:<ol>
+<li>If there are still more elements to choose from in the set Xj+1, the algorithm sets xj+1 to the next member of Xj+1.</li>
+<li>If there are no more elements to choose from in the set Xj+1, the algorithm backtracks by setting xj to the next member of Xj. If again there are no more elements to choose from in the set Xj, the algorithm backtracks by setting xj-1 to the next member of Xj-1, and so on.</li>
+</ol>
+</li>
+</ol>
+<h2 id="分枝界限-Branch-and-Bound-TSPs"><a href="#分枝界限-Branch-and-Bound-TSPs" class="headerlink" title="分枝界限 Branch and Bound (TSPs)"></a>分枝界限 Branch and Bound (TSPs)</h2><p>Branch and bound design technique is similar to backtracking in the sense that it generates a search tree and looks for one or more solutions.<br>However, while backtracking searches for a solution or a set of solutions that satisfy certain properties (including maximization or minimization), branch-and-bound algorithms are typically concerned with only maximization or minimization of a given function.<br>Moreover, in branch-and-bound algorithms, a bound is calculated at each node x on the possible value of any solution given by nodes that may later be generated in the subtree rooted at x. If the bound calculated is worse than the previous bound, the subtree rooted at x is blocked.</p>
+<p>Henceforth, we will assume that the algorithm is to minimize a given cost function; the case of maximization is similar. In order for branch and bound to be applicable, the cost function must satisfy the following property.<br>For all partial solutions (x1, x2, …, xk-1) and their extensions (x1, x2, …, xk), we must have</p>
+<script type="math/tex; mode=display">
+cost(x_1, x_2, …, x_{k-1})\leq cost(x_1, x_2, …, x_k)</script><p>Given this property, a partial solution (x1, x2, …, xk) can be discarded once it is generated if its cost is greater than or equal to a previously computed solution.<br>Thus, if the algorithm finds a solution whose cost is c, and there is a partial solution whose cost is at least c, no more extensions of this partial solution are generated.</p>
+<p><strong>Traveling Salesman Problems (TSPs):</strong><br>Given a set of cities and a cost function that is defined on each pair of cities, find a tour of minimum cost. Here a tour is a closed path that visits each city exactly once. The cost function may be the distance, travel time, air fare, etc.<br>An instance of the TSP is given by its cost matrix whose entries are assumed to be nonnegative.<br><img src="/img/algorithm_review/pic7.png" alt=""><br>With each partial solution (x1, x2, …, xk), we associate a lower bound y, which is the cost of any complete tour that visits the cities x1, x2, …, xk in this order must be at least y.<br><strong>Observations:</strong><br>We observe that each complete tour must contain exactly one edge and its associated cost from each row and each column of the cost matrix.<br>We also observe that if a constant r is subtracted from every entry in any row or column of the cost matrix A, the cost of any tour under the new matrix is exactly r less than the cost of the same tour under A. This motivates the idea of reducing the cost matrix so that each row or column contains at least one entry that is equal to 0. We will refer to such a matrix as the reduction of the original matrix.</p>
+<p>Let (r1, r2, …, rn) and (c1, c2, …, cn) be the amounts subtracted from rows 1 to n and columns 1 to n, respectively, in an nxn cost matrix A. Then, y defined as follow is a lower bound on the cost of any complete tour.</p>
+<script type="math/tex; mode=display">
+y=\sum_{i=1}^{n}r_i+\sum_{i=1}^{n}c_i</script><h1 id="随机-Randomized-Algorithms"><a href="#随机-Randomized-Algorithms" class="headerlink" title="随机 Randomized Algorithms"></a>随机 Randomized Algorithms</h1><p>Based on the probabilistic notion of accuracy. </p>
+<p>One form of algorithm design in which we relax the condition that an algorithm must solve the problem correctly for all possible inputs, and demand that its possible incorrectness is something that can safely be ignored due to its very low likelihood of occurrence.<br>Also, we will not demand that the output of an algorithm must be the same in every run on a particular input.</p>
+<p>A <strong>randomized algorithm</strong> can be defined as one that receives, in addition to its input, a stream of random bits that it can use in the course of its action for the purpose of making random choices.<br>A randomized algorithm may give different results when applied to the same input in different rounds. It follows that the execution time of a randomized algorithm may vary from one run to another when applied to the same input.</p>
+<p>Randomized algorithms can be classified into two categories:<br>The first category is referred to as <strong>Las Vegas</strong> algorithms. It constitutes those randomized algorithms that always give a correct answer, or do not give an answer at all.<br>The second category is referred to as <strong>Monte Carlo</strong> algorithms. It always gives an answer, but may occasionally produce an answer that is incorrect. However, the probability of producing an incorrect answer can be make arbitrarily small by running the algorithm repeatedly with independent random choices in each run.</p>
+<h2 id="Randomized-Selection"><a href="#Randomized-Selection" class="headerlink" title="Randomized Selection"></a>Randomized Selection</h2><p><strong>Input</strong>: An array A[1…n] of n elements and an integer k, $1\leq k\leq n$;<br><strong>Output</strong>: The kth smallest element in A;<br>1.rselect(A, 1, n, k);<br><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">rselect(A, low, high, k)</span><br><span class="line"> v←random(low, high);</span><br><span class="line"> x←A[v];</span><br><span class="line"> Partition A[low…high] into three arrays: </span><br><span class="line">    A1=&#123;a|a&lt;x&#125;, A2=&#123;a|a=x&#125;, A3=&#123;a|a&gt;x&#125;;</span><br><span class="line"> case</span><br><span class="line">    |A1|&gt;=k: return select (A1, 1, |A1|, k);</span><br><span class="line">    |A1|+|A2|&gt;=k: return x;</span><br><span class="line">    |A1|+|A2|&lt;k: return select(A3, 1, |A3|, k-|A1|-|A2|);</span><br><span class="line"> end case;</span><br></pre></td></tr></table></figure></p>
+<h2 id="Testing-String-Equality"><a href="#Testing-String-Equality" class="headerlink" title="Testing String Equality"></a>Testing String Equality</h2><p>Suppose that two parties A and B can communicate over a communication channel, which we will assume to be very reliable. A has a very long string x and B has a very long string y, and they want to determine whether x=y.</p>
+<p>Obviously, A can send x to B, who in turn can immediately test whether x=y. But this method would be extremely expensive, in view of the cost of using the channel.</p>
+<p>Another alternative would be for A to derive from x a much shorter string that could serve as a “fingerprint” of x and send it to B.<br>B then would use the same derivation to obtain a fingerprint for y, and then compare the two fingerprints.<br>If they are equal, then B would assume that x=y; otherwise he would conclude that $x\ne y$. B than notifies A of the outcome of the test.<br>This method requires that transmission of a much shorter string across the channel.</p>
+<p>For a string w, let I(w) be the integer represented by the bit string w. One method of fingerprinting is to choose a prime number p and then use the fingerprint function</p>
+<script type="math/tex; mode=display">
+I_p(x)=I(x) (mod\ p)</script><p>If p is not too large, then the fingerprint Ip(x) can be sent as a short string. If $I_p(x)\ne I_p(y)$, then obviously $x\ne y$. However, the converse is not true. That is, if Ip(x)=Ip(y), then it is not necessarily the case that x=y. We refer to this phenomenon as a <strong>false match</strong>.<br>In general, a false match occurs if $x\ne y$, but $I_p(x)=I_p(y)$, i.e., p divides $I(x)-I(y)$.</p>
+<p>The weakness of this method is that, for fixed p, there are certain pairs of strings x and y on which the method will always fail. <strong>Then, what’s the probability?</strong></p>
+<p>Let n be the number of bits of the binary strings of x and y, and p be a prime number which is smaller than $2n^2$. The probability of false matching is 1/n.</p>
+<p>Thus, we choose p at random every time the equality of two strings is to be checked, rather than agreeing on p in advance. Moreover, choosing p at random allows for resending another fingerprint, and thus increasing the confidence in the case x=y.</p>
+<ol>
+<li>A chooses p at random from the set of primes less than M.</li>
+<li>A sends p and Ip(x) to B.</li>
+<li>B checks whether Ip(x)=Ip(y) and confirms the equality or inequality of the two strings x and y.</li>
+</ol>
+<h2 id="Pattern-Matching"><a href="#Pattern-Matching" class="headerlink" title="Pattern Matching"></a>Pattern Matching</h2><p>Given a string of text $X=x_1x_2…x_n$ and a pattern $Y=y_1y_2…y_m$, where $m\leq n$, determine whether or not the pattern appears in the text. Without loss of generality, we will assume that the text alphabet is $\sum={0, 1}.$<br>The most straightforward method for solving this problem is simply to move the pattern across the entire text, and in every position compare the pattern with the portion of the text of length m.<br>This brute-force method leads to an $O(mn)$ running time in the worst case. </p>
+<p>Here we will present a simple and efficient Monte Carlo algorithm that achieves a running time of $O(n+m)$.<br>The algorithm follows the same brute-force algorithm of sliding the pattern Y across the text X, but instead of comparing the pattern with each block $X(j)=x<em>jx</em>{j+1}…x_{j+m-1}$, we will compare the fingerprint $I_p(Y)$ of the pattern with the fingerprints $I_p(X(j))$ of the blocks of text.</p>
+<p>The key observations that when we shift from one block of text to the text, the fingerprint of the new block X(j+1) can easily be computed from the fingerprint of X(j).</p>
+<script type="math/tex; mode=display">
+I_p(X(j+1))=(2I_p(X(j))-2^mx_j+x_{j+m}) (mod\ p)</script><p>If we let $W_p=2^m$ (mod p), then we have the recurrence</p>
+<script type="math/tex; mode=display">
+I_p(X(j+1))=(2I_p(X(j))-W_px_j+x_{j+m}) (mod\ p)</script><p><strong>Input</strong>: A string of text X and a pattern Y of length n and m, respectively.<br><strong>Output</strong>: The first position of Y in X if Y occurs in X; otherwise 0.<br><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">Choose p at random from the set of primes less than M;</span><br><span class="line">j←1;</span><br><span class="line">Compute Wp=2^m (mod p), Ip(Y) and Ip(Xj);</span><br><span class="line">while j&lt;=n-m+1</span><br><span class="line">    if Ip(Xj)=Ip(Y) then return j ; \\A match is found (probably)</span><br><span class="line">    Compute Ip(Xj) using previous equation;</span><br><span class="line">    j←j+1;</span><br><span class="line">end while;</span><br><span class="line">return 0; //Y does not occur in X (definitely)</span><br></pre></td></tr></table></figure><br>The time complexity of the previous pattern matching algorithm is O(m+n).<br>Let p be a prime number which is smaller than 2mn2. The probability of false matching is 1/n.</p>
+<p>To convert the algorithm into a Las Vegas algorithm is easy.<br>Whenever the two fingerprints Ip(Y) and Ip(X(j)) match, the two strings are tested for equality.<br>Thus, we end with an efficient pattern matching algorithm that always gives the correct result, and the time complexity is still O(m+n).</p>
+<h1 id="逼近-Approximation-Algorithms"><a href="#逼近-Approximation-Algorithms" class="headerlink" title="逼近 Approximation Algorithms"></a>逼近 Approximation Algorithms</h1><p>Compromise on the quality of solution in return for faster solutions.</p>
+<p>There are many hard combinatorial optimization problems that cannot be solved efficiently using backtracking or randomization.<br>An alternative in this case for tacking some of these problems is to devise an approximation algorithm, given that we will be content with a “reasonable” solution that approximates an optimal solution.</p>
+<p>Associated with each approximation algorithm, there is a performance bound that guarantees that the solution to a given instance will not be far away from the neighborhood of the exact solution.<br>A marking characteristic of (most of) approximation algorithms is that they are fast, as they are mostly greedy algorithm.</p>
+<p>A combinatorial optimization problem $\Pi$ is either a minimization problem or a maximization problem. It consists of three components:<br>(1) A set $D<em>\Pi$ of instances.<br>(2) For each instance $I\in D</em>\Pi$, there is a finite set $S<em>\Pi(I)$ of candidate solutions for I.<br>(3) Associated with each solution $\sigma\in S</em>\Pi(I)$ to an instance I in $D<em>\Pi$, there is a value $f</em>\Pi(\sigma)$ called the solution value for $\sigma$.</p>
+<p>If $\Pi$ is a minimization problem, then an optimal solution $\sigma’$ for an instance $I\in D<em>\Pi$ has the property that for all $\sigma\in S</em>\Pi(I)$, $f<em>\Pi(\sigma’)\leq f</em>\Pi(\sigma)$. An optimal solution for a maximization problem is defined similarly. We will denote by OPT(I) the value $f<em>\Pi(\sigma<em>)$.<br>An <em>*approximation algorithm</em></em> A for an optimization problem $\Pi$ is a (polynomial time) algorithm such that given an instance $I\in D</em>\Pi$, it outputs some solution $\sigma\in S<em>\Pi(I)$. We will denote by $A(I)$ the value $f</em>\Pi(\sigma)$.</p>
+<h2 id="Difference-Bounds"><a href="#Difference-Bounds" class="headerlink" title="Difference Bounds"></a>Difference Bounds</h2><p>The most we can hope from an approximation algorithm is that the difference between the value of the optimal solution and the value of the solution obtained by the approximation algorithm is always constant.</p>
+<p>In other words, for all instances I of the problem, the most desirable solution that can be obtained by an approximation algorithm A is such that $|A(I)-OPT(I)|\leq K$, for some constant K. </p>
+<h3 id="Planar-Graph-Coloring"><a href="#Planar-Graph-Coloring" class="headerlink" title="Planar Graph Coloring"></a>Planar Graph Coloring</h3><p>Let G=(V, E) be a planar graph. By the Four Color Theorem, every planar graph is four-colorable. It is fairly easy to determine whether a graph is 2-colorable or not. On the other hand, to determine whether it is 3-colorable is NP-complete.</p>
+<p>Given an instance I of G, an approximation algorithm A may proceed as follows:<br>Assume G is nontrivial, i.e. it has at least one edge. Determine if the graph is 2-colorable. If it is, then output 2; otherwise output 4. If G is 2-colorable, then $|A(I)-OPT(I)|=0$. If it is not 2-colorable, then $|A(I)-OPT(I)\leq 1$. This is because in the latter case, G is either 3-colorable or 4-colorable.</p>
+<h3 id="Counterexample-Knapsack-Problems"><a href="#Counterexample-Knapsack-Problems" class="headerlink" title="Counterexample: Knapsack Problems"></a>Counterexample: Knapsack Problems</h3><p>There is no approximation algorithms with difference bounds for knapsack problems.</p>
+<h2 id="Relative-Performance-Bounds"><a href="#Relative-Performance-Bounds" class="headerlink" title="Relative Performance Bounds"></a>Relative Performance Bounds</h2><p>Clearly, a difference bound is the best bound guaranteed by an approximation algorithm.<br>However, it turns out that very few hard problems possess such a bound. So we will discuss another performance guarantee, namely the relative performance guarantee. </p>
+<p>Let $\Pi$ be a minimization problem and I an instance of $\Pi$. Let A be an approximation algorithm to solve $\Pi$. We define the approximation ratio $R_A(I)$ to be</p>
+<script type="math/tex; mode=display">
+R_A(I)=\frac{A(I)}{OPT(I)}</script><p>If $\Pi$ is a maximization problem, then we define $R_A(I)$ to be </p>
+<script type="math/tex; mode=display">
+R_A(I)=\frac{OPT(I)}{A(I)}</script><p>Thus the approximation ratio is always greater than or equal to one.</p>
+<h3 id="The-Bin-Packing-Problem"><a href="#The-Bin-Packing-Problem" class="headerlink" title="The Bin Packing Problem"></a>The Bin Packing Problem</h3><p>Given a collection of items u1, u2, …, un of sizes s1, s2, …, sn, where such sj is between 0 and 1, we are required to pack these items into the minimum number of bins of unit capacity.</p>
+<p>We list here one heuristic method:<br><strong>First Fit (FF):</strong> The bins are indexed as 1, 2, … All bins are initially empty. The items are considered for packing in the order u1, u2, …, un. To pack item ui, find the least index j such that bin j contains at most 1-si, and add item ui to the items packed in bin j. Then, we have</p>
+<script type="math/tex; mode=display">
+R_{FF}(I)=\frac{FF(I)}{OPT(I)}<2</script><h1 id="网络流-Network-Flow"><a href="#网络流-Network-Flow" class="headerlink" title="网络流 Network Flow"></a>网络流 Network Flow</h1><p>A network is a 4-tuple (G, s, t, c), where G=(V, E) is a directed graph, s and t are two distinguished vertices called, respectively, the source and sink, and c(u, v) is a capacity function defined on all pairs of vertices with c(u, v)&gt;0 if (u, v) ∈ E and c(u, v)=0 otherwise. |V|=n, |E|=m.</p>
+<p>A flow in G is a real-valued function f on vertex pairs having the following four conditions:<br>(1) <strong>Skew symmetry.</strong> $\forall u, v\in V, f(u, v)=-f(v, u)$. We say there is a flow from u to v if $f(u, v)&gt;0$.<br>(2) <strong>Capacity constraints.</strong> $\forall u, v\in V, f(u, v)\leq c(u, v)$. We say edge (u, v) is saturated if $f(u, v)=c(u, v)$.<br>(3) <strong>Flow conservation.</strong> $\forall u\in V-{s, t}, \sum_{v\in V}f(u, v)=0$. In other words, the net flow (total flow out minus total flow in) at any interior vertex is 0.<br>(4) $\forall v\in V, f(v, v)=0$.</p>
+<p>A cut {S, T} is a partition of the vertex set V into two subsets S and T such that $s\in S$ and $t\in T$. The capacity of the cut {S, T}, denoted by c(S, T), is</p>
+<script type="math/tex; mode=display">
+c(S,T)=\sum_{u\in S,v\in T}c(u,v)</script><p>The flow across the cut {S, T}, denoted by f(S, T), is</p>
+<script type="math/tex; mode=display">
+f(S,T)=\sum_{u\in S,v\in T}f(u,v)</script><p>Thus, the flow across the cut {S, T} is the sum of the positive flow on edges from S to T minus the sum of the positive flow on edges from T to S.</p>
+<p>For any vertex u and any subset $A\subseteq V$, let f(u, A) denote f({u}, A), and f(A, u) denote f(A, {u}). For a capacity function c, c(u, A) and c(A, u) are defined similar.<br>The <strong>value of a flow f</strong>, denoted by |f|, is defined to be </p>
+<script type="math/tex; mode=display">
+|f|=f(s,v)=\sum_{v\in V}f(s,v)</script><p><strong>Lemma</strong>: For any cut {S, T} and a flow f, |f|=f(S, T).<br><strong>Max-Flow Problems</strong>: Design a function f for the network (G, s, t, c), so that |f| is the maximum.</p>
+<p>Given a flow f on G with capacity function c, the <strong>residual capacity function</strong> for f on the set of pairs of vertices is defined as follows.<br>For each pair of vertices, $u, v\subseteq V$, the residual capacity $r(u, v)=c(u, v)-f(u, v)$. The <strong>residual graph</strong> for the flow f is the directed graph $R=(V, E_f)$, with capacities defined by r and </p>
+<script type="math/tex; mode=display">
+E_f=\{(u, v)|r(u, v)>0\}</script><p>The residual capacity r(u, v) represents the amount of additional flow that can be pushed along the edge (u, v) without violating the capacity constraints.<br>If $f(u, v)&lt;c(u, v)$, then both (u, v) and (v, u) are present in R. If there is no edge between u and v in G, then neither (u, v) nor (v, u) are in $E_f$. Thus, $|E_f|\leq 2|E|$.</p>
+<p><strong>Example:</strong> what’s the residual graph of the following graph?<br><img src="/img/algorithm_review/pic8.png" alt=""><br>Let f and f’ be any two flows in a network G. Define the function f+f’ by (f+f’)(u, v)=f(u, v)+f’(u, v) for all pairs of vertices u and v. Similarly, define the function f-f’ by (f-f’)(u, v)=f(u, v)-f’(u, v).<br><strong>Lemma</strong>: Let f be a flow in G and f’ the flow in the residual graph R for f. Then the function f+f’ is a flow in G of value |f|+|f’|.<br><strong>Lemma</strong>: Let f be any flow in G and f* a maximum flow in G. If R is the residual graph for f, then the value of a maximum flow in R is |f*|-|f|.</p>
+<p>Given a flow f in G, an <strong>augmenting path</strong> p is a directed path from s to t in the residual graph R. The <strong>bottleneck capacity</strong> of p is the minimum residual capacity along p. The number of edges in p will be denoted by |p|.<br><strong>Theorem (max-flow min-cut theorem)</strong>: Let (G, s, t, c) be a network and f a flow in G. The following three statements are equivalent:<br>(a) There is a cut {S, T} with c(S, T)=|f|.<br>(b) f is a maximum flow in G.<br>(c) There is no augmenting path for f.</p>
+<p><strong>The Ford-Fulkerson Method</strong>:<br>The previous theorem suggests a way to construct a maximum flow by iterative improvement<br>One keeps finding an augmenting path arbitrarily and increases the flow by its bottleneck capacity</p>
+<p><strong>Input</strong>: A network (G, s, t, c);<br><strong>Output</strong>: A flow in G;<br><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">Initialize the residual graph: R←G;</span><br><span class="line">for each edge (u, v)∈E</span><br><span class="line">    f(u, v)←0;</span><br><span class="line">end for;</span><br><span class="line">while there is an augmenting path p=s, …, t in R</span><br><span class="line">    Let ▲ be the bottleneck capacity of p;</span><br><span class="line">    for each edge (u, v) in p</span><br><span class="line">        f(u, v) ←f(u, v)+ ▲;</span><br><span class="line">    end for;</span><br><span class="line">  Update the residual graph R;</span><br><span class="line">end while;</span><br></pre></td></tr></table></figure><br>The time complexity of the Ford-Fulkerson Method is O(m|f*|), where m is the number of edges and |f*| is the value of the maximum flow, which is an integer.</p>
+<h2 id="Shortest-Path-Augmentation"><a href="#Shortest-Path-Augmentation" class="headerlink" title="Shortest Path Augmentation:"></a>Shortest Path Augmentation:</h2><p>Here we consider another heuristic that puts some order on the selection of augmenting paths.<br>Definition: The level of a vertex v, denoted by level(v), is the least number of edges in a path from s to v. Given a directed graph G=(V, E), the level graph L is (V’, E’), where V’ is the set of vertices can be reached from s and </p>
+<script type="math/tex; mode=display">
+E'=\{(u, v) | level(v)=level(u)+1\ and\ (u, v)\in E\}.</script><p>Given a directed graph G and a source vertex s, its level graph L can easily be constructed using breadth-first search.</p>
+<h2 id="MPLA-Minimum-path-length-augmentation"><a href="#MPLA-Minimum-path-length-augmentation" class="headerlink" title="MPLA | Minimum path length augmentation"></a>MPLA | Minimum path length augmentation</h2><p>Minimum path length augmentation (MPLA)<br>MPLA selects an augmenting path of minimum length and increases the current flow by an amount equal to the bottleneck capacity of the path. The algorithm starts by initializing the flow to the zero flow and setting the residual graph R to the original network. It then proceeds in phases. Each phase consists of the following two steps:<br>(1) Compute the level graph L from the residual graph R. If t is not in L, then halt; otherwise continue.<br>(2) As long as there is a path p from s to t in L, augment the current flow by p, remove saturated edges from L and R and update them accordingly.</p>
+<p><strong>Input</strong>: A network (G, s, t, c);<br><strong>Output</strong>: The maximum flow in G;<br><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">for each edge (u, v)∈ E</span><br><span class="line">    f(u, v)←0;</span><br><span class="line">end for;</span><br><span class="line">Initialize the residual graph: R ← G;</span><br><span class="line">Find the level graph L of R;</span><br><span class="line">while t is a vertex in L</span><br><span class="line">    while t is reachable from s in L</span><br><span class="line">        Let p be a path from s to t in L;</span><br><span class="line">        Let ▲ be the bottleneck capacity on p;</span><br><span class="line">      Augment the current flow f by ▲;</span><br><span class="line">      Update L and R along the path p;</span><br><span class="line">   end while;</span><br><span class="line">   Use the residual graph R to compute a new level graph L;</span><br><span class="line">end while;</span><br></pre></td></tr></table></figure></p>
+<h1 id="匹配-Matching"><a href="#匹配-Matching" class="headerlink" title="匹配 Matching"></a>匹配 Matching</h1><p>Given an undirected graph G=(V, E), |V|=n, and |E|=m. A <strong>matching</strong> in G is a subset $M\subseteq E$ such that no two edges in M have a vertex in common.<br>An edge $e\in E$ is <strong>matched</strong> if it is in M, and <strong>unmatched</strong> or <strong>free</strong> otherwise.<br>A vertex $v\in E$ is <strong>matched</strong> if it is incident to a matched edge, and <strong>unmatched</strong> or <strong>free</strong> otherwise.<br>The size of a matching M, i.e. the number of matching edges in it, will be denoted by |M|.<br><strong>A maximum matching</strong> in a graph is a matching of maximum cardinality. A <strong>perfect matching</strong> is one in which every vertex in V is matched.</p>
+<p>The maximum matching problem asks for a subset $M\subseteq E$ with the maximum number of nonoverlapping edges; that is, no two edges in M have a vertex in common.<br>This problem arises in many applications, particularly in the areas of communication and scheduling.</p>
+<p>Given a matching M in an undirected graph G=(V, E), an <strong>alternating path</strong> p with respect to M is a simple path that consists of alternating matched and unmatched edges. The length of p is denoted by |p|.<br>If the two endpoints of an alternating path coincide, then it is called an <strong>alternating cycle</strong>.<br>An alternating path with respect to M is called an <strong>augmenting path</strong> with respect to M if all the matched edges in p are in M and its endpoints are free.</p>
+<p>Let M1 and M2 be two matchings in a graph G. Then</p>
+<script type="math/tex; mode=display">
+\begin{equation} 
+\begin{split} 
+M1\oplus M2 
+&= (M1\cup M2)-(M1\cap M2) \\
+&= (M1 - M2)\cup (M2 - M1)
+\end{split} 
+\end{equation}</script><p>That is, $M1\oplus M2$ is the set of edges that are in M1 or in M2 but not in both.<br><strong>Lemma</strong>: Let M be a matching and p an augmenting path with respect to M, then $M\oplus p$ is a matching  of size $|M\oplus p|=|M|+1$.<br><strong>Corollary</strong>: A matching M in an undirected graph G is maximum if and only if G contains no augmenting paths with respect to M.</p>
+<p><strong>Theorem</strong>: Let M1 and M2 be two matchings in an undirected G such that |M1|=r, |M2|=s and s&gt;r. Then, $M1\oplus M2$ contains at least k=s-r vertex-disjoint augmenting paths with respect to M1.</p>
+<h2 id="二分图的匈牙利树方法-Hungarian-Tree-Method-for-Bipartite-Graphs"><a href="#二分图的匈牙利树方法-Hungarian-Tree-Method-for-Bipartite-Graphs" class="headerlink" title="二分图的匈牙利树方法 Hungarian Tree Method for Bipartite Graphs"></a>二分图的匈牙利树方法 Hungarian Tree Method for Bipartite Graphs</h2><p>The previous Lemma and Corollary suggest a procedure for finding a maximum matching in G:<br>Starting from an arbitrary (e.g. empty) matching, we find an augmenting path p in G, invert the roles of the edges in p (matched to unmatched and vice-versa), and repeat the process until there are no more augmenting paths.<br>However, to find an augmenting path efficiently in a general graph is not easy.</p>
+<p>Given an undirected graph G=(V, E), if V can be divided into two disjoint subsets X and Y so that each edge in E has an end in X and an end in Y, then G is a <strong>bipartite graph.</strong><br>The most important feature of a bipartite graph is it contains no cycles of odd length.<br>Finding an augmenting path in the case of bipartite graphs is much easier than in the case of general graphs.</p>
+<p>Let $G=(X\cup Y, E)$ be a bipartite graph with |X|+|Y|=n and |E|=m. Let M be a matching in G. We call a vertex in X an x-vertex. Similarly, a y-vertex denotes a vertex in Y.<br>First, we pick a free x-vertex, say r, and label it <strong>outer</strong>. From r, we grow an <strong>alternating path tree</strong>, i.e., a tree in which each path from the root r to a leaf is an alternating path. This tree, call it T, is constructed as follows:</p>
+<p>Starting from r, add each unmatched edge (r, y) connecting r to the y-vertex y and label y inner.<br>For each y-vertex y adjacent to r, add the matched edge (y, z) to T if such a matched edge exists, and label z outer.<br>Repeat the above procedure and extend the tree until either a free y-vertex is encountered or the tree is blocked, i.e., cannot be extended any more (note that no vertex is added to the tree more than once).</p>
+<p>If a free y-vertex is found, say v, then the alternating path from the root r to v is an augmenting path. On the other hand, if the tree is blocked, then in this case the tree is called a <strong>Hungarian tree.</strong><br>Next, we start from another free x-vertex, if any, and repeat the above procedure.</p>
+<p><strong>Observation</strong><br>If T is a Hungarian tree, then it cannot be extended; each alternating path traced from the root is stopped at some outer vertex.<br>The only free vertex in T is its root. Notice that if (x, y) is an edge such that x is in T and y is not in T, then x must be labeled inner. Otherwise, x must be connected to a free vertex or T is extendable through x.</p>
+<p>It follows that no vertex in a Hungarian tree can occur in an augmenting path.<br>Suppose that p is an alternating path that shares at least one vertex with T. If p “enters” T, then it must be through a vertex labeled inner. If it “leaves” T, then it must also be through a vertex labeled as inner. But, then, p is not an alternating path; a contradiction.</p>
+<p>Therefore, if, in the process of searching for an augmenting path, a Hungarian tree is found, then it can be removed permanently without affecting the search.</p>
+<p><strong>Input</strong>: A bipartite graph $G=(X\cup Y, E)$;<br><strong>Output</strong>: A maximum matching M in G;<br><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">Initialize M to any arbitrary (possibly empty) matching;</span><br><span class="line">while (there exists a free x-vertex and a free y vertex)</span><br><span class="line">    Let r be a free x-vertex, and using breadth-first</span><br><span class="line">       search, grow an alternating path tree T  rooted at r;</span><br><span class="line">    if (T is a Hungarian tree) then let G←G-T;</span><br><span class="line">    else (find an augmenting path p in T  and let</span><br><span class="line">       M=M $\oplus$ p);</span><br><span class="line">end while.</span><br></pre></td></tr></table></figure></p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          
+
+<div class="post-copyright">
+<ul>
+  <li class="post-copyright-author">
+      <strong>本文作者： </strong>skystarry
+  </li>
+  <li class="post-copyright-link">
+      <strong>本文链接：</strong>
+      <a href="https://skystarry.cn/2018/11/20/21.Algorithm/" title="Algorithm Review">https://skystarry.cn/2018/11/20/21.Algorithm/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <span class="exturl" data-url="aHR0cHM6Ly9jcmVhdGl2ZWNvbW1vbnMub3JnL2xpY2Vuc2VzL2J5LW5jLzQuMC8="><i class="fab fa-fw fa-creative-commons"></i>BY-NC</span> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+          <div class="post-tags">
+              <a href="/tags/%E7%BC%96%E7%A8%8B/" rel="tag"><i class="fa fa-tag"></i> 编程</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2018/10/19/18.Fisher/" rel="prev" title="Fisher">
+                  <i class="fa fa-chevron-left"></i> Fisher
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2018/11/20/22.feature-select/" rel="next" title="特征提取与选择">
+                  特征提取与选择 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      const activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      const commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 2016 – 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fab fa-github"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">朋克李PunkLi</span>
+</div>
+  <div class="powered-by">由 <span class="exturl theme-link" data-url="aHR0cHM6Ly9oZXhvLmlv">Hexo</span> & <span class="exturl theme-link" data-url="aHR0cHM6Ly90aGVtZS1uZXh0LmpzLm9yZy9taXN0Lw==">NexT.Mist</span> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="//cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js"></script>
+<script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+</body>
+</html>
