@@ -345,19 +345,6 @@ P_{k+1}
       </tags>
   </entry>
   <entry>
-    <title>pods_cmake</title>
-    <url>/2018/13.pods-cmake/</url>
-    <content><![CDATA[<p>Apriltags的CMakeLists.txt中出现了一行pods_install_executables()，这并不是标准的CMake写法，项目中有cmake/pods.cmake文件，里面写道：Macros to simplify compliance with the pods build policies.</p>
-<p>关于pods的资料不多，目前我对它的理解是一组基于CMake语法的宏，本身与CMake并没有任何区别。cmake/pods.cmake的内容可以参考：<br><span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL1JvYm90TG9jb21vdGlvbi9jbWFrZS9ibG9iL21hc3Rlci9wb2RzLmNtYWtl">https://github.com/RobotLocomotion/cmake/blob/master/pods.cmake<i class="fa fa-external-link-alt"></i></span><br><span class="exturl" data-url="aHR0cHM6Ly9zb3VyY2Vmb3JnZS5uZXQvcHJvamVjdHMvcG9kcy8=">https://sourceforge.net/projects/pods/<i class="fa fa-external-link-alt"></i></span><br><span class="exturl" data-url="aHR0cHM6Ly9zb3VyY2Vmb3JnZS5uZXQvcC9wb2RzL3dpa2kvUG9kc1Rvb2wv">https://sourceforge.net/p/pods/wiki/PodsTool/<i class="fa fa-external-link-alt"></i></span></p>
-]]></content>
-      <categories>
-        <category>编程</category>
-      </categories>
-      <tags>
-        <tag>工具链</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>Lipschitz Condition</title>
     <url>/2018/14.Lipschitz/</url>
     <content><![CDATA[<p>L-lipschitz连续性是最近优化课程经常提到的一个基础内容，老师人很nice，讲课也很有开放性，每次都需要做大量的预习和课后复习才能完全消化。所以最近的Blog基本上都离不开数学主题了。<br>课堂引出L-lipschitz是为了衡量一个凸函数是否容易优化，通过函数光滑的程度和凸的程度来判断，原文是：$\nabla f$ is L-lipschitz and $f$ $\mu$-strongly convex.</p>
@@ -571,82 +558,16 @@ P_{k+1}
       </tags>
   </entry>
   <entry>
-    <title>Normal distribution</title>
-    <url>/2018/17.Normal-distribution/</url>
-    <content><![CDATA[<p>本blog总结单变量正态分布以及多元正态分布和他们的性质。</p>
-<a id="more"></a>
-<h1 id="单变量正态分布"><a href="#单变量正态分布" class="headerlink" title="单变量正态分布"></a>单变量正态分布</h1><p>概率密度函数：</p>
-<script type="math/tex; mode=display">
-p(x)=\frac{1}{\sqrt{2\pi}\sigma}\exp\left\{ -\frac{1}{2}\left(\frac{x-\mu}{\sigma}\right)^2\right\}</script><p>期望$\mu$和方差$\sigma^2$：</p>
-<script type="math/tex; mode=display">
-\mu = E\{x\}=\int_{-\infty}^{\infty}xp(x)dx \\
-\sigma^2=\int_{-\infty}^{\infty}(x-\mu)^2p(x)dx</script><h1 id="多元正态分布"><a href="#多元正态分布" class="headerlink" title="多元正态分布"></a>多元正态分布</h1><p>概率密度函数：</p>
-<script type="math/tex; mode=display">
-p(x)=\frac{1}{(x\pi)^{d/2}|\Sigma|^{1/2}}\exp\left\{ -\frac{1}{2}(x-\mu)^T\Sigma^{-1}(x-\mu)\right\}</script><ul>
-<li>$x=[x_1,x_2,…,x_d]^T$ 是d维向量</li>
-<li>$\mu=[\mu_1,\mu_2,…,\mu_d]^T$是d维均值向量</li>
-<li>$\Sigma$是dxd维协方差矩阵</li>
-</ul>
-<p>$<br>\mu=E\{x\} \\<br>\Sigma=E\{(x-\mu)(x-\mu)^T\}<br>$<br>$\mu$，$\Sigma$分别是向量$x$和矩阵$(x-\mu)(x-\mu)^T$的期望，若$x_i$是$x$的第$i$个个分量，$\mu_i$是$\mu$的第$i$个分量，$\sigma_{ij}$是$\Sigma$的第$i,j$个元素，则</p>
-<script type="math/tex; mode=display">
-\mu_i=E\{x_i\}=\int_{E^d}x_ip(x)dx=-\int_{-\infty}^{\infty}x_ip(x)dx_i</script><p>其中，$p(x_i)$为边缘分布</p>
-<script type="math/tex; mode=display">
-p(x_i)=\int_{-\infty}^{\infty}...\int_{-\infty}^{\infty}p(x)dx_1dx_2...dx_{x-1}dx_{i+1}...dx_d</script><p>而</p>
-<script type="math/tex; mode=display">
-\begin{equation} 
-\begin{split} 
-\sigma_{ij}&=E[(x_i-\mu_i)(x_j-\mu_j)] \\
-&=\int_{-\infty}^{\infty}...\int_{-\infty}^{\infty}(x_i-\mu_i)(x_j-\mu_j)p(x_i,x_j)dx_idx_j
-\end{split} 
-\end{equation}</script><p>协方差矩阵总是正定or半正定的矩阵，可以表示为</p>
-<script type="math/tex; mode=display">\Sigma = 
-\left[\begin{matrix}
-\sigma_{11} & \sigma_{12} & \dots & \sigma_{1d} \\ 
-\sigma_{21} & \sigma_{22} & \dots & \sigma_{2d} \\ 
-\vdots & \vdots & \ddots & \vdots \\ 
-\sigma_{2d} & \sigma_{2d} & \dots & \sigma_{dd} \\ 
-\end{matrix}\right]</script><h2 id="多元分布性质"><a href="#多元分布性质" class="headerlink" title="多元分布性质"></a>多元分布性质</h2><p>多元正态分布被均值向量$\mu$和协方差矩阵$\Sigma$所完全决定。</p>
-<script type="math/tex; mode=display">
-p(x)\sim N(\mu,\Sigma)</script><p>等密度点的轨迹为以超椭球面，区域中心由均值向量$\mu$决定，区域的大小由协方差矩阵$\Sigma$决定。当指数项为常数时，构成等密度点：</p>
-<script type="math/tex; mode=display">
-(x-\mu)^T\Sigma^{-1}(x-\mu)=C</script><p>该式子的解是一个超椭球面，且它的主轴方向由$\Sigma$阵的特征向量决定，主轴长度与相应的协方差矩阵$\Sigma$的特征值成正比。</p>
-<script type="math/tex; mode=display">
-\gamma^2=(x-\mu)^T\Sigma^{-1}(x-\mu)</script><p>称为由$x$到$\mu$的Mahalanobis距离（马氏距离）的平方，对应于Mahalanobis距离为$\gamma$的超椭圆球体积是</p>
-<script type="math/tex; mode=display">
-V=V_d|\Sigma|^{\frac{1}{2}}\gamma^d</script><p>其中$V_d$是$d$维单位超球体的体积，</p>
-<script type="math/tex; mode=display">
-V_d= 
-\begin{equation} 
-\left\{ 
-\begin{array}{lc} 
-\frac{\pi^{d/2}}{\left( \frac{d}{2} \right)!} & d为偶数\\
-\frac{2^d\pi^{(d-1)/2}\left( \frac{d-1}{2} \right)!}{d!} & d为奇数
-\end{array} 
-\right. 
-\end{equation}</script><p>对于给定的维数，样本离散度直接随$|\Sigma|^{1/2}$而变。</p>
-<h2 id="不相关性-独立性"><a href="#不相关性-独立性" class="headerlink" title="不相关性=独立性"></a>不相关性=独立性</h2><ul>
-<li>不相关：$E\{x_ix_j\}=E\{x_i\}E\{x-j\}$</li>
-<li>独立的：$p\{x_ix_j\}=p\{x_i\}p\{x_j\}$</li>
-</ul>
-<p>独立性比不相关性条件更强，而在多元正态分布中，两者等价。在正态分布中，变量互不相关，则一定独立。</p>
-<p>推论：如果多元正态随机向量的协方差矩阵是对角阵，则x的分量是相互独立的正态分布随机变量。</p>
-<h2 id="边缘分布和条件分布的正态性"><a href="#边缘分布和条件分布的正态性" class="headerlink" title="边缘分布和条件分布的正态性"></a>边缘分布和条件分布的正态性</h2><p>以二元正态分布为例，</p>
-<ul>
-<li>向量$x=[x_1,x_2]^T$</li>
-<li>均值$\mu=[\mu_1,\mu_2]^T$</li>
-<li>协方差矩阵$\Sigma=\left[\begin{matrix}\sigma_{11}^2&amp;\sigma_{12}^2\\\sigma_{21}^2&amp;\sigma_{22}^2\end{matrix}\right]$</li>
-</ul>
-<script type="math/tex; mode=display">
-p(x_1)\sim N(\mu_1,\sigma_{11}^2) \\
-p(x_2)\sim N(\mu_1,\sigma_{22}^2)</script><h2 id="线性变换的正态性"><a href="#线性变换的正态性" class="headerlink" title="线性变换的正态性"></a>线性变换的正态性</h2><p>对于多元正态随机变量$x$，无论是线性变化$y=Ax$还是线性组合$y=\alpha^Tx$，正态分布依然是正态分布。</p>
-<script type="math/tex; mode=display">
-p(y)\sim N(A\mu,A\Sigma A^T)
-p(y)\sim N(\alpha^T\mu,\alpha^T\Sigma\alpha)</script>]]></content>
+    <title>pods_cmake</title>
+    <url>/2018/13.pods-cmake/</url>
+    <content><![CDATA[<p>Apriltags的CMakeLists.txt中出现了一行pods_install_executables()，这并不是标准的CMake写法，项目中有cmake/pods.cmake文件，里面写道：Macros to simplify compliance with the pods build policies.</p>
+<p>关于pods的资料不多，目前我对它的理解是一组基于CMake语法的宏，本身与CMake并没有任何区别。cmake/pods.cmake的内容可以参考：<br><span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL1JvYm90TG9jb21vdGlvbi9jbWFrZS9ibG9iL21hc3Rlci9wb2RzLmNtYWtl">https://github.com/RobotLocomotion/cmake/blob/master/pods.cmake<i class="fa fa-external-link-alt"></i></span><br><span class="exturl" data-url="aHR0cHM6Ly9zb3VyY2Vmb3JnZS5uZXQvcHJvamVjdHMvcG9kcy8=">https://sourceforge.net/projects/pods/<i class="fa fa-external-link-alt"></i></span><br><span class="exturl" data-url="aHR0cHM6Ly9zb3VyY2Vmb3JnZS5uZXQvcC9wb2RzL3dpa2kvUG9kc1Rvb2wv">https://sourceforge.net/p/pods/wiki/PodsTool/<i class="fa fa-external-link-alt"></i></span></p>
+]]></content>
       <categories>
-        <category>数学</category>
+        <category>编程</category>
       </categories>
       <tags>
-        <tag>数学</tag>
+        <tag>工具链</tag>
       </tags>
   </entry>
   <entry>
@@ -801,6 +722,85 @@ J(W)=Tr{(W^TS_WW)^{-1}(W^TS_WW)}</script><p>其中，权值由$\{S_W^{-1}S_B\}$�
       </categories>
       <tags>
         <tag>模式识别</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Normal distribution</title>
+    <url>/2018/17.Normal-distribution/</url>
+    <content><![CDATA[<p>本blog总结单变量正态分布以及多元正态分布和他们的性质。</p>
+<a id="more"></a>
+<h1 id="单变量正态分布"><a href="#单变量正态分布" class="headerlink" title="单变量正态分布"></a>单变量正态分布</h1><p>概率密度函数：</p>
+<script type="math/tex; mode=display">
+p(x)=\frac{1}{\sqrt{2\pi}\sigma}\exp\left\{ -\frac{1}{2}\left(\frac{x-\mu}{\sigma}\right)^2\right\}</script><p>期望$\mu$和方差$\sigma^2$：</p>
+<script type="math/tex; mode=display">
+\mu = E\{x\}=\int_{-\infty}^{\infty}xp(x)dx \\
+\sigma^2=\int_{-\infty}^{\infty}(x-\mu)^2p(x)dx</script><h1 id="多元正态分布"><a href="#多元正态分布" class="headerlink" title="多元正态分布"></a>多元正态分布</h1><p>概率密度函数：</p>
+<script type="math/tex; mode=display">
+p(x)=\frac{1}{(x\pi)^{d/2}|\Sigma|^{1/2}}\exp\left\{ -\frac{1}{2}(x-\mu)^T\Sigma^{-1}(x-\mu)\right\}</script><ul>
+<li>$x=[x_1,x_2,…,x_d]^T$ 是d维向量</li>
+<li>$\mu=[\mu_1,\mu_2,…,\mu_d]^T$是d维均值向量</li>
+<li>$\Sigma$是dxd维协方差矩阵</li>
+</ul>
+<p>$<br>\mu=E\{x\} \\<br>\Sigma=E\{(x-\mu)(x-\mu)^T\}<br>$<br>$\mu$，$\Sigma$分别是向量$x$和矩阵$(x-\mu)(x-\mu)^T$的期望，若$x_i$是$x$的第$i$个个分量，$\mu_i$是$\mu$的第$i$个分量，$\sigma_{ij}$是$\Sigma$的第$i,j$个元素，则</p>
+<script type="math/tex; mode=display">
+\mu_i=E\{x_i\}=\int_{E^d}x_ip(x)dx=-\int_{-\infty}^{\infty}x_ip(x)dx_i</script><p>其中，$p(x_i)$为边缘分布</p>
+<script type="math/tex; mode=display">
+p(x_i)=\int_{-\infty}^{\infty}...\int_{-\infty}^{\infty}p(x)dx_1dx_2...dx_{x-1}dx_{i+1}...dx_d</script><p>而</p>
+<script type="math/tex; mode=display">
+\begin{equation} 
+\begin{split} 
+\sigma_{ij}&=E[(x_i-\mu_i)(x_j-\mu_j)] \\
+&=\int_{-\infty}^{\infty}...\int_{-\infty}^{\infty}(x_i-\mu_i)(x_j-\mu_j)p(x_i,x_j)dx_idx_j
+\end{split} 
+\end{equation}</script><p>协方差矩阵总是正定or半正定的矩阵，可以表示为</p>
+<script type="math/tex; mode=display">\Sigma = 
+\left[\begin{matrix}
+\sigma_{11} & \sigma_{12} & \dots & \sigma_{1d} \\ 
+\sigma_{21} & \sigma_{22} & \dots & \sigma_{2d} \\ 
+\vdots & \vdots & \ddots & \vdots \\ 
+\sigma_{2d} & \sigma_{2d} & \dots & \sigma_{dd} \\ 
+\end{matrix}\right]</script><h2 id="多元分布性质"><a href="#多元分布性质" class="headerlink" title="多元分布性质"></a>多元分布性质</h2><p>多元正态分布被均值向量$\mu$和协方差矩阵$\Sigma$所完全决定。</p>
+<script type="math/tex; mode=display">
+p(x)\sim N(\mu,\Sigma)</script><p>等密度点的轨迹为以超椭球面，区域中心由均值向量$\mu$决定，区域的大小由协方差矩阵$\Sigma$决定。当指数项为常数时，构成等密度点：</p>
+<script type="math/tex; mode=display">
+(x-\mu)^T\Sigma^{-1}(x-\mu)=C</script><p>该式子的解是一个超椭球面，且它的主轴方向由$\Sigma$阵的特征向量决定，主轴长度与相应的协方差矩阵$\Sigma$的特征值成正比。</p>
+<script type="math/tex; mode=display">
+\gamma^2=(x-\mu)^T\Sigma^{-1}(x-\mu)</script><p>称为由$x$到$\mu$的Mahalanobis距离（马氏距离）的平方，对应于Mahalanobis距离为$\gamma$的超椭圆球体积是</p>
+<script type="math/tex; mode=display">
+V=V_d|\Sigma|^{\frac{1}{2}}\gamma^d</script><p>其中$V_d$是$d$维单位超球体的体积，</p>
+<script type="math/tex; mode=display">
+V_d= 
+\begin{equation} 
+\left\{ 
+\begin{array}{lc} 
+\frac{\pi^{d/2}}{\left( \frac{d}{2} \right)!} & d为偶数\\
+\frac{2^d\pi^{(d-1)/2}\left( \frac{d-1}{2} \right)!}{d!} & d为奇数
+\end{array} 
+\right. 
+\end{equation}</script><p>对于给定的维数，样本离散度直接随$|\Sigma|^{1/2}$而变。</p>
+<h2 id="不相关性-独立性"><a href="#不相关性-独立性" class="headerlink" title="不相关性=独立性"></a>不相关性=独立性</h2><ul>
+<li>不相关：$E\{x_ix_j\}=E\{x_i\}E\{x-j\}$</li>
+<li>独立的：$p\{x_ix_j\}=p\{x_i\}p\{x_j\}$</li>
+</ul>
+<p>独立性比不相关性条件更强，而在多元正态分布中，两者等价。在正态分布中，变量互不相关，则一定独立。</p>
+<p>推论：如果多元正态随机向量的协方差矩阵是对角阵，则x的分量是相互独立的正态分布随机变量。</p>
+<h2 id="边缘分布和条件分布的正态性"><a href="#边缘分布和条件分布的正态性" class="headerlink" title="边缘分布和条件分布的正态性"></a>边缘分布和条件分布的正态性</h2><p>以二元正态分布为例，</p>
+<ul>
+<li>向量$x=[x_1,x_2]^T$</li>
+<li>均值$\mu=[\mu_1,\mu_2]^T$</li>
+<li>协方差矩阵$\Sigma=\left[\begin{matrix}\sigma_{11}^2&amp;\sigma_{12}^2\\\sigma_{21}^2&amp;\sigma_{22}^2\end{matrix}\right]$</li>
+</ul>
+<script type="math/tex; mode=display">
+p(x_1)\sim N(\mu_1,\sigma_{11}^2) \\
+p(x_2)\sim N(\mu_1,\sigma_{22}^2)</script><h2 id="线性变换的正态性"><a href="#线性变换的正态性" class="headerlink" title="线性变换的正态性"></a>线性变换的正态性</h2><p>对于多元正态随机变量$x$，无论是线性变化$y=Ax$还是线性组合$y=\alpha^Tx$，正态分布依然是正态分布。</p>
+<script type="math/tex; mode=display">
+p(y)\sim N(A\mu,A\Sigma A^T)
+p(y)\sim N(\alpha^T\mu,\alpha^T\Sigma\alpha)</script>]]></content>
+      <categories>
+        <category>数学</category>
+      </categories>
+      <tags>
+        <tag>数学</tag>
       </tags>
   </entry>
   <entry>
@@ -1112,6 +1112,81 @@ p(\hat{x}|X)=\int_{\theta\in\Theta}p(\hat{x}|\theta)p(\theta|X)d\theta=\int_{\th
       </tags>
   </entry>
   <entry>
+    <title>getting started ros</title>
+    <url>/2019/30.ros/</url>
+    <content><![CDATA[<p>ROS之前看过一遍，但是过于复杂，我就很快忘记了；现在重新梳理一遍。<br><span class="exturl" data-url="aHR0cDovL3dpa2kucm9zLm9yZy9jbi9ST1MvVHV0b3JpYWxz">http://wiki.ros.org/cn/ROS/Tutorials<i class="fa fa-external-link-alt"></i></span></p>
+<a id="more"></a>
+<h1 id="Tutorials"><a href="#Tutorials" class="headerlink" title="Tutorials"></a><span class="exturl" data-url="aHR0cDovL3dpa2kucm9zLm9yZy9jbi9ST1MvVHV0b3JpYWxz">Tutorials<i class="fa fa-external-link-alt"></i></span></h1><p>官方良心教程</p>
+<h1 id="catkin-overview"><a href="#catkin-overview" class="headerlink" title="catkin overview"></a><span class="exturl" data-url="aHR0cDovL3dpa2kucm9zLm9yZy9jYXRraW4=">catkin<i class="fa fa-external-link-alt"></i></span> <span class="exturl" data-url="aHR0cDovL3dpa2kucm9zLm9yZy9jYXRraW4vY29uY2VwdHVhbF9vdmVydmlldw==">overview<i class="fa fa-external-link-alt"></i></span></h1><p>Catkin has the following dependencies: <span class="exturl" data-url="aHR0cDovL2NtYWtlLm9yZy8=">CMake<i class="fa fa-external-link-alt"></i></span>、<span class="exturl" data-url="aHR0cDovL3B5dGhvbi5vcmcv">Pythn<i class="fa fa-external-link-alt"></i></span>(2.7)、<span class="exturl" data-url="aHR0cDovL3d3dy5yb3Mub3JnL3dpa2kvY2F0a2luX3BrZw==">catkin_pkg<i class="fa fa-external-link-alt"></i></span>、<span class="exturl" data-url="aHR0cDovL3d3dy5hbGN5b25lLmNvbS9weW9zL2VtcHkv">empy<i class="fa fa-external-link-alt"></i></span>、<span class="exturl" data-url="aHR0cHM6Ly9ub3NlLnJlYWR0aGVkb2NzLm9yZy9lbi9sYXRlc3Qv">nose<i class="fa fa-external-link-alt"></i></span>、<span class="exturl" data-url="aHR0cDovL2NvZGUuZ29vZ2xlLmNvbS9wL2dvb2dsZXRlc3Qv">GTest<i class="fa fa-external-link-alt"></i></span>、<span class="exturl" data-url="aHR0cDovL2djYy5nbnUub3JnLw==">g++<i class="fa fa-external-link-alt"></i></span></p>
+<h2 id="catkin-document"><a href="#catkin-document" class="headerlink" title="catkin document"></a><span class="exturl" data-url="aHR0cDovL2RvY3Mucm9zLm9yZy9hcGkvY2F0a2luL2h0bWwv">catkin document<i class="fa fa-external-link-alt"></i></span></h2><p><span class="exturl" data-url="aHR0cHM6Ly9kb2NzLnJvcy5vcmcvbWVsb2RpYy9hcGkvY2F0a2luL2h0bWwvaG93dG8vZm9ybWF0Mi9jYXRraW5fbGlicmFyeV9kZXBlbmRlbmNpZXMuaHRtbA==">C++ catkin library dependencies<i class="fa fa-external-link-alt"></i></span><br><span class="exturl" data-url="aHR0cDovL3dpa2kucm9zLm9yZy9jYXRraW4vcGFja2FnZS54bWw=">caktin for package<i class="fa fa-external-link-alt"></i></span></p>
+<h2 id="catkin-command"><a href="#catkin-command" class="headerlink" title="catkin command"></a><span class="exturl" data-url="aHR0cDovL3dpa2kucm9zLm9yZy9jYXRraW4vY29tbWFuZHM=">catkin command<i class="fa fa-external-link-alt"></i></span></h2><p><span class="exturl" data-url="aHR0cDovL3dpa2kucm9zLm9yZy9jYXRraW4vY29tbWFuZHMvY2F0a2luX2NyZWF0ZV9wa2c=">catkin_create_pkg<i class="fa fa-external-link-alt"></i></span><br><span class="exturl" data-url="aHR0cDovL3dpa2kucm9zLm9yZy9jYXRraW4vY29tbWFuZHMvY2F0a2luX21ha2U=">catkin_make<i class="fa fa-external-link-alt"></i></span><br><span class="exturl" data-url="aHR0cDovL3dpa2kucm9zLm9yZy9jYXRraW4vY29tbWFuZHMvY2F0a2luX2luaXRfd29ya3NwYWNl">catkin_init_workspace<i class="fa fa-external-link-alt"></i></span></p>
+<h1 id="catkin-workspace"><a href="#catkin-workspace" class="headerlink" title="catkin workspace"></a><span class="exturl" data-url="aHR0cDovL3dpa2kucm9zLm9yZy9jYXRraW4vd29ya3NwYWNlcw==">catkin workspace<i class="fa fa-external-link-alt"></i></span></h1><p>catkin workspace是一套规范：Source Space、Build Space、Development (Devel) Space、Install Space、Result space</p>
+<h2 id="REP-128"><a href="#REP-128" class="headerlink" title="REP-128"></a><span class="exturl" data-url="aHR0cDovL3d3dy5yb3Mub3JnL3JlcHMvcmVwLTAxMjguaHRtbA==">REP-128<i class="fa fa-external-link-alt"></i></span></h2><p>REP-128是catkin workspace的一套命名约定。</p>
+<h1 id="ros-package"><a href="#ros-package" class="headerlink" title="ros package"></a><span class="exturl" data-url="aHR0cDovL3dpa2kucm9zLm9yZy9jYXRraW4vcGFja2FnZS54bWw=">ros package<i class="fa fa-external-link-alt"></i></span></h1><p>创建程序包：<span class="exturl" data-url="aHR0cDovL3dpa2kucm9zLm9yZy9jYXRraW4vVHV0b3JpYWxzL0NyZWF0aW5nUGFja2FnZQ==">catkin_create_pkg<i class="fa fa-external-link-alt"></i></span>，程序包存在依赖关系。<br>编译程序包：<code>source devel/setup.bash</code>，ref：<span class="exturl" data-url="aHR0cDovL3dpa2kucm9zLm9yZy9jbi9ST1MvVHV0b3JpYWxzL0luc3RhbGxpbmdhbmRDb25maWd1cmluZ1JPU0Vudmlyb25tZW50">安装并配置ROS环境<i class="fa fa-external-link-alt"></i></span></p>
+<h2 id="手动创建"><a href="#手动创建" class="headerlink" title="手动创建"></a>手动创建</h2><h2 id="依赖管理rosdep"><a href="#依赖管理rosdep" class="headerlink" title="依赖管理rosdep"></a>依赖管理<span class="exturl" data-url="aHR0cDovL3dpa2kucm9zLm9yZy9jbi9ST1MvVHV0b3JpYWxzL3Jvc2RlcA==">rosdep<i class="fa fa-external-link-alt"></i></span></h2><h1 id="catkin-cmakelists"><a href="#catkin-cmakelists" class="headerlink" title="catkin cmakelists"></a><span class="exturl" data-url="aHR0cDovL3dpa2kucm9zLm9yZy9jYXRraW4vQ01ha2VMaXN0cy50eHQ=">catkin cmakelists<i class="fa fa-external-link-alt"></i></span></h1><p>详细的cmake规则说明↑</p>
+<h2 id="REP-127"><a href="#REP-127" class="headerlink" title="REP-127"></a><span class="exturl" data-url="aHR0cDovL3d3dy5yb3Mub3JnL3JlcHMvcmVwLTAxMjcuaHRtbA==">REP-127<i class="fa fa-external-link-alt"></i></span></h2><p>package.xml定义在REP127</p>
+<h2 id="REP-140"><a href="#REP-140" class="headerlink" title="REP-140"></a><span class="exturl" data-url="aHR0cDovL3d3dy5yb3Mub3JnL3JlcHMvcmVwLTAxNDAuaHRtbA==">REP-140<i class="fa fa-external-link-alt"></i></span></h2><p>REP-140是catkin package的一套命名约定。</p>
+<h1 id="graph-resource-name"><a href="#graph-resource-name" class="headerlink" title="graph resource name"></a><span class="exturl" data-url="aHR0cDovL3dpa2kucm9zLm9yZy9OYW1lcw==">graph resource name<i class="fa fa-external-link-alt"></i></span></h1><p>Graph Resource Names are an important mechanism in ROS for providing encapsulation。 </p>
+<h2 id="http-wiki-ros-org-msg"><a href="#http-wiki-ros-org-msg" class="headerlink" title="http://wiki.ros.org/msg"></a><span class="exturl" data-url="aHR0cDovL3dpa2kucm9zLm9yZy9tc2c=">http://wiki.ros.org/msg<i class="fa fa-external-link-alt"></i></span></h2><p><span class="exturl" data-url="aHR0cDovL3dpa2kucm9zLm9yZy9ST1MvTWVzc2FnZV9EZXNjcmlwdGlvbl9MYW5ndWFnZQ==">message description language<i class="fa fa-external-link-alt"></i></span></p>
+<h2 id="http-wiki-ros-org-Nodes"><a href="#http-wiki-ros-org-Nodes" class="headerlink" title="http://wiki.ros.org/Nodes"></a><span class="exturl" data-url="aHR0cDovL3dpa2kucm9zLm9yZy9Ob2Rlcw==">http://wiki.ros.org/Nodes<i class="fa fa-external-link-alt"></i></span></h2><p><span class="exturl" data-url="aHR0cDovL3dpa2kucm9zLm9yZy9jbi9ST1MvVHV0b3JpYWxzL1dyaXRpbmdQdWJsaXNoZXJTdWJzY3JpYmVy">publisher &amp; subscriber<i class="fa fa-external-link-alt"></i></span></p>
+<h2 id="http-wiki-ros-org-srv"><a href="#http-wiki-ros-org-srv" class="headerlink" title="http://wiki.ros.org/srv"></a><span class="exturl" data-url="aHR0cDovL3dpa2kucm9zLm9yZy9zcnY=">http://wiki.ros.org/srv<i class="fa fa-external-link-alt"></i></span></h2><p><span class="exturl" data-url="aHR0cDovL3dpa2kucm9zLm9yZy9jbi9ST1MvVHV0b3JpYWxzL1dyaXRpbmdTZXJ2aWNlQ2xpZW50">server &amp; client Tutorials<i class="fa fa-external-link-alt"></i></span></p>
+<h2 id="faq"><a href="#faq" class="headerlink" title="faq"></a>faq</h2><p><span class="exturl" data-url="aHR0cDovL3dpa2kucm9zLm9yZy9jbi9ST1MvVHV0b3JpYWxzL0NyZWF0aW5nTXNnQW5kU3J2">Common step for msg and srv.<i class="fa fa-external-link-alt"></i></span>，该step有小问题，主要是因为：<br><span class="exturl" data-url="aHR0cDovL3dpa2kucm9zLm9yZy9jYXRraW4vcGFja2FnZS54bWwjRm9ybWF0XzJfLjI4UmVjb21tZW5kZWQuMjk=">package format<i class="fa fa-external-link-alt"></i></span>，参考<span class="exturl" data-url="aHR0cHM6Ly9kb2NzLnJvcy5vcmcvbWVsb2RpYy9hcGkvY2F0a2luL2h0bWwvaG93dG8vZm9ybWF0Mi9taWdyYXRpbmdfZnJvbV9mb3JtYXRfMS5odG1sI21pZ3JhdGluZy1mcm9tLWZvcm1hdDEtdG8tZm9ybWF0Mg==">format1迁移format2<i class="fa fa-external-link-alt"></i></span></p>
+<p><span class="exturl" data-url="aHR0cDovL3dpa2kucm9zLm9yZy9yb3NjcHBfdHV0b3JpYWxzL1R1dG9yaWFscy9Vc2luZ0NsYXNzTWV0aG9kc0FzQ2FsbGJhY2tz">using class Methods as callback<i class="fa fa-external-link-alt"></i></span></p>
+<h2 id="py文件需要对它chmod-x-py-变为可执行才能run"><a href="#py文件需要对它chmod-x-py-变为可执行才能run" class="headerlink" title=".py文件需要对它chmod +x *.py 变为可执行才能run"></a>.py文件需要对它chmod +x *.py 变为可执行才能run</h2><h1 id="understand-ros-topic"><a href="#understand-ros-topic" class="headerlink" title="understand ros topic"></a><span class="exturl" data-url="aHR0cDovL3dpa2kucm9zLm9yZy9jbi9ST1MvVHV0b3JpYWxzL1VuZGVyc3RhbmRpbmdUb3BpY3M=">understand<i class="fa fa-external-link-alt"></i></span> <span class="exturl" data-url="aHR0cDovL3dpa2kucm9zLm9yZy9yb3N0b3BpYw==">ros topic<i class="fa fa-external-link-alt"></i></span></h1><p>节点之间是通过ROS话题来互相通信的。node在一个topic上发布（publish）msg，而其他node则订阅（subscribe）该topic以接收该msg.<br>进阶：<span class="exturl" data-url="aHR0cDovL3dpa2kucm9zLm9yZy9yb3NweS9PdmVydmlldy9QdWJsaXNoZXJzJTIwYW5kJTIwU3Vic2NyaWJlcnMjcm9zcHkuUHVibGlzaGVyX2luaXRpYWxpemF0aW9u">http://wiki.ros.org/rospy/Overview/Publishers%20and%20Subscribers#rospy.Publisher_initialization<i class="fa fa-external-link-alt"></i></span></p>
+<h2 id="rqt-graph"><a href="#rqt-graph" class="headerlink" title="rqt_graph"></a><span class="exturl" data-url="aHR0cDovL3dpa2kucm9zLm9yZy9ycXRfZ3JhcGg=">rqt_graph<i class="fa fa-external-link-alt"></i></span></h2><p>一个几乎没啥功能的图形化界面，显示框图、线条的粗细颜色表示通信数据流量和延迟。可以保存各种图片格式，便于梳理机器人代码结构。</p>
+<h2 id="rxplot"><a href="#rxplot" class="headerlink" title="rxplot"></a><span class="exturl" data-url="aHR0cDovL3dpa2kucm9zLm9yZy9yeHBsb3Q=">rxplot<i class="fa fa-external-link-alt"></i></span></h2><p>一个plot UI，可以显示波形，和rqt_graph差不多。</p>
+<h1 id="ros-service"><a href="#ros-service" class="headerlink" title="ros service"></a><span class="exturl" data-url="aHR0cDovL3dpa2kucm9zLm9yZy9jbi9ST1MvVHV0b3JpYWxzL1VuZGVyc3RhbmRpbmdTZXJ2aWNlc1BhcmFtcw==">ros service<i class="fa fa-external-link-alt"></i></span></h1><p>服务（services）是节点之间通讯的另一种方式。服务允许节点发送请求（request） 并获得一个响应（response）.</p>
+<h2 id="using-rosparam"><a href="#using-rosparam" class="headerlink" title="using rosparam"></a>using rosparam</h2><p>rosparam使得我们能够存储并操作ROS 参数服务器（Parameter Server）上的数据。参数服务器能够存储整型、浮点、布尔、字符串、字典和列表等数据类型。rosparam使用YAML标记语言的语法。</p>
+<h1 id="actionlib"><a href="#actionlib" class="headerlink" title="actionlib"></a><span class="exturl" data-url="aHR0cDovL3dpa2kucm9zLm9yZy9hY3Rpb25saWI=">actionlib<i class="fa fa-external-link-alt"></i></span></h1><p>actionlib就是带feedback的srv，but基于msg，原理描述：<span class="exturl" data-url="aHR0cDovL3dpa2kucm9zLm9yZy9hY3Rpb25saWIvRGV0YWlsZWREZXNjcmlwdGlvbg==">http://wiki.ros.org/actionlib/DetailedDescription<i class="fa fa-external-link-alt"></i></span></p>
+<h1 id="ros-console"><a href="#ros-console" class="headerlink" title="ros console"></a><span class="exturl" data-url="aHR0cDovL3dpa2kucm9zLm9yZy9yb3Njb25zb2xl">ros console<i class="fa fa-external-link-alt"></i></span></h1><p>编写node、server、client，API，such as ROS_INFO：<span class="exturl" data-url="aHR0cDovL3dpa2kucm9zLm9yZy9yb3NjcHBfdHV0b3JpYWxz">http://wiki.ros.org/roscpp_tutorials<i class="fa fa-external-link-alt"></i></span><br><span class="exturl" data-url="aHR0cDovL3dpa2kucm9zLm9yZy9yb3NjcHBfdHV0b3JpYWxzL1R1dG9yaWFscy9Xcml0aW5nUHVibGlzaGVyU3Vic2NyaWJlcg==">Writing a Simple Publisher and Subscriber<i class="fa fa-external-link-alt"></i></span><br><span class="exturl" data-url="aHR0cDovL3dpa2kucm9zLm9yZy9yb3NjcHBfdHV0b3JpYWxzL1R1dG9yaWFscy9Xcml0aW5nU2VydmljZUNsaWVudA==">Writing a Simple Service and Client<i class="fa fa-external-link-alt"></i></span><br><span class="exturl" data-url="aHR0cDovL3dpa2kucm9zLm9yZy9yb3NjcHBfdHV0b3JpYWxzL1R1dG9yaWFscy9QYXJhbWV0ZXJz">Using Parameters in roscpp<i class="fa fa-external-link-alt"></i></span><br><span class="exturl" data-url="aHR0cDovL3dpa2kucm9zLm9yZy9yb3NjcHBfdHV0b3JpYWxzL1R1dG9yaWFscy9BY2Nlc3NpbmdQcml2YXRlTmFtZXNXaXRoTm9kZUhhbmRsZQ==">Accessing Private Names from a NodeHandle<i class="fa fa-external-link-alt"></i></span><br><span class="exturl" data-url="aHR0cDovL3dpa2kucm9zLm9yZy9yb3NjcHBfdHV0b3JpYWxzL1R1dG9yaWFscy9Vc2luZ0NsYXNzTWV0aG9kc0FzQ2FsbGJhY2tz">Using Class Methods as Callbacks<i class="fa fa-external-link-alt"></i></span><br><span class="exturl" data-url="aHR0cDovL3dpa2kucm9zLm9yZy9yb3NjcHBfdHV0b3JpYWxzL1R1dG9yaWFscy9UaW1lcnM=">Understanding Timers<i class="fa fa-external-link-alt"></i></span><br><span class="exturl" data-url="aHR0cDovL3dpa2kucm9zLm9yZy9yb3NjcHBfdHV0b3JpYWxzL1R1dG9yaWFscy9QdWJsaXNoZXIlMjBhbmQlMjBTdWJzY3JpYmVyJTIwd2l0aCUyMFBhcmFtZXRlcnMlMjBhbmQlMjBEeW5hbWljJTIwUmVjb25maWd1cmU=">Dynamic Reconfigure<i class="fa fa-external-link-alt"></i></span><br><span class="exturl" data-url="aHR0cDovL3dpa2kucm9zLm9yZy9DbG9jaw==">clock<i class="fa fa-external-link-alt"></i></span></p>
+<h1 id="ros-launch"><a href="#ros-launch" class="headerlink" title="ros launch"></a><span class="exturl" data-url="aHR0cDovL3dpa2kucm9zLm9yZy9yb3NsYXVuY2g=">ros launch<i class="fa fa-external-link-alt"></i></span></h1><p>ros launch可以启动多个node，有固定文件写法。<br>进阶：<span class="exturl" data-url="aHR0cDovL3dpa2kucm9zLm9yZy9jbi9ST1MvVHV0b3JpYWxzL1Jvc2xhdW5jaCUyMHRpcHMlMjBmb3IlMjBsYXJnZXIlMjBwcm9qZWN0cw==">http://wiki.ros.org/cn/ROS/Tutorials/Roslaunch%20tips%20for%20larger%20projects<i class="fa fa-external-link-alt"></i></span></p>
+<h1 id="ros-bash"><a href="#ros-bash" class="headerlink" title="ros bash"></a><span class="exturl" data-url="aHR0cDovL3dpa2kucm9zLm9yZy9yb3NiYXNo">ros bash<i class="fa fa-external-link-alt"></i></span></h1><p>这里是各种ROS的bash指令，参考<span class="exturl" data-url="aHR0cDovL3dpa2kucm9zLm9yZy9jbi9ST1MvVHV0b3JpYWxzL05hdmlnYXRpbmdUaGVGaWxlc3lzdGVt">ROS文件系统介绍<i class="fa fa-external-link-alt"></i></span><br>rosed 是 rosbash 的一部分。利用它可以直接通过package名来获取到待编辑的文件而无需指定该文件的存储路径了。</p>
+<h1 id="debugging"><a href="#debugging" class="headerlink" title="debugging"></a><span class="exturl" data-url="aHR0cDovL3dpa2kucm9zLm9yZy9jbi9ST1MvVHV0b3JpYWxzL1VzaW5nUnF0Y29uc29sZVJvc2xhdW5jaA==">debugging<i class="fa fa-external-link-alt"></i></span></h1><h2 id="ros-record"><a href="#ros-record" class="headerlink" title="ros record"></a><span class="exturl" data-url="aHR0cDovL3dpa2kucm9zLm9yZy9jbi9ST1MvVHV0b3JpYWxzL1JlY29yZGluZw==">ros record<i class="fa fa-external-link-alt"></i></span></h2><h2 id="ros-wtf"><a href="#ros-wtf" class="headerlink" title="ros wtf"></a><span class="exturl" data-url="aHR0cDovL3dpa2kucm9zLm9yZy9yb3N3dGY=">ros wtf<i class="fa fa-external-link-alt"></i></span></h2><h2 id="rqt-console"><a href="#rqt-console" class="headerlink" title="rqt_console"></a><span class="exturl" data-url="aHR0cDovL3dpa2kucm9zLm9yZy9ycXRfY29uc29sZQ==">rqt_console<i class="fa fa-external-link-alt"></i></span></h2><p>rqt_console属于ROS日志框架(logging framework)的一部分，用来显示节点的输出信息。</p>
+<h2 id="rqt-logger-level"><a href="#rqt-logger-level" class="headerlink" title="rqt_logger_level"></a><span class="exturl" data-url="aHR0cDovL3dpa2kucm9zLm9yZy9ycXRfbG9nZ2VyX2xldmVs">rqt_logger_level<i class="fa fa-external-link-alt"></i></span></h2><p>rqt_logger_level允许我们修改节点运行时输出信息的日志等级（logger levels）（包括 DEBUG、WARN、INFO和ERROR）。</p>
+<h1 id="master-and-newwork"><a href="#master-and-newwork" class="headerlink" title="master and newwork"></a>master and newwork</h1><h2 id="ros-core"><a href="#ros-core" class="headerlink" title="ros core"></a>ros core</h2><p>如果 roscore 运行后无法正常初始化，很有可能是存在网络配置问题。<br>如果 roscore 不能初始化并提示缺少权限，这可能是因为~/.ros文件夹归属于root</p>
+<p>运行类似于rosnode的指令时出现一些问题,也许是环境变量的影响。</p>
+<h2 id="ros-out"><a href="#ros-out" class="headerlink" title="ros out"></a><span class="exturl" data-url="aHR0cDovL3dpa2kucm9zLm9yZy9yb3NvdXQ=">ros out<i class="fa fa-external-link-alt"></i></span></h2><h2 id="network-setup"><a href="#network-setup" class="headerlink" title="network setup"></a><span class="exturl" data-url="aHR0cDovL3dpa2kucm9zLm9yZy9ST1MvTmV0d29ya1NldHVwI1NpbmdsZV9tYWNoaW5lX2NvbmZpZ3VyYXRpb24=">network setup<i class="fa fa-external-link-alt"></i></span></h2><h2 id="multiple-machines"><a href="#multiple-machines" class="headerlink" title="multiple machines"></a><span class="exturl" data-url="aHR0cDovL3dpa2kucm9zLm9yZy9jbi9ST1MvVHV0b3JpYWxzL011bHRpcGxlTWFjaGluZXM=">multiple machines<i class="fa fa-external-link-alt"></i></span></h2><h1 id="ros-tf-Introduction"><a href="#ros-tf-Introduction" class="headerlink" title="ros tf Introduction"></a><span class="exturl" data-url="aHR0cDovL3dpa2kucm9zLm9yZy90Zg==">ros tf<i class="fa fa-external-link-alt"></i></span> <span class="exturl" data-url="aHR0cDovL3dpa2kucm9zLm9yZy90Zi9UdXRvcmlhbHMvSW50cm9kdWN0aW9uJTIwdG8lMjB0Zg==">Introduction<i class="fa fa-external-link-alt"></i></span></h1><p><span class="exturl" data-url="aHR0cDovL3dpa2kucm9zLm9yZy90Zi9UdXRvcmlhbHM=">TF Tutorials<i class="fa fa-external-link-alt"></i></span></p>
+<h2 id="tf-API"><a href="#tf-API" class="headerlink" title="tf API"></a>tf API</h2><p>数据类型：<span class="exturl" data-url="aHR0cDovL3dpa2kucm9zLm9yZy90Zi9PdmVydmlldy9EYXRhJTIwVHlwZXM=">http://wiki.ros.org/tf/Overview/Data%20Types<i class="fa fa-external-link-alt"></i></span><br>变换与参考系：<span class="exturl" data-url="aHR0cDovL3dpa2kucm9zLm9yZy90Zi9PdmVydmlldy9UcmFuc2Zvcm1hdGlvbnM=">http://wiki.ros.org/tf/Overview/Transformations<i class="fa fa-external-link-alt"></i></span><br>发布tf变换广播：<span class="exturl" data-url="aHR0cDovL3dpa2kucm9zLm9yZy90Zi9PdmVydmlldy9Ccm9hZGNhc3RpbmclMjBUcmFuc2Zvcm1z">http://wiki.ros.org/tf/Overview/Broadcasting%20Transforms<i class="fa fa-external-link-alt"></i></span><br>接收并使用tf广播：<span class="exturl" data-url="aHR0cDovL3dpa2kucm9zLm9yZy90Zi9PdmVydmlldy9Vc2luZyUyMFB1Ymxpc2hlZCUyMFRyYW5zZm9ybXM=">http://wiki.ros.org/tf/Overview/Using%20Published%20Transforms<i class="fa fa-external-link-alt"></i></span><br>异常：<span class="exturl" data-url="aHR0cDovL3dpa2kucm9zLm9yZy90Zi9PdmVydmlldy9FeGNlcHRpb25z">http://wiki.ros.org/tf/Overview/Exceptions<i class="fa fa-external-link-alt"></i></span></p>
+<h2 id="tf-monitor"><a href="#tf-monitor" class="headerlink" title="tf_monitor"></a>tf_monitor</h2><h2 id="tf-echo"><a href="#tf-echo" class="headerlink" title="tf_echo"></a>tf_echo</h2><h2 id="static-transform-publisher"><a href="#static-transform-publisher" class="headerlink" title="static_transform_publisher"></a>static_transform_publisher</h2><h2 id="view-frames"><a href="#view-frames" class="headerlink" title="view_frames"></a>view_frames</h2><p><span class="exturl" data-url="aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3poYW5naG0xOTk1L2FydGljbGUvZGV0YWlscy84NDY0NDk4NA==">详解tf<i class="fa fa-external-link-alt"></i></span></p>
+<h1 id="ros-navigation"><a href="#ros-navigation" class="headerlink" title="ros navigation"></a><span class="exturl" data-url="aHR0cDovL3dpa2kucm9zLm9yZy9uYXZpZ2F0aW9u">ros navigation<i class="fa fa-external-link-alt"></i></span></h1><p>frist：sudo apt-get install ros-kinetic-navigation<br>tutorial：<span class="exturl" data-url="aHR0cHM6Ly93d3cubmNueW5sLmNvbS9jYXRlZ29yeS9yb3MtbmF2aWdhdGlvbi8=">https://www.ncnynl.com/category/ros-navigation/<i class="fa fa-external-link-alt"></i></span></p>
+<p><span class="exturl" data-url="aHR0cHM6Ly93d3cucm9zLm9yZy9yZXBzL3JlcC0wMTA1Lmh0bWw=">https://www.ros.org/reps/rep-0105.html<i class="fa fa-external-link-alt"></i></span></p>
+<p>map：<span class="exturl" data-url="aHR0cDovL3dpa2kucm9zLm9yZy9tYXBfc2VydmVyP2Rpc3Rybz1raW5ldGlj">http://wiki.ros.org/map_server?distro=kinetic<i class="fa fa-external-link-alt"></i></span><br><span class="exturl" data-url="aHR0cDovL3dpa2kucm9zLm9yZy9nbG9iYWxfcGxhbm5lcj9kaXN0cm89a2luZXRpYw==">http://wiki.ros.org/global_planner?distro=kinetic<i class="fa fa-external-link-alt"></i></span><br><span class="exturl" data-url="aHR0cDovL3dpa2kucm9zLm9yZy9tb3ZlX2Jhc2U/ZGlzdHJvPWtpbmV0aWM=">http://wiki.ros.org/move_base?distro=kinetic<i class="fa fa-external-link-alt"></i></span><br><span class="exturl" data-url="aHR0cDovL3dpa2kucm9zLm9yZy9uYXZfY29yZT9kaXN0cm89a2luZXRpYw==">http://wiki.ros.org/nav_core?distro=kinetic<i class="fa fa-external-link-alt"></i></span></p>
+<h1 id="rviz-user-guide"><a href="#rviz-user-guide" class="headerlink" title="rviz user guide"></a><span class="exturl" data-url="aHR0cDovL3dpa2kucm9zLm9yZy9ydml6">rviz<i class="fa fa-external-link-alt"></i></span> <span class="exturl" data-url="aHR0cDovL3dpa2kucm9zLm9yZy9ydml6L1VzZXJHdWlkZQ==">user guide<i class="fa fa-external-link-alt"></i></span></h1><p><span class="exturl" data-url="aHR0cDovL3dpa2kucm9zLm9yZy9ydml6L0Rpc3BsYXlUeXBlcy9NYXJrZXI=">http://wiki.ros.org/rviz/DisplayTypes/Marker<i class="fa fa-external-link-alt"></i></span><br><span class="exturl" data-url="aHR0cDovL2RvY3Mucm9zLm9yZy9hcGkvdmlzdWFsaXphdGlvbl9tc2dzL2h0bWwvbXNnL01hcmtlci5odG1s">http://docs.ros.org/api/visualization_msgs/html/msg/Marker.html<i class="fa fa-external-link-alt"></i></span><br><span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL1BpY2tOaWtSb2JvdGljcy9ydml6X3Zpc3VhbF90b29scw==">https://github.com/PickNikRobotics/rviz_visual_tools<i class="fa fa-external-link-alt"></i></span></p>
+<h1 id="gazebo"><a href="#gazebo" class="headerlink" title="gazebo"></a><span class="exturl" data-url="aHR0cDovL2dhemVib3NpbS5vcmcv">gazebo<i class="fa fa-external-link-alt"></i></span></h1><h1 id="v-rep"><a href="#v-rep" class="headerlink" title="v-rep"></a><span class="exturl" data-url="aHR0cDovL3d3dy5jb3BwZWxpYXJvYm90aWNzLmNvbS9oZWxwRmlsZXMvaW5kZXguaHRtbA==">v-rep<i class="fa fa-external-link-alt"></i></span></h1><h1 id="simulator"><a href="#simulator" class="headerlink" title="simulator"></a>simulator</h1><p>rviz是三维可视化工具，强调把已有的数据可视化显示；<br>gazebo是三维物理仿真平台，强调的是创建一个虚拟的仿真环境。<span class="exturl" data-url="aHR0cDovL2dhemVib3NpbS5vcmcv">http://gazebosim.org/<i class="fa fa-external-link-alt"></i></span></p>
+<p>used ML for simulator <span class="exturl" data-url="aHR0cDovL3d3dy5tdWpvY28ub3JnLw==">http://www.mujoco.org/<i class="fa fa-external-link-alt"></i></span> </p>
+]]></content>
+      <categories>
+        <category>机器人</category>
+      </categories>
+      <tags>
+        <tag>ROS</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>ROS通信解析</title>
+    <url>/2019/32.ros%20tcp/</url>
+    <content><![CDATA[<p>了解ROS的几种通信方式以后，对于ROS通信延迟有一些困惑，更多的是想追究背后原理，这篇博客《<span class="exturl" data-url="aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L1pYUUhCRC9hcnRpY2xlL2RldGFpbHMvNzI4NDY4NjU=">ROS之topic和service通信比较<i class="fa fa-external-link-alt"></i></span>》起到了抛砖引玉的作用。</p>
+<p>更多可以参考2013年的这一篇论文《<span class="exturl" data-url="aHR0cHM6Ly93d3cucG9saXRlc2kucG9saW1pLml0L2JpdHN0cmVhbS8xMDU4OS83ODUwMi8xLzIwMTNfMDRfWm9wcGkuUERG">A lightweight Opensource communication framework for native integration of resource constrained robotics devices with ROS<i class="fa fa-external-link-alt"></i></span>》，目前网上关于ROS通信模型的中文资料大部分都是对这篇文章的翻译。</p>
+<a id="more"></a>
+<h1 id="先上结论"><a href="#先上结论" class="headerlink" title="先上结论"></a>先上结论</h1><h2 id="Topic（异步）"><a href="#Topic（异步）" class="headerlink" title="Topic（异步）"></a>Topic（异步）</h2><p>topic基于ros tcp/udp，pub/sub通信延迟大约0.7ms，但是ros::spin()是忙等待，对于异步架构，回调函数的执行频率设计对系统整体性能影响很大，node不宜过多。</p>
+<h2 id="Service（同步）"><a href="#Service（同步）" class="headerlink" title="Service（同步）"></a>Service（同步）</h2><p>server基于RPC，它在接收到调用请求前都处于休眠状态；将休眠状态的server唤醒，所需要的时间大约是2.7ms，约占总通信延迟的82%，实际传输延迟大于0.3ms，只有topic的一半。server唤醒耗时太大，不建议用于通讯频率高的情况。</p>
+<p>Client维护着一个与server的持久连接(persistent connection)，在单纯的数据传输上可以做到更快，尤其是在分布式作业。</p>
+<h1 id="阻塞非阻塞与同步异步"><a href="#阻塞非阻塞与同步异步" class="headerlink" title="阻塞非阻塞与同步异步"></a>阻塞非阻塞与同步异步</h1><p><span class="exturl" data-url="aHR0cHM6Ly93d3cuemhpaHUuY29tL3F1ZXN0aW9uLzE5NzMyNDczL2Fuc3dlci8yMDg1MTI1Ng==">怎样理解阻塞非阻塞与同步异步的区别？ - 严肃的回答 - 知乎<i class="fa fa-external-link-alt"></i></span></p>
+<ul>
+<li>同步和异步关注的是消息通信机制 (synchronous communication/ asynchronous communication).</li>
+<li>阻塞和非阻塞关注的是程序在等待调用结果（消息，返回值）时的状态.</li>
+</ul>
+<p>在处理 IO 的时候，阻塞和非阻塞都是同步 IO。只有使用了特殊的 API 才是异步 IO。</p>
+<h2 id="异步消息的传递－回调机制"><a href="#异步消息的传递－回调机制" class="headerlink" title="异步消息的传递－回调机制"></a><span class="exturl" data-url="aHR0cHM6Ly93d3cuaWJtLmNvbS9kZXZlbG9wZXJ3b3Jrcy9jbi9saW51eC9sLWNhbGxiYWNrL2luZGV4Lmh0bWw=">异步消息的传递－回调机制<i class="fa fa-external-link-alt"></i></span></h2><p>目前的粗浅理解，异步通信总会带点儿callback。</p>
+]]></content>
+      <categories>
+        <category>编程</category>
+      </categories>
+      <tags>
+        <tag>工具链</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Particle Filter</title>
     <url>/2019/29.%E7%B2%92%E5%AD%90%E6%BB%A4%E6%B3%A2/</url>
     <content><![CDATA[<p>这篇文章数学公式推得有点儿长。。。。提前预警= =</p>
@@ -1228,81 +1303,6 @@ w_k^{(i)}
       </categories>
       <tags>
         <tag>SLAM</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>ROS通信解析</title>
-    <url>/2019/32.ros%20tcp/</url>
-    <content><![CDATA[<p>了解ROS的几种通信方式以后，对于ROS通信延迟有一些困惑，更多的是想追究背后原理，这篇博客《<span class="exturl" data-url="aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L1pYUUhCRC9hcnRpY2xlL2RldGFpbHMvNzI4NDY4NjU=">ROS之topic和service通信比较<i class="fa fa-external-link-alt"></i></span>》起到了抛砖引玉的作用。</p>
-<p>更多可以参考2013年的这一篇论文《<span class="exturl" data-url="aHR0cHM6Ly93d3cucG9saXRlc2kucG9saW1pLml0L2JpdHN0cmVhbS8xMDU4OS83ODUwMi8xLzIwMTNfMDRfWm9wcGkuUERG">A lightweight Opensource communication framework for native integration of resource constrained robotics devices with ROS<i class="fa fa-external-link-alt"></i></span>》，目前网上关于ROS通信模型的中文资料大部分都是对这篇文章的翻译。</p>
-<a id="more"></a>
-<h1 id="先上结论"><a href="#先上结论" class="headerlink" title="先上结论"></a>先上结论</h1><h2 id="Topic（异步）"><a href="#Topic（异步）" class="headerlink" title="Topic（异步）"></a>Topic（异步）</h2><p>topic基于ros tcp/udp，pub/sub通信延迟大约0.7ms，但是ros::spin()是忙等待，对于异步架构，回调函数的执行频率设计对系统整体性能影响很大，node不宜过多。</p>
-<h2 id="Service（同步）"><a href="#Service（同步）" class="headerlink" title="Service（同步）"></a>Service（同步）</h2><p>server基于RPC，它在接收到调用请求前都处于休眠状态；将休眠状态的server唤醒，所需要的时间大约是2.7ms，约占总通信延迟的82%，实际传输延迟大于0.3ms，只有topic的一半。server唤醒耗时太大，不建议用于通讯频率高的情况。</p>
-<p>Client维护着一个与server的持久连接(persistent connection)，在单纯的数据传输上可以做到更快，尤其是在分布式作业。</p>
-<h1 id="阻塞非阻塞与同步异步"><a href="#阻塞非阻塞与同步异步" class="headerlink" title="阻塞非阻塞与同步异步"></a>阻塞非阻塞与同步异步</h1><p><span class="exturl" data-url="aHR0cHM6Ly93d3cuemhpaHUuY29tL3F1ZXN0aW9uLzE5NzMyNDczL2Fuc3dlci8yMDg1MTI1Ng==">怎样理解阻塞非阻塞与同步异步的区别？ - 严肃的回答 - 知乎<i class="fa fa-external-link-alt"></i></span></p>
-<ul>
-<li>同步和异步关注的是消息通信机制 (synchronous communication/ asynchronous communication).</li>
-<li>阻塞和非阻塞关注的是程序在等待调用结果（消息，返回值）时的状态.</li>
-</ul>
-<p>在处理 IO 的时候，阻塞和非阻塞都是同步 IO。只有使用了特殊的 API 才是异步 IO。</p>
-<h2 id="异步消息的传递－回调机制"><a href="#异步消息的传递－回调机制" class="headerlink" title="异步消息的传递－回调机制"></a><span class="exturl" data-url="aHR0cHM6Ly93d3cuaWJtLmNvbS9kZXZlbG9wZXJ3b3Jrcy9jbi9saW51eC9sLWNhbGxiYWNrL2luZGV4Lmh0bWw=">异步消息的传递－回调机制<i class="fa fa-external-link-alt"></i></span></h2><p>目前的粗浅理解，异步通信总会带点儿callback。</p>
-]]></content>
-      <categories>
-        <category>编程</category>
-      </categories>
-      <tags>
-        <tag>工具链</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>getting started ros</title>
-    <url>/2019/30.ros/</url>
-    <content><![CDATA[<p>ROS之前看过一遍，但是过于复杂，我就很快忘记了；现在重新梳理一遍。<br><span class="exturl" data-url="aHR0cDovL3dpa2kucm9zLm9yZy9jbi9ST1MvVHV0b3JpYWxz">http://wiki.ros.org/cn/ROS/Tutorials<i class="fa fa-external-link-alt"></i></span></p>
-<a id="more"></a>
-<h1 id="Tutorials"><a href="#Tutorials" class="headerlink" title="Tutorials"></a><span class="exturl" data-url="aHR0cDovL3dpa2kucm9zLm9yZy9jbi9ST1MvVHV0b3JpYWxz">Tutorials<i class="fa fa-external-link-alt"></i></span></h1><p>官方良心教程</p>
-<h1 id="catkin-overview"><a href="#catkin-overview" class="headerlink" title="catkin overview"></a><span class="exturl" data-url="aHR0cDovL3dpa2kucm9zLm9yZy9jYXRraW4=">catkin<i class="fa fa-external-link-alt"></i></span> <span class="exturl" data-url="aHR0cDovL3dpa2kucm9zLm9yZy9jYXRraW4vY29uY2VwdHVhbF9vdmVydmlldw==">overview<i class="fa fa-external-link-alt"></i></span></h1><p>Catkin has the following dependencies: <span class="exturl" data-url="aHR0cDovL2NtYWtlLm9yZy8=">CMake<i class="fa fa-external-link-alt"></i></span>、<span class="exturl" data-url="aHR0cDovL3B5dGhvbi5vcmcv">Pythn<i class="fa fa-external-link-alt"></i></span>(2.7)、<span class="exturl" data-url="aHR0cDovL3d3dy5yb3Mub3JnL3dpa2kvY2F0a2luX3BrZw==">catkin_pkg<i class="fa fa-external-link-alt"></i></span>、<span class="exturl" data-url="aHR0cDovL3d3dy5hbGN5b25lLmNvbS9weW9zL2VtcHkv">empy<i class="fa fa-external-link-alt"></i></span>、<span class="exturl" data-url="aHR0cHM6Ly9ub3NlLnJlYWR0aGVkb2NzLm9yZy9lbi9sYXRlc3Qv">nose<i class="fa fa-external-link-alt"></i></span>、<span class="exturl" data-url="aHR0cDovL2NvZGUuZ29vZ2xlLmNvbS9wL2dvb2dsZXRlc3Qv">GTest<i class="fa fa-external-link-alt"></i></span>、<span class="exturl" data-url="aHR0cDovL2djYy5nbnUub3JnLw==">g++<i class="fa fa-external-link-alt"></i></span></p>
-<h2 id="catkin-document"><a href="#catkin-document" class="headerlink" title="catkin document"></a><span class="exturl" data-url="aHR0cDovL2RvY3Mucm9zLm9yZy9hcGkvY2F0a2luL2h0bWwv">catkin document<i class="fa fa-external-link-alt"></i></span></h2><p><span class="exturl" data-url="aHR0cHM6Ly9kb2NzLnJvcy5vcmcvbWVsb2RpYy9hcGkvY2F0a2luL2h0bWwvaG93dG8vZm9ybWF0Mi9jYXRraW5fbGlicmFyeV9kZXBlbmRlbmNpZXMuaHRtbA==">C++ catkin library dependencies<i class="fa fa-external-link-alt"></i></span><br><span class="exturl" data-url="aHR0cDovL3dpa2kucm9zLm9yZy9jYXRraW4vcGFja2FnZS54bWw=">caktin for package<i class="fa fa-external-link-alt"></i></span></p>
-<h2 id="catkin-command"><a href="#catkin-command" class="headerlink" title="catkin command"></a><span class="exturl" data-url="aHR0cDovL3dpa2kucm9zLm9yZy9jYXRraW4vY29tbWFuZHM=">catkin command<i class="fa fa-external-link-alt"></i></span></h2><p><span class="exturl" data-url="aHR0cDovL3dpa2kucm9zLm9yZy9jYXRraW4vY29tbWFuZHMvY2F0a2luX2NyZWF0ZV9wa2c=">catkin_create_pkg<i class="fa fa-external-link-alt"></i></span><br><span class="exturl" data-url="aHR0cDovL3dpa2kucm9zLm9yZy9jYXRraW4vY29tbWFuZHMvY2F0a2luX21ha2U=">catkin_make<i class="fa fa-external-link-alt"></i></span><br><span class="exturl" data-url="aHR0cDovL3dpa2kucm9zLm9yZy9jYXRraW4vY29tbWFuZHMvY2F0a2luX2luaXRfd29ya3NwYWNl">catkin_init_workspace<i class="fa fa-external-link-alt"></i></span></p>
-<h1 id="catkin-workspace"><a href="#catkin-workspace" class="headerlink" title="catkin workspace"></a><span class="exturl" data-url="aHR0cDovL3dpa2kucm9zLm9yZy9jYXRraW4vd29ya3NwYWNlcw==">catkin workspace<i class="fa fa-external-link-alt"></i></span></h1><p>catkin workspace是一套规范：Source Space、Build Space、Development (Devel) Space、Install Space、Result space</p>
-<h2 id="REP-128"><a href="#REP-128" class="headerlink" title="REP-128"></a><span class="exturl" data-url="aHR0cDovL3d3dy5yb3Mub3JnL3JlcHMvcmVwLTAxMjguaHRtbA==">REP-128<i class="fa fa-external-link-alt"></i></span></h2><p>REP-128是catkin workspace的一套命名约定。</p>
-<h1 id="ros-package"><a href="#ros-package" class="headerlink" title="ros package"></a><span class="exturl" data-url="aHR0cDovL3dpa2kucm9zLm9yZy9jYXRraW4vcGFja2FnZS54bWw=">ros package<i class="fa fa-external-link-alt"></i></span></h1><p>创建程序包：<span class="exturl" data-url="aHR0cDovL3dpa2kucm9zLm9yZy9jYXRraW4vVHV0b3JpYWxzL0NyZWF0aW5nUGFja2FnZQ==">catkin_create_pkg<i class="fa fa-external-link-alt"></i></span>，程序包存在依赖关系。<br>编译程序包：<code>source devel/setup.bash</code>，ref：<span class="exturl" data-url="aHR0cDovL3dpa2kucm9zLm9yZy9jbi9ST1MvVHV0b3JpYWxzL0luc3RhbGxpbmdhbmRDb25maWd1cmluZ1JPU0Vudmlyb25tZW50">安装并配置ROS环境<i class="fa fa-external-link-alt"></i></span></p>
-<h2 id="手动创建"><a href="#手动创建" class="headerlink" title="手动创建"></a>手动创建</h2><h2 id="依赖管理rosdep"><a href="#依赖管理rosdep" class="headerlink" title="依赖管理rosdep"></a>依赖管理<span class="exturl" data-url="aHR0cDovL3dpa2kucm9zLm9yZy9jbi9ST1MvVHV0b3JpYWxzL3Jvc2RlcA==">rosdep<i class="fa fa-external-link-alt"></i></span></h2><h1 id="catkin-cmakelists"><a href="#catkin-cmakelists" class="headerlink" title="catkin cmakelists"></a><span class="exturl" data-url="aHR0cDovL3dpa2kucm9zLm9yZy9jYXRraW4vQ01ha2VMaXN0cy50eHQ=">catkin cmakelists<i class="fa fa-external-link-alt"></i></span></h1><p>详细的cmake规则说明↑</p>
-<h2 id="REP-127"><a href="#REP-127" class="headerlink" title="REP-127"></a><span class="exturl" data-url="aHR0cDovL3d3dy5yb3Mub3JnL3JlcHMvcmVwLTAxMjcuaHRtbA==">REP-127<i class="fa fa-external-link-alt"></i></span></h2><p>package.xml定义在REP127</p>
-<h2 id="REP-140"><a href="#REP-140" class="headerlink" title="REP-140"></a><span class="exturl" data-url="aHR0cDovL3d3dy5yb3Mub3JnL3JlcHMvcmVwLTAxNDAuaHRtbA==">REP-140<i class="fa fa-external-link-alt"></i></span></h2><p>REP-140是catkin package的一套命名约定。</p>
-<h1 id="graph-resource-name"><a href="#graph-resource-name" class="headerlink" title="graph resource name"></a><span class="exturl" data-url="aHR0cDovL3dpa2kucm9zLm9yZy9OYW1lcw==">graph resource name<i class="fa fa-external-link-alt"></i></span></h1><p>Graph Resource Names are an important mechanism in ROS for providing encapsulation。 </p>
-<h2 id="http-wiki-ros-org-msg"><a href="#http-wiki-ros-org-msg" class="headerlink" title="http://wiki.ros.org/msg"></a><span class="exturl" data-url="aHR0cDovL3dpa2kucm9zLm9yZy9tc2c=">http://wiki.ros.org/msg<i class="fa fa-external-link-alt"></i></span></h2><p><span class="exturl" data-url="aHR0cDovL3dpa2kucm9zLm9yZy9ST1MvTWVzc2FnZV9EZXNjcmlwdGlvbl9MYW5ndWFnZQ==">message description language<i class="fa fa-external-link-alt"></i></span></p>
-<h2 id="http-wiki-ros-org-Nodes"><a href="#http-wiki-ros-org-Nodes" class="headerlink" title="http://wiki.ros.org/Nodes"></a><span class="exturl" data-url="aHR0cDovL3dpa2kucm9zLm9yZy9Ob2Rlcw==">http://wiki.ros.org/Nodes<i class="fa fa-external-link-alt"></i></span></h2><p><span class="exturl" data-url="aHR0cDovL3dpa2kucm9zLm9yZy9jbi9ST1MvVHV0b3JpYWxzL1dyaXRpbmdQdWJsaXNoZXJTdWJzY3JpYmVy">publisher &amp; subscriber<i class="fa fa-external-link-alt"></i></span></p>
-<h2 id="http-wiki-ros-org-srv"><a href="#http-wiki-ros-org-srv" class="headerlink" title="http://wiki.ros.org/srv"></a><span class="exturl" data-url="aHR0cDovL3dpa2kucm9zLm9yZy9zcnY=">http://wiki.ros.org/srv<i class="fa fa-external-link-alt"></i></span></h2><p><span class="exturl" data-url="aHR0cDovL3dpa2kucm9zLm9yZy9jbi9ST1MvVHV0b3JpYWxzL1dyaXRpbmdTZXJ2aWNlQ2xpZW50">server &amp; client Tutorials<i class="fa fa-external-link-alt"></i></span></p>
-<h2 id="faq"><a href="#faq" class="headerlink" title="faq"></a>faq</h2><p><span class="exturl" data-url="aHR0cDovL3dpa2kucm9zLm9yZy9jbi9ST1MvVHV0b3JpYWxzL0NyZWF0aW5nTXNnQW5kU3J2">Common step for msg and srv.<i class="fa fa-external-link-alt"></i></span>，该step有小问题，主要是因为：<br><span class="exturl" data-url="aHR0cDovL3dpa2kucm9zLm9yZy9jYXRraW4vcGFja2FnZS54bWwjRm9ybWF0XzJfLjI4UmVjb21tZW5kZWQuMjk=">package format<i class="fa fa-external-link-alt"></i></span>，参考<span class="exturl" data-url="aHR0cHM6Ly9kb2NzLnJvcy5vcmcvbWVsb2RpYy9hcGkvY2F0a2luL2h0bWwvaG93dG8vZm9ybWF0Mi9taWdyYXRpbmdfZnJvbV9mb3JtYXRfMS5odG1sI21pZ3JhdGluZy1mcm9tLWZvcm1hdDEtdG8tZm9ybWF0Mg==">format1迁移format2<i class="fa fa-external-link-alt"></i></span></p>
-<p><span class="exturl" data-url="aHR0cDovL3dpa2kucm9zLm9yZy9yb3NjcHBfdHV0b3JpYWxzL1R1dG9yaWFscy9Vc2luZ0NsYXNzTWV0aG9kc0FzQ2FsbGJhY2tz">using class Methods as callback<i class="fa fa-external-link-alt"></i></span></p>
-<h2 id="py文件需要对它chmod-x-py-变为可执行才能run"><a href="#py文件需要对它chmod-x-py-变为可执行才能run" class="headerlink" title=".py文件需要对它chmod +x *.py 变为可执行才能run"></a>.py文件需要对它chmod +x *.py 变为可执行才能run</h2><h1 id="understand-ros-topic"><a href="#understand-ros-topic" class="headerlink" title="understand ros topic"></a><span class="exturl" data-url="aHR0cDovL3dpa2kucm9zLm9yZy9jbi9ST1MvVHV0b3JpYWxzL1VuZGVyc3RhbmRpbmdUb3BpY3M=">understand<i class="fa fa-external-link-alt"></i></span> <span class="exturl" data-url="aHR0cDovL3dpa2kucm9zLm9yZy9yb3N0b3BpYw==">ros topic<i class="fa fa-external-link-alt"></i></span></h1><p>节点之间是通过ROS话题来互相通信的。node在一个topic上发布（publish）msg，而其他node则订阅（subscribe）该topic以接收该msg.<br>进阶：<span class="exturl" data-url="aHR0cDovL3dpa2kucm9zLm9yZy9yb3NweS9PdmVydmlldy9QdWJsaXNoZXJzJTIwYW5kJTIwU3Vic2NyaWJlcnMjcm9zcHkuUHVibGlzaGVyX2luaXRpYWxpemF0aW9u">http://wiki.ros.org/rospy/Overview/Publishers%20and%20Subscribers#rospy.Publisher_initialization<i class="fa fa-external-link-alt"></i></span></p>
-<h2 id="rqt-graph"><a href="#rqt-graph" class="headerlink" title="rqt_graph"></a><span class="exturl" data-url="aHR0cDovL3dpa2kucm9zLm9yZy9ycXRfZ3JhcGg=">rqt_graph<i class="fa fa-external-link-alt"></i></span></h2><p>一个几乎没啥功能的图形化界面，显示框图、线条的粗细颜色表示通信数据流量和延迟。可以保存各种图片格式，便于梳理机器人代码结构。</p>
-<h2 id="rxplot"><a href="#rxplot" class="headerlink" title="rxplot"></a><span class="exturl" data-url="aHR0cDovL3dpa2kucm9zLm9yZy9yeHBsb3Q=">rxplot<i class="fa fa-external-link-alt"></i></span></h2><p>一个plot UI，可以显示波形，和rqt_graph差不多。</p>
-<h1 id="ros-service"><a href="#ros-service" class="headerlink" title="ros service"></a><span class="exturl" data-url="aHR0cDovL3dpa2kucm9zLm9yZy9jbi9ST1MvVHV0b3JpYWxzL1VuZGVyc3RhbmRpbmdTZXJ2aWNlc1BhcmFtcw==">ros service<i class="fa fa-external-link-alt"></i></span></h1><p>服务（services）是节点之间通讯的另一种方式。服务允许节点发送请求（request） 并获得一个响应（response）.</p>
-<h2 id="using-rosparam"><a href="#using-rosparam" class="headerlink" title="using rosparam"></a>using rosparam</h2><p>rosparam使得我们能够存储并操作ROS 参数服务器（Parameter Server）上的数据。参数服务器能够存储整型、浮点、布尔、字符串、字典和列表等数据类型。rosparam使用YAML标记语言的语法。</p>
-<h1 id="actionlib"><a href="#actionlib" class="headerlink" title="actionlib"></a><span class="exturl" data-url="aHR0cDovL3dpa2kucm9zLm9yZy9hY3Rpb25saWI=">actionlib<i class="fa fa-external-link-alt"></i></span></h1><p>actionlib就是带feedback的srv，but基于msg，原理描述：<span class="exturl" data-url="aHR0cDovL3dpa2kucm9zLm9yZy9hY3Rpb25saWIvRGV0YWlsZWREZXNjcmlwdGlvbg==">http://wiki.ros.org/actionlib/DetailedDescription<i class="fa fa-external-link-alt"></i></span></p>
-<h1 id="ros-console"><a href="#ros-console" class="headerlink" title="ros console"></a><span class="exturl" data-url="aHR0cDovL3dpa2kucm9zLm9yZy9yb3Njb25zb2xl">ros console<i class="fa fa-external-link-alt"></i></span></h1><p>编写node、server、client，API，such as ROS_INFO：<span class="exturl" data-url="aHR0cDovL3dpa2kucm9zLm9yZy9yb3NjcHBfdHV0b3JpYWxz">http://wiki.ros.org/roscpp_tutorials<i class="fa fa-external-link-alt"></i></span><br><span class="exturl" data-url="aHR0cDovL3dpa2kucm9zLm9yZy9yb3NjcHBfdHV0b3JpYWxzL1R1dG9yaWFscy9Xcml0aW5nUHVibGlzaGVyU3Vic2NyaWJlcg==">Writing a Simple Publisher and Subscriber<i class="fa fa-external-link-alt"></i></span><br><span class="exturl" data-url="aHR0cDovL3dpa2kucm9zLm9yZy9yb3NjcHBfdHV0b3JpYWxzL1R1dG9yaWFscy9Xcml0aW5nU2VydmljZUNsaWVudA==">Writing a Simple Service and Client<i class="fa fa-external-link-alt"></i></span><br><span class="exturl" data-url="aHR0cDovL3dpa2kucm9zLm9yZy9yb3NjcHBfdHV0b3JpYWxzL1R1dG9yaWFscy9QYXJhbWV0ZXJz">Using Parameters in roscpp<i class="fa fa-external-link-alt"></i></span><br><span class="exturl" data-url="aHR0cDovL3dpa2kucm9zLm9yZy9yb3NjcHBfdHV0b3JpYWxzL1R1dG9yaWFscy9BY2Nlc3NpbmdQcml2YXRlTmFtZXNXaXRoTm9kZUhhbmRsZQ==">Accessing Private Names from a NodeHandle<i class="fa fa-external-link-alt"></i></span><br><span class="exturl" data-url="aHR0cDovL3dpa2kucm9zLm9yZy9yb3NjcHBfdHV0b3JpYWxzL1R1dG9yaWFscy9Vc2luZ0NsYXNzTWV0aG9kc0FzQ2FsbGJhY2tz">Using Class Methods as Callbacks<i class="fa fa-external-link-alt"></i></span><br><span class="exturl" data-url="aHR0cDovL3dpa2kucm9zLm9yZy9yb3NjcHBfdHV0b3JpYWxzL1R1dG9yaWFscy9UaW1lcnM=">Understanding Timers<i class="fa fa-external-link-alt"></i></span><br><span class="exturl" data-url="aHR0cDovL3dpa2kucm9zLm9yZy9yb3NjcHBfdHV0b3JpYWxzL1R1dG9yaWFscy9QdWJsaXNoZXIlMjBhbmQlMjBTdWJzY3JpYmVyJTIwd2l0aCUyMFBhcmFtZXRlcnMlMjBhbmQlMjBEeW5hbWljJTIwUmVjb25maWd1cmU=">Dynamic Reconfigure<i class="fa fa-external-link-alt"></i></span><br><span class="exturl" data-url="aHR0cDovL3dpa2kucm9zLm9yZy9DbG9jaw==">clock<i class="fa fa-external-link-alt"></i></span></p>
-<h1 id="ros-launch"><a href="#ros-launch" class="headerlink" title="ros launch"></a><span class="exturl" data-url="aHR0cDovL3dpa2kucm9zLm9yZy9yb3NsYXVuY2g=">ros launch<i class="fa fa-external-link-alt"></i></span></h1><p>ros launch可以启动多个node，有固定文件写法。<br>进阶：<span class="exturl" data-url="aHR0cDovL3dpa2kucm9zLm9yZy9jbi9ST1MvVHV0b3JpYWxzL1Jvc2xhdW5jaCUyMHRpcHMlMjBmb3IlMjBsYXJnZXIlMjBwcm9qZWN0cw==">http://wiki.ros.org/cn/ROS/Tutorials/Roslaunch%20tips%20for%20larger%20projects<i class="fa fa-external-link-alt"></i></span></p>
-<h1 id="ros-bash"><a href="#ros-bash" class="headerlink" title="ros bash"></a><span class="exturl" data-url="aHR0cDovL3dpa2kucm9zLm9yZy9yb3NiYXNo">ros bash<i class="fa fa-external-link-alt"></i></span></h1><p>这里是各种ROS的bash指令，参考<span class="exturl" data-url="aHR0cDovL3dpa2kucm9zLm9yZy9jbi9ST1MvVHV0b3JpYWxzL05hdmlnYXRpbmdUaGVGaWxlc3lzdGVt">ROS文件系统介绍<i class="fa fa-external-link-alt"></i></span><br>rosed 是 rosbash 的一部分。利用它可以直接通过package名来获取到待编辑的文件而无需指定该文件的存储路径了。</p>
-<h1 id="debugging"><a href="#debugging" class="headerlink" title="debugging"></a><span class="exturl" data-url="aHR0cDovL3dpa2kucm9zLm9yZy9jbi9ST1MvVHV0b3JpYWxzL1VzaW5nUnF0Y29uc29sZVJvc2xhdW5jaA==">debugging<i class="fa fa-external-link-alt"></i></span></h1><h2 id="ros-record"><a href="#ros-record" class="headerlink" title="ros record"></a><span class="exturl" data-url="aHR0cDovL3dpa2kucm9zLm9yZy9jbi9ST1MvVHV0b3JpYWxzL1JlY29yZGluZw==">ros record<i class="fa fa-external-link-alt"></i></span></h2><h2 id="ros-wtf"><a href="#ros-wtf" class="headerlink" title="ros wtf"></a><span class="exturl" data-url="aHR0cDovL3dpa2kucm9zLm9yZy9yb3N3dGY=">ros wtf<i class="fa fa-external-link-alt"></i></span></h2><h2 id="rqt-console"><a href="#rqt-console" class="headerlink" title="rqt_console"></a><span class="exturl" data-url="aHR0cDovL3dpa2kucm9zLm9yZy9ycXRfY29uc29sZQ==">rqt_console<i class="fa fa-external-link-alt"></i></span></h2><p>rqt_console属于ROS日志框架(logging framework)的一部分，用来显示节点的输出信息。</p>
-<h2 id="rqt-logger-level"><a href="#rqt-logger-level" class="headerlink" title="rqt_logger_level"></a><span class="exturl" data-url="aHR0cDovL3dpa2kucm9zLm9yZy9ycXRfbG9nZ2VyX2xldmVs">rqt_logger_level<i class="fa fa-external-link-alt"></i></span></h2><p>rqt_logger_level允许我们修改节点运行时输出信息的日志等级（logger levels）（包括 DEBUG、WARN、INFO和ERROR）。</p>
-<h1 id="master-and-newwork"><a href="#master-and-newwork" class="headerlink" title="master and newwork"></a>master and newwork</h1><h2 id="ros-core"><a href="#ros-core" class="headerlink" title="ros core"></a>ros core</h2><p>如果 roscore 运行后无法正常初始化，很有可能是存在网络配置问题。<br>如果 roscore 不能初始化并提示缺少权限，这可能是因为~/.ros文件夹归属于root</p>
-<p>运行类似于rosnode的指令时出现一些问题,也许是环境变量的影响。</p>
-<h2 id="ros-out"><a href="#ros-out" class="headerlink" title="ros out"></a><span class="exturl" data-url="aHR0cDovL3dpa2kucm9zLm9yZy9yb3NvdXQ=">ros out<i class="fa fa-external-link-alt"></i></span></h2><h2 id="network-setup"><a href="#network-setup" class="headerlink" title="network setup"></a><span class="exturl" data-url="aHR0cDovL3dpa2kucm9zLm9yZy9ST1MvTmV0d29ya1NldHVwI1NpbmdsZV9tYWNoaW5lX2NvbmZpZ3VyYXRpb24=">network setup<i class="fa fa-external-link-alt"></i></span></h2><h2 id="multiple-machines"><a href="#multiple-machines" class="headerlink" title="multiple machines"></a><span class="exturl" data-url="aHR0cDovL3dpa2kucm9zLm9yZy9jbi9ST1MvVHV0b3JpYWxzL011bHRpcGxlTWFjaGluZXM=">multiple machines<i class="fa fa-external-link-alt"></i></span></h2><h1 id="ros-tf-Introduction"><a href="#ros-tf-Introduction" class="headerlink" title="ros tf Introduction"></a><span class="exturl" data-url="aHR0cDovL3dpa2kucm9zLm9yZy90Zg==">ros tf<i class="fa fa-external-link-alt"></i></span> <span class="exturl" data-url="aHR0cDovL3dpa2kucm9zLm9yZy90Zi9UdXRvcmlhbHMvSW50cm9kdWN0aW9uJTIwdG8lMjB0Zg==">Introduction<i class="fa fa-external-link-alt"></i></span></h1><p><span class="exturl" data-url="aHR0cDovL3dpa2kucm9zLm9yZy90Zi9UdXRvcmlhbHM=">TF Tutorials<i class="fa fa-external-link-alt"></i></span></p>
-<h2 id="tf-API"><a href="#tf-API" class="headerlink" title="tf API"></a>tf API</h2><p>数据类型：<span class="exturl" data-url="aHR0cDovL3dpa2kucm9zLm9yZy90Zi9PdmVydmlldy9EYXRhJTIwVHlwZXM=">http://wiki.ros.org/tf/Overview/Data%20Types<i class="fa fa-external-link-alt"></i></span><br>变换与参考系：<span class="exturl" data-url="aHR0cDovL3dpa2kucm9zLm9yZy90Zi9PdmVydmlldy9UcmFuc2Zvcm1hdGlvbnM=">http://wiki.ros.org/tf/Overview/Transformations<i class="fa fa-external-link-alt"></i></span><br>发布tf变换广播：<span class="exturl" data-url="aHR0cDovL3dpa2kucm9zLm9yZy90Zi9PdmVydmlldy9Ccm9hZGNhc3RpbmclMjBUcmFuc2Zvcm1z">http://wiki.ros.org/tf/Overview/Broadcasting%20Transforms<i class="fa fa-external-link-alt"></i></span><br>接收并使用tf广播：<span class="exturl" data-url="aHR0cDovL3dpa2kucm9zLm9yZy90Zi9PdmVydmlldy9Vc2luZyUyMFB1Ymxpc2hlZCUyMFRyYW5zZm9ybXM=">http://wiki.ros.org/tf/Overview/Using%20Published%20Transforms<i class="fa fa-external-link-alt"></i></span><br>异常：<span class="exturl" data-url="aHR0cDovL3dpa2kucm9zLm9yZy90Zi9PdmVydmlldy9FeGNlcHRpb25z">http://wiki.ros.org/tf/Overview/Exceptions<i class="fa fa-external-link-alt"></i></span></p>
-<h2 id="tf-monitor"><a href="#tf-monitor" class="headerlink" title="tf_monitor"></a>tf_monitor</h2><h2 id="tf-echo"><a href="#tf-echo" class="headerlink" title="tf_echo"></a>tf_echo</h2><h2 id="static-transform-publisher"><a href="#static-transform-publisher" class="headerlink" title="static_transform_publisher"></a>static_transform_publisher</h2><h2 id="view-frames"><a href="#view-frames" class="headerlink" title="view_frames"></a>view_frames</h2><p><span class="exturl" data-url="aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3poYW5naG0xOTk1L2FydGljbGUvZGV0YWlscy84NDY0NDk4NA==">详解tf<i class="fa fa-external-link-alt"></i></span></p>
-<h1 id="ros-navigation"><a href="#ros-navigation" class="headerlink" title="ros navigation"></a><span class="exturl" data-url="aHR0cDovL3dpa2kucm9zLm9yZy9uYXZpZ2F0aW9u">ros navigation<i class="fa fa-external-link-alt"></i></span></h1><p>frist：sudo apt-get install ros-kinetic-navigation<br>tutorial：<span class="exturl" data-url="aHR0cHM6Ly93d3cubmNueW5sLmNvbS9jYXRlZ29yeS9yb3MtbmF2aWdhdGlvbi8=">https://www.ncnynl.com/category/ros-navigation/<i class="fa fa-external-link-alt"></i></span></p>
-<p><span class="exturl" data-url="aHR0cHM6Ly93d3cucm9zLm9yZy9yZXBzL3JlcC0wMTA1Lmh0bWw=">https://www.ros.org/reps/rep-0105.html<i class="fa fa-external-link-alt"></i></span></p>
-<p>map：<span class="exturl" data-url="aHR0cDovL3dpa2kucm9zLm9yZy9tYXBfc2VydmVyP2Rpc3Rybz1raW5ldGlj">http://wiki.ros.org/map_server?distro=kinetic<i class="fa fa-external-link-alt"></i></span><br><span class="exturl" data-url="aHR0cDovL3dpa2kucm9zLm9yZy9nbG9iYWxfcGxhbm5lcj9kaXN0cm89a2luZXRpYw==">http://wiki.ros.org/global_planner?distro=kinetic<i class="fa fa-external-link-alt"></i></span><br><span class="exturl" data-url="aHR0cDovL3dpa2kucm9zLm9yZy9tb3ZlX2Jhc2U/ZGlzdHJvPWtpbmV0aWM=">http://wiki.ros.org/move_base?distro=kinetic<i class="fa fa-external-link-alt"></i></span><br><span class="exturl" data-url="aHR0cDovL3dpa2kucm9zLm9yZy9uYXZfY29yZT9kaXN0cm89a2luZXRpYw==">http://wiki.ros.org/nav_core?distro=kinetic<i class="fa fa-external-link-alt"></i></span></p>
-<h1 id="rviz-user-guide"><a href="#rviz-user-guide" class="headerlink" title="rviz user guide"></a><span class="exturl" data-url="aHR0cDovL3dpa2kucm9zLm9yZy9ydml6">rviz<i class="fa fa-external-link-alt"></i></span> <span class="exturl" data-url="aHR0cDovL3dpa2kucm9zLm9yZy9ydml6L1VzZXJHdWlkZQ==">user guide<i class="fa fa-external-link-alt"></i></span></h1><p><span class="exturl" data-url="aHR0cDovL3dpa2kucm9zLm9yZy9ydml6L0Rpc3BsYXlUeXBlcy9NYXJrZXI=">http://wiki.ros.org/rviz/DisplayTypes/Marker<i class="fa fa-external-link-alt"></i></span><br><span class="exturl" data-url="aHR0cDovL2RvY3Mucm9zLm9yZy9hcGkvdmlzdWFsaXphdGlvbl9tc2dzL2h0bWwvbXNnL01hcmtlci5odG1s">http://docs.ros.org/api/visualization_msgs/html/msg/Marker.html<i class="fa fa-external-link-alt"></i></span><br><span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL1BpY2tOaWtSb2JvdGljcy9ydml6X3Zpc3VhbF90b29scw==">https://github.com/PickNikRobotics/rviz_visual_tools<i class="fa fa-external-link-alt"></i></span></p>
-<h1 id="gazebo"><a href="#gazebo" class="headerlink" title="gazebo"></a><span class="exturl" data-url="aHR0cDovL2dhemVib3NpbS5vcmcv">gazebo<i class="fa fa-external-link-alt"></i></span></h1><h1 id="v-rep"><a href="#v-rep" class="headerlink" title="v-rep"></a><span class="exturl" data-url="aHR0cDovL3d3dy5jb3BwZWxpYXJvYm90aWNzLmNvbS9oZWxwRmlsZXMvaW5kZXguaHRtbA==">v-rep<i class="fa fa-external-link-alt"></i></span></h1><h1 id="simulator"><a href="#simulator" class="headerlink" title="simulator"></a>simulator</h1><p>rviz是三维可视化工具，强调把已有的数据可视化显示；<br>gazebo是三维物理仿真平台，强调的是创建一个虚拟的仿真环境。<span class="exturl" data-url="aHR0cDovL2dhemVib3NpbS5vcmcv">http://gazebosim.org/<i class="fa fa-external-link-alt"></i></span></p>
-<p>used ML for simulator <span class="exturl" data-url="aHR0cDovL3d3dy5tdWpvY28ub3JnLw==">http://www.mujoco.org/<i class="fa fa-external-link-alt"></i></span> </p>
-]]></content>
-      <categories>
-        <category>机器人</category>
-      </categories>
-      <tags>
-        <tag>ROS</tag>
       </tags>
   </entry>
   <entry>

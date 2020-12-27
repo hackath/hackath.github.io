@@ -23,42 +23,42 @@
 
 <script class="hexo-configurations">
     var NexT = window.NexT || {};
-    var CONFIG = {"hostname":"skystarry.cn","root":"/","images":"/images","scheme":"Mist","version":"8.1.0","exturl":true,"sidebar":{"position":"right","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}};
+    var CONFIG = {"hostname":"punkli.github.io","root":"/","images":"/images","scheme":"Mist","version":"8.1.0","exturl":true,"sidebar":{"position":"right","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}};
   </script>
 <meta name="description" content="用机器视觉系统分析未知场景时，计算机并不预先知道图像中物体的尺度。我们需要同时考虑图像在多尺度下的描述，获知感兴趣物体的最佳尺度。如果不同的尺度下都有同样的关键点，那么在不同的尺度的输入图像下就都可以检测出来关键点匹配，也就是尺度不变性。">
 <meta property="og:type" content="article">
 <meta property="og:title" content="图像算子概述">
-<meta property="og:url" content="https://skystarry.cn/2018/07.Constant-scale/index.html">
+<meta property="og:url" content="https://punkli.github.io/2018/07.Constant-scale/index.html">
 <meta property="og:site_name" content="skystarry">
 <meta property="og:description" content="用机器视觉系统分析未知场景时，计算机并不预先知道图像中物体的尺度。我们需要同时考虑图像在多尺度下的描述，获知感兴趣物体的最佳尺度。如果不同的尺度下都有同样的关键点，那么在不同的尺度的输入图像下就都可以检测出来关键点匹配，也就是尺度不变性。">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://skystarry.cn/img/viusal-scale/Dog-1.jpg">
-<meta property="og:image" content="https://skystarry.cn/img/viusal-scale/Dog-7-300x252.png">
-<meta property="og:image" content="https://skystarry.cn/img/viusal-scale/Dog-1-750x375.png">
-<meta property="og:image" content="https://skystarry.cn/img/viusal-scale/Dog-2.png">
-<meta property="og:image" content="https://skystarry.cn/img/viusal-scale/Dog-3.png">
-<meta property="og:image" content="https://skystarry.cn/img/viusal-scale/Moravec1.png">
-<meta property="og:image" content="https://skystarry.cn/img/viusal-scale/Moravec3.png">
-<meta property="og:image" content="https://skystarry.cn/img/viusal-scale/Moravec5.png">
-<meta property="og:image" content="https://skystarry.cn/img/viusal-scale/harris.png">
-<meta property="og:image" content="https://skystarry.cn/img/viusal-scale/harris-2.png">
-<meta property="og:image" content="https://skystarry.cn/img/viusal-scale/harris4.png">
-<meta property="og:image" content="https://skystarry.cn/img/viusal-scale/harris8-750x270.png">
-<meta property="og:image" content="https://skystarry.cn/img/viusal-scale/harris9-300x292.png">
-<meta property="og:image" content="https://skystarry.cn/img/viusal-scale/susan1.png">
-<meta property="og:image" content="https://skystarry.cn/img/viusal-scale/fast1-1024x519.png">
-<meta property="og:image" content="https://skystarry.cn/img/viusal-scale/log-1024x341.png">
-<meta property="og:image" content="https://skystarry.cn/img/viusal-scale/DoG_tile.jpg">
+<meta property="og:image" content="https://punkli.github.io/img/viusal-scale/Dog-1.jpg">
+<meta property="og:image" content="https://punkli.github.io/img/viusal-scale/Dog-7-300x252.png">
+<meta property="og:image" content="https://punkli.github.io/img/viusal-scale/Dog-1-750x375.png">
+<meta property="og:image" content="https://punkli.github.io/img/viusal-scale/Dog-2.png">
+<meta property="og:image" content="https://punkli.github.io/img/viusal-scale/Dog-3.png">
+<meta property="og:image" content="https://punkli.github.io/img/viusal-scale/Moravec1.png">
+<meta property="og:image" content="https://punkli.github.io/img/viusal-scale/Moravec3.png">
+<meta property="og:image" content="https://punkli.github.io/img/viusal-scale/Moravec5.png">
+<meta property="og:image" content="https://punkli.github.io/img/viusal-scale/harris.png">
+<meta property="og:image" content="https://punkli.github.io/img/viusal-scale/harris-2.png">
+<meta property="og:image" content="https://punkli.github.io/img/viusal-scale/harris4.png">
+<meta property="og:image" content="https://punkli.github.io/img/viusal-scale/harris8-750x270.png">
+<meta property="og:image" content="https://punkli.github.io/img/viusal-scale/harris9-300x292.png">
+<meta property="og:image" content="https://punkli.github.io/img/viusal-scale/susan1.png">
+<meta property="og:image" content="https://punkli.github.io/img/viusal-scale/fast1-1024x519.png">
+<meta property="og:image" content="https://punkli.github.io/img/viusal-scale/log-1024x341.png">
+<meta property="og:image" content="https://punkli.github.io/img/viusal-scale/DoG_tile.jpg">
 <meta property="article:published_time" content="2018-08-01T15:59:38.000Z">
 <meta property="article:modified_time" content="2020-12-09T01:10:09.583Z">
 <meta property="article:author" content="skystarry">
 <meta property="article:tag" content="图像处理">
 <meta property="article:tag" content="数学">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://skystarry.cn/img/viusal-scale/Dog-1.jpg">
+<meta name="twitter:image" content="https://punkli.github.io/img/viusal-scale/Dog-1.jpg">
 
 
-<link rel="canonical" href="https://skystarry.cn/2018/07.Constant-scale/">
+<link rel="canonical" href="https://punkli.github.io/2018/07.Constant-scale/">
 
 
 <script class="page-configurations">
@@ -327,7 +327,7 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://skystarry.cn/2018/07.Constant-scale/">
+    <link itemprop="mainEntityOfPage" href="https://punkli.github.io/2018/07.Constant-scale/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/img/skystarry.jpg">

@@ -1692,7 +1692,6 @@ pre code {
   color: #000000;
   display: inline-block;
   margin: 0 5px;
-  animation: icon-animate 1.33s ease-in-out infinite;
 }
 @-moz-keyframes icon-animate {
   0%, 100% {
@@ -2967,7 +2966,7 @@ hr {
 }
 .links-of-author a::before,
 .links-of-author span.exturl::before {
-  background: #3e243b;
+  background: #5828ba;
   display: inline-block;
   margin-right: 3px;
   transform: translateY(-2px);
