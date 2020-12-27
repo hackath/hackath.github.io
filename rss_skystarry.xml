@@ -1,0 +1,432 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+  <title>skystarry</title>
+  
+  <subtitle>我的博客</subtitle>
+  <link href="https://skystarry.cn/rss_skystarry.xml" rel="self"/>
+  
+  <link href="https://skystarry.cn/"/>
+  <updated>2020-12-27T00:35:27.144Z</updated>
+  <id>https://skystarry.cn/</id>
+  
+  <author>
+    <name>skystarry</name>
+    
+  </author>
+  
+  <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>使用神经网络进行机器学习</title>
+    <link href="https://skystarry.cn/2020/04/13/35.network/"/>
+    <id>https://skystarry.cn/2020/04/13/35.network/</id>
+    <published>2020-04-13T11:09:17.000Z</published>
+    <updated>2020-12-27T00:35:27.144Z</updated>
+    
+    
+    <summary type="html">&lt;h2 id=&quot;数据介绍&quot;&gt;&lt;a href=&quot;#数据介绍&quot; class=&quot;headerlink&quot; title=&quot;数据介绍&quot;&gt;&lt;/a&gt;数据介绍&lt;/h2&gt;&lt;p&gt;本次练习所用的数据集有5000个训练样本，每个样本对应于20x20大小的灰度图像。这些训练样本包括了9-0共十个数字的手写图像。这些样本中每个像素都用浮点数表示。加载得到的数据中，每幅图像都被展开为一个400维的向量，构成了数据矩阵中的一行。完整的训练数据是一个5000x400的矩阵，其每一行为一个训练样本（数字的手写图像）。数据中，对应于数字”0”的图像被标记为”10”，而数字”1”到”9”按照其自然顺序被分别标记为”1”到”9”。数据集保存在&lt;code&gt;NN_data.mat&lt;/code&gt;.&lt;br&gt;&lt;img src=&quot;/img/PRML/data-array.png&quot; alt=&quot;image&quot;&gt;&lt;/p&gt;</summary>
+    
+    
+    
+    <category term="机器学习" scheme="https://skystarry.cn/categories/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/"/>
+    
+    
+    <category term="机器学习" scheme="https://skystarry.cn/tags/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>逻辑回归</title>
+    <link href="https://skystarry.cn/2020/04/12/34.logistic/"/>
+    <id>https://skystarry.cn/2020/04/12/34.logistic/</id>
+    <published>2020-04-12T11:09:17.000Z</published>
+    <updated>2020-12-27T00:35:32.922Z</updated>
+    
+    
+    <summary type="html">&lt;p&gt;本次作业的目的是建立一个逻辑回归模型，用于预测一个学生是否应该被大学录取。&lt;/p&gt;
+&lt;p&gt;简单起见，大学通过&lt;strong&gt;两次考试的成绩来确定一个学生是否应该录取&lt;/strong&gt;。你有以前数届考生的成绩，可以做为训练集学习逻辑回归模型。每个训练样本包括了考生两次考试的成绩和对应的录取决定。&lt;/p&gt;
+&lt;p&gt;你的任务是建立一个分类模型，根据两次考试的成绩来估计考生被录取的概率。&lt;br&gt;本次实验需要实现的函数&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;plot_data&lt;/code&gt; 绘制二维的分类数据。&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;sigmoid&lt;/code&gt;函数&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;cost_function&lt;/code&gt; 逻辑回归的代价函数&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;cost_gradient&lt;/code&gt; 逻辑回归的代价函数的梯度，无正则化&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;predict&lt;/code&gt; 逻辑回归的预测函数&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;cost_function_reg&lt;/code&gt; 逻辑回归带正则化项的代价函数&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;cost_gradient_reg&lt;/code&gt; 逻辑回归的代价函数的梯度，带正则化&lt;/li&gt;
+&lt;/ul&gt;</summary>
+    
+    
+    
+    <category term="机器学习" scheme="https://skystarry.cn/categories/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/"/>
+    
+    
+    <category term="机器学习" scheme="https://skystarry.cn/tags/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>ROS通信解析</title>
+    <link href="https://skystarry.cn/2019/02/09/32.ros%20tcp/"/>
+    <id>https://skystarry.cn/2019/02/09/32.ros%20tcp/</id>
+    <published>2019-02-09T01:09:17.000Z</published>
+    <updated>2020-12-09T01:10:09.591Z</updated>
+    
+    
+    <summary type="html">&lt;p&gt;了解ROS的几种通信方式以后，对于ROS通信延迟有一些困惑，更多的是想追究背后原理，这篇博客《&lt;span class=&quot;exturl&quot; data-url=&quot;aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L1pYUUhCRC9hcnRpY2xlL2RldGFpbHMvNzI4NDY4NjU=&quot;&gt;ROS之topic和service通信比较&lt;i class=&quot;fa fa-external-link-alt&quot;&gt;&lt;/i&gt;&lt;/span&gt;》起到了抛砖引玉的作用。&lt;/p&gt;
+&lt;p&gt;更多可以参考2013年的这一篇论文《&lt;span class=&quot;exturl&quot; data-url=&quot;aHR0cHM6Ly93d3cucG9saXRlc2kucG9saW1pLml0L2JpdHN0cmVhbS8xMDU4OS83ODUwMi8xLzIwMTNfMDRfWm9wcGkuUERG&quot;&gt;A lightweight Opensource communication framework for native integration of resource constrained robotics devices with ROS&lt;i class=&quot;fa fa-external-link-alt&quot;&gt;&lt;/i&gt;&lt;/span&gt;》，目前网上关于ROS通信模型的中文资料大部分都是对这篇文章的翻译。&lt;/p&gt;</summary>
+    
+    
+    
+    <category term="编程" scheme="https://skystarry.cn/categories/%E7%BC%96%E7%A8%8B/"/>
+    
+    
+    <category term="工具链" scheme="https://skystarry.cn/tags/%E5%B7%A5%E5%85%B7%E9%93%BE/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>getting started ros</title>
+    <link href="https://skystarry.cn/2019/02/05/30.ros/"/>
+    <id>https://skystarry.cn/2019/02/05/30.ros/</id>
+    <published>2019-02-05T01:09:17.000Z</published>
+    <updated>2020-12-09T01:10:09.591Z</updated>
+    
+    
+    <summary type="html">&lt;p&gt;ROS之前看过一遍，但是过于复杂，我就很快忘记了；现在重新梳理一遍。&lt;br&gt;&lt;span class=&quot;exturl&quot; data-url=&quot;aHR0cDovL3dpa2kucm9zLm9yZy9jbi9ST1MvVHV0b3JpYWxz&quot;&gt;http://wiki.ros.org/cn/ROS/Tutorials&lt;i class=&quot;fa fa-external-link-alt&quot;&gt;&lt;/i&gt;&lt;/span&gt;&lt;/p&gt;</summary>
+    
+    
+    
+    <category term="机器人" scheme="https://skystarry.cn/categories/%E6%9C%BA%E5%99%A8%E4%BA%BA/"/>
+    
+    
+    <category term="ROS" scheme="https://skystarry.cn/tags/ROS/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Particle Filter</title>
+    <link href="https://skystarry.cn/2019/02/03/29.%E7%B2%92%E5%AD%90%E6%BB%A4%E6%B3%A2/"/>
+    <id>https://skystarry.cn/2019/02/03/29.%E7%B2%92%E5%AD%90%E6%BB%A4%E6%B3%A2/</id>
+    <published>2019-02-03T01:09:17.000Z</published>
+    <updated>2020-12-09T01:10:09.590Z</updated>
+    
+    
+    <summary type="html">&lt;p&gt;这篇文章数学公式推得有点儿长。。。。提前预警= =&lt;/p&gt;</summary>
+    
+    
+    
+    <category term="机器人" scheme="https://skystarry.cn/categories/%E6%9C%BA%E5%99%A8%E4%BA%BA/"/>
+    
+    
+    <category term="SLAM" scheme="https://skystarry.cn/tags/SLAM/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>MLE和MAP</title>
+    <link href="https://skystarry.cn/2019/02/03/28.MLE%E5%92%8CMAP/"/>
+    <id>https://skystarry.cn/2019/02/03/28.MLE%E5%92%8CMAP/</id>
+    <published>2019-02-02T23:09:17.000Z</published>
+    <updated>2020-12-09T01:10:09.590Z</updated>
+    
+    
+    <summary type="html">&lt;p&gt;频率学派 - Frequentist - Maximum Likelihood Estimation (MLE，最大似然估计)&lt;br&gt;贝叶斯学派 - Bayesian - Maximum A Posteriori (MAP，最大后验估计)&lt;/p&gt;
+&lt;p&gt;频率学派和贝叶斯学派对世界的认知有本质不同：&lt;br&gt;频率学派认为世界是确定的，有一个本体，这个本体的真值是不变的，我们的目标就是要找到这个真值或真值所在的范围；&lt;br&gt;而贝叶斯学派认为世界是不确定的，人们对世界先有一个预判，而后通过观测数据对这个预判做调整，我们的目标是要找到最优的描述这个世界的概率分布。&lt;/p&gt;</summary>
+    
+    
+    
+    <category term="数学" scheme="https://skystarry.cn/categories/%E6%95%B0%E5%AD%A6/"/>
+    
+    
+    <category term="统计学" scheme="https://skystarry.cn/tags/%E7%BB%9F%E8%AE%A1%E5%AD%A6/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>无约束最优化方法</title>
+    <link href="https://skystarry.cn/2019/02/01/27.optimize1/"/>
+    <id>https://skystarry.cn/2019/02/01/27.optimize1/</id>
+    <published>2019-02-01T07:09:17.000Z</published>
+    <updated>2020-12-09T01:10:09.590Z</updated>
+    
+    
+    <summary type="html">&lt;p&gt;约束规划问题一般形式：&lt;/p&gt;
+&lt;script type=&quot;math/tex; mode=display&quot;&gt;
+\begin{split}
+&amp;\min f(x),&amp;\quad x\in \mathbb{R}^{n} \\ 
+&amp;\text{s. t. }&amp;c_{i}(x)=0,\quad i\in E=\{1,2,\dots, l\} \\ 
+            &amp; &amp;c_{i}(x)\leq 0, \quad i\in I=\{l+1,l+2,\dots, l+m\} 
+\end{split}&lt;/script&gt;</summary>
+    
+    
+    
+    <category term="数学" scheme="https://skystarry.cn/categories/%E6%95%B0%E5%AD%A6/"/>
+    
+    
+    <category term="优化理论" scheme="https://skystarry.cn/tags/%E4%BC%98%E5%8C%96%E7%90%86%E8%AE%BA/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>矩阵分解</title>
+    <link href="https://skystarry.cn/2019/01/21/25.matrix/"/>
+    <id>https://skystarry.cn/2019/01/21/25.matrix/</id>
+    <published>2019-01-20T20:10:24.000Z</published>
+    <updated>2020-12-09T01:10:09.589Z</updated>
+    
+    
+    <summary type="html">&lt;p&gt;开个专题，研究矩阵分解的方法。&lt;/p&gt;</summary>
+    
+    
+    
+    <category term="数学" scheme="https://skystarry.cn/categories/%E6%95%B0%E5%AD%A6/"/>
+    
+    
+    <category term="线性代数" scheme="https://skystarry.cn/tags/%E7%BA%BF%E6%80%A7%E4%BB%A3%E6%95%B0/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>博弈论</title>
+    <link href="https://skystarry.cn/2018/11/24/24.game/"/>
+    <id>https://skystarry.cn/2018/11/24/24.game/</id>
+    <published>2018-11-24T08:08:53.000Z</published>
+    <updated>2020-12-09T01:10:09.589Z</updated>
+    
+    
+    <summary type="html">&lt;h1 id=&quot;纳什均衡&quot;&gt;&lt;a href=&quot;#纳什均衡&quot; class=&quot;headerlink&quot; title=&quot;纳什均衡&quot;&gt;&lt;/a&gt;纳什均衡&lt;/h1&gt;&lt;p&gt;纳什均衡指的是这样一种策略组合，即在给定别人策略的情况下，没有人愿意单方面改变自己的策略，从而打破这种均衡。&lt;br&gt;数学表示：&lt;/p&gt;
+&lt;p&gt;// 公式太长了，下次补上&lt;/p&gt;
+&lt;p&gt;纳什均衡的一致预测性质:&lt;br&gt;一致预测：&lt;br&gt;如果所有博弈方都预测一个特定博弈结果会出现，所有博弈方都不会选择与预测结果不一致的策略，即没有哪个博弈方有偏离这个预测结果的愿望，因此预测结果会成为博弈的最终结果。&lt;br&gt;只有纳什均衡才具有一致预测的性质。一致预测性是纳什均衡的本质属性。&lt;br&gt;一致预测并不意味着一定能准确预测，因为有多重均衡， 预测不一致的可能。&lt;/p&gt;</summary>
+    
+    
+    
+    
+  </entry>
+  
+  <entry>
+    <title>特征提取与选择</title>
+    <link href="https://skystarry.cn/2018/11/20/22.feature-select/"/>
+    <id>https://skystarry.cn/2018/11/20/22.feature-select/</id>
+    <published>2018-11-20T00:50:58.000Z</published>
+    <updated>2020-12-27T00:38:50.054Z</updated>
+    
+    
+    <summary type="html">&lt;p&gt;对分类器设计来说，使用什么样的特征描述事物，也就是说使用什么样的特征空间是个很重要的问题。这个问题称之为描述量的选择问题，意思是指保留哪些描述量，删除哪些描述量的问题。&lt;br&gt;本章节研究对特征空间进行改造,目的在于提高其某方面的性能，因此又称特征的优化问题。&lt;/p&gt;</summary>
+    
+    
+    
+    <category term="模式识别" scheme="https://skystarry.cn/categories/%E6%A8%A1%E5%BC%8F%E8%AF%86%E5%88%AB/"/>
+    
+    
+    <category term="模式识别" scheme="https://skystarry.cn/tags/%E6%A8%A1%E5%BC%8F%E8%AF%86%E5%88%AB/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Algorithm Review</title>
+    <link href="https://skystarry.cn/2018/11/20/21.Algorithm/"/>
+    <id>https://skystarry.cn/2018/11/20/21.Algorithm/</id>
+    <published>2018-11-19T18:27:02.000Z</published>
+    <updated>2020-12-27T00:39:37.882Z</updated>
+    
+    
+    <summary type="html">&lt;p&gt;Algorithm review of M.H.Alsuwaiyel, Algorithms design techniques and Analysis, Publishing House of Electronics Industry.&lt;/p&gt;</summary>
+    
+    
+    
+    <category term="数据结构与算法" scheme="https://skystarry.cn/categories/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95/"/>
+    
+    
+    <category term="编程" scheme="https://skystarry.cn/tags/%E7%BC%96%E7%A8%8B/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Fisher</title>
+    <link href="https://skystarry.cn/2018/10/19/18.Fisher/"/>
+    <id>https://skystarry.cn/2018/10/19/18.Fisher/</id>
+    <published>2018-10-19T10:09:38.000Z</published>
+    <updated>2020-12-09T01:10:09.587Z</updated>
+    
+    
+    <summary type="html">&lt;p&gt;线性判别方法linear discriminant analysis, LDA, R.A.&lt;/p&gt;</summary>
+    
+    
+    
+    <category term="模式识别" scheme="https://skystarry.cn/categories/%E6%A8%A1%E5%BC%8F%E8%AF%86%E5%88%AB/"/>
+    
+    
+    <category term="模式识别" scheme="https://skystarry.cn/tags/%E6%A8%A1%E5%BC%8F%E8%AF%86%E5%88%AB/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Cpp-Taskflow</title>
+    <link href="https://skystarry.cn/2018/10/17/20.cpp-taskflow/"/>
+    <id>https://skystarry.cn/2018/10/17/20.cpp-taskflow/</id>
+    <published>2018-10-17T10:09:38.000Z</published>
+    <updated>2020-12-09T01:10:09.588Z</updated>
+    
+    
+    <summary type="html">&lt;p&gt;A fast C++ header-only library to help you quickly write parallel programs with complex task dependencies.&lt;br&gt;&lt;span class=&quot;exturl&quot; data-url=&quot;aHR0cHM6Ly9naXRodWIuY29tL2NwcC10YXNrZmxvdy9jcHAtdGFza2Zsb3c=&quot;&gt;https://github.com/cpp-taskflow/cpp-taskflow&lt;i class=&quot;fa fa-external-link-alt&quot;&gt;&lt;/i&gt;&lt;/span&gt;&lt;/p&gt;</summary>
+    
+    
+    
+    <category term="编程" scheme="https://skystarry.cn/categories/%E7%BC%96%E7%A8%8B/"/>
+    
+    
+    <category term="编程" scheme="https://skystarry.cn/tags/%E7%BC%96%E7%A8%8B/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Normal distribution</title>
+    <link href="https://skystarry.cn/2018/10/03/17.Normal-distribution/"/>
+    <id>https://skystarry.cn/2018/10/03/17.Normal-distribution/</id>
+    <published>2018-10-03T13:39:37.000Z</published>
+    <updated>2020-12-09T01:10:09.587Z</updated>
+    
+    
+    <summary type="html">&lt;p&gt;本blog总结单变量正态分布以及多元正态分布和他们的性质。&lt;/p&gt;</summary>
+    
+    
+    
+    <category term="数学" scheme="https://skystarry.cn/categories/%E6%95%B0%E5%AD%A6/"/>
+    
+    
+    <category term="数学" scheme="https://skystarry.cn/tags/%E6%95%B0%E5%AD%A6/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Bayesian Theorem</title>
+    <link href="https://skystarry.cn/2018/10/02/16.Bayesian-Theorem/"/>
+    <id>https://skystarry.cn/2018/10/02/16.Bayesian-Theorem/</id>
+    <published>2018-10-02T08:42:38.000Z</published>
+    <updated>2020-12-09T01:10:09.586Z</updated>
+    
+    
+    <summary type="html">&lt;p&gt;根据概率论中的贝叶斯公式，有：&lt;/p&gt;
+&lt;script type=&quot;math/tex; mode=display&quot;&gt;
+P(\omega_i|x)=\frac{p(x,\omega_i)}{p(x)}=\frac{p(x|\omega_i)p(\omega_i)}{p(x)},i=1,2,...&lt;/script&gt;&lt;ul&gt;
+&lt;li&gt;$p(\omega_i)$是先验概率&lt;/li&gt;
+&lt;li&gt;$p(x,\omega_i)$是联合概率分布&lt;/li&gt;
+&lt;li&gt;$p(x)$是总体密度&lt;/li&gt;
+&lt;li&gt;$p(x|\omega_i)$是第$i$类x的概率密度，即类条件概率&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;这样，后验概率就转换成先验概率与类条件概率密度的乘积，再用总体密度进行归一化。这就是贝叶斯决策。&lt;/p&gt;</summary>
+    
+    
+    
+    <category term="数学" scheme="https://skystarry.cn/categories/%E6%95%B0%E5%AD%A6/"/>
+    
+    
+    <category term="数学" scheme="https://skystarry.cn/tags/%E6%95%B0%E5%AD%A6/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>google tools</title>
+    <link href="https://skystarry.cn/2018/09/30/15.google/"/>
+    <id>https://skystarry.cn/2018/09/30/15.google/</id>
+    <published>2018-09-29T16:57:33.000Z</published>
+    <updated>2020-12-09T01:10:09.586Z</updated>
+    
+    
+    <summary type="html">&lt;p&gt;本blog整理google自家的工具链，包括glags、glog、gtest、protocol-buffers&lt;/p&gt;</summary>
+    
+    
+    
+    <category term="编程" scheme="https://skystarry.cn/categories/%E7%BC%96%E7%A8%8B/"/>
+    
+    
+    <category term="工具链" scheme="https://skystarry.cn/tags/%E5%B7%A5%E5%85%B7%E9%93%BE/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Lipschitz Condition</title>
+    <link href="https://skystarry.cn/2018/09/13/14.Lipschitz/"/>
+    <id>https://skystarry.cn/2018/09/13/14.Lipschitz/</id>
+    <published>2018-09-13T12:24:28.000Z</published>
+    <updated>2020-12-09T01:10:09.586Z</updated>
+    
+    
+    <summary type="html">&lt;p&gt;L-lipschitz连续性是最近优化课程经常提到的一个基础内容，老师人很nice，讲课也很有开放性，每次都需要做大量的预习和课后复习才能完全消化。所以最近的Blog基本上都离不开数学主题了。&lt;br&gt;课堂引出L-lipschitz是为了衡量一个凸函数是否容易优化，通过函数光滑的程度和凸的程度来判断，原文是：$\nabla f$ is L-lipschitz and $f$ $\mu$-strongly convex.&lt;/p&gt;</summary>
+    
+    
+    
+    <category term="数学" scheme="https://skystarry.cn/categories/%E6%95%B0%E5%AD%A6/"/>
+    
+    
+    <category term="数学" scheme="https://skystarry.cn/tags/%E6%95%B0%E5%AD%A6/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>pods_cmake</title>
+    <link href="https://skystarry.cn/2018/08/26/13.pods-cmake/"/>
+    <id>https://skystarry.cn/2018/08/26/13.pods-cmake/</id>
+    <published>2018-08-26T14:33:32.000Z</published>
+    <updated>2020-12-09T01:10:09.585Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;p&gt;Apriltags的CMakeLists.txt中出现了一行pods_install_executables()，这并不是标准的CMake写法，项目中有cmake/pods.cmake文件，里面写道：Macros to simplify compliance with</summary>
+        
+      
+    
+    
+    
+    <category term="编程" scheme="https://skystarry.cn/categories/%E7%BC%96%E7%A8%8B/"/>
+    
+    
+    <category term="工具链" scheme="https://skystarry.cn/tags/%E5%B7%A5%E5%85%B7%E9%93%BE/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Kalman with eigen</title>
+    <link href="https://skystarry.cn/2018/08/22/12.matrix-decomposition/"/>
+    <id>https://skystarry.cn/2018/08/22/12.matrix-decomposition/</id>
+    <published>2018-08-21T20:10:24.000Z</published>
+    <updated>2020-12-09T01:10:09.585Z</updated>
+    
+    
+    <summary type="html">&lt;p&gt;&lt;span class=&quot;exturl&quot; data-url=&quot;aHR0cHM6Ly9naXRodWIuY29tL21oZXJiL2thbG1hblQ=&quot;&gt;https://github.com/mherb/kalmanT&lt;i class=&quot;fa fa-external-link-alt&quot;&gt;&lt;/i&gt;&lt;/span&gt; 是一个基于eigin3的Kalman-Filter，包含了Extended Kalman Filter (EKF)、Square Root Extended Kalman Filter (SR-EKF)、Unscented Kalman Filter (UKF)、Square Root Unscented Kalman Filter (SR-UKF)，4种Kalman filter。&lt;/p&gt;</summary>
+    
+    
+    
+    <category term="数学" scheme="https://skystarry.cn/categories/%E6%95%B0%E5%AD%A6/"/>
+    
+    
+    <category term="线性代数" scheme="https://skystarry.cn/tags/%E7%BA%BF%E6%80%A7%E4%BB%A3%E6%95%B0/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Kalman Filter</title>
+    <link href="https://skystarry.cn/2018/08/21/11.Kalman/"/>
+    <id>https://skystarry.cn/2018/08/21/11.Kalman/</id>
+    <published>2018-08-20T18:05:36.000Z</published>
+    <updated>2020-12-09T01:10:09.585Z</updated>
+    
+    
+    <summary type="html">&lt;p&gt;前段时间在知乎上看到的&lt;span class=&quot;exturl&quot; data-url=&quot;aHR0cHM6Ly96aHVhbmxhbi56aGlodS5jb20vcC8zODc0NTk1MA==&quot;&gt;《卡尔曼滤波器及其在云台控制中的应用》&lt;i class=&quot;fa fa-external-link-alt&quot;&gt;&lt;/i&gt;&lt;/span&gt;这篇文章，中间提到了Estimate的三个境界：smoothing-&amp;gt;filtering-&amp;gt;prediction。为了解决我在机器人比赛中的预测问题，也为了迈入Estimate的大门，就从Kalman Filter开始入手吧。&lt;/p&gt;</summary>
+    
+    
+    
+    <category term="数学" scheme="https://skystarry.cn/categories/%E6%95%B0%E5%AD%A6/"/>
+    
+    
+    <category term="机器人" scheme="https://skystarry.cn/tags/%E6%9C%BA%E5%99%A8%E4%BA%BA/"/>
+    
+    <category term="数学" scheme="https://skystarry.cn/tags/%E6%95%B0%E5%AD%A6/"/>
+    
+  </entry>
+  
+</feed>
