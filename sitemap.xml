@@ -2,13 +2,6 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
-    <loc>https://punkli.github.io/google334ee391159a9a5d.html</loc>
-    
-    <lastmod>2020-12-27</lastmod>
-    
-  </url>
-  
-  <url>
     <loc>https://punkli.github.io/about/index.html</loc>
     
     <lastmod>2020-12-27</lastmod>
@@ -86,13 +79,6 @@
   </url>
   
   <url>
-    <loc>https://punkli.github.io/2019/27.optimize1/</loc>
-    
-    <lastmod>2020-12-09</lastmod>
-    
-  </url>
-  
-  <url>
     <loc>https://punkli.github.io/2019/28.MLE%E5%92%8CMAP/</loc>
     
     <lastmod>2020-12-09</lastmod>
@@ -100,7 +86,7 @@
   </url>
   
   <url>
-    <loc>https://punkli.github.io/2018/24.game/</loc>
+    <loc>https://punkli.github.io/2019/27.optimize1/</loc>
     
     <lastmod>2020-12-09</lastmod>
     
@@ -114,6 +100,13 @@
   </url>
   
   <url>
+    <loc>https://punkli.github.io/2018/24.game/</loc>
+    
+    <lastmod>2020-12-09</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>https://punkli.github.io/2018/20.cpp-taskflow/</loc>
     
     <lastmod>2020-12-09</lastmod>
@@ -121,14 +114,14 @@
   </url>
   
   <url>
-    <loc>https://punkli.github.io/2018/18.Fisher/</loc>
+    <loc>https://punkli.github.io/2018/17.Normal-distribution/</loc>
     
     <lastmod>2020-12-09</lastmod>
     
   </url>
   
   <url>
-    <loc>https://punkli.github.io/2018/17.Normal-distribution/</loc>
+    <loc>https://punkli.github.io/2018/18.Fisher/</loc>
     
     <lastmod>2020-12-09</lastmod>
     
@@ -156,14 +149,14 @@
   </url>
   
   <url>
-    <loc>https://punkli.github.io/2018/12.matrix-decomposition/</loc>
+    <loc>https://punkli.github.io/2018/13.pods-cmake/</loc>
     
     <lastmod>2020-12-09</lastmod>
     
   </url>
   
   <url>
-    <loc>https://punkli.github.io/2018/13.pods-cmake/</loc>
+    <loc>https://punkli.github.io/2018/12.matrix-decomposition/</loc>
     
     <lastmod>2020-12-09</lastmod>
     
@@ -177,7 +170,7 @@
   </url>
   
   <url>
-    <loc>https://punkli.github.io/2018/10.Graph-Based-Image-Segmentation/</loc>
+    <loc>https://punkli.github.io/2018/09.apriltags/</loc>
     
     <lastmod>2020-12-09</lastmod>
     
@@ -191,7 +184,7 @@
   </url>
   
   <url>
-    <loc>https://punkli.github.io/2018/09.apriltags/</loc>
+    <loc>https://punkli.github.io/2018/10.Graph-Based-Image-Segmentation/</loc>
     
     <lastmod>2020-12-09</lastmod>
     
