@@ -640,6 +640,85 @@ R(\alpha_i|x)=E(\lambda(\alpha_i,\omega_j)|x)=\sum_{j=1}^{c}\lambda(\alpha_i,\om
       </tags>
   </entry>
   <entry>
+    <title>Normal distribution</title>
+    <url>/2018/17.Normal-distribution/</url>
+    <content><![CDATA[<p>本blog总结单变量正态分布以及多元正态分布和他们的性质。</p>
+<a id="more"></a>
+<h1 id="单变量正态分布"><a href="#单变量正态分布" class="headerlink" title="单变量正态分布"></a>单变量正态分布</h1><p>概率密度函数：</p>
+<script type="math/tex; mode=display">
+p(x)=\frac{1}{\sqrt{2\pi}\sigma}\exp\left\{ -\frac{1}{2}\left(\frac{x-\mu}{\sigma}\right)^2\right\}</script><p>期望$\mu$和方差$\sigma^2$：</p>
+<script type="math/tex; mode=display">
+\mu = E\{x\}=\int_{-\infty}^{\infty}xp(x)dx \\
+\sigma^2=\int_{-\infty}^{\infty}(x-\mu)^2p(x)dx</script><h1 id="多元正态分布"><a href="#多元正态分布" class="headerlink" title="多元正态分布"></a>多元正态分布</h1><p>概率密度函数：</p>
+<script type="math/tex; mode=display">
+p(x)=\frac{1}{(x\pi)^{d/2}|\Sigma|^{1/2}}\exp\left\{ -\frac{1}{2}(x-\mu)^T\Sigma^{-1}(x-\mu)\right\}</script><ul>
+<li>$x=[x_1,x_2,…,x_d]^T$ 是d维向量</li>
+<li>$\mu=[\mu_1,\mu_2,…,\mu_d]^T$是d维均值向量</li>
+<li>$\Sigma$是dxd维协方差矩阵</li>
+</ul>
+<p>$<br>\mu=E\{x\} \\<br>\Sigma=E\{(x-\mu)(x-\mu)^T\}<br>$<br>$\mu$，$\Sigma$分别是向量$x$和矩阵$(x-\mu)(x-\mu)^T$的期望，若$x_i$是$x$的第$i$个个分量，$\mu_i$是$\mu$的第$i$个分量，$\sigma_{ij}$是$\Sigma$的第$i,j$个元素，则</p>
+<script type="math/tex; mode=display">
+\mu_i=E\{x_i\}=\int_{E^d}x_ip(x)dx=-\int_{-\infty}^{\infty}x_ip(x)dx_i</script><p>其中，$p(x_i)$为边缘分布</p>
+<script type="math/tex; mode=display">
+p(x_i)=\int_{-\infty}^{\infty}...\int_{-\infty}^{\infty}p(x)dx_1dx_2...dx_{x-1}dx_{i+1}...dx_d</script><p>而</p>
+<script type="math/tex; mode=display">
+\begin{equation} 
+\begin{split} 
+\sigma_{ij}&=E[(x_i-\mu_i)(x_j-\mu_j)] \\
+&=\int_{-\infty}^{\infty}...\int_{-\infty}^{\infty}(x_i-\mu_i)(x_j-\mu_j)p(x_i,x_j)dx_idx_j
+\end{split} 
+\end{equation}</script><p>协方差矩阵总是正定or半正定的矩阵，可以表示为</p>
+<script type="math/tex; mode=display">\Sigma = 
+\left[\begin{matrix}
+\sigma_{11} & \sigma_{12} & \dots & \sigma_{1d} \\ 
+\sigma_{21} & \sigma_{22} & \dots & \sigma_{2d} \\ 
+\vdots & \vdots & \ddots & \vdots \\ 
+\sigma_{2d} & \sigma_{2d} & \dots & \sigma_{dd} \\ 
+\end{matrix}\right]</script><h2 id="多元分布性质"><a href="#多元分布性质" class="headerlink" title="多元分布性质"></a>多元分布性质</h2><p>多元正态分布被均值向量$\mu$和协方差矩阵$\Sigma$所完全决定。</p>
+<script type="math/tex; mode=display">
+p(x)\sim N(\mu,\Sigma)</script><p>等密度点的轨迹为以超椭球面，区域中心由均值向量$\mu$决定，区域的大小由协方差矩阵$\Sigma$决定。当指数项为常数时，构成等密度点：</p>
+<script type="math/tex; mode=display">
+(x-\mu)^T\Sigma^{-1}(x-\mu)=C</script><p>该式子的解是一个超椭球面，且它的主轴方向由$\Sigma$阵的特征向量决定，主轴长度与相应的协方差矩阵$\Sigma$的特征值成正比。</p>
+<script type="math/tex; mode=display">
+\gamma^2=(x-\mu)^T\Sigma^{-1}(x-\mu)</script><p>称为由$x$到$\mu$的Mahalanobis距离（马氏距离）的平方，对应于Mahalanobis距离为$\gamma$的超椭圆球体积是</p>
+<script type="math/tex; mode=display">
+V=V_d|\Sigma|^{\frac{1}{2}}\gamma^d</script><p>其中$V_d$是$d$维单位超球体的体积，</p>
+<script type="math/tex; mode=display">
+V_d= 
+\begin{equation} 
+\left\{ 
+\begin{array}{lc} 
+\frac{\pi^{d/2}}{\left( \frac{d}{2} \right)!} & d为偶数\\
+\frac{2^d\pi^{(d-1)/2}\left( \frac{d-1}{2} \right)!}{d!} & d为奇数
+\end{array} 
+\right. 
+\end{equation}</script><p>对于给定的维数，样本离散度直接随$|\Sigma|^{1/2}$而变。</p>
+<h2 id="不相关性-独立性"><a href="#不相关性-独立性" class="headerlink" title="不相关性=独立性"></a>不相关性=独立性</h2><ul>
+<li>不相关：$E\{x_ix_j\}=E\{x_i\}E\{x-j\}$</li>
+<li>独立的：$p\{x_ix_j\}=p\{x_i\}p\{x_j\}$</li>
+</ul>
+<p>独立性比不相关性条件更强，而在多元正态分布中，两者等价。在正态分布中，变量互不相关，则一定独立。</p>
+<p>推论：如果多元正态随机向量的协方差矩阵是对角阵，则x的分量是相互独立的正态分布随机变量。</p>
+<h2 id="边缘分布和条件分布的正态性"><a href="#边缘分布和条件分布的正态性" class="headerlink" title="边缘分布和条件分布的正态性"></a>边缘分布和条件分布的正态性</h2><p>以二元正态分布为例，</p>
+<ul>
+<li>向量$x=[x_1,x_2]^T$</li>
+<li>均值$\mu=[\mu_1,\mu_2]^T$</li>
+<li>协方差矩阵$\Sigma=\left[\begin{matrix}\sigma_{11}^2&amp;\sigma_{12}^2\\\sigma_{21}^2&amp;\sigma_{22}^2\end{matrix}\right]$</li>
+</ul>
+<script type="math/tex; mode=display">
+p(x_1)\sim N(\mu_1,\sigma_{11}^2) \\
+p(x_2)\sim N(\mu_1,\sigma_{22}^2)</script><h2 id="线性变换的正态性"><a href="#线性变换的正态性" class="headerlink" title="线性变换的正态性"></a>线性变换的正态性</h2><p>对于多元正态随机变量$x$，无论是线性变化$y=Ax$还是线性组合$y=\alpha^Tx$，正态分布依然是正态分布。</p>
+<script type="math/tex; mode=display">
+p(y)\sim N(A\mu,A\Sigma A^T)
+p(y)\sim N(\alpha^T\mu,\alpha^T\Sigma\alpha)</script>]]></content>
+      <categories>
+        <category>数学</category>
+      </categories>
+      <tags>
+        <tag>数学</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Fisher</title>
     <url>/2018/18.Fisher/</url>
     <content><![CDATA[<p>线性判别方法linear discriminant analysis, LDA, R.A.</p>
@@ -739,83 +818,71 @@ J(W)=Tr{(W^TS_WW)^{-1}(W^TS_WW)}</script><p>其中，权值由$\{S_W^{-1}S_B\}$�
       </tags>
   </entry>
   <entry>
-    <title>Normal distribution</title>
-    <url>/2018/17.Normal-distribution/</url>
-    <content><![CDATA[<p>本blog总结单变量正态分布以及多元正态分布和他们的性质。</p>
+    <title>博弈论</title>
+    <url>/2018/24.game/</url>
+    <content><![CDATA[<h1 id="纳什均衡"><a href="#纳什均衡" class="headerlink" title="纳什均衡"></a>纳什均衡</h1><p>纳什均衡指的是这样一种策略组合，即在给定别人策略的情况下，没有人愿意单方面改变自己的策略，从而打破这种均衡。<br>数学表示：</p>
+<p>// 公式太长了，下次补上</p>
+<p>纳什均衡的一致预测性质:<br>一致预测：<br>如果所有博弈方都预测一个特定博弈结果会出现，所有博弈方都不会选择与预测结果不一致的策略，即没有哪个博弈方有偏离这个预测结果的愿望，因此预测结果会成为博弈的最终结果。<br>只有纳什均衡才具有一致预测的性质。一致预测性是纳什均衡的本质属性。<br>一致预测并不意味着一定能准确预测，因为有多重均衡， 预测不一致的可能。</p>
 <a id="more"></a>
-<h1 id="单变量正态分布"><a href="#单变量正态分布" class="headerlink" title="单变量正态分布"></a>单变量正态分布</h1><p>概率密度函数：</p>
-<script type="math/tex; mode=display">
-p(x)=\frac{1}{\sqrt{2\pi}\sigma}\exp\left\{ -\frac{1}{2}\left(\frac{x-\mu}{\sigma}\right)^2\right\}</script><p>期望$\mu$和方差$\sigma^2$：</p>
-<script type="math/tex; mode=display">
-\mu = E\{x\}=\int_{-\infty}^{\infty}xp(x)dx \\
-\sigma^2=\int_{-\infty}^{\infty}(x-\mu)^2p(x)dx</script><h1 id="多元正态分布"><a href="#多元正态分布" class="headerlink" title="多元正态分布"></a>多元正态分布</h1><p>概率密度函数：</p>
-<script type="math/tex; mode=display">
-p(x)=\frac{1}{(x\pi)^{d/2}|\Sigma|^{1/2}}\exp\left\{ -\frac{1}{2}(x-\mu)^T\Sigma^{-1}(x-\mu)\right\}</script><ul>
-<li>$x=[x_1,x_2,…,x_d]^T$ 是d维向量</li>
-<li>$\mu=[\mu_1,\mu_2,…,\mu_d]^T$是d维均值向量</li>
-<li>$\Sigma$是dxd维协方差矩阵</li>
+<h1 id="什么是博弈论"><a href="#什么是博弈论" class="headerlink" title="什么是博弈论"></a>什么是博弈论</h1><p>博弈论又称对策论，它使用严谨的数学模型研究 冲突对抗条件下的最优决策问题、是研究竞争的 逻辑和规律的数学分支。</p>
+<p>简单的说，博弈论是研究决策主体在给定信息结 构条件下，如何决策以使自己的效用最大化，以及不同决策主体之间决策的均衡。</p>
+<h1 id="博弈的要素"><a href="#博弈的要素" class="headerlink" title="博弈的要素"></a>博弈的要素</h1><h2 id="参与人（玩家-Player-Agent）"><a href="#参与人（玩家-Player-Agent）" class="headerlink" title="参与人（玩家, Player, Agent）:"></a>参与人（玩家, Player, Agent）:</h2><p>是博弈的参与主体，他通过选择自己的行动 （策略）来使自己的 收益最大化。参与人可以是 自然人，企业，国家等。在基于博弈的优化算法中，参与人代表算法中的某个元素。</p>
+<h2 id="参与人的策略集："><a href="#参与人的策略集：" class="headerlink" title="参与人的策略集："></a>参与人的策略集：</h2><p>是参与人可供选择的策略的集合。比如囚徒困境中的欺骗和合作。</p>
+<h2 id="收益-（效用，支付）："><a href="#收益-（效用，支付）：" class="headerlink" title="收益 （效用，支付）："></a>收益 （效用，支付）：</h2><p>在给定的策略组合下，参与人得到的确定的效用水平，或是参与人得到的期望效用水平。收益由收益函数来计算。</p>
+<h2 id="行动："><a href="#行动：" class="headerlink" title="行动："></a>行动：</h2><p>参与人在博弈的某个时间点的策略变量。</p>
+<h2 id="行动的顺序："><a href="#行动的顺序：" class="headerlink" title="行动的顺序："></a>行动的顺序：</h2><p>在动态博弈中，行动的顺序对博弈的结果有重要影响。同样的策略集，行动的顺序不同，每个人的最优策略就不同，博弈的结果就不同。尤其在不完全信息博弈中，后行动者根据先行动者的行动来获取信息。</p>
+<h2 id="信息"><a href="#信息" class="headerlink" title="信息"></a>信息</h2><p>参与人有关博弈的知识，特别是关于其它参与人的特征和行动的知识，以及自然的选择。<br>完美信息是指参与人对其它参与人的行动选择有准确的掌握。</p>
+<h2 id="共同知识："><a href="#共同知识：" class="headerlink" title="共同知识："></a>共同知识：</h2><p>所有参与人知道的每一步的信息集。</p>
+<h2 id="策略（战略）"><a href="#策略（战略）" class="headerlink" title="策略（战略）"></a>策略（战略）</h2><ul>
+<li>参与人在给定信息集情况下的行动规则，它规定参与人在 什么情况下选择什么行动。</li>
+<li>策略与行动：策略是行动的规则而不是行动本身。</li>
+<li>在静态博弈中，策略和行动是相同的。</li>
+<li>策略必须是完备的：必须给出参与人在每一种可能的情况下的行动选择。</li>
 </ul>
-<p>$<br>\mu=E\{x\} \\<br>\Sigma=E\{(x-\mu)(x-\mu)^T\}<br>$<br>$\mu$，$\Sigma$分别是向量$x$和矩阵$(x-\mu)(x-\mu)^T$的期望，若$x_i$是$x$的第$i$个个分量，$\mu_i$是$\mu$的第$i$个分量，$\sigma_{ij}$是$\Sigma$的第$i,j$个元素，则</p>
-<script type="math/tex; mode=display">
-\mu_i=E\{x_i\}=\int_{E^d}x_ip(x)dx=-\int_{-\infty}^{\infty}x_ip(x)dx_i</script><p>其中，$p(x_i)$为边缘分布</p>
-<script type="math/tex; mode=display">
-p(x_i)=\int_{-\infty}^{\infty}...\int_{-\infty}^{\infty}p(x)dx_1dx_2...dx_{x-1}dx_{i+1}...dx_d</script><p>而</p>
-<script type="math/tex; mode=display">
-\begin{equation} 
-\begin{split} 
-\sigma_{ij}&=E[(x_i-\mu_i)(x_j-\mu_j)] \\
-&=\int_{-\infty}^{\infty}...\int_{-\infty}^{\infty}(x_i-\mu_i)(x_j-\mu_j)p(x_i,x_j)dx_idx_j
-\end{split} 
-\end{equation}</script><p>协方差矩阵总是正定or半正定的矩阵，可以表示为</p>
-<script type="math/tex; mode=display">\Sigma = 
-\left[\begin{matrix}
-\sigma_{11} & \sigma_{12} & \dots & \sigma_{1d} \\ 
-\sigma_{21} & \sigma_{22} & \dots & \sigma_{2d} \\ 
-\vdots & \vdots & \ddots & \vdots \\ 
-\sigma_{2d} & \sigma_{2d} & \dots & \sigma_{dd} \\ 
-\end{matrix}\right]</script><h2 id="多元分布性质"><a href="#多元分布性质" class="headerlink" title="多元分布性质"></a>多元分布性质</h2><p>多元正态分布被均值向量$\mu$和协方差矩阵$\Sigma$所完全决定。</p>
-<script type="math/tex; mode=display">
-p(x)\sim N(\mu,\Sigma)</script><p>等密度点的轨迹为以超椭球面，区域中心由均值向量$\mu$决定，区域的大小由协方差矩阵$\Sigma$决定。当指数项为常数时，构成等密度点：</p>
-<script type="math/tex; mode=display">
-(x-\mu)^T\Sigma^{-1}(x-\mu)=C</script><p>该式子的解是一个超椭球面，且它的主轴方向由$\Sigma$阵的特征向量决定，主轴长度与相应的协方差矩阵$\Sigma$的特征值成正比。</p>
-<script type="math/tex; mode=display">
-\gamma^2=(x-\mu)^T\Sigma^{-1}(x-\mu)</script><p>称为由$x$到$\mu$的Mahalanobis距离（马氏距离）的平方，对应于Mahalanobis距离为$\gamma$的超椭圆球体积是</p>
-<script type="math/tex; mode=display">
-V=V_d|\Sigma|^{\frac{1}{2}}\gamma^d</script><p>其中$V_d$是$d$维单位超球体的体积，</p>
-<script type="math/tex; mode=display">
-V_d= 
-\begin{equation} 
-\left\{ 
-\begin{array}{lc} 
-\frac{\pi^{d/2}}{\left( \frac{d}{2} \right)!} & d为偶数\\
-\frac{2^d\pi^{(d-1)/2}\left( \frac{d-1}{2} \right)!}{d!} & d为奇数
-\end{array} 
-\right. 
-\end{equation}</script><p>对于给定的维数，样本离散度直接随$|\Sigma|^{1/2}$而变。</p>
-<h2 id="不相关性-独立性"><a href="#不相关性-独立性" class="headerlink" title="不相关性=独立性"></a>不相关性=独立性</h2><ul>
-<li>不相关：$E\{x_ix_j\}=E\{x_i\}E\{x-j\}$</li>
-<li>独立的：$p\{x_ix_j\}=p\{x_i\}p\{x_j\}$</li>
-</ul>
-<p>独立性比不相关性条件更强，而在多元正态分布中，两者等价。在正态分布中，变量互不相关，则一定独立。</p>
-<p>推论：如果多元正态随机向量的协方差矩阵是对角阵，则x的分量是相互独立的正态分布随机变量。</p>
-<h2 id="边缘分布和条件分布的正态性"><a href="#边缘分布和条件分布的正态性" class="headerlink" title="边缘分布和条件分布的正态性"></a>边缘分布和条件分布的正态性</h2><p>以二元正态分布为例，</p>
+<h2 id="均衡："><a href="#均衡：" class="headerlink" title="均衡："></a>均衡：</h2><p>指所有参与人的最优策略组合</p>
+<h1 id="基于博弈的控制"><a href="#基于博弈的控制" class="headerlink" title="基于博弈的控制"></a>基于博弈的控制</h1><ol>
+<li>合作博弈与非合作博弈 </li>
+<li>完全信息博弈与不完全信息博弈 </li>
+<li>静态博弈与动态博弈<br>相互组合：完全信息静态博弈、完全信息动态博弈、不完全信息静态博弈、不完全信息动态博弈。</li>
+<li>纯策略博弈与混合策略博弈</li>
+</ol>
+<p>特征函数。。。。。。。。。。。。。</p>
+<h2 id="合作博弈"><a href="#合作博弈" class="headerlink" title="合作博弈"></a>合作博弈</h2><p>合作博弈亦称为正和博弈，是指博弈双方的利益都有所增加，或者至少是一方的利益增加，而另一方的利益不受损害，因而整个集体的利益有所<br>增加。<br>合作博弈研究人们达成合作时如何分配合作得到的收益，即收益分配问题。合作博弈采取的是一种合作的方式，或者说是一种妥协。<br>至于收益在博弈各方之间如何分配，取决于博弈各方的力量对比和技巧运用。因此，妥协必须经过博弈各方的讨价还价，达成共识，进行合作。</p>
+<p>合作博弈存在的两个基本条件是：</p>
+<ol>
+<li>对联盟来说，整体收益大于其每个成员单 独经营时的收益之和。</li>
+<li>对联盟内部而言，应存在具有帕累托改进 性质的分配规则，即每个成员都能获得比不加入联盟时多一些的收益。</li>
+</ol>
+<h2 id="非合作博弈"><a href="#非合作博弈" class="headerlink" title="非合作博弈"></a>非合作博弈</h2><p>在参与人利益相互冲突中如何选择策略使自己的收益最大，即策略选择问题。是一种不可能达成具有约束力的 协议的博弈类型。<br>零和博弈、负和博弈是非合作博弈。<br>囚徒困境是非合作博弈。</p>
+<h2 id="完全信息博弈："><a href="#完全信息博弈：" class="headerlink" title="完全信息博弈："></a>完全信息博弈：</h2><p>是指每一参与者都拥有所有其他参与者的特征、策略及收益函数等方面的准确信息的博弈。<br>不完全信息博弈，参与人并不完全清楚有关博弈的一些信息。</p>
+<h2 id="静态博弈："><a href="#静态博弈：" class="headerlink" title="静态博弈："></a>静态博弈：</h2><p>是指博弈中参与者同时采取行动，或者尽管参与者行动的采取有先后顺序，但后行动的人不知道先采取行动的人采取的是什么行动。</p>
+<h2 id="动态博弈："><a href="#动态博弈：" class="headerlink" title="动态博弈："></a>动态博弈：</h2><p>动态博弈(dynamic game)是指参与人的行动有先后顺序，而且行动在后者可以观察到行动在先者的选择，并据此作出相应的选择。<br>不同的参与人在不同时间点行动，先行动者的选择影响后行动者的选择空间，后行动者可以观察到先行动者做了什么选择，因此，为了做最优的行动选择，每个参与人都必须这样思考问题：如果我如此选择，对方将如何应对？如果我是他，我将会如何行动？给定他的应对，什么是我的最优选择？</p>
+<p>动态博弈的困难在于，在前一刻最优的决策在下一刻可能不再为最优，因此在求解上发生很大的困难。</p>
 <ul>
-<li>向量$x=[x_1,x_2]^T$</li>
-<li>均值$\mu=[\mu_1,\mu_2]^T$</li>
-<li>协方差矩阵$\Sigma=\left[\begin{matrix}\sigma_{11}^2&amp;\sigma_{12}^2\\\sigma_{21}^2&amp;\sigma_{22}^2\end{matrix}\right]$</li>
+<li>动态博弈的先动优势与后动优势</li>
+<li>在动态博弈中，行动总 有先后顺序。有些博弈具有先动优势(first-mover advantage), 但有些博弈具有后动优势(second-mover advantage)。例如日常我们所说的：“先下手为强，后下手遭殃”；“捷足先登”；“后发制人”、“后发优势”，等等。</li>
 </ul>
-<script type="math/tex; mode=display">
-p(x_1)\sim N(\mu_1,\sigma_{11}^2) \\
-p(x_2)\sim N(\mu_1,\sigma_{22}^2)</script><h2 id="线性变换的正态性"><a href="#线性变换的正态性" class="headerlink" title="线性变换的正态性"></a>线性变换的正态性</h2><p>对于多元正态随机变量$x$，无论是线性变化$y=Ax$还是线性组合$y=\alpha^Tx$，正态分布依然是正态分布。</p>
-<script type="math/tex; mode=display">
-p(y)\sim N(A\mu,A\Sigma A^T)
-p(y)\sim N(\alpha^T\mu,\alpha^T\Sigma\alpha)</script>]]></content>
-      <categories>
-        <category>数学</category>
-      </categories>
-      <tags>
-        <tag>数学</tag>
-      </tags>
+<h2 id="纯策略博弈与混合策略博弈"><a href="#纯策略博弈与混合策略博弈" class="headerlink" title="纯策略博弈与混合策略博弈"></a>纯策略博弈与混合策略博弈</h2><p>在完全信息博弈中，如果在每个给定信息下，只能选择一种特定策略，这个策略为纯策略（purestrategy）。<br>如果在每个给定信息下只以某种概率选择不同策略，称为混合策略（mixed strategy）。混合策略是纯策略在空间上的概率分布，纯策略是混合策略的特例。纯策略的收益可以用效用表示，混合策略的收益只能以期望效用表示。</p>
+<hr>
+<h1 id="多重均衡与优化"><a href="#多重均衡与优化" class="headerlink" title="多重均衡与优化"></a>多重均衡与优化</h1><ol>
+<li>占优策略与智猪博弈</li>
+<li>博弈的多重纳什均衡</li>
+<li>帕累托最优均衡</li>
+<li>帕累托最优均衡与纳什均衡的关系</li>
+<li>如何得到帕累托最优均衡 </li>
+</ol>
+<h2 id="占优策略与智猪博弈"><a href="#占优策略与智猪博弈" class="headerlink" title="占优策略与智猪博弈"></a>占优策略与智猪博弈</h2><p>在参与人各自的策略集中，如果存在一个与其他竞争对手可能采取的策略无关的最优选择，则称其为占优策略(Dominant Strategy)，与之相对的其他策略则为劣势策略。占优策略是博弈论（game theory）中的专业术语, 所谓的占优策略就是指无论博弈对手如何行动都属于本人最佳选择的策略。</p>
+<h3 id="占优策略和纳什均衡的比较"><a href="#占优策略和纳什均衡的比较" class="headerlink" title="占优策略和纳什均衡的比较"></a>占优策略和纳什均衡的比较</h3><ul>
+<li>占优策略:“不管你怎么做，我所做的都是我能做得最好的。”</li>
+<li>纳什均衡:<ul>
+<li>“给定你的做法后，我所做的是我能做得最好的。”</li>
+<li>如果你有占优策略, 你可以使用此策略, 以不变应万变;</li>
+<li>如果你没有占优策略, 你必须随机应变。在达到了纳什均衡之后, 所有参与者都没有动机想再变了。</li>
+</ul>
+</li>
+</ul>
+<p>许多博弈可能有多个纳什均衡。</p>
+]]></content>
   </entry>
   <entry>
     <title>特征提取与选择</title>
@@ -901,71 +968,31 @@ J_d(x) = tr(\tilde{S_w}+\tilde{S_b})</script><p>优点：<br>定义直观、易�
       </tags>
   </entry>
   <entry>
-    <title>博弈论</title>
-    <url>/2018/24.game/</url>
-    <content><![CDATA[<h1 id="纳什均衡"><a href="#纳什均衡" class="headerlink" title="纳什均衡"></a>纳什均衡</h1><p>纳什均衡指的是这样一种策略组合，即在给定别人策略的情况下，没有人愿意单方面改变自己的策略，从而打破这种均衡。<br>数学表示：</p>
-<p>// 公式太长了，下次补上</p>
-<p>纳什均衡的一致预测性质:<br>一致预测：<br>如果所有博弈方都预测一个特定博弈结果会出现，所有博弈方都不会选择与预测结果不一致的策略，即没有哪个博弈方有偏离这个预测结果的愿望，因此预测结果会成为博弈的最终结果。<br>只有纳什均衡才具有一致预测的性质。一致预测性是纳什均衡的本质属性。<br>一致预测并不意味着一定能准确预测，因为有多重均衡， 预测不一致的可能。</p>
+    <title>矩阵分解</title>
+    <url>/2019/25.matrix/</url>
+    <content><![CDATA[<p>开个专题，研究矩阵分解的方法。</p>
 <a id="more"></a>
-<h1 id="什么是博弈论"><a href="#什么是博弈论" class="headerlink" title="什么是博弈论"></a>什么是博弈论</h1><p>博弈论又称对策论，它使用严谨的数学模型研究 冲突对抗条件下的最优决策问题、是研究竞争的 逻辑和规律的数学分支。</p>
-<p>简单的说，博弈论是研究决策主体在给定信息结 构条件下，如何决策以使自己的效用最大化，以及不同决策主体之间决策的均衡。</p>
-<h1 id="博弈的要素"><a href="#博弈的要素" class="headerlink" title="博弈的要素"></a>博弈的要素</h1><h2 id="参与人（玩家-Player-Agent）"><a href="#参与人（玩家-Player-Agent）" class="headerlink" title="参与人（玩家, Player, Agent）:"></a>参与人（玩家, Player, Agent）:</h2><p>是博弈的参与主体，他通过选择自己的行动 （策略）来使自己的 收益最大化。参与人可以是 自然人，企业，国家等。在基于博弈的优化算法中，参与人代表算法中的某个元素。</p>
-<h2 id="参与人的策略集："><a href="#参与人的策略集：" class="headerlink" title="参与人的策略集："></a>参与人的策略集：</h2><p>是参与人可供选择的策略的集合。比如囚徒困境中的欺骗和合作。</p>
-<h2 id="收益-（效用，支付）："><a href="#收益-（效用，支付）：" class="headerlink" title="收益 （效用，支付）："></a>收益 （效用，支付）：</h2><p>在给定的策略组合下，参与人得到的确定的效用水平，或是参与人得到的期望效用水平。收益由收益函数来计算。</p>
-<h2 id="行动："><a href="#行动：" class="headerlink" title="行动："></a>行动：</h2><p>参与人在博弈的某个时间点的策略变量。</p>
-<h2 id="行动的顺序："><a href="#行动的顺序：" class="headerlink" title="行动的顺序："></a>行动的顺序：</h2><p>在动态博弈中，行动的顺序对博弈的结果有重要影响。同样的策略集，行动的顺序不同，每个人的最优策略就不同，博弈的结果就不同。尤其在不完全信息博弈中，后行动者根据先行动者的行动来获取信息。</p>
-<h2 id="信息"><a href="#信息" class="headerlink" title="信息"></a>信息</h2><p>参与人有关博弈的知识，特别是关于其它参与人的特征和行动的知识，以及自然的选择。<br>完美信息是指参与人对其它参与人的行动选择有准确的掌握。</p>
-<h2 id="共同知识："><a href="#共同知识：" class="headerlink" title="共同知识："></a>共同知识：</h2><p>所有参与人知道的每一步的信息集。</p>
-<h2 id="策略（战略）"><a href="#策略（战略）" class="headerlink" title="策略（战略）"></a>策略（战略）</h2><ul>
-<li>参与人在给定信息集情况下的行动规则，它规定参与人在 什么情况下选择什么行动。</li>
-<li>策略与行动：策略是行动的规则而不是行动本身。</li>
-<li>在静态博弈中，策略和行动是相同的。</li>
-<li>策略必须是完备的：必须给出参与人在每一种可能的情况下的行动选择。</li>
-</ul>
-<h2 id="均衡："><a href="#均衡：" class="headerlink" title="均衡："></a>均衡：</h2><p>指所有参与人的最优策略组合</p>
-<h1 id="基于博弈的控制"><a href="#基于博弈的控制" class="headerlink" title="基于博弈的控制"></a>基于博弈的控制</h1><ol>
-<li>合作博弈与非合作博弈 </li>
-<li>完全信息博弈与不完全信息博弈 </li>
-<li>静态博弈与动态博弈<br>相互组合：完全信息静态博弈、完全信息动态博弈、不完全信息静态博弈、不完全信息动态博弈。</li>
-<li>纯策略博弈与混合策略博弈</li>
-</ol>
-<p>特征函数。。。。。。。。。。。。。</p>
-<h2 id="合作博弈"><a href="#合作博弈" class="headerlink" title="合作博弈"></a>合作博弈</h2><p>合作博弈亦称为正和博弈，是指博弈双方的利益都有所增加，或者至少是一方的利益增加，而另一方的利益不受损害，因而整个集体的利益有所<br>增加。<br>合作博弈研究人们达成合作时如何分配合作得到的收益，即收益分配问题。合作博弈采取的是一种合作的方式，或者说是一种妥协。<br>至于收益在博弈各方之间如何分配，取决于博弈各方的力量对比和技巧运用。因此，妥协必须经过博弈各方的讨价还价，达成共识，进行合作。</p>
-<p>合作博弈存在的两个基本条件是：</p>
-<ol>
-<li>对联盟来说，整体收益大于其每个成员单 独经营时的收益之和。</li>
-<li>对联盟内部而言，应存在具有帕累托改进 性质的分配规则，即每个成员都能获得比不加入联盟时多一些的收益。</li>
-</ol>
-<h2 id="非合作博弈"><a href="#非合作博弈" class="headerlink" title="非合作博弈"></a>非合作博弈</h2><p>在参与人利益相互冲突中如何选择策略使自己的收益最大，即策略选择问题。是一种不可能达成具有约束力的 协议的博弈类型。<br>零和博弈、负和博弈是非合作博弈。<br>囚徒困境是非合作博弈。</p>
-<h2 id="完全信息博弈："><a href="#完全信息博弈：" class="headerlink" title="完全信息博弈："></a>完全信息博弈：</h2><p>是指每一参与者都拥有所有其他参与者的特征、策略及收益函数等方面的准确信息的博弈。<br>不完全信息博弈，参与人并不完全清楚有关博弈的一些信息。</p>
-<h2 id="静态博弈："><a href="#静态博弈：" class="headerlink" title="静态博弈："></a>静态博弈：</h2><p>是指博弈中参与者同时采取行动，或者尽管参与者行动的采取有先后顺序，但后行动的人不知道先采取行动的人采取的是什么行动。</p>
-<h2 id="动态博弈："><a href="#动态博弈：" class="headerlink" title="动态博弈："></a>动态博弈：</h2><p>动态博弈(dynamic game)是指参与人的行动有先后顺序，而且行动在后者可以观察到行动在先者的选择，并据此作出相应的选择。<br>不同的参与人在不同时间点行动，先行动者的选择影响后行动者的选择空间，后行动者可以观察到先行动者做了什么选择，因此，为了做最优的行动选择，每个参与人都必须这样思考问题：如果我如此选择，对方将如何应对？如果我是他，我将会如何行动？给定他的应对，什么是我的最优选择？</p>
-<p>动态博弈的困难在于，在前一刻最优的决策在下一刻可能不再为最优，因此在求解上发生很大的困难。</p>
-<ul>
-<li>动态博弈的先动优势与后动优势</li>
-<li>在动态博弈中，行动总 有先后顺序。有些博弈具有先动优势(first-mover advantage), 但有些博弈具有后动优势(second-mover advantage)。例如日常我们所说的：“先下手为强，后下手遭殃”；“捷足先登”；“后发制人”、“后发优势”，等等。</li>
-</ul>
-<h2 id="纯策略博弈与混合策略博弈"><a href="#纯策略博弈与混合策略博弈" class="headerlink" title="纯策略博弈与混合策略博弈"></a>纯策略博弈与混合策略博弈</h2><p>在完全信息博弈中，如果在每个给定信息下，只能选择一种特定策略，这个策略为纯策略（purestrategy）。<br>如果在每个给定信息下只以某种概率选择不同策略，称为混合策略（mixed strategy）。混合策略是纯策略在空间上的概率分布，纯策略是混合策略的特例。纯策略的收益可以用效用表示，混合策略的收益只能以期望效用表示。</p>
-<hr>
-<h1 id="多重均衡与优化"><a href="#多重均衡与优化" class="headerlink" title="多重均衡与优化"></a>多重均衡与优化</h1><ol>
-<li>占优策略与智猪博弈</li>
-<li>博弈的多重纳什均衡</li>
-<li>帕累托最优均衡</li>
-<li>帕累托最优均衡与纳什均衡的关系</li>
-<li>如何得到帕累托最优均衡 </li>
-</ol>
-<h2 id="占优策略与智猪博弈"><a href="#占优策略与智猪博弈" class="headerlink" title="占优策略与智猪博弈"></a>占优策略与智猪博弈</h2><p>在参与人各自的策略集中，如果存在一个与其他竞争对手可能采取的策略无关的最优选择，则称其为占优策略(Dominant Strategy)，与之相对的其他策略则为劣势策略。占优策略是博弈论（game theory）中的专业术语, 所谓的占优策略就是指无论博弈对手如何行动都属于本人最佳选择的策略。</p>
-<h3 id="占优策略和纳什均衡的比较"><a href="#占优策略和纳什均衡的比较" class="headerlink" title="占优策略和纳什均衡的比较"></a>占优策略和纳什均衡的比较</h3><ul>
-<li>占优策略:“不管你怎么做，我所做的都是我能做得最好的。”</li>
-<li>纳什均衡:<ul>
-<li>“给定你的做法后，我所做的是我能做得最好的。”</li>
-<li>如果你有占优策略, 你可以使用此策略, 以不变应万变;</li>
-<li>如果你没有占优策略, 你必须随机应变。在达到了纳什均衡之后, 所有参与者都没有动机想再变了。</li>
-</ul>
-</li>
-</ul>
-<p>许多博弈可能有多个纳什均衡。</p>
+<h1 id="Cholesky分解"><a href="#Cholesky分解" class="headerlink" title="Cholesky分解"></a>Cholesky分解</h1><p><span class="exturl" data-url="aHR0cHM6Ly96aC53aWtpcGVkaWEub3JnL3dpa2kvJUU1JTlGJTgzJUU1JUIwJTk0JUU3JUIxJUIzJUU3JTg5JUI5JUU3JTlGJUE5JUU5JTk4JUI1">Hermitian matrix（埃尔米特矩阵，厄米矩阵，自伴随矩阵）<i class="fa fa-external-link-alt"></i></span>，是共轭对称的方阵。</p>
+<script type="math/tex; mode=display">\left[\begin{matrix} 3 & 2+i \\ 2-i & 1 \end{matrix}\right]</script><p><span class="exturl" data-url="aHR0cHM6Ly96aC53aWtpcGVkaWEub3JnL3dpa2kvJUU2JUFEJUEzJUU1JUFFJTlBJUU3JTlGJUE5JUU5JTk4JUI1">正定矩阵<i class="fa fa-external-link-alt"></i></span>是Hermitian matrix的一种。<br>设A是一个n阶厄米特正定矩阵(Hermitian positive-definite matrix)。Cholesky分解的目标是：<br>设$A = LL^{T}$，得到：（其中$A_{21}$是一个列向量，$A_{22}$是一个n-1阶的方阵）</p>
+<script type="math/tex; mode=display">\left[ \begin{matrix} a_{11}&A_{21}^{T}\\ A_{21}&A_{22}\\ \end{matrix} \right] =  \left[ \begin{matrix} l_{11}&0\\ L_{21}&L_{22}\\ \end{matrix} \right] \left[ \begin{matrix} l_{11}&L_{21}^{T}\\ 0&L_{22}^{T}\\ \end{matrix} \right]=  \left[ \begin{matrix} l_{11}^{2}&l_{11}L_{21}^{T}\\ l_{11}L_{21}&L_{21}L_{21}^{T}+L_{22}L_{22}^{T}\\ \end{matrix} \right]</script><p>其中，未知量$l_{11},L_{21},L_{22}$，这3个未知量的求解公式是：</p>
+<script type="math/tex; mode=display">l_{11} = \sqrt {a_{11}}，L_{21} = \frac {1}{l_{11}}A_{21}，L_{22}L_{22}^{T} =  A_{22} - L_{21}L_{21}^{T}</script><p>设$A_{22}’ = A_{22} - L_{21}L_{21}^{T}$，则化简为$A_{22}’ = L_{22}L_{22}^{T}$，可以继续Cholesky分解，被分解的矩阵是A的右下角的n-1阶子方阵。所以这个算法具有递归性质。</p>
+<p>举个例子：</p>
+<script type="math/tex; mode=display">A =  \left[ \begin{matrix} 25&15&-5\\ 15&18&0\\ -5&0&11\\ \end{matrix} \right] =  \left[ \begin{matrix} l_{11}&0&0\\ l_{21}&l_{22}&0\\ l_{31}&l_{32}&l_{33}\\ \end{matrix} \right] \left[ \begin{matrix} l_{11}&l_{21}&l_{31}\\ 0&l_{22}&l_{32}\\ 0&0&l_{33}\\ \end{matrix} \right]</script><p>根据公式，有：</p>
+<script type="math/tex; mode=display">l_{11} = \sqrt { a_{11} } = 5</script><script type="math/tex; mode=display">L_{21} = \frac {1}{l_{11}}A_{21} = \frac {1}{5} \left[ \begin{matrix} 15\\ -5\\ \end{matrix} \right] =  \left[ \begin{matrix} 3\\ -1\\ \end{matrix} \right]</script><script type="math/tex; mode=display">A_{22} - L_{21}L_{21}^{T}  =  L_{22}L_{22}^{T}</script><script type="math/tex; mode=display">A_{22} - L_{21}L_{21}^{T}  =  L_{22}L_{22}^{T}</script><script type="math/tex; mode=display">\left[ \begin{matrix} 18&0\\ 0&11\\ \end{matrix} \right] -  \left[ \begin{matrix} 3\\ -1\\ \end{matrix} \right] \left[ \begin{matrix} 3&-1\\ \end{matrix} \right] =   \left[ \begin{matrix} l_{22}&0\\ l_{32}&l_{33}\\ \end{matrix} \right]   \left[ \begin{matrix} l_{22}&l_{32}\\ 0&l_{33}\\ \end{matrix} \right]</script><script type="math/tex; mode=display">\left[ \begin{matrix} 9&3\\ 3&10\\ \end{matrix} \right] =  \left[ \begin{matrix} l_{22}&0\\ l_{32}&l_{33}\\ \end{matrix} \right]   \left[ \begin{matrix} l_{22}&l_{32}\\ 0&l_{33}\\ \end{matrix} \right]</script><p>(注意，这里已经是n-1阶的Cholesky分解)</p>
+<script type="math/tex; mode=display">l_{22} = \sqrt { 9 } = 3</script><script type="math/tex; mode=display">l_{32} = \frac {1}{3}3 = 1</script><script type="math/tex; mode=display">10 = l_{32}^{2} + l_{33}^{2} = 1 + l_{33}^{2}</script><script type="math/tex; mode=display">l_{33} = \sqrt {10 - 1} = 3</script><p>综上</p>
+<script type="math/tex; mode=display">A =  \left[ \begin{matrix} 25&15&-5\\ 15&18&0\\ -5&0&11\\ \end{matrix} \right] =  \left[ \begin{matrix} 5&0&0\\ 3&3&0\\ -1&1&3\\ \end{matrix} \right] \left[ \begin{matrix} 5&3&-1\\ 0&3&1\\ 0&0&3\\ \end{matrix} \right]</script><p>对矩阵的Cholesky分解，就像对实数的求平方根。根据协方差矩阵的定义，Cholesky分解可以反求期望。</p>
+<h1 id="特征分解"><a href="#特征分解" class="headerlink" title="特征分解"></a>特征分解</h1><p>N维非零向量$v$是N×N的矩阵$A$的特征向量，当且仅当下式成立：</p>
+<script type="math/tex; mode=display">
+Av=\lambda v</script><p>其中$λ$为一标量，称为$v$对应的特征值。也称$v$为特征值$λ$对应的特征向量。也即特征向量被施以线性变换$A$只会使向量伸长或缩短而其方向不被改变。<br>由上式可得</p>
+<script type="math/tex; mode=display">
+p(\lambda):=det(A-\lambda I)=0.</script><h1 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h1><p><span class="exturl" data-url="aHR0cHM6Ly96aC53aWtpcGVkaWEub3JnL3dpa2kvJUU1JThGJUFGJUU1JUFGJUI5JUU4JUE3JTkyJUU1JThDJTk2JUU3JTlGJUE5JUU5JTk4JUI1">可对角化矩阵<i class="fa fa-external-link-alt"></i></span><br><span class="exturl" data-url="aHR0cHM6Ly96aC53aWtpcGVkaWEub3JnL3dpa2kvJUU4JThCJUE1JUU1JUIwJTk0JUU1JUJEJTkzJUU2JUEwJTg3JUU1JTg3JTg2JUU1JTlFJThC">若尔当标准型<i class="fa fa-external-link-alt"></i></span><br><span class="exturl" data-url="aHR0cHM6Ly96aC53aWtpcGVkaWEub3JnL3dpa2kvJUU1JUI4JThDJUU1JUIwJTk0JUU0JUJDJUFGJUU3JTg5JUI5JUU3JUE5JUJBJUU5JTk3JUI0">希尔伯特空间<i class="fa fa-external-link-alt"></i></span><br><span class="exturl" data-url="aHR0cHM6Ly96aC53aWtpcGVkaWEub3JnL3dpa2kvJUU3JTg5JUI5JUU1JUJFJTgxJUU1JTg4JTg2JUU4JUE3JUEz">特征分解<i class="fa fa-external-link-alt"></i></span><br><span class="exturl" data-url="aHR0cHM6Ly96aC53aWtpcGVkaWEub3JnL3dpa2kvJUU1JUE1JTg3JUU1JUJDJTgyJUU1JTgwJUJDJUU1JTg4JTg2JUU4JUE3JUEz">奇异值分解<i class="fa fa-external-link-alt"></i></span></p>
 ]]></content>
+      <categories>
+        <category>数学</category>
+      </categories>
+      <tags>
+        <tag>线性代数</tag>
+      </tags>
   </entry>
   <entry>
     <title>无约束最优化方法</title>
@@ -1082,33 +1109,6 @@ p(\hat{x}|X)=\int_{\theta\in\Theta}p(\hat{x}|\theta)p(\theta|X)d\theta=\int_{\th
       </categories>
       <tags>
         <tag>统计学</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>矩阵分解</title>
-    <url>/2019/25.matrix/</url>
-    <content><![CDATA[<p>开个专题，研究矩阵分解的方法。</p>
-<a id="more"></a>
-<h1 id="Cholesky分解"><a href="#Cholesky分解" class="headerlink" title="Cholesky分解"></a>Cholesky分解</h1><p><span class="exturl" data-url="aHR0cHM6Ly96aC53aWtpcGVkaWEub3JnL3dpa2kvJUU1JTlGJTgzJUU1JUIwJTk0JUU3JUIxJUIzJUU3JTg5JUI5JUU3JTlGJUE5JUU5JTk4JUI1">Hermitian matrix（埃尔米特矩阵，厄米矩阵，自伴随矩阵）<i class="fa fa-external-link-alt"></i></span>，是共轭对称的方阵。</p>
-<script type="math/tex; mode=display">\left[\begin{matrix} 3 & 2+i \\ 2-i & 1 \end{matrix}\right]</script><p><span class="exturl" data-url="aHR0cHM6Ly96aC53aWtpcGVkaWEub3JnL3dpa2kvJUU2JUFEJUEzJUU1JUFFJTlBJUU3JTlGJUE5JUU5JTk4JUI1">正定矩阵<i class="fa fa-external-link-alt"></i></span>是Hermitian matrix的一种。<br>设A是一个n阶厄米特正定矩阵(Hermitian positive-definite matrix)。Cholesky分解的目标是：<br>设$A = LL^{T}$，得到：（其中$A_{21}$是一个列向量，$A_{22}$是一个n-1阶的方阵）</p>
-<script type="math/tex; mode=display">\left[ \begin{matrix} a_{11}&A_{21}^{T}\\ A_{21}&A_{22}\\ \end{matrix} \right] =  \left[ \begin{matrix} l_{11}&0\\ L_{21}&L_{22}\\ \end{matrix} \right] \left[ \begin{matrix} l_{11}&L_{21}^{T}\\ 0&L_{22}^{T}\\ \end{matrix} \right]=  \left[ \begin{matrix} l_{11}^{2}&l_{11}L_{21}^{T}\\ l_{11}L_{21}&L_{21}L_{21}^{T}+L_{22}L_{22}^{T}\\ \end{matrix} \right]</script><p>其中，未知量$l_{11},L_{21},L_{22}$，这3个未知量的求解公式是：</p>
-<script type="math/tex; mode=display">l_{11} = \sqrt {a_{11}}，L_{21} = \frac {1}{l_{11}}A_{21}，L_{22}L_{22}^{T} =  A_{22} - L_{21}L_{21}^{T}</script><p>设$A_{22}’ = A_{22} - L_{21}L_{21}^{T}$，则化简为$A_{22}’ = L_{22}L_{22}^{T}$，可以继续Cholesky分解，被分解的矩阵是A的右下角的n-1阶子方阵。所以这个算法具有递归性质。</p>
-<p>举个例子：</p>
-<script type="math/tex; mode=display">A =  \left[ \begin{matrix} 25&15&-5\\ 15&18&0\\ -5&0&11\\ \end{matrix} \right] =  \left[ \begin{matrix} l_{11}&0&0\\ l_{21}&l_{22}&0\\ l_{31}&l_{32}&l_{33}\\ \end{matrix} \right] \left[ \begin{matrix} l_{11}&l_{21}&l_{31}\\ 0&l_{22}&l_{32}\\ 0&0&l_{33}\\ \end{matrix} \right]</script><p>根据公式，有：</p>
-<script type="math/tex; mode=display">l_{11} = \sqrt { a_{11} } = 5</script><script type="math/tex; mode=display">L_{21} = \frac {1}{l_{11}}A_{21} = \frac {1}{5} \left[ \begin{matrix} 15\\ -5\\ \end{matrix} \right] =  \left[ \begin{matrix} 3\\ -1\\ \end{matrix} \right]</script><script type="math/tex; mode=display">A_{22} - L_{21}L_{21}^{T}  =  L_{22}L_{22}^{T}</script><script type="math/tex; mode=display">A_{22} - L_{21}L_{21}^{T}  =  L_{22}L_{22}^{T}</script><script type="math/tex; mode=display">\left[ \begin{matrix} 18&0\\ 0&11\\ \end{matrix} \right] -  \left[ \begin{matrix} 3\\ -1\\ \end{matrix} \right] \left[ \begin{matrix} 3&-1\\ \end{matrix} \right] =   \left[ \begin{matrix} l_{22}&0\\ l_{32}&l_{33}\\ \end{matrix} \right]   \left[ \begin{matrix} l_{22}&l_{32}\\ 0&l_{33}\\ \end{matrix} \right]</script><script type="math/tex; mode=display">\left[ \begin{matrix} 9&3\\ 3&10\\ \end{matrix} \right] =  \left[ \begin{matrix} l_{22}&0\\ l_{32}&l_{33}\\ \end{matrix} \right]   \left[ \begin{matrix} l_{22}&l_{32}\\ 0&l_{33}\\ \end{matrix} \right]</script><p>(注意，这里已经是n-1阶的Cholesky分解)</p>
-<script type="math/tex; mode=display">l_{22} = \sqrt { 9 } = 3</script><script type="math/tex; mode=display">l_{32} = \frac {1}{3}3 = 1</script><script type="math/tex; mode=display">10 = l_{32}^{2} + l_{33}^{2} = 1 + l_{33}^{2}</script><script type="math/tex; mode=display">l_{33} = \sqrt {10 - 1} = 3</script><p>综上</p>
-<script type="math/tex; mode=display">A =  \left[ \begin{matrix} 25&15&-5\\ 15&18&0\\ -5&0&11\\ \end{matrix} \right] =  \left[ \begin{matrix} 5&0&0\\ 3&3&0\\ -1&1&3\\ \end{matrix} \right] \left[ \begin{matrix} 5&3&-1\\ 0&3&1\\ 0&0&3\\ \end{matrix} \right]</script><p>对矩阵的Cholesky分解，就像对实数的求平方根。根据协方差矩阵的定义，Cholesky分解可以反求期望。</p>
-<h1 id="特征分解"><a href="#特征分解" class="headerlink" title="特征分解"></a>特征分解</h1><p>N维非零向量$v$是N×N的矩阵$A$的特征向量，当且仅当下式成立：</p>
-<script type="math/tex; mode=display">
-Av=\lambda v</script><p>其中$λ$为一标量，称为$v$对应的特征值。也称$v$为特征值$λ$对应的特征向量。也即特征向量被施以线性变换$A$只会使向量伸长或缩短而其方向不被改变。<br>由上式可得</p>
-<script type="math/tex; mode=display">
-p(\lambda):=det(A-\lambda I)=0.</script><h1 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h1><p><span class="exturl" data-url="aHR0cHM6Ly96aC53aWtpcGVkaWEub3JnL3dpa2kvJUU1JThGJUFGJUU1JUFGJUI5JUU4JUE3JTkyJUU1JThDJTk2JUU3JTlGJUE5JUU5JTk4JUI1">可对角化矩阵<i class="fa fa-external-link-alt"></i></span><br><span class="exturl" data-url="aHR0cHM6Ly96aC53aWtpcGVkaWEub3JnL3dpa2kvJUU4JThCJUE1JUU1JUIwJTk0JUU1JUJEJTkzJUU2JUEwJTg3JUU1JTg3JTg2JUU1JTlFJThC">若尔当标准型<i class="fa fa-external-link-alt"></i></span><br><span class="exturl" data-url="aHR0cHM6Ly96aC53aWtpcGVkaWEub3JnL3dpa2kvJUU1JUI4JThDJUU1JUIwJTk0JUU0JUJDJUFGJUU3JTg5JUI5JUU3JUE5JUJBJUU5JTk3JUI0">希尔伯特空间<i class="fa fa-external-link-alt"></i></span><br><span class="exturl" data-url="aHR0cHM6Ly96aC53aWtpcGVkaWEub3JnL3dpa2kvJUU3JTg5JUI5JUU1JUJFJTgxJUU1JTg4JTg2JUU4JUE3JUEz">特征分解<i class="fa fa-external-link-alt"></i></span><br><span class="exturl" data-url="aHR0cHM6Ly96aC53aWtpcGVkaWEub3JnL3dpa2kvJUU1JUE1JTg3JUU1JUJDJTgyJUU1JTgwJUJDJUU1JTg4JTg2JUU4JUE3JUEz">奇异值分解<i class="fa fa-external-link-alt"></i></span></p>
-]]></content>
-      <categories>
-        <category>数学</category>
-      </categories>
-      <tags>
-        <tag>线性代数</tag>
       </tags>
   </entry>
   <entry>
