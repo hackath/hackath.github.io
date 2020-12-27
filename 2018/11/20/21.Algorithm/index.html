@@ -39,7 +39,7 @@
 <meta property="og:image" content="https://skystarry.cn/img/algorithm_review/pic7.png">
 <meta property="og:image" content="https://skystarry.cn/img/algorithm_review/pic8.png">
 <meta property="article:published_time" content="2018-11-19T18:27:02.000Z">
-<meta property="article:modified_time" content="2020-12-09T01:10:09.588Z">
+<meta property="article:modified_time" content="2020-12-27T00:39:37.882Z">
 <meta property="article:author" content="skystarry">
 <meta property="article:tag" content="编程">
 <meta name="twitter:card" content="summary">
@@ -234,20 +234,20 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">29</span>
+          <span class="site-state-item-count">28</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">9</span>
+        <span class="site-state-item-count">8</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">18</span>
+        <span class="site-state-item-count">17</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -334,7 +334,7 @@
           <i class="far fa-calendar-check"></i>
         </span>
         <span class="post-meta-item-text">更新于</span>
-        <time title="修改时间：2020-12-09 09:10:09" itemprop="dateModified" datetime="2020-12-09T09:10:09+08:00">2020-12-09</time>
+        <time title="修改时间：2020-12-27 08:39:37" itemprop="dateModified" datetime="2020-12-27T08:39:37+08:00">2020-12-27</time>
       </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -380,8 +380,8 @@
 <h2 id="Insertion-Sort"><a href="#Insertion-Sort" class="headerlink" title="Insertion Sort"></a>Insertion Sort</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">for i←2 to n</span><br><span class="line">    x←A[i];</span><br><span class="line">    j←i-1;</span><br><span class="line">    while (j&gt;0) and (A[j]&gt;x)</span><br><span class="line">        A[j+1]←A[j];</span><br><span class="line">        j←j-1;</span><br><span class="line">    end while;</span><br><span class="line">    A[j+1]←x;</span><br><span class="line">end for;</span><br></pre></td></tr></table></figure>
 <h2 id="Bottom-Up-Merge-Sorting"><a href="#Bottom-Up-Merge-Sorting" class="headerlink" title="Bottom-Up Merge Sorting"></a>Bottom-Up Merge Sorting</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">t←1;</span><br><span class="line">while t&lt;n</span><br><span class="line">    s←t; t←2s; i←0;</span><br><span class="line">    while i+tn</span><br><span class="line">        MERGE(A, i+1, i+s, i+t);</span><br><span class="line">        i←i+t;</span><br><span class="line">    end while;</span><br><span class="line">    if i+s&lt;n then MERGE(A, i+1, i+s, n);</span><br><span class="line">end while;</span><br></pre></td></tr></table></figure>
 <h1 id="递归-Techniques-Based-on-Recursion"><a href="#递归-Techniques-Based-on-Recursion" class="headerlink" title="递归 Techniques Based on Recursion"></a>递归 Techniques Based on Recursion</h1><h2 id="归纳-induction"><a href="#归纳-induction" class="headerlink" title="归纳 induction"></a>归纳 induction</h2><p>Given a problem with parameter n, designing an algorithm by induction is based on the fact that if we know how to solve the problem when presented with a parameter less than n, called the induction hypothesis, then our task reduces to extending that solution to include those instances with parameter n.</p>
-<h3 id="Radix-Sort"><a href="#Radix-Sort" class="headerlink" title="Radix Sort"></a>Radix Sort</h3><p>Let $L={a<em>1, a_2, …, a_n}$ be a list of n numbers each consisting of exactly $k$ digits. That is, each number is of the form $d_kd</em>{k-1}…d_1$, where each $d_i$ is a digit between 0 and 9.<br>In this problem, instead of applying induction on n, the number of objects, we use induction on k, the size of each integer.</p>
-<p>If the numbers are first distributed into the lists by their <strong>least significant digit</strong>, then a very efficient algorithm results.<br>Suppose that the numbers are sorted lexicographically according to their least <em>k-1</em> digits, i.e., digits $d<em>{k-1}, d</em>{k-2}, …, d_1$.<br>After sorting them on their <em>k</em>th digits, they will eventually be sorted.</p>
+<h3 id="Radix-Sort"><a href="#Radix-Sort" class="headerlink" title="Radix Sort"></a>Radix Sort</h3><p>Let $L=\{a_1, a_2, …, a_n\}$ be a list of n numbers each consisting of exactly $k$ digits. That is, each number is of the form $d_kd_{k-1}…d_1$, where each $d_i$ is a digit between 0 and 9.<br>In this problem, instead of applying induction on n, the number of objects, we use induction on k, the size of each integer.</p>
+<p>If the numbers are first distributed into the lists by their <strong>least significant digit</strong>, then a very efficient algorithm results.<br>Suppose that the numbers are sorted lexicographically according to their least <em>k-1</em> digits, i.e., digits $d_{k-1}, d_{k-2}, …, d_1$.<br>After sorting them on their <em>k</em>th digits, they will eventually be sorted.</p>
 <p><strong>First</strong>, distribute the numbers into 10 lists <em>$L_0, L_1, …, L_9$</em> according to digit <em>$d_1$</em> so that those numbers with <em>$d_1=0$</em> constitute list <em>$L_0$</em>, those with <em>$d_1=1$</em> constitute list <em>$L_1$</em> and so on.<br><strong>Next</strong>, the lists are coalesced in the order <em>$L_0, L_1, …, L_9$</em>.<br><strong>Then</strong>, they are distributed into 10 lists according to digit <em>$d_2$</em>, coalesced in order, and so on.</p>
 <p><strong>After</strong> distributing them according to <em>$d_k$</em> and collecting them in order, all numbers will be sorted.</p>
 <p><strong>Example</strong>: Sort A nondecreasingly. A[1…5]=7467，3275，6792，9134，1239</p>
@@ -413,9 +413,9 @@
 <p>The only extra space used is that needed to hold its local variables. Therefore, the space complexity is $\Theta(1)$.</p>
 <p>Input: An array A[1…n] of n elements;<br>Output: The elements in A sorted in nondecreasing order;<br>quicksort(A, 1, n);<br><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">quicksort(A, low, high)</span><br><span class="line"> if low&lt;high then</span><br><span class="line">     SPLIT(A[low…high], w) //w is the new position of A[low];</span><br><span class="line">     quicksort(A, low, w-1);</span><br><span class="line">     quicksort(A, w+1, high);</span><br><span class="line"> end if;</span><br></pre></td></tr></table></figure><br>The average number of comparisons performed by Algorithm QUICKSORT to sort an array of n elements is $\Theta(nlogn)$.</p>
 <h2 id="动态规划-Dynamic-Programming"><a href="#动态规划-Dynamic-Programming" class="headerlink" title="动态规划 Dynamic Programming"></a>动态规划 Dynamic Programming</h2><p>An algorithm that employs the dynamic programming technique is not recursive by itself, but the underlying solution of the problem is usually stated in the form of a recursive function.<br>This technique resorts to evaluating the recurrence in a bottom-up manner, saving intermediate results that are used later on to compute the desired solution.<br>This technique applies to many combinatorial optimization problems to derive efficient algorithms.</p>
-<h3 id="Longest-Common-Subsequence"><a href="#Longest-Common-Subsequence" class="headerlink" title="Longest Common Subsequence"></a>Longest Common Subsequence</h3><p>Given two strings A and B of lengths n and m, respectively, over an alphabet $\sum$, determine the length of the longest subsequence that is common to both A and B.<br>A subsequence of $A=a<em>1a_2…a_n$ is a string of the form $a</em>{i1}a<em>{i2}…a</em>{ik}$, where each $i_j$ is between 1 and n and $1\leq i_1&lt;i_2&lt;…&lt;i_k\leq n$.</p>
+<h3 id="Longest-Common-Subsequence"><a href="#Longest-Common-Subsequence" class="headerlink" title="Longest Common Subsequence"></a>Longest Common Subsequence</h3><p>Given two strings A and B of lengths n and m, respectively, over an alphabet $\sum$, determine the length of the longest subsequence that is common to both A and B.<br>A subsequence of $A=a_1a_2…a_n$ is a string of the form $a_{i1}a_{i2}…a_{ik}$, where each $i_j$ is between 1 and n and $1\leq i_1&lt;i_2&lt;…&lt;i_k\leq n$.</p>
 <p>Let $A=a_1a_2…a_n$ and $B=b_1b_2…b_m$.<br>Let L[i, j] denote the length of a longest common subsequence of $a_1a_2…a_i$ and $b_1b_2…b_j$. $0\leq i\leq n, 0\leq j\leq m$. When i or j be 0, it means the corresponding string is empty.<br>Naturally, if i=0 or j=0; the L[i, j]=0</p>
-<p>Suppose that both i and j are greater than 0. Then<br>If $a_i=b_j，L[i,j]=L[i-1,j-1]+1$<br>If $a_i\ne b_j，L[i,j]=max{L[i,j-1],L[i-1,j]}$<br>We get the following recurrence for computing the length of the longest common subsequence of A and B:</p>
+<p>Suppose that both i and j are greater than 0. Then<br>If $a_i=b_j，L[i,j]=L[i-1,j-1]+1$<br>If $a_i\ne b_j，L[i,j]=max\{L[i,j-1],L[i-1,j]\}$<br>We get the following recurrence for computing the length of the longest common subsequence of A and B:</p>
 <script type="math/tex; mode=display">
 L[i,j]= 
 \begin{equation} 
@@ -427,10 +427,10 @@ max\{L[i,j-1],L[i-1,j]\}, && if\ i>0,j>0, and\ a_i\ne b_j
 \end{array} 
 \right. 
 \end{equation}</script><p>We use an $(n+1)\times(m+1)$ table to compute the values of $L[i, j]$ for each pair of values of i and j, $0\leq i\leq n, 0\leq j\leq m$.<br>We only need to fill the table $L[0…n, 0…m]$ row by row using the previous formula.<br>Example: A=zxyxyz, B=xyyzx</p>
-<p><strong>Input</strong>: Two strings A and B of lengths n and m, respectively, over an alphabet $\sum$;<br><strong>Output</strong>: The length of the longest common subsequence of A and B.<br><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">for i←0 to n</span><br><span class="line">    L[i, 0]←0;</span><br><span class="line">end for;</span><br><span class="line">for j←0 to m</span><br><span class="line">    L[0, j]←0;</span><br><span class="line">end for;</span><br><span class="line">for i←1 to n</span><br><span class="line">    for j←1 to m</span><br><span class="line">        if ai=bj then L[i, j]←L[i-1, j-1]+1;</span><br><span class="line">      else L[i, j]←max&#123;L[i, j-1], L[i-1, j]&#125;;</span><br><span class="line">      end if;</span><br><span class="line">   end for;</span><br><span class="line">end for;</span><br><span class="line">return L[n, m];</span><br></pre></td></tr></table></figure><br>Time Complexity: $\Theta(nm)$<br>Space Complexity: $\Theta(\min{n,m})$</p>
+<p><strong>Input</strong>: Two strings A and B of lengths n and m, respectively, over an alphabet $\sum$;<br><strong>Output</strong>: The length of the longest common subsequence of A and B.<br><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">for i←0 to n</span><br><span class="line">    L[i, 0]←0;</span><br><span class="line">end for;</span><br><span class="line">for j←0 to m</span><br><span class="line">    L[0, j]←0;</span><br><span class="line">end for;</span><br><span class="line">for i←1 to n</span><br><span class="line">    for j←1 to m</span><br><span class="line">        if ai=bj then L[i, j]←L[i-1, j-1]+1;</span><br><span class="line">      else L[i, j]←max&#123;L[i, j-1], L[i-1, j]&#125;;</span><br><span class="line">      end if;</span><br><span class="line">   end for;</span><br><span class="line">end for;</span><br><span class="line">return L[n, m];</span><br></pre></td></tr></table></figure><br>Time Complexity: $\Theta(nm)$<br>Space Complexity: $\Theta(\min\{n,m\})$</p>
 <h3 id="The-Dynamic-Programming-Paradigm"><a href="#The-Dynamic-Programming-Paradigm" class="headerlink" title="The Dynamic Programming Paradigm"></a>The Dynamic Programming Paradigm</h3><p>The idea of saving solutions to subproblems in order to avoid their recomputation is the basis of this powerful method.<br>This is usually the case in many combinatorial optimization problems in which the solution can be expressed in the form of a recurrence whose direct solution causes subinstances to be computed more than once.</p>
 <p>An important observation about the working of dynamic programming is that the algorithm computes an optimal solution to every subinstance of the original instance considered by the algorithm.<br>This argument illustrates an important principle in algorithm design called the principle of optimality: Given an optimal sequence of decisions, each subsequence must be an optimal sequence of decisions by itself.</p>
-<h3 id="All-Pairs-Shortest-Path"><a href="#All-Pairs-Shortest-Path" class="headerlink" title="All-Pairs Shortest Path"></a>All-Pairs Shortest Path</h3><p>$d<em>{i,j}^0=l[i,j]$<br>$d</em>{i,j}^1$ is the length of a shortest path from i to j that does not pass through any vertex except possibly vertex 1<br>$d<em>{i,j}^2$ is the length of a shortest path from i to j that does not pass through any vertex except possibly vertex 1 or vertex 2 or both<br>$d</em>{i,j}^n$ is the length of a shortest path from i to j, i.e. the distance from i to j</p>
+<h3 id="All-Pairs-Shortest-Path"><a href="#All-Pairs-Shortest-Path" class="headerlink" title="All-Pairs Shortest Path"></a>All-Pairs Shortest Path</h3><p>$d_{i,j}^0=l[i,j]$<br>$d_{i,j}^1$ is the length of a shortest path from i to j that does not pass through any vertex except possibly vertex 1<br>$d_{i,j}^2$ is the length of a shortest path from i to j that does not pass through any vertex except possibly vertex 1 or vertex 2 or both<br>$d_{i,j}^n$ is the length of a shortest path from i to j, i.e. the distance from i to j</p>
 <p>We can compute $d_{i,j}^k$ recursively as follows:</p>
 <script type="math/tex; mode=display">
 d_{i,j}^k= 
@@ -453,7 +453,7 @@ D_k[i, j]=\min\left\{D_{k-1}[i, j], D_{k-1}[i, k]+D_{k-1}[k, j]\right\}</script>
 <script type="math/tex; mode=display">
 \sum_{u_i\in S}V_i \leq C</script><p>This version of the knapsack problem is sometimes referred to in the literature as the 0/1 knapsack problem. This is because the knapsack cannot contain more than one item of the same type.</p>
 <p>Let V[i, j] denote the value obtained by filling a knapsack of size j with items taken from the first i items {u1, u2, …, ui} in an optimal way. Here the range of i is from 0 to n and the range of j is from 0 to C. Thus, what we seek is the value V[n, C].<br>Obviously, V[0, j] is 0 for all values of j, as there is nothing in the knapsack. On the other hand, V[i, 0] is 0 for all values of i since nothing can be put in a knapsack of size 0.</p>
-<p>V[i, j], where i&gt;0 and j&gt;0, is the maximum of the following two quantities:<br>V[i-1, j]: The maximum value obtained by filling a knapsack of size j with items taken from ${u<em>1, u_2, …, u</em>{i-1}}$ only in an optimal way.<br>$V[i-1, j-s<em>i]+v_i$: The maximum value obtained by filling a knapsack of size $j-s_i$ with items taken from ${u_1, u_2, …, u</em>{i-1}}$ in an optimal way plus the value of item $u_i$. This case applies only if $j\geq s_i$ and it amounts to adding item $u_i$ to the knapsack.</p>
+<p>V[i, j], where i&gt;0 and j&gt;0, is the maximum of the following two quantities:<br>V[i-1, j]: The maximum value obtained by filling a knapsack of size j with items taken from $\{u_1, u_2, …, u_{i-1}\}$ only in an optimal way.<br>$V[i-1, j-s_i]+v_i$: The maximum value obtained by filling a knapsack of size $j-s_i$ with items taken from $\{u_1, u_2, …, u_{i-1}\}$ in an optimal way plus the value of item $u_i$. This case applies only if $j\geq s_i$ and it amounts to adding item $u_i$ to the knapsack.</p>
 <p>Then, we got the following recurrence for finding the value in an optimal packing:</p>
 <script type="math/tex; mode=display">
 V[i,j]= 
@@ -467,7 +467,7 @@ V[i-1,j] && if\ j<s_i \\
 \right.
 \end{equation}</script><p>Using dynamic programming to solve this integer programming problem is now straightforward. We use an $(n+1)\times (C+1)$ table to evaluate the values of V[i, j]. We only need to fill the table V[0…n, 0…C] row by row using the above formula.</p>
 <p>Example:<br>C=9<br>U={u1, u2, u3, u4}<br>Si=2, 3, 4, 5<br>Vi=3, 4, 5, 7</p>
-<p><strong>Input</strong>: A set of items $U={u<em>1, u_2, …, u_n}$ with sizes $s_1, s_2, …, s_n$ and values $v_1, v_2, …, v_n$ and a knapsack capacity C.<br><strong>Output</strong>: The maximum value of the function $\sum</em>{u<em>i\in S}v_i$ subject to $\sum</em>{u_i\in S}S_i\leq C$ for some subset of items $S\in U$.<br><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">for i←0 to n</span><br><span class="line">    V[i, 0]←0;</span><br><span class="line">end for;</span><br><span class="line">for j←0 to C</span><br><span class="line">    V[0, j]←0;</span><br><span class="line">end for;</span><br><span class="line">for i←1 to n</span><br><span class="line">    for j←1 to C</span><br><span class="line">        V[i, j]←V[i-1, j];</span><br><span class="line">       if si&lt;=j then V[i, j] ← max&#123;V[i, j], V[i-1, j-si]+vi&#125;;</span><br><span class="line">   end for;</span><br><span class="line">end for;</span><br><span class="line">return V[n, C];</span><br></pre></td></tr></table></figure><br>Time Complexity: $\Theta(nC)$<br>Space Complexity: $\Theta(C)$</p>
+<p><strong>Input</strong>: A set of items $U={u_1, u_2, …, u_n}$ with sizes $s_1, s_2, …, s_n$ and values $v_1, v_2, …, v_n$ and a knapsack capacity C.<br><strong>Output</strong>: The maximum value of the function $\sum_{u_i\in S}v_i$ subject to $\sum_{u_i\in S}S_i\leq C$ for some subset of items $S\in U$.<br><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">for i←0 to n</span><br><span class="line">    V[i, 0]←0;</span><br><span class="line">end for;</span><br><span class="line">for j←0 to C</span><br><span class="line">    V[0, j]←0;</span><br><span class="line">end for;</span><br><span class="line">for i←1 to n</span><br><span class="line">    for j←1 to C</span><br><span class="line">        V[i, j]←V[i-1, j];</span><br><span class="line">       if si&lt;=j then V[i, j] ← max&#123;V[i, j], V[i-1, j-si]+vi&#125;;</span><br><span class="line">   end for;</span><br><span class="line">end for;</span><br><span class="line">return V[n, C];</span><br></pre></td></tr></table></figure><br>Time Complexity: $\Theta(nC)$<br>Space Complexity: $\Theta(C)$</p>
 <h1 id="贪心-The-Greedy-Approach"><a href="#贪心-The-Greedy-Approach" class="headerlink" title="贪心 The Greedy Approach"></a>贪心 The Greedy Approach</h1><p>As in the case of dynamic programming algorithms, greedy algorithms are usually designed to solve optimization problems in which a quantity is to be minimized or maximized.<br>Unlike dynamic programming algorithms, greedy algorithms typically consist of a n iterative procedure that tries to find a local optimal solution.<br>In some instances, these local optimal solutions translate to global optimal solutions. In others, they fail to give optimal solutions.</p>
 <p>A greedy algorithm makes a correct guess on the basis of little calculation without worrying about the future. Thus, it builds a solution step by step. Each step increases the size of the partial solution and is based on local optimization.<br>The choice make is that which produces the largest immediate gain while maintaining feasibility.<br>Since each step consists of little work based on a small amount of information, the resulting algorithms are typically efficient.</p>
 <h2 id="The-Fractional-Knapsack-Problem"><a href="#The-Fractional-Knapsack-Problem" class="headerlink" title="The Fractional Knapsack Problem"></a>The Fractional Knapsack Problem</h2><p>Given n items of sizes s1, s2, …, sn, and values v1, v2, …, vn and size C, the knapsack capacity, the objective is to find nonnegative real numbers x1, x2, …, xn that maximize the sum</p>
@@ -559,8 +559,8 @@ I_p(x)=I(x) (mod\ p)</script><p>If p is not too large, then the fingerprint Ip(x
 <li>A sends p and Ip(x) to B.</li>
 <li>B checks whether Ip(x)=Ip(y) and confirms the equality or inequality of the two strings x and y.</li>
 </ol>
-<h2 id="Pattern-Matching"><a href="#Pattern-Matching" class="headerlink" title="Pattern Matching"></a>Pattern Matching</h2><p>Given a string of text $X=x_1x_2…x_n$ and a pattern $Y=y_1y_2…y_m$, where $m\leq n$, determine whether or not the pattern appears in the text. Without loss of generality, we will assume that the text alphabet is $\sum={0, 1}.$<br>The most straightforward method for solving this problem is simply to move the pattern across the entire text, and in every position compare the pattern with the portion of the text of length m.<br>This brute-force method leads to an $O(mn)$ running time in the worst case. </p>
-<p>Here we will present a simple and efficient Monte Carlo algorithm that achieves a running time of $O(n+m)$.<br>The algorithm follows the same brute-force algorithm of sliding the pattern Y across the text X, but instead of comparing the pattern with each block $X(j)=x<em>jx</em>{j+1}…x_{j+m-1}$, we will compare the fingerprint $I_p(Y)$ of the pattern with the fingerprints $I_p(X(j))$ of the blocks of text.</p>
+<h2 id="Pattern-Matching"><a href="#Pattern-Matching" class="headerlink" title="Pattern Matching"></a>Pattern Matching</h2><p>Given a string of text $X=x_1x_2…x_n$ and a pattern $Y=y_1y_2…y_m$, where $m\leq n$, determine whether or not the pattern appears in the text. Without loss of generality, we will assume that the text alphabet is $\sum=\{0, 1\}.$<br>The most straightforward method for solving this problem is simply to move the pattern across the entire text, and in every position compare the pattern with the portion of the text of length m.<br>This brute-force method leads to an $O(mn)$ running time in the worst case. </p>
+<p>Here we will present a simple and efficient Monte Carlo algorithm that achieves a running time of $O(n+m)$.<br>The algorithm follows the same brute-force algorithm of sliding the pattern Y across the text X, but instead of comparing the pattern with each block $X(j)=x_jx_{j+1}…x_{j+m-1}$, we will compare the fingerprint $I_p(Y)$ of the pattern with the fingerprints $I_p(X(j))$ of the blocks of text.</p>
 <p>The key observations that when we shift from one block of text to the text, the fingerprint of the new block X(j+1) can easily be computed from the fingerprint of X(j).</p>
 <script type="math/tex; mode=display">
 I_p(X(j+1))=(2I_p(X(j))-2^mx_j+x_{j+m}) (mod\ p)</script><p>If we let $W_p=2^m$ (mod p), then we have the recurrence</p>
@@ -570,8 +570,8 @@ I_p(X(j+1))=(2I_p(X(j))-W_px_j+x_{j+m}) (mod\ p)</script><p><strong>Input</stron
 <h1 id="逼近-Approximation-Algorithms"><a href="#逼近-Approximation-Algorithms" class="headerlink" title="逼近 Approximation Algorithms"></a>逼近 Approximation Algorithms</h1><p>Compromise on the quality of solution in return for faster solutions.</p>
 <p>There are many hard combinatorial optimization problems that cannot be solved efficiently using backtracking or randomization.<br>An alternative in this case for tacking some of these problems is to devise an approximation algorithm, given that we will be content with a “reasonable” solution that approximates an optimal solution.</p>
 <p>Associated with each approximation algorithm, there is a performance bound that guarantees that the solution to a given instance will not be far away from the neighborhood of the exact solution.<br>A marking characteristic of (most of) approximation algorithms is that they are fast, as they are mostly greedy algorithm.</p>
-<p>A combinatorial optimization problem $\Pi$ is either a minimization problem or a maximization problem. It consists of three components:<br>(1) A set $D<em>\Pi$ of instances.<br>(2) For each instance $I\in D</em>\Pi$, there is a finite set $S<em>\Pi(I)$ of candidate solutions for I.<br>(3) Associated with each solution $\sigma\in S</em>\Pi(I)$ to an instance I in $D<em>\Pi$, there is a value $f</em>\Pi(\sigma)$ called the solution value for $\sigma$.</p>
-<p>If $\Pi$ is a minimization problem, then an optimal solution $\sigma’$ for an instance $I\in D<em>\Pi$ has the property that for all $\sigma\in S</em>\Pi(I)$, $f<em>\Pi(\sigma’)\leq f</em>\Pi(\sigma)$. An optimal solution for a maximization problem is defined similarly. We will denote by OPT(I) the value $f<em>\Pi(\sigma<em>)$.<br>An <em>*approximation algorithm</em></em> A for an optimization problem $\Pi$ is a (polynomial time) algorithm such that given an instance $I\in D</em>\Pi$, it outputs some solution $\sigma\in S<em>\Pi(I)$. We will denote by $A(I)$ the value $f</em>\Pi(\sigma)$.</p>
+<p>A combinatorial optimization problem $\Pi$ is either a minimization problem or a maximization problem. It consists of three components:<br>(1) A set $D_\Pi$ of instances.<br>(2) For each instance $I\in D_\Pi$, there is a finite set $S_\Pi(I)$ of candidate solutions for I.<br>(3) Associated with each solution $\sigma\in S_\Pi(I)$ to an instance I in $D_\Pi$, there is a value $f_\Pi(\sigma)$ called the solution value for $\sigma$.</p>
+<p>If $\Pi$ is a minimization problem, then an optimal solution $\sigma’$ for an instance $I\in D_\Pi$ has the property that for all $\sigma\in S_\Pi(I)$, $f_\Pi(\sigma’)\leq f_\Pi(\sigma)$. An optimal solution for a maximization problem is defined similarly. We will denote by OPT(I) the value $f_\Pi(\sigma<em>)$.<br>An <em>*approximation algorithm</em></em> A for an optimization problem $\Pi$ is a (polynomial time) algorithm such that given an instance $I\in D_\Pi$, it outputs some solution $\sigma\in S_\Pi(I)$. We will denote by $A(I)$ the value $f_\Pi(\sigma)$.</p>
 <h2 id="Difference-Bounds"><a href="#Difference-Bounds" class="headerlink" title="Difference Bounds"></a>Difference Bounds</h2><p>The most we can hope from an approximation algorithm is that the difference between the value of the optimal solution and the value of the solution obtained by the approximation algorithm is always constant.</p>
 <p>In other words, for all instances I of the problem, the most desirable solution that can be obtained by an approximation algorithm A is such that $|A(I)-OPT(I)|\leq K$, for some constant K. </p>
 <h3 id="Planar-Graph-Coloring"><a href="#Planar-Graph-Coloring" class="headerlink" title="Planar Graph Coloring"></a>Planar Graph Coloring</h3><p>Let G=(V, E) be a planar graph. By the Four Color Theorem, every planar graph is four-colorable. It is fairly easy to determine whether a graph is 2-colorable or not. On the other hand, to determine whether it is 3-colorable is NP-complete.</p>
@@ -587,7 +587,7 @@ R_A(I)=\frac{OPT(I)}{A(I)}</script><p>Thus the approximation ratio is always gre
 <p>We list here one heuristic method:<br><strong>First Fit (FF):</strong> The bins are indexed as 1, 2, … All bins are initially empty. The items are considered for packing in the order u1, u2, …, un. To pack item ui, find the least index j such that bin j contains at most 1-si, and add item ui to the items packed in bin j. Then, we have</p>
 <script type="math/tex; mode=display">
 R_{FF}(I)=\frac{FF(I)}{OPT(I)}<2</script><h1 id="网络流-Network-Flow"><a href="#网络流-Network-Flow" class="headerlink" title="网络流 Network Flow"></a>网络流 Network Flow</h1><p>A network is a 4-tuple (G, s, t, c), where G=(V, E) is a directed graph, s and t are two distinguished vertices called, respectively, the source and sink, and c(u, v) is a capacity function defined on all pairs of vertices with c(u, v)&gt;0 if (u, v) ∈ E and c(u, v)=0 otherwise. |V|=n, |E|=m.</p>
-<p>A flow in G is a real-valued function f on vertex pairs having the following four conditions:<br>(1) <strong>Skew symmetry.</strong> $\forall u, v\in V, f(u, v)=-f(v, u)$. We say there is a flow from u to v if $f(u, v)&gt;0$.<br>(2) <strong>Capacity constraints.</strong> $\forall u, v\in V, f(u, v)\leq c(u, v)$. We say edge (u, v) is saturated if $f(u, v)=c(u, v)$.<br>(3) <strong>Flow conservation.</strong> $\forall u\in V-{s, t}, \sum_{v\in V}f(u, v)=0$. In other words, the net flow (total flow out minus total flow in) at any interior vertex is 0.<br>(4) $\forall v\in V, f(v, v)=0$.</p>
+<p>A flow in G is a real-valued function f on vertex pairs having the following four conditions:<br>(1) <strong>Skew symmetry.</strong> $\forall u, v\in V, f(u, v)=-f(v, u)$. We say there is a flow from u to v if $f(u, v)&gt;0$.<br>(2) <strong>Capacity constraints.</strong> $\forall u, v\in V, f(u, v)\leq c(u, v)$. We say edge (u, v) is saturated if $f(u, v)=c(u, v)$.<br>(3) <strong>Flow conservation.</strong> $\forall u\in V-\{s, t\}, \sum_{v\in V}f(u, v)=0$. In other words, the net flow (total flow out minus total flow in) at any interior vertex is 0.<br>(4) $\forall v\in V, f(v, v)=0$.</p>
 <p>A cut {S, T} is a partition of the vertex set V into two subsets S and T such that $s\in S$ and $t\in T$. The capacity of the cut {S, T}, denoted by c(S, T), is</p>
 <script type="math/tex; mode=display">
 c(S,T)=\sum_{u\in S,v\in T}c(u,v)</script><p>The flow across the cut {S, T}, denoted by f(S, T), is</p>
@@ -713,11 +713,9 @@ M1\oplus M2
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">2:29</span>
+    <span title="站点阅读时长">2:28</span>
   </span>
 </div>
-  <div class="powered-by">由 <span class="exturl theme-link" data-url="aHR0cHM6Ly9oZXhvLmlv">Hexo</span> & <span class="exturl theme-link" data-url="aHR0cHM6Ly90aGVtZS1uZXh0LmpzLm9yZy9taXN0Lw==">NexT.Mist</span> 强力驱动
-  </div>
 
     </div>
   </footer>
@@ -741,7 +739,49 @@ M1\oplus M2
 
 
 
-  
+  <script>
+  if (typeof MathJax === 'undefined') {
+    window.MathJax = {
+      tex: {
+        inlineMath: {'[+]': [['$', '$']]},
+        tags: 'ams'
+      },
+      options: {
+        renderActions: {
+          findScript: [10, doc => {
+            document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+              const display = !!node.type.match(/; *mode=display/);
+              const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+              const text = document.createTextNode('');
+              node.parentNode.replaceChild(text, node);
+              math.start = {node: text, delim: '', n: 0};
+              math.end = {node: text, delim: '', n: 0};
+              doc.math.push(math);
+            });
+          }, '', false],
+          insertedScript: [200, () => {
+            document.querySelectorAll('mjx-container').forEach(node => {
+              const target = node.parentNode;
+              if (target.nodeName.toLowerCase() === 'li') {
+                target.parentNode.classList.add('has-jax');
+              }
+            });
+          }, '', false]
+        }
+      }
+    };
+    const script = document.createElement('script');
+    script.src = '//cdn.jsdelivr.net/npm/mathjax@3.1.2/es5/tex-mml-chtml.js';
+    script.defer = true;
+    document.head.appendChild(script);
+  } else {
+    MathJax.startup.document.state(0);
+    MathJax.typesetClear();
+    MathJax.texReset();
+    MathJax.typeset();
+  }
+</script>
+
 
 
 </body>

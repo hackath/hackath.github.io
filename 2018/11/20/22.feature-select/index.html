@@ -31,7 +31,7 @@
 <meta property="og:description" content="对分类器设计来说，使用什么样的特征描述事物，也就是说使用什么样的特征空间是个很重要的问题。这个问题称之为描述量的选择问题，意思是指保留哪些描述量，删除哪些描述量的问题。本章节研究对特征空间进行改造,目的在于提高其某方面的性能，因此又称特征的优化问题。">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2018-11-20T00:50:58.000Z">
-<meta property="article:modified_time" content="2020-12-09T01:10:09.589Z">
+<meta property="article:modified_time" content="2020-12-27T00:38:50.054Z">
 <meta property="article:author" content="skystarry">
 <meta property="article:tag" content="模式识别">
 <meta name="twitter:card" content="summary">
@@ -225,20 +225,20 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">29</span>
+          <span class="site-state-item-count">28</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">9</span>
+        <span class="site-state-item-count">8</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">18</span>
+        <span class="site-state-item-count">17</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -325,7 +325,7 @@
           <i class="far fa-calendar-check"></i>
         </span>
         <span class="post-meta-item-text">更新于</span>
-        <time title="修改时间：2020-12-09 09:10:09" itemprop="dateModified" datetime="2020-12-09T09:10:09+08:00">2020-12-09</time>
+        <time title="修改时间：2020-12-27 08:38:50" itemprop="dateModified" datetime="2020-12-27T08:38:50+08:00">2020-12-27</time>
       </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -343,7 +343,7 @@
         <i class="far fa-file-word"></i>
       </span>
       <span class="post-meta-item-text">本文字数：</span>
-      <span>2.9k</span>
+      <span>3k</span>
     </span>
     <span class="post-meta-item" title="阅读时长">
       <span class="post-meta-item-icon">
@@ -391,8 +391,8 @@
 <li>度量特性：<ul>
 <li>$J_{ij} &gt; 0$，当$i\ne j$时</li>
 <li>$J_{ij} = 0$，当$i = j$时</li>
-<li>$J<em>{ij} = J</em>{ji}$</li>
-<li>这里$J<em>{ij}$是第$i$类和第$j$类的可分性准则函数，$J</em>{ij}$越大，两类的分离程度就越大。</li>
+<li>$J_{ij} = J_{ji}$</li>
+<li>这里$J_{ij}$是第$i$类和第$j$类的可分性准则函数，$J_{ij}$越大，两类的分离程度就越大。</li>
 </ul>
 </li>
 <li>单调性：即加入新的特征时候，准则函数不减小。</li>
@@ -416,20 +416,20 @@ J_d(x) = tr(\tilde{S_w}+\tilde{S_b})</script><p>优点：<br>定义直观、易�
 <p>常用的概率距离度量：</p>
 <ol>
 <li>Bhattacharyya距离（巴氏距离）：<ul>
-<li>$J<em>B=-\ln \int</em>{}^{}\left[ p(x|\omega_1)p(x|\omega_2) \right]^{1/2}dx$</li>
+<li>$J_B=-\ln \int_{}^{}\left[ p(x|\omega_1)p(x|\omega_2) \right]^{1/2}dx$</li>
 <li>显然，当$p(X|\omega_1)=p(X|\omega_2)$对所有X值成立时$J_B＝0$，而当两者完全不交迭时$J_B$无穷大。巴氏距离与错误率的上界有直接关系，因此$J_B$不仅用来对特征空间进行降维优化，而且也用来对分类器的错误率作出估计。</li>
 </ul>
 </li>
 <li>Chernoff（切诺夫）界限：<ul>
-<li>$J<em>C=-\ln \int</em>{}^{}p^s(x|\omega_1)p^{1-s}(x|\omega_2) dx$</li>
+<li>$J_C=-\ln \int_{}^{}p^s(x|\omega_1)p^{1-s}(x|\omega_2) dx$</li>
 <li>其中S取$[0，1]$区间的一个参数，显然在$S=0.5$时就变为$J_B$式，因此$J_B$是$J_C$的一个特例。</li>
 </ul>
 </li>
 <li>散度：区分$i，j$两类总的平均信息<ul>
-<li>$w<em>i，w_j$对数似然比：$l</em>{ij}(x)=p(x|\omega_i)/p(x|\omega_j)$</li>
-<li>对$w<em>i$类的可分信息：$I</em>{ij}(x)=E(l<em>{ij}(x)]=\int</em>{x}p(x|\omega_i)In(p(x|\omega_i)/p(x|\omega_j))dx$</li>
-<li>对$w<em>j$类的可分信息：$I</em>{ji}(x)=E(l<em>{ji}(x)]=\int</em>{x}p(x|\omega_j)In(p(x|\omega_j)/p(x|\omega_i))dx$</li>
-<li>散度$J<em>d$为两类平均可分信息之和：$J_D{x}=I</em>{ij}+I<em>{ji}=\int</em>{x}[p(x|\omega_i)-p(x|\omega_j)In(p(x|\omega_i)/p(x|\omega_j))dx$</li>
+<li>$w_i，w_j$对数似然比：$l_{ij}(x)=p(x|\omega_i)/p(x|\omega_j)$</li>
+<li>对$w_i$类的可分信息：$I_{ij}(x)=E(l_{ij}(x)]=\int_{x}p(x|\omega_i)In(p(x|\omega_i)/p(x|\omega_j))dx$</li>
+<li>对$w_j$类的可分信息：$I_{ji}(x)=E(l_{ji}(x)]=\int_{x}p(x|\omega_j)In(p(x|\omega_j)/p(x|\omega_i))dx$</li>
+<li>散度$J_d$为两类平均可分信息之和：$J_D{x}=I_{ij}+I_{ji}=\int_{x}[p(x|\omega_i)-p(x|\omega_j)In(p(x|\omega_i)/p(x|\omega_j))dx$</li>
 </ul>
 </li>
 </ol>
@@ -516,11 +516,9 @@ J_d(x) = tr(\tilde{S_w}+\tilde{S_b})</script><p>优点：<br>定义直观、易�
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">2:29</span>
+    <span title="站点阅读时长">2:28</span>
   </span>
 </div>
-  <div class="powered-by">由 <span class="exturl theme-link" data-url="aHR0cHM6Ly9oZXhvLmlv">Hexo</span> & <span class="exturl theme-link" data-url="aHR0cHM6Ly90aGVtZS1uZXh0LmpzLm9yZy9taXN0Lw==">NexT.Mist</span> 强力驱动
-  </div>
 
     </div>
   </footer>
@@ -544,7 +542,49 @@ J_d(x) = tr(\tilde{S_w}+\tilde{S_b})</script><p>优点：<br>定义直观、易�
 
 
 
-  
+  <script>
+  if (typeof MathJax === 'undefined') {
+    window.MathJax = {
+      tex: {
+        inlineMath: {'[+]': [['$', '$']]},
+        tags: 'ams'
+      },
+      options: {
+        renderActions: {
+          findScript: [10, doc => {
+            document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+              const display = !!node.type.match(/; *mode=display/);
+              const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+              const text = document.createTextNode('');
+              node.parentNode.replaceChild(text, node);
+              math.start = {node: text, delim: '', n: 0};
+              math.end = {node: text, delim: '', n: 0};
+              doc.math.push(math);
+            });
+          }, '', false],
+          insertedScript: [200, () => {
+            document.querySelectorAll('mjx-container').forEach(node => {
+              const target = node.parentNode;
+              if (target.nodeName.toLowerCase() === 'li') {
+                target.parentNode.classList.add('has-jax');
+              }
+            });
+          }, '', false]
+        }
+      }
+    };
+    const script = document.createElement('script');
+    script.src = '//cdn.jsdelivr.net/npm/mathjax@3.1.2/es5/tex-mml-chtml.js';
+    script.defer = true;
+    document.head.appendChild(script);
+  } else {
+    MathJax.startup.document.state(0);
+    MathJax.typesetClear();
+    MathJax.texReset();
+    MathJax.typeset();
+  }
+</script>
+
 
 
 </body>

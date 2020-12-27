@@ -228,20 +228,20 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">29</span>
+          <span class="site-state-item-count">28</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">9</span>
+        <span class="site-state-item-count">8</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">18</span>
+        <span class="site-state-item-count">17</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -399,7 +399,7 @@ P(x_t|y_1,...,y_t)&\propto P(x_t,y_1,...,y_t) \\
 &\propto P(y_t|x_t,y_1,...,y_{t-1})\cdot P(x_t|y_1,...,y_{t-1}) \\
 &= P(y_t|x_t)\cdot P(x_t|y_1,...,y_{t-1})
 \end{split} 
-\end{equation}</script><p>其中，更新为 $P(x<em>t|y_1,…,y_t)$，预测为 $P(x_t|y_1,…,y</em>{t-1})$</p>
+\end{equation}</script><p>其中，更新为 $P(x_t|y_1,…,y_t)$，预测为 $P(x_t|y_1,…,y_{t-1})$</p>
 <script type="math/tex; mode=display">
 \begin{equation} 
 \begin{split} 
@@ -409,8 +409,8 @@ P(x_t|y_1,...,y_{t-1})
 &\propto\int_{}P(x_t|x_{t-1},y_1,...,y_{t-1}) \cdot P(x_{t-1}|y_1,...,y_{t-1}) \\
 &=\int_{}P(x_t|x_{t-1})\cdot P(x_{t-1}|y_1,...,y_{t-1}) 
 \end{split} 
-\end{equation}</script><p>最后更新有了递归 $P(x<em>{t-1}|y_1,…,y</em>{t-1})$<br>重复描述这个过程：<br>$t=1$：<br>更新：$P(x_1|y_1)\sim N(\hat{\mu}_1,\hat{\Sigma}_1)$<br>$t=2$：<br>预测：$P(x_2|y_1)\sim N(\bar{\mu}_2,\bar{\Sigma}_2) $<br>更新：$P(x_2|y_1,y_2)\sim N(\hat{\mu}_2,\hat{\Sigma}_2) $</p>
-<p>$t=t$：<br>预测：$P(x<em>t|y_1,…,y</em>{t-1})\sim N(\bar{\mu}_t,\bar{\Sigma}_t)$<br>更新：$P(x_t|y_1,…,y_t)\sim N(\hat{\mu}_t,\hat{\Sigma}_t) $</p>
+\end{equation}</script><p>最后更新有了递归 $P(x_{t-1}|y_1,…,y_{t-1})$<br>重复描述这个过程：<br>$t=1$：<br>更新：$P(x_1|y_1)\sim N(\hat{\mu}_1,\hat{\Sigma}_1)$<br>$t=2$：<br>预测：$P(x_2|y_1)\sim N(\bar{\mu}_2,\bar{\Sigma}_2) $<br>更新：$P(x_2|y_1,y_2)\sim N(\hat{\mu}_2,\hat{\Sigma}_2) $</p>
+<p>$t=t$：<br>预测：$P(x_t|y_1,…,y_{t-1})\sim N(\bar{\mu}_t,\bar{\Sigma}_t)$<br>更新：$P(x_t|y_1,…,y_t)\sim N(\hat{\mu}_t,\hat{\Sigma}_t) $</p>
 <h1 id="由带噪声的预测和测量得到估计"><a href="#由带噪声的预测和测量得到估计" class="headerlink" title="由带噪声的预测和测量得到估计"></a>由带噪声的预测和测量得到估计</h1><p>每次更新状态是相互独立的，状态测量虽然是一个序列，但是由观测方程，每次测量也是相互独立的。对噪声计算协方差的平方矩阵就是Q和R。</p>
 <p>预测理论值$x_k$（先验）有了，测量实际值$z_k$（后验）也有了，假设一个$K$，然后得到估计值</p>
 <script type="math/tex; mode=display">\hat{x}_k=\hat{x}_k'+K_k(z_k-\hat{z}_k)=\hat{x}_k'+K_k(z_k-H\hat{x}_k')</script><ul>
@@ -460,7 +460,7 @@ P_{k+1}
 \end{equation}</script><p>由此也得到了$P_k’$的递推公式。因此我们只需设定最初的$P_k$，就能不断递推下去。</p>
 <h1 id="总结-Kalman-计算流程"><a href="#总结-Kalman-计算流程" class="headerlink" title="总结 Kalman 计算流程"></a>总结 Kalman 计算流程</h1><ol>
 <li>计算预测值 <script type="math/tex">x_k = Ax_{k-1}+Bu_{k-1}+w_{k-1}</script></li>
-<li>计算系统误差 $P<em>k’ = AP</em>{k-1}A^T+Q$</li>
+<li>计算系统误差 $P_k’ = AP_{k-1}A^T+Q$</li>
 <li>计算卡尔曼增益 $K_k=P_k’H^T(HP_k’H^T+R)^{-1}$</li>
 <li>计算估计值 $\hat{x}_k=\hat{x}_k’+K_k(z_k-H\hat{x}_k’)$</li>
 <li>递推更新 $P_k = (I-K_kH)P_k’$</li>
@@ -469,8 +469,8 @@ P_{k+1}
 <hr>
 <h1 id="简化-Kalman-Filter"><a href="#简化-Kalman-Filter" class="headerlink" title="简化 Kalman Filter"></a>简化 Kalman Filter</h1><p>最简单的情况是一阶，全部是标量计算，调节Q/R的比值来控制滤波效果。当然可以是更复杂的，二阶三阶都可以。</p>
 <ol>
-<li>计算预测值 $\hat{x}^-<em>k=\hat{x}</em>{k-1}$</li>
-<li>计算系统误差 $P^-<em>{k}=P</em>{k-1}+Q$</li>
+<li>计算预测值 $\hat{x}^-_k=\hat{x}_{k-1}$</li>
+<li>计算系统误差 $P^-_{k}=P_{k-1}+Q$</li>
 <li>计算卡尔曼增益 $K_k=\frac{P^-_k}{P^-_k+R}$</li>
 <li>计算估计值 $\hat{x}=\hat{x}^-_k+K_k(z_k-\hat{x}^-_k)$</li>
 <li>递推更新 $P_k=(1-K_k)P^-_k$</li>
@@ -567,11 +567,9 @@ P_{k+1}
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">2:29</span>
+    <span title="站点阅读时长">2:28</span>
   </span>
 </div>
-  <div class="powered-by">由 <span class="exturl theme-link" data-url="aHR0cHM6Ly9oZXhvLmlv">Hexo</span> & <span class="exturl theme-link" data-url="aHR0cHM6Ly90aGVtZS1uZXh0LmpzLm9yZy9taXN0Lw==">NexT.Mist</span> 强力驱动
-  </div>
 
     </div>
   </footer>

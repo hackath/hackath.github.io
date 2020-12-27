@@ -225,20 +225,20 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">29</span>
+          <span class="site-state-item-count">28</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">9</span>
+        <span class="site-state-item-count">8</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">18</span>
+        <span class="site-state-item-count">17</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -364,9 +364,9 @@
         <p><span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL21oZXJiL2thbG1hblQ=">https://github.com/mherb/kalmanT<i class="fa fa-external-link-alt"></i></span> 是一个基于eigin3的Kalman-Filter，包含了Extended Kalman Filter (EKF)、Square Root Extended Kalman Filter (SR-EKF)、Unscented Kalman Filter (UKF)、Square Root Unscented Kalman Filter (SR-UKF)，4种Kalman filter。</p>
 <a id="more"></a>
 <h1 id="Cholesky分解"><a href="#Cholesky分解" class="headerlink" title="Cholesky分解"></a>Cholesky分解</h1><p><span class="exturl" data-url="aHR0cHM6Ly96aC53aWtpcGVkaWEub3JnL3dpa2kvJUU1JTlGJTgzJUU1JUIwJTk0JUU3JUIxJUIzJUU3JTg5JUI5JUU3JTlGJUE5JUU5JTk4JUI1">Hermitian matrix（埃尔米特矩阵，厄米矩阵，自伴随矩阵）<i class="fa fa-external-link-alt"></i></span>，是共轭对称的方阵。</p>
-<script type="math/tex; mode=display">\left[\begin{matrix} 3 & 2+i \\ 2-i & 1 \end{matrix}\right]</script><p><span class="exturl" data-url="aHR0cHM6Ly96aC53aWtpcGVkaWEub3JnL3dpa2kvJUU2JUFEJUEzJUU1JUFFJTlBJUU3JTlGJUE5JUU5JTk4JUI1">正定矩阵<i class="fa fa-external-link-alt"></i></span>是Hermitian matrix的一种。<br>设A是一个n阶厄米特正定矩阵(Hermitian positive-definite matrix)。Cholesky分解的目标是：<br>设$A = LL^{T}$，得到：（其中$A<em>{21}$是一个列向量，$A</em>{22}$是一个n-1阶的方阵）</p>
-<script type="math/tex; mode=display">\left[ \begin{matrix} a_{11}&A_{21}^{T}\\ A_{21}&A_{22}\\ \end{matrix} \right] =  \left[ \begin{matrix} l_{11}&0\\ L_{21}&L_{22}\\ \end{matrix} \right] \left[ \begin{matrix} l_{11}&L_{21}^{T}\\ 0&L_{22}^{T}\\ \end{matrix} \right]=  \left[ \begin{matrix} l_{11}^{2}&l_{11}L_{21}^{T}\\ l_{11}L_{21}&L_{21}L_{21}^{T}+L_{22}L_{22}^{T}\\ \end{matrix} \right]</script><p>其中，未知量$l<em>{11},L</em>{21},L_{22}$，这3个未知量的求解公式是：</p>
-<script type="math/tex; mode=display">l_{11} = \sqrt {a_{11}}，L_{21} = \frac {1}{l_{11}}A_{21}，L_{22}L_{22}^{T} =  A_{22} - L_{21}L_{21}^{T}</script><p>设$A<em>{22}’ = A</em>{22} - L<em>{21}L</em>{21}^{T}$，则化简为$A<em>{22}’ = L</em>{22}L_{22}^{T}$，可以继续Cholesky分解，被分解的矩阵是A的右下角的n-1阶子方阵。所以这个算法具有递归性质。</p>
+<script type="math/tex; mode=display">\left[\begin{matrix} 3 & 2+i \\ 2-i & 1 \end{matrix}\right]</script><p><span class="exturl" data-url="aHR0cHM6Ly96aC53aWtpcGVkaWEub3JnL3dpa2kvJUU2JUFEJUEzJUU1JUFFJTlBJUU3JTlGJUE5JUU5JTk4JUI1">正定矩阵<i class="fa fa-external-link-alt"></i></span>是Hermitian matrix的一种。<br>设A是一个n阶厄米特正定矩阵(Hermitian positive-definite matrix)。Cholesky分解的目标是：<br>设$A = LL^{T}$，得到：（其中$A_{21}$是一个列向量，$A_{22}$是一个n-1阶的方阵）</p>
+<script type="math/tex; mode=display">\left[ \begin{matrix} a_{11}&A_{21}^{T}\\ A_{21}&A_{22}\\ \end{matrix} \right] =  \left[ \begin{matrix} l_{11}&0\\ L_{21}&L_{22}\\ \end{matrix} \right] \left[ \begin{matrix} l_{11}&L_{21}^{T}\\ 0&L_{22}^{T}\\ \end{matrix} \right]=  \left[ \begin{matrix} l_{11}^{2}&l_{11}L_{21}^{T}\\ l_{11}L_{21}&L_{21}L_{21}^{T}+L_{22}L_{22}^{T}\\ \end{matrix} \right]</script><p>其中，未知量$l_{11},L_{21},L_{22}$，这3个未知量的求解公式是：</p>
+<script type="math/tex; mode=display">l_{11} = \sqrt {a_{11}}，L_{21} = \frac {1}{l_{11}}A_{21}，L_{22}L_{22}^{T} =  A_{22} - L_{21}L_{21}^{T}</script><p>设$A_{22}’ = A_{22} - L_{21}L_{21}^{T}$，则化简为$A_{22}’ = L_{22}L_{22}^{T}$，可以继续Cholesky分解，被分解的矩阵是A的右下角的n-1阶子方阵。所以这个算法具有递归性质。</p>
 <p>举个例子：</p>
 <script type="math/tex; mode=display">A =  \left[ \begin{matrix} 25&15&-5\\ 15&18&0\\ -5&0&11\\ \end{matrix} \right] =  \left[ \begin{matrix} l_{11}&0&0\\ l_{21}&l_{22}&0\\ l_{31}&l_{32}&l_{33}\\ \end{matrix} \right] \left[ \begin{matrix} l_{11}&l_{21}&l_{31}\\ 0&l_{22}&l_{32}\\ 0&0&l_{33}\\ \end{matrix} \right]</script><p>根据公式，有：</p>
 <script type="math/tex; mode=display">l_{11} = \sqrt { a_{11} } = 5</script><script type="math/tex; mode=display">L_{21} = \frac {1}{l_{11}}A_{21} = \frac {1}{5} \left[ \begin{matrix} 15\\ -5\\ \end{matrix} \right] =  \left[ \begin{matrix} 3\\ -1\\ \end{matrix} \right]</script><script type="math/tex; mode=display">A_{22} - L_{21}L_{21}^{T}  =  L_{22}L_{22}^{T}</script><script type="math/tex; mode=display">A_{22} - L_{21}L_{21}^{T}  =  L_{22}L_{22}^{T}</script><script type="math/tex; mode=display">\left[ \begin{matrix} 18&0\\ 0&11\\ \end{matrix} \right] -  \left[ \begin{matrix} 3\\ -1\\ \end{matrix} \right] \left[ \begin{matrix} 3&-1\\ \end{matrix} \right] =   \left[ \begin{matrix} l_{22}&0\\ l_{32}&l_{33}\\ \end{matrix} \right]   \left[ \begin{matrix} l_{22}&l_{32}\\ 0&l_{33}\\ \end{matrix} \right]</script><script type="math/tex; mode=display">\left[ \begin{matrix} 9&3\\ 3&10\\ \end{matrix} \right] =  \left[ \begin{matrix} l_{22}&0\\ l_{32}&l_{33}\\ \end{matrix} \right]   \left[ \begin{matrix} l_{22}&l_{32}\\ 0&l_{33}\\ \end{matrix} \right]</script><p>(注意，这里已经是n-1阶的Cholesky分解)</p>
@@ -455,11 +455,9 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">2:29</span>
+    <span title="站点阅读时长">2:28</span>
   </span>
 </div>
-  <div class="powered-by">由 <span class="exturl theme-link" data-url="aHR0cHM6Ly9oZXhvLmlv">Hexo</span> & <span class="exturl theme-link" data-url="aHR0cHM6Ly90aGVtZS1uZXh0LmpzLm9yZy9taXN0Lw==">NexT.Mist</span> 强力驱动
-  </div>
 
     </div>
   </footer>

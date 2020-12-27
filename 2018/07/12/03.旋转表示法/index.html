@@ -23,12 +23,12 @@
     var NexT = window.NexT || {};
     var CONFIG = {"hostname":"skystarry.cn","root":"/","images":"/images","scheme":"Mist","version":"8.1.0","exturl":true,"sidebar":{"position":"right","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}};
   </script>
-<meta name="description" content="一、向量和坐标系要想确定一个坐标，首先要建立坐标系。在三维空间中建立的坐标系通常都是两两垂直的，坐标系也叫做线性空间中的一组基 $(e{1},e{2},e_{3})$ ，向量 $a$ 在这组基的坐标就可以表示成：      a&#x3D;[e_{1},e_{2},e_{3}]\left[\begin{matrix}a_{1} \\ a_{2} \\ a_3\end{matrix}\right]&#x3D;a_{1}e">
+<meta name="description" content="一、向量和坐标系要想确定一个坐标，首先要建立坐标系。在三维空间中建立的坐标系通常都是两两垂直的，坐标系也叫做线性空间中的一组基 $(e_{1},e_{2},e_{3})$ ，向量 $a$ 在这组基的坐标就可以表示成：      a&#x3D;[e_{1},e_{2},e_{3}]\left[\begin{matrix}a_{1} \\ a_{2} \\ a_3\end{matrix}\right]&#x3D;a_{1">
 <meta property="og:type" content="article">
 <meta property="og:title" content="旋转表示法">
 <meta property="og:url" content="https://skystarry.cn/2018/07/12/03.%E6%97%8B%E8%BD%AC%E8%A1%A8%E7%A4%BA%E6%B3%95/index.html">
 <meta property="og:site_name" content="skystarry">
-<meta property="og:description" content="一、向量和坐标系要想确定一个坐标，首先要建立坐标系。在三维空间中建立的坐标系通常都是两两垂直的，坐标系也叫做线性空间中的一组基 $(e{1},e{2},e_{3})$ ，向量 $a$ 在这组基的坐标就可以表示成：      a&#x3D;[e_{1},e_{2},e_{3}]\left[\begin{matrix}a_{1} \\ a_{2} \\ a_3\end{matrix}\right]&#x3D;a_{1}e">
+<meta property="og:description" content="一、向量和坐标系要想确定一个坐标，首先要建立坐标系。在三维空间中建立的坐标系通常都是两两垂直的，坐标系也叫做线性空间中的一组基 $(e_{1},e_{2},e_{3})$ ，向量 $a$ 在这组基的坐标就可以表示成：      a&#x3D;[e_{1},e_{2},e_{3}]\left[\begin{matrix}a_{1} \\ a_{2} \\ a_3\end{matrix}\right]&#x3D;a_{1">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2018-07-12T07:37:35.000Z">
 <meta property="article:modified_time" content="2020-12-09T01:10:09.580Z">
@@ -226,20 +226,20 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">29</span>
+          <span class="site-state-item-count">28</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">9</span>
+        <span class="site-state-item-count">8</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">18</span>
+        <span class="site-state-item-count">17</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -362,18 +362,18 @@
     
     
     <div class="post-body" itemprop="articleBody">
-        <h1 id="一、向量和坐标系"><a href="#一、向量和坐标系" class="headerlink" title="一、向量和坐标系"></a>一、向量和坐标系</h1><p>要想确定一个坐标，首先要建立坐标系。在三维空间中建立的坐标系通常都是两两垂直的，坐标系也叫做线性空间中的一组基 $(e<em>{1},e</em>{2},e_{3})$ ，向量 $a$ 在这组基的坐标就可以表示成：    </p>
+        <h1 id="一、向量和坐标系"><a href="#一、向量和坐标系" class="headerlink" title="一、向量和坐标系"></a>一、向量和坐标系</h1><p>要想确定一个坐标，首先要建立坐标系。在三维空间中建立的坐标系通常都是两两垂直的，坐标系也叫做线性空间中的一组基 $(e_{1},e_{2},e_{3})$ ，向量 $a$ 在这组基的坐标就可以表示成：    </p>
 <script type="math/tex; mode=display">
 a=[e_{1},e_{2},e_{3}]\left[\begin{matrix}a_{1} \\ a_{2} \\ a_3\end{matrix}\right]=a_{1}e_{1}+a_{2}e_{2}+a_{3}e_{3}</script><p>向量有内积和外积之分，<br>内积表示为 $a^Tb$ ，可以描述为两个向量之间的投影关系。<br>外积表示为 $ab^T$ ，外积大小是两个向量张成四边形的有向面积，之所以有向，是因为外积方向垂直于这两个向量构成的平面，且满足右手定理， $ab^T$ 和 $ba^T$ 会得到大小相同，方向相反的结果。</p>
 <a id="more"></a> 
 <h1 id="二、旋转向量"><a href="#二、旋转向量" class="headerlink" title="二、旋转向量"></a>二、旋转向量</h1><p>向量的外积是可以表示旋转的，假设物体从 $a$ 旋转到 $b$ 转过的角度为 $\theta$ ,那么旋转的方向和大小分别可以用有向面积的正负和大小来表示，它们的外积方向垂直于它们构成的平面（右手定律），长度等于张成四边形的面积。<br>于是，我们可以使用一个向量，其方向与旋转轴一致，长度等于旋转角来描述旋转，表示为 $\theta n$ （$\theta$为旋转角， $n$ 为旋转轴）。在三维空间中，只需要三个这样的向量，并且它们可以构成线性空间中的一组基，就可以描述三维空间中任意的刚体旋转。<br>根据3条旋转轴建立空间坐标，可以略去对转轴的描述，因此，通过一个空间中的三维向量就可以描述旋转，这就是旋转向量。<br>旋转向量通过3个参数控制了6个自由度的旋转。其表示非常紧凑。</p>
-<h1 id="三、旋转矩阵"><a href="#三、旋转矩阵" class="headerlink" title="三、旋转矩阵"></a>三、旋转矩阵</h1><p>旋转向量描述的是物体原地做旋转，给人感觉并不关心坐标系，在使用旋转向量的时候，就默认自己是坐标系的中心了。<br>设某个单位正交基 $(e<em>{1},e</em>{2},e<em>{3})$ 经过一次旋转变成了 $(e</em>{1}’,e<em>{2}’,e</em>{3}’)$ ，那么对于同一个向量 $a$ (注意向量并没有跟随坐标系的旋转而发生运动)，它在两个坐标系下的坐标为 $[a<em>{1},a</em>{2},a<em>{3}]^T$ 和 $[a</em>{1}’,a<em>{2}’,a</em>{3}’]^T$ 。根据坐标定义，有：</p>
+<h1 id="三、旋转矩阵"><a href="#三、旋转矩阵" class="headerlink" title="三、旋转矩阵"></a>三、旋转矩阵</h1><p>旋转向量描述的是物体原地做旋转，给人感觉并不关心坐标系，在使用旋转向量的时候，就默认自己是坐标系的中心了。<br>设某个单位正交基 $(e_{1},e_{2},e_{3})$ 经过一次旋转变成了 $(e_{1}’,e_{2}’,e_{3}’)$ ，那么对于同一个向量 $a$ (注意向量并没有跟随坐标系的旋转而发生运动)，它在两个坐标系下的坐标为 $[a_{1},a_{2},a_{3}]^T$ 和 $[a_{1}’,a_{2}’,a_{3}’]^T$ 。根据坐标定义，有：</p>
 <script type="math/tex; mode=display">[e_{1},e_{2},e_{3}]\left[\begin{matrix}a_{1} \\ a_{2}\\ a_3\end{matrix}\right]=[e_{1}',e_{2}',e_{3}']\left[\begin{matrix}a_{1}' \\ a_{2}' \\ a_{3}'\end{matrix}\right]</script><p>可以得到 $a=Ra’$ ，这里的 矩阵$R$ 称为旋转矩阵。可以把旋转矩阵的集合定义为</p>
 <script type="math/tex; mode=display">SO(n)=\{ {\boldsymbol{R}\in\mathbb{R}^{n\times n}|RR^T=I,det(R)=1}\}</script><p>$R^T$ 刻画了一个相反的旋转，这算一个重要性质吧，求逆非常方便。<br>$SO(3)$ 的旋转矩阵有9个量，但一次旋转只有3个自由度，这种表示法是冗余的。<br>旋转矩阵自身带有约束太多：必须是一个单位正交矩阵，且行列式为1。</p>
 <h1 id="四、四元数"><a href="#四、四元数" class="headerlink" title="四、四元数"></a>四、四元数</h1><p>复数由一个实部和一个虚部构成，两个参数可以表示二维平面内所有的旋转，直觉上推广到三个参数就能表示三维旋转，这是错误的，必须4个量才可以表示。<br>在表达三维空间的旋转时，有一种类似复数的代数：四元数。它和复数一样有实部和虚部，表示为</p>
 <script type="math/tex; mode=display">q=[s,v],s=q_{0}\in\mathbb{R}, v=[q_{1},q_{2},q_{3}]^T\in \mathbb{R}^3</script><p>考虑到三维空间需要3个轴，四元数也有3个虚部。三维空间中的点是通过虚四元数来标识的，此时四元数的实部没有任何作用。而在旋转的过程中，这个实部才会起作用，某种意义上来讲，这个四元数的实部不是三维空间的量。<br>更详细的四元数内容可以参考<span class="exturl" data-url="aHR0cHM6Ly93d3cuM2RnZXAuY29tL3VuZGVyc3RhbmRpbmctcXVhdGVybmlvbnMv">https://www.3dgep.com/understanding-quaternions/<i class="fa fa-external-link-alt"></i></span><br>这里关心的只是旋转，旋转向量、旋转矩阵、四元数的相互转化，</p>
 <script type="math/tex; mode=display">q=[cos\frac{\theta}{2},\boldsymbol{n}sin\frac{\theta}{2}]</script><p>这里的 $n$ 表示旋转轴，和旋转向量的轴是一根轴，而这跟轴所表示的向量正是旋转矩阵的特征向量。<br>从旋转向量到旋转矩阵由著名的<code>Rodrigues公式</code>表示。</p>
-<h1 id="五、李群李代数"><a href="#五、李群李代数" class="headerlink" title="五、李群李代数"></a>五、李群李代数</h1><p>$R$ 是旋转矩阵，设$\phi$ 为 $R$ 的导数，反应了 $R$ 的导数性质，故它在 $SO(3)$ 原点附近的正切空间上。同时在 $t<em>{0}$ 附近，设 $\phi(t</em>{0})=\phi_{0}$ ，所以有</p>
+<h1 id="五、李群李代数"><a href="#五、李群李代数" class="headerlink" title="五、李群李代数"></a>五、李群李代数</h1><p>$R$ 是旋转矩阵，设$\phi$ 为 $R$ 的导数，反应了 $R$ 的导数性质，故它在 $SO(3)$ 原点附近的正切空间上。同时在 $t_{0}$ 附近，设 $\phi(t_{0})=\phi_{0}$ ，所以有</p>
 <script type="math/tex; mode=display">R(t)=\exp(\phi_{0}^{\wedge}t)
 \Phi=\phi^\wedge=\left[\begin{matrix}0&-\phi_{3}&\phi_{2}\\ \phi_{3}&0&-\phi_{1}\\ -\phi_{2}&\phi_{1}&0\end{matrix}\right]\in\mathbb{R}^{3\times3} （反对称矩阵）</script><script type="math/tex; mode=display">\mathfrak{s}\mathfrak{o}(3)=\{ {\phi\in\mathbb{R}^3,\Phi=\phi^\wedge\in\mathbb{R}^{3\times3}}\}</script><p>李代数对应的反对称矩阵正是李群的导数，而李群李代数存在指数映射，这意味这求导很方便。<br>李群李代数的关系，正是旋转矩阵与旋转向量的关系。旋转向量其实就是李代数，而旋转矩阵构成的集合就是李群。指数映射即是Rodrigues公式。</p>
 <p>任意矩阵的指数映射可以写成一个泰勒展开，但是只有在收敛的情况下才会有结果，其结果仍是一个矩阵。<br>$\exp(\phi^\wedge)=\sum_{n=0}^{\infty}\frac{1}{n!}(\phi^\wedge)^n$ 公式展开，可以证明<code>Rodrigues公式</code>。</p>
@@ -470,11 +470,9 @@ a=[e_{1},e_{2},e_{3}]\left[\begin{matrix}a_{1} \\ a_{2} \\ a_3\end{matrix}\right
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">2:29</span>
+    <span title="站点阅读时长">2:28</span>
   </span>
 </div>
-  <div class="powered-by">由 <span class="exturl theme-link" data-url="aHR0cHM6Ly9oZXhvLmlv">Hexo</span> & <span class="exturl theme-link" data-url="aHR0cHM6Ly90aGVtZS1uZXh0LmpzLm9yZy9taXN0Lw==">NexT.Mist</span> 强力驱动
-  </div>
 
     </div>
   </footer>
