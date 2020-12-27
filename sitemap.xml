@@ -58,14 +58,14 @@
   </url>
   
   <url>
-    <loc>https://punkli.github.io/2019/32.ros%20tcp/</loc>
+    <loc>https://punkli.github.io/2019/30.ros/</loc>
     
     <lastmod>2020-12-09</lastmod>
     
   </url>
   
   <url>
-    <loc>https://punkli.github.io/2019/30.ros/</loc>
+    <loc>https://punkli.github.io/2019/32.ros%20tcp/</loc>
     
     <lastmod>2020-12-09</lastmod>
     
@@ -128,13 +128,6 @@
   </url>
   
   <url>
-    <loc>https://punkli.github.io/2018/16.Bayesian-Theorem/</loc>
-    
-    <lastmod>2020-12-09</lastmod>
-    
-  </url>
-  
-  <url>
     <loc>https://punkli.github.io/2018/15.google/</loc>
     
     <lastmod>2020-12-09</lastmod>
@@ -142,14 +135,14 @@
   </url>
   
   <url>
-    <loc>https://punkli.github.io/2018/14.Lipschitz/</loc>
+    <loc>https://punkli.github.io/2018/16.Bayesian-Theorem/</loc>
     
     <lastmod>2020-12-09</lastmod>
     
   </url>
   
   <url>
-    <loc>https://punkli.github.io/2018/11.Kalman/</loc>
+    <loc>https://punkli.github.io/2018/14.Lipschitz/</loc>
     
     <lastmod>2020-12-09</lastmod>
     
@@ -170,14 +163,7 @@
   </url>
   
   <url>
-    <loc>https://punkli.github.io/2018/09.apriltags/</loc>
-    
-    <lastmod>2020-12-09</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://punkli.github.io/2018/10.Graph-Based-Image-Segmentation/</loc>
+    <loc>https://punkli.github.io/2018/11.Kalman/</loc>
     
     <lastmod>2020-12-09</lastmod>
     
@@ -191,7 +177,14 @@
   </url>
   
   <url>
-    <loc>https://punkli.github.io/2018/06.openmp/</loc>
+    <loc>https://punkli.github.io/2018/10.Graph-Based-Image-Segmentation/</loc>
+    
+    <lastmod>2020-12-09</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://punkli.github.io/2018/09.apriltags/</loc>
     
     <lastmod>2020-12-09</lastmod>
     
@@ -199,6 +192,13 @@
   
   <url>
     <loc>https://punkli.github.io/2018/07.Constant-scale/</loc>
+    
+    <lastmod>2020-12-09</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://punkli.github.io/2018/06.openmp/</loc>
     
     <lastmod>2020-12-09</lastmod>
     
@@ -228,13 +228,6 @@
 
   
   <url>
-    <loc>https://punkli.github.io/tags/%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE/</loc>
-    <lastmod>2020-12-27</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
     <loc>https://punkli.github.io/tags/%E7%BA%BF%E6%80%A7%E4%BB%A3%E6%95%B0/</loc>
     <lastmod>2020-12-27</lastmod>
     <changefreq>daily</changefreq>
@@ -243,6 +236,13 @@
   
   <url>
     <loc>https://punkli.github.io/tags/%E6%9C%BA%E5%99%A8%E4%BA%BA/</loc>
+    <lastmod>2020-12-27</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://punkli.github.io/tags/%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE/</loc>
     <lastmod>2020-12-27</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
@@ -349,14 +349,14 @@
 
   
   <url>
-    <loc>https://punkli.github.io/categories/Linux/</loc>
+    <loc>https://punkli.github.io/categories/%E6%95%B0%E5%AD%A6/</loc>
     <lastmod>2020-12-27</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
-    <loc>https://punkli.github.io/categories/%E6%95%B0%E5%AD%A6/</loc>
+    <loc>https://punkli.github.io/categories/Linux/</loc>
     <lastmod>2020-12-27</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
