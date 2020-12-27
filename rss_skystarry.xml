@@ -18,8 +18,8 @@
   
   <entry>
     <title>使用神经网络进行机器学习</title>
-    <link href="https://skystarry.cn/2020/04/13/35.network/"/>
-    <id>https://skystarry.cn/2020/04/13/35.network/</id>
+    <link href="https://skystarry.cn/2020/35.network/"/>
+    <id>https://skystarry.cn/2020/35.network/</id>
     <published>2020-04-13T11:09:17.000Z</published>
     <updated>2020-12-27T00:35:27.144Z</updated>
     
@@ -37,8 +37,8 @@
   
   <entry>
     <title>逻辑回归</title>
-    <link href="https://skystarry.cn/2020/04/12/34.logistic/"/>
-    <id>https://skystarry.cn/2020/04/12/34.logistic/</id>
+    <link href="https://skystarry.cn/2020/34.logistic/"/>
+    <id>https://skystarry.cn/2020/34.logistic/</id>
     <published>2020-04-12T11:09:17.000Z</published>
     <updated>2020-12-27T00:35:32.922Z</updated>
     
@@ -67,8 +67,8 @@
   
   <entry>
     <title>ROS通信解析</title>
-    <link href="https://skystarry.cn/2019/02/09/32.ros%20tcp/"/>
-    <id>https://skystarry.cn/2019/02/09/32.ros%20tcp/</id>
+    <link href="https://skystarry.cn/2019/32.ros%20tcp/"/>
+    <id>https://skystarry.cn/2019/32.ros%20tcp/</id>
     <published>2019-02-09T01:09:17.000Z</published>
     <updated>2020-12-09T01:10:09.591Z</updated>
     
@@ -87,8 +87,8 @@
   
   <entry>
     <title>getting started ros</title>
-    <link href="https://skystarry.cn/2019/02/05/30.ros/"/>
-    <id>https://skystarry.cn/2019/02/05/30.ros/</id>
+    <link href="https://skystarry.cn/2019/30.ros/"/>
+    <id>https://skystarry.cn/2019/30.ros/</id>
     <published>2019-02-05T01:09:17.000Z</published>
     <updated>2020-12-09T01:10:09.591Z</updated>
     
@@ -106,8 +106,8 @@
   
   <entry>
     <title>Particle Filter</title>
-    <link href="https://skystarry.cn/2019/02/03/29.%E7%B2%92%E5%AD%90%E6%BB%A4%E6%B3%A2/"/>
-    <id>https://skystarry.cn/2019/02/03/29.%E7%B2%92%E5%AD%90%E6%BB%A4%E6%B3%A2/</id>
+    <link href="https://skystarry.cn/2019/29.%E7%B2%92%E5%AD%90%E6%BB%A4%E6%B3%A2/"/>
+    <id>https://skystarry.cn/2019/29.%E7%B2%92%E5%AD%90%E6%BB%A4%E6%B3%A2/</id>
     <published>2019-02-03T01:09:17.000Z</published>
     <updated>2020-12-09T01:10:09.590Z</updated>
     
@@ -125,8 +125,8 @@
   
   <entry>
     <title>MLE和MAP</title>
-    <link href="https://skystarry.cn/2019/02/03/28.MLE%E5%92%8CMAP/"/>
-    <id>https://skystarry.cn/2019/02/03/28.MLE%E5%92%8CMAP/</id>
+    <link href="https://skystarry.cn/2019/28.MLE%E5%92%8CMAP/"/>
+    <id>https://skystarry.cn/2019/28.MLE%E5%92%8CMAP/</id>
     <published>2019-02-02T23:09:17.000Z</published>
     <updated>2020-12-09T01:10:09.590Z</updated>
     
@@ -145,8 +145,8 @@
   
   <entry>
     <title>无约束最优化方法</title>
-    <link href="https://skystarry.cn/2019/02/01/27.optimize1/"/>
-    <id>https://skystarry.cn/2019/02/01/27.optimize1/</id>
+    <link href="https://skystarry.cn/2019/27.optimize1/"/>
+    <id>https://skystarry.cn/2019/27.optimize1/</id>
     <published>2019-02-01T07:09:17.000Z</published>
     <updated>2020-12-09T01:10:09.590Z</updated>
     
@@ -170,8 +170,8 @@
   
   <entry>
     <title>矩阵分解</title>
-    <link href="https://skystarry.cn/2019/01/21/25.matrix/"/>
-    <id>https://skystarry.cn/2019/01/21/25.matrix/</id>
+    <link href="https://skystarry.cn/2019/25.matrix/"/>
+    <id>https://skystarry.cn/2019/25.matrix/</id>
     <published>2019-01-20T20:10:24.000Z</published>
     <updated>2020-12-09T01:10:09.589Z</updated>
     
@@ -189,8 +189,8 @@
   
   <entry>
     <title>博弈论</title>
-    <link href="https://skystarry.cn/2018/11/24/24.game/"/>
-    <id>https://skystarry.cn/2018/11/24/24.game/</id>
+    <link href="https://skystarry.cn/2018/24.game/"/>
+    <id>https://skystarry.cn/2018/24.game/</id>
     <published>2018-11-24T08:08:53.000Z</published>
     <updated>2020-12-09T01:10:09.589Z</updated>
     
@@ -206,8 +206,8 @@
   
   <entry>
     <title>特征提取与选择</title>
-    <link href="https://skystarry.cn/2018/11/20/22.feature-select/"/>
-    <id>https://skystarry.cn/2018/11/20/22.feature-select/</id>
+    <link href="https://skystarry.cn/2018/22.feature-select/"/>
+    <id>https://skystarry.cn/2018/22.feature-select/</id>
     <published>2018-11-20T00:50:58.000Z</published>
     <updated>2020-12-27T00:38:50.054Z</updated>
     
@@ -225,8 +225,8 @@
   
   <entry>
     <title>Algorithm Review</title>
-    <link href="https://skystarry.cn/2018/11/20/21.Algorithm/"/>
-    <id>https://skystarry.cn/2018/11/20/21.Algorithm/</id>
+    <link href="https://skystarry.cn/2018/21.Algorithm/"/>
+    <id>https://skystarry.cn/2018/21.Algorithm/</id>
     <published>2018-11-19T18:27:02.000Z</published>
     <updated>2020-12-27T00:39:37.882Z</updated>
     
@@ -244,8 +244,8 @@
   
   <entry>
     <title>Fisher</title>
-    <link href="https://skystarry.cn/2018/10/19/18.Fisher/"/>
-    <id>https://skystarry.cn/2018/10/19/18.Fisher/</id>
+    <link href="https://skystarry.cn/2018/18.Fisher/"/>
+    <id>https://skystarry.cn/2018/18.Fisher/</id>
     <published>2018-10-19T10:09:38.000Z</published>
     <updated>2020-12-09T01:10:09.587Z</updated>
     
@@ -263,8 +263,8 @@
   
   <entry>
     <title>Cpp-Taskflow</title>
-    <link href="https://skystarry.cn/2018/10/17/20.cpp-taskflow/"/>
-    <id>https://skystarry.cn/2018/10/17/20.cpp-taskflow/</id>
+    <link href="https://skystarry.cn/2018/20.cpp-taskflow/"/>
+    <id>https://skystarry.cn/2018/20.cpp-taskflow/</id>
     <published>2018-10-17T10:09:38.000Z</published>
     <updated>2020-12-09T01:10:09.588Z</updated>
     
@@ -282,8 +282,8 @@
   
   <entry>
     <title>Normal distribution</title>
-    <link href="https://skystarry.cn/2018/10/03/17.Normal-distribution/"/>
-    <id>https://skystarry.cn/2018/10/03/17.Normal-distribution/</id>
+    <link href="https://skystarry.cn/2018/17.Normal-distribution/"/>
+    <id>https://skystarry.cn/2018/17.Normal-distribution/</id>
     <published>2018-10-03T13:39:37.000Z</published>
     <updated>2020-12-09T01:10:09.587Z</updated>
     
@@ -301,8 +301,8 @@
   
   <entry>
     <title>Bayesian Theorem</title>
-    <link href="https://skystarry.cn/2018/10/02/16.Bayesian-Theorem/"/>
-    <id>https://skystarry.cn/2018/10/02/16.Bayesian-Theorem/</id>
+    <link href="https://skystarry.cn/2018/16.Bayesian-Theorem/"/>
+    <id>https://skystarry.cn/2018/16.Bayesian-Theorem/</id>
     <published>2018-10-02T08:42:38.000Z</published>
     <updated>2020-12-09T01:10:09.586Z</updated>
     
@@ -328,8 +328,8 @@ P(\omega_i|x)=\frac{p(x,\omega_i)}{p(x)}=\frac{p(x|\omega_i)p(\omega_i)}{p(x)},i
   
   <entry>
     <title>google tools</title>
-    <link href="https://skystarry.cn/2018/09/30/15.google/"/>
-    <id>https://skystarry.cn/2018/09/30/15.google/</id>
+    <link href="https://skystarry.cn/2018/15.google/"/>
+    <id>https://skystarry.cn/2018/15.google/</id>
     <published>2018-09-29T16:57:33.000Z</published>
     <updated>2020-12-09T01:10:09.586Z</updated>
     
@@ -347,8 +347,8 @@ P(\omega_i|x)=\frac{p(x,\omega_i)}{p(x)}=\frac{p(x|\omega_i)p(\omega_i)}{p(x)},i
   
   <entry>
     <title>Lipschitz Condition</title>
-    <link href="https://skystarry.cn/2018/09/13/14.Lipschitz/"/>
-    <id>https://skystarry.cn/2018/09/13/14.Lipschitz/</id>
+    <link href="https://skystarry.cn/2018/14.Lipschitz/"/>
+    <id>https://skystarry.cn/2018/14.Lipschitz/</id>
     <published>2018-09-13T12:24:28.000Z</published>
     <updated>2020-12-09T01:10:09.586Z</updated>
     
@@ -366,8 +366,8 @@ P(\omega_i|x)=\frac{p(x,\omega_i)}{p(x)}=\frac{p(x|\omega_i)p(\omega_i)}{p(x)},i
   
   <entry>
     <title>pods_cmake</title>
-    <link href="https://skystarry.cn/2018/08/26/13.pods-cmake/"/>
-    <id>https://skystarry.cn/2018/08/26/13.pods-cmake/</id>
+    <link href="https://skystarry.cn/2018/13.pods-cmake/"/>
+    <id>https://skystarry.cn/2018/13.pods-cmake/</id>
     <published>2018-08-26T14:33:32.000Z</published>
     <updated>2020-12-09T01:10:09.585Z</updated>
     
@@ -391,8 +391,8 @@ P(\omega_i|x)=\frac{p(x,\omega_i)}{p(x)}=\frac{p(x|\omega_i)p(\omega_i)}{p(x)},i
   
   <entry>
     <title>Kalman with eigen</title>
-    <link href="https://skystarry.cn/2018/08/22/12.matrix-decomposition/"/>
-    <id>https://skystarry.cn/2018/08/22/12.matrix-decomposition/</id>
+    <link href="https://skystarry.cn/2018/12.matrix-decomposition/"/>
+    <id>https://skystarry.cn/2018/12.matrix-decomposition/</id>
     <published>2018-08-21T20:10:24.000Z</published>
     <updated>2020-12-09T01:10:09.585Z</updated>
     
@@ -410,8 +410,8 @@ P(\omega_i|x)=\frac{p(x,\omega_i)}{p(x)}=\frac{p(x|\omega_i)p(\omega_i)}{p(x)},i
   
   <entry>
     <title>Kalman Filter</title>
-    <link href="https://skystarry.cn/2018/08/21/11.Kalman/"/>
-    <id>https://skystarry.cn/2018/08/21/11.Kalman/</id>
+    <link href="https://skystarry.cn/2018/11.Kalman/"/>
+    <id>https://skystarry.cn/2018/11.Kalman/</id>
     <published>2018-08-20T18:05:36.000Z</published>
     <updated>2020-12-09T01:10:09.585Z</updated>
     

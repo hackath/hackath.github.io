@@ -1,0 +1,601 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.3.0">
+
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+  <meta http-equiv="Cache-Control" content="no-transform">
+  <meta http-equiv="Cache-Control" content="no-siteapp">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.1/css/all.min.css">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css">
+
+<script class="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"skystarry.cn","root":"/","images":"/images","scheme":"Mist","version":"8.1.0","exturl":true,"sidebar":{"position":"right","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}};
+  </script>
+<meta name="description" content="本blog总结单变量正态分布以及多元正态分布和他们的性质。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Normal distribution">
+<meta property="og:url" content="https://skystarry.cn/2018/17.Normal-distribution/index.html">
+<meta property="og:site_name" content="skystarry">
+<meta property="og:description" content="本blog总结单变量正态分布以及多元正态分布和他们的性质。">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2018-10-03T13:39:37.000Z">
+<meta property="article:modified_time" content="2020-12-09T01:10:09.587Z">
+<meta property="article:author" content="skystarry">
+<meta property="article:tag" content="数学">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://skystarry.cn/2018/17.Normal-distribution/">
+
+
+<script class="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+<title>Normal distribution | skystarry</title>
+  
+
+
+
+  <noscript>
+  <style>
+  body { margin-top: 2rem; }
+
+  .use-motion .menu-item,
+  .use-motion .sidebar,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header {
+    visibility: visible;
+  }
+
+  .use-motion .header,
+  .use-motion .site-brand-container .toggle,
+  .use-motion .footer { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle,
+  .use-motion .custom-logo-image {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line {
+    transform: scaleX(1);
+  }
+
+  .search-pop-overlay, .sidebar-nav { display: none; }
+  .sidebar-panel { display: block; }
+  </style>
+</noscript>
+
+<!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+<!-- hexo injector head_end end --><link rel="alternate" href="/rss_skystarry.xml" title="skystarry" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">skystarry</h1>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">我的博客</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <section class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%8D%95%E5%8F%98%E9%87%8F%E6%AD%A3%E6%80%81%E5%88%86%E5%B8%83"><span class="nav-number">1.</span> <span class="nav-text">单变量正态分布</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%A4%9A%E5%85%83%E6%AD%A3%E6%80%81%E5%88%86%E5%B8%83"><span class="nav-number">2.</span> <span class="nav-text">多元正态分布</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%A4%9A%E5%85%83%E5%88%86%E5%B8%83%E6%80%A7%E8%B4%A8"><span class="nav-number">2.1.</span> <span class="nav-text">多元分布性质</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%8D%E7%9B%B8%E5%85%B3%E6%80%A7-%E7%8B%AC%E7%AB%8B%E6%80%A7"><span class="nav-number">2.2.</span> <span class="nav-text">不相关性&#x3D;独立性</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%BE%B9%E7%BC%98%E5%88%86%E5%B8%83%E5%92%8C%E6%9D%A1%E4%BB%B6%E5%88%86%E5%B8%83%E7%9A%84%E6%AD%A3%E6%80%81%E6%80%A7"><span class="nav-number">2.3.</span> <span class="nav-text">边缘分布和条件分布的正态性</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%BA%BF%E6%80%A7%E5%8F%98%E6%8D%A2%E7%9A%84%E6%AD%A3%E6%80%81%E6%80%A7"><span class="nav-number">2.4.</span> <span class="nav-text">线性变换的正态性</span></a></li></ol></li></ol></div>
+        </section>
+        <!--/noindex-->
+
+        <section class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="skystarry"
+      src="/img/skystarry.jpg">
+  <p class="site-author-name" itemprop="name">skystarry</p>
+  <div class="site-description" itemprop="description">Seek only light, freedom, and you.</div>
+</div>
+
+   <div class="feed-link motion-element">
+     <a href="/rss_skystarry.xml" rel="alternate">
+       <i class="fa fa-rss"></i>
+       RSS
+     </a>
+   </div>
+ 
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">28</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">8</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">17</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author site-overview-item animated">
+      <span class="links-of-author-item">
+        <span class="exturl" data-url="aHR0cHM6Ly9za3lzdGFycnkuZ2l0ZWUuaW8v" title="Wiki → https:&#x2F;&#x2F;skystarry.gitee.io&#x2F;">Wiki</span>
+      </span>
+      <span class="links-of-author-item">
+        <span class="exturl" data-url="bWFpbHRvOmxpY2h1bnBlbmcyMjAwQG91dGxvb2suY29t" title="E-Mail → mailto:lichunpeng2200@outlook.com">E-Mail</span>
+      </span>
+      <span class="links-of-author-item">
+        <span class="exturl" data-url="aHR0cHM6Ly93d3cuemhpaHUuY29tL3Blb3BsZS9saS1jaHVucGVuZw==" title="知乎 → https:&#x2F;&#x2F;www.zhihu.com&#x2F;people&#x2F;li-chunpeng">知乎</span>
+      </span>
+      <span class="links-of-author-item">
+        <span class="exturl" data-url="aHR0cHM6Ly9zcGFjZS5iaWxpYmlsaS5jb20vMTc5NDE2OTY1" title="B站 → https:&#x2F;&#x2F;space.bilibili.com&#x2F;179416965">B站</span>
+      </span>
+      <span class="links-of-author-item">
+        <span class="exturl" data-url="aHR0cDovL211c2ljLjE2My5jb20vIy91c2VyL2hvbWU/aWQ9MjcyMTA3MDQw" title="网抑云 → http:&#x2F;&#x2F;music.163.com&#x2F;#&#x2F;user&#x2F;home?id&#x3D;272107040">网抑云</span>
+      </span>
+  </div>
+
+
+
+        </section>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+
+  <span class="exturl github-corner" data-url="aHR0cHM6Ly9naXRodWIuY29tL1B1bmtMaQ==" title="Follow me on GitHub" aria-label="Follow me on GitHub"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></span>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://skystarry.cn/2018/17.Normal-distribution/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/img/skystarry.jpg">
+      <meta itemprop="name" content="skystarry">
+      <meta itemprop="description" content="Seek only light, freedom, and you.">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="skystarry">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Normal distribution
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2018-10-03 21:39:37" itemprop="dateCreated datePublished" datetime="2018-10-03T21:39:37+08:00">2018-10-03</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">更新于</span>
+        <time title="修改时间：2020-12-09 09:10:09" itemprop="dateModified" datetime="2020-12-09T09:10:09+08:00">2020-12-09</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E6%95%B0%E5%AD%A6/" itemprop="url" rel="index"><span itemprop="name">数学</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>2.4k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>2 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <p>本blog总结单变量正态分布以及多元正态分布和他们的性质。</p>
+<a id="more"></a>
+<h1 id="单变量正态分布"><a href="#单变量正态分布" class="headerlink" title="单变量正态分布"></a>单变量正态分布</h1><p>概率密度函数：</p>
+<script type="math/tex; mode=display">
+p(x)=\frac{1}{\sqrt{2\pi}\sigma}\exp\left\{ -\frac{1}{2}\left(\frac{x-\mu}{\sigma}\right)^2\right\}</script><p>期望$\mu$和方差$\sigma^2$：</p>
+<script type="math/tex; mode=display">
+\mu = E\{x\}=\int_{-\infty}^{\infty}xp(x)dx \\
+\sigma^2=\int_{-\infty}^{\infty}(x-\mu)^2p(x)dx</script><h1 id="多元正态分布"><a href="#多元正态分布" class="headerlink" title="多元正态分布"></a>多元正态分布</h1><p>概率密度函数：</p>
+<script type="math/tex; mode=display">
+p(x)=\frac{1}{(x\pi)^{d/2}|\Sigma|^{1/2}}\exp\left\{ -\frac{1}{2}(x-\mu)^T\Sigma^{-1}(x-\mu)\right\}</script><ul>
+<li>$x=[x_1,x_2,…,x_d]^T$ 是d维向量</li>
+<li>$\mu=[\mu_1,\mu_2,…,\mu_d]^T$是d维均值向量</li>
+<li>$\Sigma$是dxd维协方差矩阵</li>
+</ul>
+<p>$<br>\mu=E\{x\} \\<br>\Sigma=E\{(x-\mu)(x-\mu)^T\}<br>$<br>$\mu$，$\Sigma$分别是向量$x$和矩阵$(x-\mu)(x-\mu)^T$的期望，若$x_i$是$x$的第$i$个个分量，$\mu_i$是$\mu$的第$i$个分量，$\sigma_{ij}$是$\Sigma$的第$i,j$个元素，则</p>
+<script type="math/tex; mode=display">
+\mu_i=E\{x_i\}=\int_{E^d}x_ip(x)dx=-\int_{-\infty}^{\infty}x_ip(x)dx_i</script><p>其中，$p(x_i)$为边缘分布</p>
+<script type="math/tex; mode=display">
+p(x_i)=\int_{-\infty}^{\infty}...\int_{-\infty}^{\infty}p(x)dx_1dx_2...dx_{x-1}dx_{i+1}...dx_d</script><p>而</p>
+<script type="math/tex; mode=display">
+\begin{equation} 
+\begin{split} 
+\sigma_{ij}&=E[(x_i-\mu_i)(x_j-\mu_j)] \\
+&=\int_{-\infty}^{\infty}...\int_{-\infty}^{\infty}(x_i-\mu_i)(x_j-\mu_j)p(x_i,x_j)dx_idx_j
+\end{split} 
+\end{equation}</script><p>协方差矩阵总是正定or半正定的矩阵，可以表示为</p>
+<script type="math/tex; mode=display">\Sigma = 
+\left[\begin{matrix}
+\sigma_{11} & \sigma_{12} & \dots & \sigma_{1d} \\ 
+\sigma_{21} & \sigma_{22} & \dots & \sigma_{2d} \\ 
+\vdots & \vdots & \ddots & \vdots \\ 
+\sigma_{2d} & \sigma_{2d} & \dots & \sigma_{dd} \\ 
+\end{matrix}\right]</script><h2 id="多元分布性质"><a href="#多元分布性质" class="headerlink" title="多元分布性质"></a>多元分布性质</h2><p>多元正态分布被均值向量$\mu$和协方差矩阵$\Sigma$所完全决定。</p>
+<script type="math/tex; mode=display">
+p(x)\sim N(\mu,\Sigma)</script><p>等密度点的轨迹为以超椭球面，区域中心由均值向量$\mu$决定，区域的大小由协方差矩阵$\Sigma$决定。当指数项为常数时，构成等密度点：</p>
+<script type="math/tex; mode=display">
+(x-\mu)^T\Sigma^{-1}(x-\mu)=C</script><p>该式子的解是一个超椭球面，且它的主轴方向由$\Sigma$阵的特征向量决定，主轴长度与相应的协方差矩阵$\Sigma$的特征值成正比。</p>
+<script type="math/tex; mode=display">
+\gamma^2=(x-\mu)^T\Sigma^{-1}(x-\mu)</script><p>称为由$x$到$\mu$的Mahalanobis距离（马氏距离）的平方，对应于Mahalanobis距离为$\gamma$的超椭圆球体积是</p>
+<script type="math/tex; mode=display">
+V=V_d|\Sigma|^{\frac{1}{2}}\gamma^d</script><p>其中$V_d$是$d$维单位超球体的体积，</p>
+<script type="math/tex; mode=display">
+V_d= 
+\begin{equation} 
+\left\{ 
+\begin{array}{lc} 
+\frac{\pi^{d/2}}{\left( \frac{d}{2} \right)!} & d为偶数\\
+\frac{2^d\pi^{(d-1)/2}\left( \frac{d-1}{2} \right)!}{d!} & d为奇数
+\end{array} 
+\right. 
+\end{equation}</script><p>对于给定的维数，样本离散度直接随$|\Sigma|^{1/2}$而变。</p>
+<h2 id="不相关性-独立性"><a href="#不相关性-独立性" class="headerlink" title="不相关性=独立性"></a>不相关性=独立性</h2><ul>
+<li>不相关：$E\{x_ix_j\}=E\{x_i\}E\{x-j\}$</li>
+<li>独立的：$p\{x_ix_j\}=p\{x_i\}p\{x_j\}$</li>
+</ul>
+<p>独立性比不相关性条件更强，而在多元正态分布中，两者等价。在正态分布中，变量互不相关，则一定独立。</p>
+<p>推论：如果多元正态随机向量的协方差矩阵是对角阵，则x的分量是相互独立的正态分布随机变量。</p>
+<h2 id="边缘分布和条件分布的正态性"><a href="#边缘分布和条件分布的正态性" class="headerlink" title="边缘分布和条件分布的正态性"></a>边缘分布和条件分布的正态性</h2><p>以二元正态分布为例，</p>
+<ul>
+<li>向量$x=[x_1,x_2]^T$</li>
+<li>均值$\mu=[\mu_1,\mu_2]^T$</li>
+<li>协方差矩阵$\Sigma=\left[\begin{matrix}\sigma_{11}^2&amp;\sigma_{12}^2\\\sigma_{21}^2&amp;\sigma_{22}^2\end{matrix}\right]$</li>
+</ul>
+<script type="math/tex; mode=display">
+p(x_1)\sim N(\mu_1,\sigma_{11}^2) \\
+p(x_2)\sim N(\mu_1,\sigma_{22}^2)</script><h2 id="线性变换的正态性"><a href="#线性变换的正态性" class="headerlink" title="线性变换的正态性"></a>线性变换的正态性</h2><p>对于多元正态随机变量$x$，无论是线性变化$y=Ax$还是线性组合$y=\alpha^Tx$，正态分布依然是正态分布。</p>
+<script type="math/tex; mode=display">
+p(y)\sim N(A\mu,A\Sigma A^T)
+p(y)\sim N(\alpha^T\mu,\alpha^T\Sigma\alpha)</script>
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E6%95%B0%E5%AD%A6/" rel="tag"><i class="fa fa-tag"></i> 数学</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2018/16.Bayesian-Theorem/" rel="prev" title="Bayesian Theorem">
+                  <i class="fa fa-chevron-left"></i> Bayesian Theorem
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2018/20.cpp-taskflow/" rel="next" title="Cpp-Taskflow">
+                  Cpp-Taskflow <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      const activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      const commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 2016 – 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fab fa-github"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">朋克李PunkLi</span>
+</div>
+<div class="wordcount">
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-line"></i>
+    </span>
+    <span title="站点总字数">163k</span>
+  </span>
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="站点阅读时长">2:28</span>
+  </span>
+</div>
+
+    </div>
+  </footer>
+
+  
+  <script src="//cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js"></script>
+<script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+  
+
+
+
+
+
+  <script>
+  if (typeof MathJax === 'undefined') {
+    window.MathJax = {
+      tex: {
+        inlineMath: {'[+]': [['$', '$']]},
+        tags: 'ams'
+      },
+      options: {
+        renderActions: {
+          findScript: [10, doc => {
+            document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+              const display = !!node.type.match(/; *mode=display/);
+              const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+              const text = document.createTextNode('');
+              node.parentNode.replaceChild(text, node);
+              math.start = {node: text, delim: '', n: 0};
+              math.end = {node: text, delim: '', n: 0};
+              doc.math.push(math);
+            });
+          }, '', false],
+          insertedScript: [200, () => {
+            document.querySelectorAll('mjx-container').forEach(node => {
+              const target = node.parentNode;
+              if (target.nodeName.toLowerCase() === 'li') {
+                target.parentNode.classList.add('has-jax');
+              }
+            });
+          }, '', false]
+        }
+      }
+    };
+    const script = document.createElement('script');
+    script.src = '//cdn.jsdelivr.net/npm/mathjax@3.1.2/es5/tex-mml-chtml.js';
+    script.defer = true;
+    document.head.appendChild(script);
+  } else {
+    MathJax.startup.document.state(0);
+    MathJax.typesetClear();
+    MathJax.texReset();
+    MathJax.typeset();
+  }
+</script>
+
+
+
+</body>
+</html>

@@ -2,7 +2,7 @@
 <search>
   <entry>
     <title>配置我的linux</title>
-    <url>/2018/07/02/02.%E9%85%8D%E7%BD%AE%E6%88%91%E7%9A%84linux/</url>
+    <url>/2018/02.%E9%85%8D%E7%BD%AE%E6%88%91%E7%9A%84linux/</url>
     <content><![CDATA[<p>这篇博客从我以前的博客搬运过来，备份系统可以使用Remastersys，网上的教程一搜一大把。为了省心，我一直坚持使用ubuntu16.04，以下是系统环境的配置。</p>
 <a id="more"></a> 
 <h2 id="一些基础的安装和依赖"><a href="#一些基础的安装和依赖" class="headerlink" title="一些基础的安装和依赖"></a>一些基础的安装和依赖</h2><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">sudo apt install </span><br><span class="line">sudo snap install mathpix-snipping-tool</span><br><span class="line">sudo apt-get install build-essential</span><br><span class="line">sudo apt-get install git cmake cmake-qt-gui </span><br><span class="line"></span><br><span class="line">git config --global user.name &quot;yourname&quot;</span><br><span class="line">git config --global user.email &quot;youremail@example.com&quot;</span><br><span class="line"></span><br><span class="line">ssh-keygen -t rsa -C &quot;youremail@example.com&quot;</span><br></pre></td></tr></table></figure>
@@ -64,7 +64,7 @@
   </entry>
   <entry>
     <title>旋转表示法</title>
-    <url>/2018/07/12/03.%E6%97%8B%E8%BD%AC%E8%A1%A8%E7%A4%BA%E6%B3%95/</url>
+    <url>/2018/03.%E6%97%8B%E8%BD%AC%E8%A1%A8%E7%A4%BA%E6%B3%95/</url>
     <content><![CDATA[<h1 id="一、向量和坐标系"><a href="#一、向量和坐标系" class="headerlink" title="一、向量和坐标系"></a>一、向量和坐标系</h1><p>要想确定一个坐标，首先要建立坐标系。在三维空间中建立的坐标系通常都是两两垂直的，坐标系也叫做线性空间中的一组基 $(e_{1},e_{2},e_{3})$ ，向量 $a$ 在这组基的坐标就可以表示成：    </p>
 <script type="math/tex; mode=display">
 a=[e_{1},e_{2},e_{3}]\left[\begin{matrix}a_{1} \\ a_{2} \\ a_3\end{matrix}\right]=a_{1}e_{1}+a_{2}e_{2}+a_{3}e_{3}</script><p>向量有内积和外积之分，<br>内积表示为 $a^Tb$ ，可以描述为两个向量之间的投影关系。<br>外积表示为 $ab^T$ ，外积大小是两个向量张成四边形的有向面积，之所以有向，是因为外积方向垂直于这两个向量构成的平面，且满足右手定理， $ab^T$ 和 $ba^T$ 会得到大小相同，方向相反的结果。</p>
@@ -100,7 +100,7 @@ a=[e_{1},e_{2},e_{3}]\left[\begin{matrix}a_{1} \\ a_{2} \\ a_3\end{matrix}\right
   </entry>
   <entry>
     <title>图像的矩</title>
-    <url>/2018/08/02/08.moments/</url>
+    <url>/2018/08.moments/</url>
     <content><![CDATA[<h1 id="数学中的矩"><a href="#数学中的矩" class="headerlink" title="数学中的矩"></a>数学中的矩</h1><p>矩的本质是数学期望，而期望的计算公式是</p>
 <script type="math/tex; mode=display">E(x)=\int_{-\infty}^{+\infty} xf(x)dx</script><p>其中f(x)是x的概率密度，上面的公式默认了所有变量概率相等。<br><a id="more"></a><br>[定义]：设x，y是离散型随机变量，c为常数，k为正整数，如果E(|x-c|^2)存在，则称其为x关于点c的k阶矩。<br>c=0时，称为k阶原点矩<br>c=E(x)时，成为k阶中心距<br>如果E(|x-c1|^p·|x-c2|^q)存在，则称其为x，y关于点c的p+q阶矩<br>c1=c2=0时，称为p+q阶混合中心矩<br>c1=E(x), c2=E(y)时，称为p+q阶混合中心矩<br>如果x, y是连续型的，则下式称其为x，y关于点c的p+q阶矩</p>
 <script type="math/tex; mode=display">\iint\limits_{p+y} {( x-x_{0})^p\cdot (y-y_{0})^q}dxdy</script><h1 id="图像的矩"><a href="#图像的矩" class="headerlink" title="图像的矩"></a>图像的矩</h1><p>一般的图象距，指的是原点矩。一阶矩和零阶矩就可以计算某个形状的重心，而二阶矩就可以拿来计算形状和方向。<br>(1)普通矩</p>
@@ -144,7 +144,7 @@ a=[e_{1},e_{2},e_{3}]\left[\begin{matrix}a_{1} \\ a_{2} \\ a_3\end{matrix}\right
   </entry>
   <entry>
     <title>基于图的图像分割</title>
-    <url>/2018/08/07/10.Graph-Based-Image-Segmentation/</url>
+    <url>/2018/10.Graph-Based-Image-Segmentation/</url>
     <content><![CDATA[<p>Graph-Based Segmentation 是经典的图像分割算法。论文：<span class="exturl" data-url="aHR0cDovL2NzLmJyb3duLmVkdS9wZW9wbGUvcGZlbHplbnMvcGFwZXJzL3NlZy1pamN2LnBkZg==">Efficient Graph-Based Image Segmentation，IJCV 2004，MIT<i class="fa fa-external-link-alt"></i></span>，作者 Pedro F. Felzenszwalb.</p>
 <a id="more"></a> 
 <h1 id="图"><a href="#图" class="headerlink" title="图"></a>图</h1><p>图是由顶点集$V$（vertices）和边集$E$（edges）组成，表示为$G=(V,E)$，顶点$v \in V$，在本文中即为单个的像素点，连接一对顶点的边$(v_i,v_j)\in E$具有权重$w(v_i,v_j)$，本文中的意义为顶点之间的不相似度，所用的是无向图。</p>
@@ -193,7 +193,7 @@ flase，otherwise
   </entry>
   <entry>
     <title>Kalman Filter</title>
-    <url>/2018/08/21/11.Kalman/</url>
+    <url>/2018/11.Kalman/</url>
     <content><![CDATA[<p>前段时间在知乎上看到的<span class="exturl" data-url="aHR0cHM6Ly96aHVhbmxhbi56aGlodS5jb20vcC8zODc0NTk1MA==">《卡尔曼滤波器及其在云台控制中的应用》<i class="fa fa-external-link-alt"></i></span>这篇文章，中间提到了Estimate的三个境界：smoothing-&gt;filtering-&gt;prediction。为了解决我在机器人比赛中的预测问题，也为了迈入Estimate的大门，就从Kalman Filter开始入手吧。</p>
 <a id="more"></a>
 <h1 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h1><p>卡尔曼滤波器是在估计线性系统状态的过程中，以最小均方误差为目的而推导出的5个递推数学等式，即“根据当前的测量值和上一刻的预测量、误差，计算当前的最优量，再预测下一刻的量”。误差是不断变化而且独立存在, 始终不受测量数据的影响。<br>从概率论贝叶斯模型的观点来看，系统预测的结果是先验，系统测量的结果是后验。<br>核心思想：预测 + 测量反馈。</p>
@@ -324,7 +324,7 @@ P_{k+1}
   </entry>
   <entry>
     <title>Kalman with eigen</title>
-    <url>/2018/08/22/12.matrix-decomposition/</url>
+    <url>/2018/12.matrix-decomposition/</url>
     <content><![CDATA[<p><span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL21oZXJiL2thbG1hblQ=">https://github.com/mherb/kalmanT<i class="fa fa-external-link-alt"></i></span> 是一个基于eigin3的Kalman-Filter，包含了Extended Kalman Filter (EKF)、Square Root Extended Kalman Filter (SR-EKF)、Unscented Kalman Filter (UKF)、Square Root Unscented Kalman Filter (SR-UKF)，4种Kalman filter。</p>
 <a id="more"></a>
 <h1 id="Cholesky分解"><a href="#Cholesky分解" class="headerlink" title="Cholesky分解"></a>Cholesky分解</h1><p><span class="exturl" data-url="aHR0cHM6Ly96aC53aWtpcGVkaWEub3JnL3dpa2kvJUU1JTlGJTgzJUU1JUIwJTk0JUU3JUIxJUIzJUU3JTg5JUI5JUU3JTlGJUE5JUU5JTk4JUI1">Hermitian matrix（埃尔米特矩阵，厄米矩阵，自伴随矩阵）<i class="fa fa-external-link-alt"></i></span>，是共轭对称的方阵。</p>
@@ -346,7 +346,7 @@ P_{k+1}
   </entry>
   <entry>
     <title>pods_cmake</title>
-    <url>/2018/08/26/13.pods-cmake/</url>
+    <url>/2018/13.pods-cmake/</url>
     <content><![CDATA[<p>Apriltags的CMakeLists.txt中出现了一行pods_install_executables()，这并不是标准的CMake写法，项目中有cmake/pods.cmake文件，里面写道：Macros to simplify compliance with the pods build policies.</p>
 <p>关于pods的资料不多，目前我对它的理解是一组基于CMake语法的宏，本身与CMake并没有任何区别。cmake/pods.cmake的内容可以参考：<br><span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL1JvYm90TG9jb21vdGlvbi9jbWFrZS9ibG9iL21hc3Rlci9wb2RzLmNtYWtl">https://github.com/RobotLocomotion/cmake/blob/master/pods.cmake<i class="fa fa-external-link-alt"></i></span><br><span class="exturl" data-url="aHR0cHM6Ly9zb3VyY2Vmb3JnZS5uZXQvcHJvamVjdHMvcG9kcy8=">https://sourceforge.net/projects/pods/<i class="fa fa-external-link-alt"></i></span><br><span class="exturl" data-url="aHR0cHM6Ly9zb3VyY2Vmb3JnZS5uZXQvcC9wb2RzL3dpa2kvUG9kc1Rvb2wv">https://sourceforge.net/p/pods/wiki/PodsTool/<i class="fa fa-external-link-alt"></i></span></p>
 ]]></content>
@@ -359,7 +359,7 @@ P_{k+1}
   </entry>
   <entry>
     <title>Lipschitz Condition</title>
-    <url>/2018/09/13/14.Lipschitz/</url>
+    <url>/2018/14.Lipschitz/</url>
     <content><![CDATA[<p>L-lipschitz连续性是最近优化课程经常提到的一个基础内容，老师人很nice，讲课也很有开放性，每次都需要做大量的预习和课后复习才能完全消化。所以最近的Blog基本上都离不开数学主题了。<br>课堂引出L-lipschitz是为了衡量一个凸函数是否容易优化，通过函数光滑的程度和凸的程度来判断，原文是：$\nabla f$ is L-lipschitz and $f$ $\mu$-strongly convex.</p>
 <a id="more"></a> 
 <hr>
@@ -385,7 +385,7 @@ P_{k+1}
   </entry>
   <entry>
     <title>google tools</title>
-    <url>/2018/09/30/15.google/</url>
+    <url>/2018/15.google/</url>
     <content><![CDATA[<p>本blog整理google自家的工具链，包括glags、glog、gtest、protocol-buffers</p>
 <a id="more"></a>
 <h1 id="Googletest-断言"><a href="#Googletest-断言" class="headerlink" title="Googletest-断言"></a>Googletest-断言</h1><p><code>EXPECT_EQ(expected, actual)</code> is the same as <code>EXPECT_TRUE((expected) == (actual))</code></p>
@@ -571,77 +571,8 @@ P_{k+1}
       </tags>
   </entry>
   <entry>
-    <title>Bayesian Theorem</title>
-    <url>/2018/10/02/16.Bayesian-Theorem/</url>
-    <content><![CDATA[<p>根据概率论中的贝叶斯公式，有：</p>
-<script type="math/tex; mode=display">
-P(\omega_i|x)=\frac{p(x,\omega_i)}{p(x)}=\frac{p(x|\omega_i)p(\omega_i)}{p(x)},i=1,2,...</script><ul>
-<li>$p(\omega_i)$是先验概率</li>
-<li>$p(x,\omega_i)$是联合概率分布</li>
-<li>$p(x)$是总体密度</li>
-<li>$p(x|\omega_i)$是第$i$类x的概率密度，即类条件概率</li>
-</ul>
-<p>这样，后验概率就转换成先验概率与类条件概率密度的乘积，再用总体密度进行归一化。这就是贝叶斯决策。</p>
-<a id="more"></a>
-<hr>
-<h1 id="最小错误率准则"><a href="#最小错误率准则" class="headerlink" title="最小错误率准则"></a>最小错误率准则</h1><p>使错误率最小的分类决策，就是使后验概率最大。默认情况下，贝叶斯决策就是最小错误率决策。其中，后验概率用贝叶斯公式求得：</p>
-<script type="math/tex; mode=display">
-P(\omega_i|x)=\frac{p(x|\omega_i)p(\omega_i)}{p(x)}=\frac{p(x|\omega_i)p(\omega_i)}{\sum_{j=1}^{2}{p(x|\omega_i)p(\omega_i)}},i=1,2</script><p>最小错误率可以表示多种形式，比如：</p>
-<script type="math/tex; mode=display">
-minP(e)=\int_{}^{}P(e)p(x)dx \\ 
-P(\omega_i|x)=\max P(\omega_j|x),j=1,2</script><p>如果$p(x|\omega_1)p(\omega_1)P(\omega_1)&gt;p(x|\omega_2)p(\omega_2)P(\omega_2)$,则$x\in\omega_1$;反之，则$x\in\omega_2$</p>
-<h2 id="似然比"><a href="#似然比" class="headerlink" title="似然比"></a>似然比</h2><p>先验概率$p(\omega_i)$是事先确定的，与当前样本$x$无关，这样可以实现计算似然比$\lambda$，对每一个样本计算$l(x)$作比较</p>
-<script type="math/tex; mode=display">
-l(x)=p(x|\omega_1)/p(x|\omega_2)，\lambda=P(\omega_2)/P(\omega_1) \\
-l(x) > \lambda, x\in \omega_1 \\ 
-l(x) < \lambda, x\in \omega_2</script><p>为了计算，有时候使用对数似然比</p>
-<script type="math/tex; mode=display">
-h(x)=-\ln [l(x)]=-\ln p(x|\omega_1)+\ln p(x|\omega_2)</script><h2 id="错误率"><a href="#错误率" class="headerlink" title="错误率"></a>错误率</h2><p>不同类的分界线称作决策边界，在多维情况下称为决策面，它把特征空间划分成属于各类的区域。<br>对二分类问题的错误率分析：</p>
-<script type="math/tex; mode=display">
-\begin{equation} 
-\begin{split} 
-P(e)&= \int_{-\infty}^{t}P(\omega_2|x)p(x)dx+\int_{t}^{\infty}P(\omega_1|x)p(x)dx \\
-&=\int_{-\infty}^{t}p(x|\omega_2)P(\omega_2)dx+\int_{t}^{\infty}p(x|\omega_1)P(\omega_1)dx \\
-&=P(\omega_2)\int_{-\infty}^{t}p(x|\omega_2)dx+P(\omega_1)\int_{t}^{\infty}p(x|\omega_1)dx \\ 
-&=P(\omega_2)P_2(e)+P(\omega_1)P_1(e)
-\end{split} 
-\end{equation}</script><p>其中，$P_1(e)$是把第一类错判成第二类的错误率，$P_2(e)$是把第二类错判成第一类的错误类。</p>
-<h2 id="多决策"><a href="#多决策" class="headerlink" title="多决策"></a>多决策</h2><p>假如不是二分类，就要把特征空间分割成$\mathcal{R_1}，\mathcal{R_2}，…，\mathcal{R_n}$个区域，可能错分的情况就很多，平均错误率$P(e)$将有$c(c-1)$项，一共$c$行，每行$c-1$列。</p>
-<script type="math/tex; mode=display">
-P(e)=\sum_{i=1}^{c}\sum_{j=1}^{c}{[P(x\in \mathcal{R_j}|\omega_i)]P(\omega_i)}</script><p>可以通过计算平均正确率$P(c)$来降低计算量：</p>
-<script type="math/tex; mode=display">
-P(c)=\sum_{j=1}^{c}{P(x\in\mathcal{R}|\omega_i)P(\omega_j)}=\sum_{j=1}^{c}{\int_{\mathcal{R_j}}p(x|\omega_j)P(\omega_j)}dx \\
-P(e)=1-P(c)</script><hr>
-<h1 id="最小风险准则"><a href="#最小风险准则" class="headerlink" title="最小风险准则"></a>最小风险准则</h1><p>所谓最小风险准则，就是考虑各种错误造成损失不同时的一种最优决策。</p>
-<ul>
-<li>样本$x$看作$d$维随机向量：$x=[x_1,x_2,…,x_d]^T$</li>
-<li>状态空间$\Omega$由$c$个可能的状态（$c$类）组成：$\Omega=\{\omega_1,\omega_2,…,\omega_c\}$</li>
-<li>对$x$可能采取的决策组成决策空间，由$k$个决策组成：$\mathcal{A}=\{\alpha_1,\alpha_2,…,\alpha_k\}$</li>
-<li>对实际为$\omega_j$的x采取决策$\alpha_i$所带来的损失为$\lambda(\alpha_i,\omega_j),i=1,…,k， j=1,…,c$</li>
-</ul>
-<p>这里没有假定$k=c$，是因为允许拒绝决策，比如不属于任何一类，这是更一般的情况。决策损失可以列出一个$k$行$c$列的决策表。</p>
-<p>对于某一个样本属于各个状态的后验概率是$P(\omega_j|x),j=1,…,c$，对它采取决策$\alpha_i,i=1,…,k$ 的期望损失是：</p>
-<script type="math/tex; mode=display">
-R(\alpha_i|x)=E(\lambda(\alpha_i,\omega_j)|x)=\sum_{j=1}^{c}\lambda(\alpha_i,\omega_j)P(\omega_j|x)，i=1,...,k</script><p>设某一个决策$\alpha(x)$，它对特征空间中所有可能的样本采用决策所造成的期望损失是$R(\alpha)$，称为平均/期望风险，令它最小就是最小风险准则。</p>
-<script type="math/tex; mode=display">
-\min R(\alpha)=\int R(\alpha(x)|x)p(x)dx</script><p>以二分类为例，</p>
-<script type="math/tex; mode=display">
-\lambda_{11}P(\omega_1|x)+\lambda_{12}P(\omega_2|x) < \lambda_{21}P(\omega_1|x)+\lambda_{22}P(\omega_2|x)，x\in \omega_1 \\
-\lambda_{11}P(\omega_1|x)+\lambda_{12}P(\omega_2|x) > \lambda_{21}P(\omega_1|x)+\lambda_{22}P(\omega_2|x)，x\in \omega_2</script><p>关于决策表，可以写成矩阵吧，对角线一般都是0，最小错误率准则就是0-1决策表，而最小风险准则就是有了不同的参数.</p>
-<script type="math/tex; mode=display">
-\left[\begin{matrix}\lambda_{11} & \lambda_{12} \\ \lambda_{21} & \lambda_{22}\end{matrix}\right]=\left[\begin{matrix}0 & 1 \\ 1 & 0\end{matrix}\right]</script><hr>
-<h1 id="两类错误率、Neyman-Pearson决策与ROC曲线"><a href="#两类错误率、Neyman-Pearson决策与ROC曲线" class="headerlink" title="两类错误率、Neyman-Pearson决策与ROC曲线"></a>两类错误率、Neyman-Pearson决策与ROC曲线</h1><p>待续</p>
-]]></content>
-      <categories>
-        <category>数学</category>
-      </categories>
-      <tags>
-        <tag>数学</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>Normal distribution</title>
-    <url>/2018/10/03/17.Normal-distribution/</url>
+    <url>/2018/17.Normal-distribution/</url>
     <content><![CDATA[<p>本blog总结单变量正态分布以及多元正态分布和他们的性质。</p>
 <a id="more"></a>
 <h1 id="单变量正态分布"><a href="#单变量正态分布" class="headerlink" title="单变量正态分布"></a>单变量正态分布</h1><p>概率密度函数：</p>
@@ -719,22 +650,77 @@ p(y)\sim N(\alpha^T\mu,\alpha^T\Sigma\alpha)</script>]]></content>
       </tags>
   </entry>
   <entry>
-    <title>Cpp-Taskflow</title>
-    <url>/2018/10/17/20.cpp-taskflow/</url>
-    <content><![CDATA[<p>A fast C++ header-only library to help you quickly write parallel programs with complex task dependencies.<br><span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL2NwcC10YXNrZmxvdy9jcHAtdGFza2Zsb3c=">https://github.com/cpp-taskflow/cpp-taskflow<i class="fa fa-external-link-alt"></i></span></p>
+    <title>Bayesian Theorem</title>
+    <url>/2018/16.Bayesian-Theorem/</url>
+    <content><![CDATA[<p>根据概率论中的贝叶斯公式，有：</p>
+<script type="math/tex; mode=display">
+P(\omega_i|x)=\frac{p(x,\omega_i)}{p(x)}=\frac{p(x|\omega_i)p(\omega_i)}{p(x)},i=1,2,...</script><ul>
+<li>$p(\omega_i)$是先验概率</li>
+<li>$p(x,\omega_i)$是联合概率分布</li>
+<li>$p(x)$是总体密度</li>
+<li>$p(x|\omega_i)$是第$i$类x的概率密度，即类条件概率</li>
+</ul>
+<p>这样，后验概率就转换成先验概率与类条件概率密度的乘积，再用总体密度进行归一化。这就是贝叶斯决策。</p>
 <a id="more"></a>
-<h2 id="升级Cmake"><a href="#升级Cmake" class="headerlink" title="升级Cmake"></a>升级Cmake</h2><p>指定安装路径进行安装<br><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">cd /user/bin/cmake-3.8/cmake-x.xx.x</span><br><span class="line">./bootstrap --prefix=/user/bin/cmake-x.x/cmake-x.xx.x</span><br><span class="line">make</span><br><span class="line">make install</span><br></pre></td></tr></table></figure><br>另一种安装方案：不使用./bootstrap，而通过 ./configure执行<br><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">./configure</span><br><span class="line">make</span><br><span class="line">make install</span><br><span class="line">sudo ln -sf /....../....../cmake-3.12.4/bin/*  /usr/bin/</span><br></pre></td></tr></table></figure></p>
-<h2 id="升级编译器gcc-g"><a href="#升级编译器gcc-g" class="headerlink" title="升级编译器gcc/g++"></a>升级编译器gcc/g++</h2><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">sudo add-apt-repository ppa:ubuntu-toolchain-r/test</span><br><span class="line">sudo apt-get update </span><br><span class="line">sudo apt-get install gcc-7</span><br><span class="line">sudo apt-get install g++-7</span><br><span class="line"></span><br><span class="line">sudo update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-7 100</span><br><span class="line">sudo update-alternatives --config gcc</span><br><span class="line"></span><br><span class="line">sudo update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-7 100</span><br><span class="line">sudo update-alternatives --config g++</span><br><span class="line"></span><br><span class="line">gcc -v</span><br><span class="line">g++ -v</span><br></pre></td></tr></table></figure>]]></content>
+<hr>
+<h1 id="最小错误率准则"><a href="#最小错误率准则" class="headerlink" title="最小错误率准则"></a>最小错误率准则</h1><p>使错误率最小的分类决策，就是使后验概率最大。默认情况下，贝叶斯决策就是最小错误率决策。其中，后验概率用贝叶斯公式求得：</p>
+<script type="math/tex; mode=display">
+P(\omega_i|x)=\frac{p(x|\omega_i)p(\omega_i)}{p(x)}=\frac{p(x|\omega_i)p(\omega_i)}{\sum_{j=1}^{2}{p(x|\omega_i)p(\omega_i)}},i=1,2</script><p>最小错误率可以表示多种形式，比如：</p>
+<script type="math/tex; mode=display">
+minP(e)=\int_{}^{}P(e)p(x)dx \\ 
+P(\omega_i|x)=\max P(\omega_j|x),j=1,2</script><p>如果$p(x|\omega_1)p(\omega_1)P(\omega_1)&gt;p(x|\omega_2)p(\omega_2)P(\omega_2)$,则$x\in\omega_1$;反之，则$x\in\omega_2$</p>
+<h2 id="似然比"><a href="#似然比" class="headerlink" title="似然比"></a>似然比</h2><p>先验概率$p(\omega_i)$是事先确定的，与当前样本$x$无关，这样可以实现计算似然比$\lambda$，对每一个样本计算$l(x)$作比较</p>
+<script type="math/tex; mode=display">
+l(x)=p(x|\omega_1)/p(x|\omega_2)，\lambda=P(\omega_2)/P(\omega_1) \\
+l(x) > \lambda, x\in \omega_1 \\ 
+l(x) < \lambda, x\in \omega_2</script><p>为了计算，有时候使用对数似然比</p>
+<script type="math/tex; mode=display">
+h(x)=-\ln [l(x)]=-\ln p(x|\omega_1)+\ln p(x|\omega_2)</script><h2 id="错误率"><a href="#错误率" class="headerlink" title="错误率"></a>错误率</h2><p>不同类的分界线称作决策边界，在多维情况下称为决策面，它把特征空间划分成属于各类的区域。<br>对二分类问题的错误率分析：</p>
+<script type="math/tex; mode=display">
+\begin{equation} 
+\begin{split} 
+P(e)&= \int_{-\infty}^{t}P(\omega_2|x)p(x)dx+\int_{t}^{\infty}P(\omega_1|x)p(x)dx \\
+&=\int_{-\infty}^{t}p(x|\omega_2)P(\omega_2)dx+\int_{t}^{\infty}p(x|\omega_1)P(\omega_1)dx \\
+&=P(\omega_2)\int_{-\infty}^{t}p(x|\omega_2)dx+P(\omega_1)\int_{t}^{\infty}p(x|\omega_1)dx \\ 
+&=P(\omega_2)P_2(e)+P(\omega_1)P_1(e)
+\end{split} 
+\end{equation}</script><p>其中，$P_1(e)$是把第一类错判成第二类的错误率，$P_2(e)$是把第二类错判成第一类的错误类。</p>
+<h2 id="多决策"><a href="#多决策" class="headerlink" title="多决策"></a>多决策</h2><p>假如不是二分类，就要把特征空间分割成$\mathcal{R_1}，\mathcal{R_2}，…，\mathcal{R_n}$个区域，可能错分的情况就很多，平均错误率$P(e)$将有$c(c-1)$项，一共$c$行，每行$c-1$列。</p>
+<script type="math/tex; mode=display">
+P(e)=\sum_{i=1}^{c}\sum_{j=1}^{c}{[P(x\in \mathcal{R_j}|\omega_i)]P(\omega_i)}</script><p>可以通过计算平均正确率$P(c)$来降低计算量：</p>
+<script type="math/tex; mode=display">
+P(c)=\sum_{j=1}^{c}{P(x\in\mathcal{R}|\omega_i)P(\omega_j)}=\sum_{j=1}^{c}{\int_{\mathcal{R_j}}p(x|\omega_j)P(\omega_j)}dx \\
+P(e)=1-P(c)</script><hr>
+<h1 id="最小风险准则"><a href="#最小风险准则" class="headerlink" title="最小风险准则"></a>最小风险准则</h1><p>所谓最小风险准则，就是考虑各种错误造成损失不同时的一种最优决策。</p>
+<ul>
+<li>样本$x$看作$d$维随机向量：$x=[x_1,x_2,…,x_d]^T$</li>
+<li>状态空间$\Omega$由$c$个可能的状态（$c$类）组成：$\Omega=\{\omega_1,\omega_2,…,\omega_c\}$</li>
+<li>对$x$可能采取的决策组成决策空间，由$k$个决策组成：$\mathcal{A}=\{\alpha_1,\alpha_2,…,\alpha_k\}$</li>
+<li>对实际为$\omega_j$的x采取决策$\alpha_i$所带来的损失为$\lambda(\alpha_i,\omega_j),i=1,…,k， j=1,…,c$</li>
+</ul>
+<p>这里没有假定$k=c$，是因为允许拒绝决策，比如不属于任何一类，这是更一般的情况。决策损失可以列出一个$k$行$c$列的决策表。</p>
+<p>对于某一个样本属于各个状态的后验概率是$P(\omega_j|x),j=1,…,c$，对它采取决策$\alpha_i,i=1,…,k$ 的期望损失是：</p>
+<script type="math/tex; mode=display">
+R(\alpha_i|x)=E(\lambda(\alpha_i,\omega_j)|x)=\sum_{j=1}^{c}\lambda(\alpha_i,\omega_j)P(\omega_j|x)，i=1,...,k</script><p>设某一个决策$\alpha(x)$，它对特征空间中所有可能的样本采用决策所造成的期望损失是$R(\alpha)$，称为平均/期望风险，令它最小就是最小风险准则。</p>
+<script type="math/tex; mode=display">
+\min R(\alpha)=\int R(\alpha(x)|x)p(x)dx</script><p>以二分类为例，</p>
+<script type="math/tex; mode=display">
+\lambda_{11}P(\omega_1|x)+\lambda_{12}P(\omega_2|x) < \lambda_{21}P(\omega_1|x)+\lambda_{22}P(\omega_2|x)，x\in \omega_1 \\
+\lambda_{11}P(\omega_1|x)+\lambda_{12}P(\omega_2|x) > \lambda_{21}P(\omega_1|x)+\lambda_{22}P(\omega_2|x)，x\in \omega_2</script><p>关于决策表，可以写成矩阵吧，对角线一般都是0，最小错误率准则就是0-1决策表，而最小风险准则就是有了不同的参数.</p>
+<script type="math/tex; mode=display">
+\left[\begin{matrix}\lambda_{11} & \lambda_{12} \\ \lambda_{21} & \lambda_{22}\end{matrix}\right]=\left[\begin{matrix}0 & 1 \\ 1 & 0\end{matrix}\right]</script><hr>
+<h1 id="两类错误率、Neyman-Pearson决策与ROC曲线"><a href="#两类错误率、Neyman-Pearson决策与ROC曲线" class="headerlink" title="两类错误率、Neyman-Pearson决策与ROC曲线"></a>两类错误率、Neyman-Pearson决策与ROC曲线</h1><p>待续</p>
+]]></content>
       <categories>
-        <category>编程</category>
+        <category>数学</category>
       </categories>
       <tags>
-        <tag>编程</tag>
+        <tag>数学</tag>
       </tags>
   </entry>
   <entry>
     <title>Fisher</title>
-    <url>/2018/10/19/18.Fisher/</url>
+    <url>/2018/18.Fisher/</url>
     <content><![CDATA[<p>线性判别方法linear discriminant analysis, LDA, R.A.</p>
 <a id="more"></a> 
 <h1 id="线性判别函数"><a href="#线性判别函数" class="headerlink" title="线性判别函数"></a>线性判别函数</h1><ul>
@@ -818,8 +804,22 @@ J(W)=Tr{(W^TS_WW)^{-1}(W^TS_WW)}</script><p>其中，权值由$\{S_W^{-1}S_B\}$�
       </tags>
   </entry>
   <entry>
+    <title>Cpp-Taskflow</title>
+    <url>/2018/20.cpp-taskflow/</url>
+    <content><![CDATA[<p>A fast C++ header-only library to help you quickly write parallel programs with complex task dependencies.<br><span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL2NwcC10YXNrZmxvdy9jcHAtdGFza2Zsb3c=">https://github.com/cpp-taskflow/cpp-taskflow<i class="fa fa-external-link-alt"></i></span></p>
+<a id="more"></a>
+<h2 id="升级Cmake"><a href="#升级Cmake" class="headerlink" title="升级Cmake"></a>升级Cmake</h2><p>指定安装路径进行安装<br><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">cd /user/bin/cmake-3.8/cmake-x.xx.x</span><br><span class="line">./bootstrap --prefix=/user/bin/cmake-x.x/cmake-x.xx.x</span><br><span class="line">make</span><br><span class="line">make install</span><br></pre></td></tr></table></figure><br>另一种安装方案：不使用./bootstrap，而通过 ./configure执行<br><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">./configure</span><br><span class="line">make</span><br><span class="line">make install</span><br><span class="line">sudo ln -sf /....../....../cmake-3.12.4/bin/*  /usr/bin/</span><br></pre></td></tr></table></figure></p>
+<h2 id="升级编译器gcc-g"><a href="#升级编译器gcc-g" class="headerlink" title="升级编译器gcc/g++"></a>升级编译器gcc/g++</h2><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">sudo add-apt-repository ppa:ubuntu-toolchain-r/test</span><br><span class="line">sudo apt-get update </span><br><span class="line">sudo apt-get install gcc-7</span><br><span class="line">sudo apt-get install g++-7</span><br><span class="line"></span><br><span class="line">sudo update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-7 100</span><br><span class="line">sudo update-alternatives --config gcc</span><br><span class="line"></span><br><span class="line">sudo update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-7 100</span><br><span class="line">sudo update-alternatives --config g++</span><br><span class="line"></span><br><span class="line">gcc -v</span><br><span class="line">g++ -v</span><br></pre></td></tr></table></figure>]]></content>
+      <categories>
+        <category>编程</category>
+      </categories>
+      <tags>
+        <tag>编程</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>特征提取与选择</title>
-    <url>/2018/11/20/22.feature-select/</url>
+    <url>/2018/22.feature-select/</url>
     <content><![CDATA[<p>对分类器设计来说，使用什么样的特征描述事物，也就是说使用什么样的特征空间是个很重要的问题。这个问题称之为描述量的选择问题，意思是指保留哪些描述量，删除哪些描述量的问题。<br>本章节研究对特征空间进行改造,目的在于提高其某方面的性能，因此又称特征的优化问题。</p>
 <a id="more"></a>
 <hr>
@@ -902,7 +902,7 @@ J_d(x) = tr(\tilde{S_w}+\tilde{S_b})</script><p>优点：<br>定义直观、易�
   </entry>
   <entry>
     <title>博弈论</title>
-    <url>/2018/11/24/24.game/</url>
+    <url>/2018/24.game/</url>
     <content><![CDATA[<h1 id="纳什均衡"><a href="#纳什均衡" class="headerlink" title="纳什均衡"></a>纳什均衡</h1><p>纳什均衡指的是这样一种策略组合，即在给定别人策略的情况下，没有人愿意单方面改变自己的策略，从而打破这种均衡。<br>数学表示：</p>
 <p>// 公式太长了，下次补上</p>
 <p>纳什均衡的一致预测性质:<br>一致预测：<br>如果所有博弈方都预测一个特定博弈结果会出现，所有博弈方都不会选择与预测结果不一致的策略，即没有哪个博弈方有偏离这个预测结果的愿望，因此预测结果会成为博弈的最终结果。<br>只有纳什均衡才具有一致预测的性质。一致预测性是纳什均衡的本质属性。<br>一致预测并不意味着一定能准确预测，因为有多重均衡， 预测不一致的可能。</p>
@@ -969,7 +969,7 @@ J_d(x) = tr(\tilde{S_w}+\tilde{S_b})</script><p>优点：<br>定义直观、易�
   </entry>
   <entry>
     <title>矩阵分解</title>
-    <url>/2019/01/21/25.matrix/</url>
+    <url>/2019/25.matrix/</url>
     <content><![CDATA[<p>开个专题，研究矩阵分解的方法。</p>
 <a id="more"></a>
 <h1 id="Cholesky分解"><a href="#Cholesky分解" class="headerlink" title="Cholesky分解"></a>Cholesky分解</h1><p><span class="exturl" data-url="aHR0cHM6Ly96aC53aWtpcGVkaWEub3JnL3dpa2kvJUU1JTlGJTgzJUU1JUIwJTk0JUU3JUIxJUIzJUU3JTg5JUI5JUU3JTlGJUE5JUU5JTk4JUI1">Hermitian matrix（埃尔米特矩阵，厄米矩阵，自伴随矩阵）<i class="fa fa-external-link-alt"></i></span>，是共轭对称的方阵。</p>
@@ -996,7 +996,7 @@ p(\lambda):=det(A-\lambda I)=0.</script><h1 id="参考"><a href="#参考" class=
   </entry>
   <entry>
     <title>无约束最优化方法</title>
-    <url>/2019/02/01/27.optimize1/</url>
+    <url>/2019/27.optimize1/</url>
     <content><![CDATA[<p>约束规划问题一般形式：</p>
 <script type="math/tex; mode=display">
 \begin{split}
@@ -1060,7 +1060,7 @@ p(\lambda):=det(A-\lambda I)=0.</script><h1 id="参考"><a href="#参考" class=
   </entry>
   <entry>
     <title>MLE和MAP</title>
-    <url>/2019/02/03/28.MLE%E5%92%8CMAP/</url>
+    <url>/2019/28.MLE%E5%92%8CMAP/</url>
     <content><![CDATA[<p>频率学派 - Frequentist - Maximum Likelihood Estimation (MLE，最大似然估计)<br>贝叶斯学派 - Bayesian - Maximum A Posteriori (MAP，最大后验估计)</p>
 <p>频率学派和贝叶斯学派对世界的认知有本质不同：<br>频率学派认为世界是确定的，有一个本体，这个本体的真值是不变的，我们的目标就是要找到这个真值或真值所在的范围；<br>而贝叶斯学派认为世界是不确定的，人们对世界先有一个预判，而后通过观测数据对这个预判做调整，我们的目标是要找到最优的描述这个世界的概率分布。</p>
 <a id="more"></a>
@@ -1113,7 +1113,7 @@ p(\hat{x}|X)=\int_{\theta\in\Theta}p(\hat{x}|\theta)p(\theta|X)d\theta=\int_{\th
   </entry>
   <entry>
     <title>Particle Filter</title>
-    <url>/2019/02/03/29.%E7%B2%92%E5%AD%90%E6%BB%A4%E6%B3%A2/</url>
+    <url>/2019/29.%E7%B2%92%E5%AD%90%E6%BB%A4%E6%B3%A2/</url>
     <content><![CDATA[<p>这篇文章数学公式推得有点儿长。。。。提前预警= =</p>
 <a id="more"></a>
 <h1 id="贝叶斯滤波"><a href="#贝叶斯滤波" class="headerlink" title="贝叶斯滤波"></a>贝叶斯滤波</h1><p>假设有一个系统:</p>
@@ -1231,8 +1231,32 @@ w_k^{(i)}
       </tags>
   </entry>
   <entry>
+    <title>ROS通信解析</title>
+    <url>/2019/32.ros%20tcp/</url>
+    <content><![CDATA[<p>了解ROS的几种通信方式以后，对于ROS通信延迟有一些困惑，更多的是想追究背后原理，这篇博客《<span class="exturl" data-url="aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L1pYUUhCRC9hcnRpY2xlL2RldGFpbHMvNzI4NDY4NjU=">ROS之topic和service通信比较<i class="fa fa-external-link-alt"></i></span>》起到了抛砖引玉的作用。</p>
+<p>更多可以参考2013年的这一篇论文《<span class="exturl" data-url="aHR0cHM6Ly93d3cucG9saXRlc2kucG9saW1pLml0L2JpdHN0cmVhbS8xMDU4OS83ODUwMi8xLzIwMTNfMDRfWm9wcGkuUERG">A lightweight Opensource communication framework for native integration of resource constrained robotics devices with ROS<i class="fa fa-external-link-alt"></i></span>》，目前网上关于ROS通信模型的中文资料大部分都是对这篇文章的翻译。</p>
+<a id="more"></a>
+<h1 id="先上结论"><a href="#先上结论" class="headerlink" title="先上结论"></a>先上结论</h1><h2 id="Topic（异步）"><a href="#Topic（异步）" class="headerlink" title="Topic（异步）"></a>Topic（异步）</h2><p>topic基于ros tcp/udp，pub/sub通信延迟大约0.7ms，但是ros::spin()是忙等待，对于异步架构，回调函数的执行频率设计对系统整体性能影响很大，node不宜过多。</p>
+<h2 id="Service（同步）"><a href="#Service（同步）" class="headerlink" title="Service（同步）"></a>Service（同步）</h2><p>server基于RPC，它在接收到调用请求前都处于休眠状态；将休眠状态的server唤醒，所需要的时间大约是2.7ms，约占总通信延迟的82%，实际传输延迟大于0.3ms，只有topic的一半。server唤醒耗时太大，不建议用于通讯频率高的情况。</p>
+<p>Client维护着一个与server的持久连接(persistent connection)，在单纯的数据传输上可以做到更快，尤其是在分布式作业。</p>
+<h1 id="阻塞非阻塞与同步异步"><a href="#阻塞非阻塞与同步异步" class="headerlink" title="阻塞非阻塞与同步异步"></a>阻塞非阻塞与同步异步</h1><p><span class="exturl" data-url="aHR0cHM6Ly93d3cuemhpaHUuY29tL3F1ZXN0aW9uLzE5NzMyNDczL2Fuc3dlci8yMDg1MTI1Ng==">怎样理解阻塞非阻塞与同步异步的区别？ - 严肃的回答 - 知乎<i class="fa fa-external-link-alt"></i></span></p>
+<ul>
+<li>同步和异步关注的是消息通信机制 (synchronous communication/ asynchronous communication).</li>
+<li>阻塞和非阻塞关注的是程序在等待调用结果（消息，返回值）时的状态.</li>
+</ul>
+<p>在处理 IO 的时候，阻塞和非阻塞都是同步 IO。只有使用了特殊的 API 才是异步 IO。</p>
+<h2 id="异步消息的传递－回调机制"><a href="#异步消息的传递－回调机制" class="headerlink" title="异步消息的传递－回调机制"></a><span class="exturl" data-url="aHR0cHM6Ly93d3cuaWJtLmNvbS9kZXZlbG9wZXJ3b3Jrcy9jbi9saW51eC9sLWNhbGxiYWNrL2luZGV4Lmh0bWw=">异步消息的传递－回调机制<i class="fa fa-external-link-alt"></i></span></h2><p>目前的粗浅理解，异步通信总会带点儿callback。</p>
+]]></content>
+      <categories>
+        <category>编程</category>
+      </categories>
+      <tags>
+        <tag>工具链</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>getting started ros</title>
-    <url>/2019/02/05/30.ros/</url>
+    <url>/2019/30.ros/</url>
     <content><![CDATA[<p>ROS之前看过一遍，但是过于复杂，我就很快忘记了；现在重新梳理一遍。<br><span class="exturl" data-url="aHR0cDovL3dpa2kucm9zLm9yZy9jbi9ST1MvVHV0b3JpYWxz">http://wiki.ros.org/cn/ROS/Tutorials<i class="fa fa-external-link-alt"></i></span></p>
 <a id="more"></a>
 <h1 id="Tutorials"><a href="#Tutorials" class="headerlink" title="Tutorials"></a><span class="exturl" data-url="aHR0cDovL3dpa2kucm9zLm9yZy9jbi9ST1MvVHV0b3JpYWxz">Tutorials<i class="fa fa-external-link-alt"></i></span></h1><p>官方良心教程</p>
@@ -1282,32 +1306,8 @@ w_k^{(i)}
       </tags>
   </entry>
   <entry>
-    <title>ROS通信解析</title>
-    <url>/2019/02/09/32.ros%20tcp/</url>
-    <content><![CDATA[<p>了解ROS的几种通信方式以后，对于ROS通信延迟有一些困惑，更多的是想追究背后原理，这篇博客《<span class="exturl" data-url="aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L1pYUUhCRC9hcnRpY2xlL2RldGFpbHMvNzI4NDY4NjU=">ROS之topic和service通信比较<i class="fa fa-external-link-alt"></i></span>》起到了抛砖引玉的作用。</p>
-<p>更多可以参考2013年的这一篇论文《<span class="exturl" data-url="aHR0cHM6Ly93d3cucG9saXRlc2kucG9saW1pLml0L2JpdHN0cmVhbS8xMDU4OS83ODUwMi8xLzIwMTNfMDRfWm9wcGkuUERG">A lightweight Opensource communication framework for native integration of resource constrained robotics devices with ROS<i class="fa fa-external-link-alt"></i></span>》，目前网上关于ROS通信模型的中文资料大部分都是对这篇文章的翻译。</p>
-<a id="more"></a>
-<h1 id="先上结论"><a href="#先上结论" class="headerlink" title="先上结论"></a>先上结论</h1><h2 id="Topic（异步）"><a href="#Topic（异步）" class="headerlink" title="Topic（异步）"></a>Topic（异步）</h2><p>topic基于ros tcp/udp，pub/sub通信延迟大约0.7ms，但是ros::spin()是忙等待，对于异步架构，回调函数的执行频率设计对系统整体性能影响很大，node不宜过多。</p>
-<h2 id="Service（同步）"><a href="#Service（同步）" class="headerlink" title="Service（同步）"></a>Service（同步）</h2><p>server基于RPC，它在接收到调用请求前都处于休眠状态；将休眠状态的server唤醒，所需要的时间大约是2.7ms，约占总通信延迟的82%，实际传输延迟大于0.3ms，只有topic的一半。server唤醒耗时太大，不建议用于通讯频率高的情况。</p>
-<p>Client维护着一个与server的持久连接(persistent connection)，在单纯的数据传输上可以做到更快，尤其是在分布式作业。</p>
-<h1 id="阻塞非阻塞与同步异步"><a href="#阻塞非阻塞与同步异步" class="headerlink" title="阻塞非阻塞与同步异步"></a>阻塞非阻塞与同步异步</h1><p><span class="exturl" data-url="aHR0cHM6Ly93d3cuemhpaHUuY29tL3F1ZXN0aW9uLzE5NzMyNDczL2Fuc3dlci8yMDg1MTI1Ng==">怎样理解阻塞非阻塞与同步异步的区别？ - 严肃的回答 - 知乎<i class="fa fa-external-link-alt"></i></span></p>
-<ul>
-<li>同步和异步关注的是消息通信机制 (synchronous communication/ asynchronous communication).</li>
-<li>阻塞和非阻塞关注的是程序在等待调用结果（消息，返回值）时的状态.</li>
-</ul>
-<p>在处理 IO 的时候，阻塞和非阻塞都是同步 IO。只有使用了特殊的 API 才是异步 IO。</p>
-<h2 id="异步消息的传递－回调机制"><a href="#异步消息的传递－回调机制" class="headerlink" title="异步消息的传递－回调机制"></a><span class="exturl" data-url="aHR0cHM6Ly93d3cuaWJtLmNvbS9kZXZlbG9wZXJ3b3Jrcy9jbi9saW51eC9sLWNhbGxiYWNrL2luZGV4Lmh0bWw=">异步消息的传递－回调机制<i class="fa fa-external-link-alt"></i></span></h2><p>目前的粗浅理解，异步通信总会带点儿callback。</p>
-]]></content>
-      <categories>
-        <category>编程</category>
-      </categories>
-      <tags>
-        <tag>工具链</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>图像算子概述</title>
-    <url>/2018/08/01/07.Constant-scale/</url>
+    <url>/2018/07.Constant-scale/</url>
     <content><![CDATA[<p>用机器视觉系统分析未知场景时，计算机并不预先知道图像中物体的尺度。我们需要同时考虑图像在多尺度下的描述，获知感兴趣物体的最佳尺度。如果不同的尺度下都有同样的关键点，那么在不同的尺度的输入图像下就都可以检测出来关键点匹配，也就是尺度不变性。<br><a id="more"></a><br>尺度空间中各尺度图像的模糊程度逐渐变大，能够模拟人在距离目标由近到远时目标在视网膜上的形成过程。<br>尺度越大图像越模糊。</p>
 <h1 id="尺度空间表达与金字塔多分辨率表达"><a href="#尺度空间表达与金字塔多分辨率表达" class="headerlink" title="尺度空间表达与金字塔多分辨率表达"></a>尺度空间表达与金字塔多分辨率表达</h1><p>高斯核是唯一可以产生多尺度空间的核（<span class="exturl" data-url="aHR0cHM6Ly93d3cudGFuZGZvbmxpbmUuY29tL2RvaS9hYnMvMTAuMTA4MC83NTc1ODI5NzY=">Scale-space theory: A basic tool for analysing structures at different scales<i class="fa fa-external-link-alt"></i></span>）。一个图像的尺度空间$L(x,y,σ)$ ,定义为原始图像$I(x,y)$与一个可变尺度的2维高斯函数$G(x,y,σ)$卷积运算。</p>
 <p>二维空间高斯函数：</p>
@@ -1485,7 +1485,7 @@ G_{\sigma_{2}}=\frac{1}{\sqrt{2\pi}}\left( \frac{1}{\sigma_{1}}e^{-(x^2+y^2)/2\s
   </entry>
   <entry>
     <title>OpenMP</title>
-    <url>/2018/08/01/06.openmp/</url>
+    <url>/2018/06.openmp/</url>
     <content><![CDATA[<p>OpenMP（Open Multi-Processing）是一套支持跨平台共享内存方式的多线程并发的编程API，使用C,C++和Fortran语言，可以在大多数的处理器体系和操作系统中运行。</p>
 <a id="more"></a> 
 <hr>
@@ -1607,7 +1607,7 @@ G_{\sigma_{2}}=\frac{1}{\sqrt{2\pi}}\left( \frac{1}{\sigma_{1}}e^{-(x^2+y^2)/2\s
   </entry>
   <entry>
     <title>Apriltags</title>
-    <url>/2018/08/07/09.apriltags/</url>
+    <url>/2018/09.apriltags/</url>
     <content><![CDATA[<p>AprilTag是一套免费开源的视觉定位系统，他们的主页：<span class="exturl" data-url="aHR0cHM6Ly9hcHJpbC5lZWNzLnVtaWNoLmVkdS9zb2Z0d2FyZS9hcHJpbHRhZy8=">https://april.eecs.umich.edu/software/apriltag/<i class="fa fa-external-link-alt"></i></span><br>根据他们的论文<span class="exturl" data-url="aHR0cHM6Ly9hcHJpbC5lZWNzLnVtaWNoLmVkdS9tZWRpYS9wZGZzL29sc29uMjAxMXRhZ3MucGRm">AprilTag - A robust and flexible visual fiducial system, ICRA 2011<i class="fa fa-external-link-alt"></i></span>，AprilTag主要的贡献是：</p>
 <ul>
 <li>提出了一种可靠的检测视觉基准的方法：基于图形的图像分割、基于局部梯度，可以精确估计线条。还描述了一种可以处理重要遮挡的四边形提取方法。</li>
@@ -1682,7 +1682,7 @@ h_{02}=sR_xT_x \\
   </entry>
   <entry>
     <title>逻辑回归</title>
-    <url>/2020/04/12/34.logistic/</url>
+    <url>/2020/34.logistic/</url>
     <content><![CDATA[<p>本次作业的目的是建立一个逻辑回归模型，用于预测一个学生是否应该被大学录取。</p>
 <p>简单起见，大学通过<strong>两次考试的成绩来确定一个学生是否应该录取</strong>。你有以前数届考生的成绩，可以做为训练集学习逻辑回归模型。每个训练样本包括了考生两次考试的成绩和对应的录取决定。</p>
 <p>你的任务是建立一个分类模型，根据两次考试的成绩来估计考生被录取的概率。<br>本次实验需要实现的函数</p>
@@ -1804,7 +1804,7 @@ theta_op:
   </entry>
   <entry>
     <title>使用神经网络进行机器学习</title>
-    <url>/2020/04/13/35.network/</url>
+    <url>/2020/35.network/</url>
     <content><![CDATA[<h2 id="数据介绍"><a href="#数据介绍" class="headerlink" title="数据介绍"></a>数据介绍</h2><p>本次练习所用的数据集有5000个训练样本，每个样本对应于20x20大小的灰度图像。这些训练样本包括了9-0共十个数字的手写图像。这些样本中每个像素都用浮点数表示。加载得到的数据中，每幅图像都被展开为一个400维的向量，构成了数据矩阵中的一行。完整的训练数据是一个5000x400的矩阵，其每一行为一个训练样本（数字的手写图像）。数据中，对应于数字”0”的图像被标记为”10”，而数字”1”到”9”按照其自然顺序被分别标记为”1”到”9”。数据集保存在<code>NN_data.mat</code>.<br><img src="/img/PRML/data-array.png" alt="image"></p>
 <a id="more"></a>
 <h2 id="模型表示"><a href="#模型表示" class="headerlink" title="模型表示"></a>模型表示</h2><p>我们准备训练的神经网络是一个三层的结构，一个输入层，一个隐层以及一个输出层。由于我们训练样本（图像）是20x20的，所以输入层单元数为400（不考虑额外的偏置项，如果考虑单元个数需要+1）。在我们的程序中，数据会被加载到变量<span> $X$ </span> 和<span> $y$ </span>里。</p>
@@ -1992,7 +1992,7 @@ Training Set Accuracy: 0.9592
   </entry>
   <entry>
     <title>Modern C++ 学习笔记</title>
-    <url>/2018/07/18/04.modern_cpp/</url>
+    <url>/2018/04.modern_cpp/</url>
     <content><![CDATA[<p>总结C++11、C++14的学习笔记。<br><a id="more"></a> </p>
 <h1 id="类别推导"><a href="#类别推导" class="headerlink" title="类别推导"></a>类别推导</h1><hr>
 <p>C++98有用于函数模板的推导规则，C++11和C++14增加了用于auto和deltype的推导规则。</p>
@@ -2236,7 +2236,7 @@ Training Set Accuracy: 0.9592
   </entry>
   <entry>
     <title>Algorithm Review</title>
-    <url>/2018/11/20/21.Algorithm/</url>
+    <url>/2018/21.Algorithm/</url>
     <content><![CDATA[<p>Algorithm review of M.H.Alsuwaiyel, Algorithms design techniques and Analysis, Publishing House of Electronics Industry.</p>
 <a id="more"></a>
 <h1 id="分析-Algorithmic-Analysis"><a href="#分析-Algorithmic-Analysis" class="headerlink" title="分析 Algorithmic Analysis"></a>分析 Algorithmic Analysis</h1><h2 id="Binary-Search"><a href="#Binary-Search" class="headerlink" title="Binary Search"></a>Binary Search</h2><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">low←1; high←n; j←0;</span><br><span class="line">while (low &lt;&#x3D; high) and (j←0)</span><br><span class="line">    mid←(low+high)&#x2F;2;</span><br><span class="line">    if x &#x3D; A[mid] then j←mid;</span><br><span class="line">    else if x &lt; A[mid] then high←mid–1;</span><br><span class="line">    else low←mid+1;</span><br><span class="line">end while;</span><br><span class="line">return j;</span><br></pre></td></tr></table></figure>

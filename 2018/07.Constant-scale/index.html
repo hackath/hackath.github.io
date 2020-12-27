@@ -1,0 +1,719 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.3.0">
+
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+  <meta http-equiv="Cache-Control" content="no-transform">
+  <meta http-equiv="Cache-Control" content="no-siteapp">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.1/css/all.min.css">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css">
+
+<script class="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"skystarry.cn","root":"/","images":"/images","scheme":"Mist","version":"8.1.0","exturl":true,"sidebar":{"position":"right","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}};
+  </script>
+<meta name="description" content="用机器视觉系统分析未知场景时，计算机并不预先知道图像中物体的尺度。我们需要同时考虑图像在多尺度下的描述，获知感兴趣物体的最佳尺度。如果不同的尺度下都有同样的关键点，那么在不同的尺度的输入图像下就都可以检测出来关键点匹配，也就是尺度不变性。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="图像算子概述">
+<meta property="og:url" content="https://skystarry.cn/2018/07.Constant-scale/index.html">
+<meta property="og:site_name" content="skystarry">
+<meta property="og:description" content="用机器视觉系统分析未知场景时，计算机并不预先知道图像中物体的尺度。我们需要同时考虑图像在多尺度下的描述，获知感兴趣物体的最佳尺度。如果不同的尺度下都有同样的关键点，那么在不同的尺度的输入图像下就都可以检测出来关键点匹配，也就是尺度不变性。">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://skystarry.cn/img/viusal-scale/Dog-1.jpg">
+<meta property="og:image" content="https://skystarry.cn/img/viusal-scale/Dog-7-300x252.png">
+<meta property="og:image" content="https://skystarry.cn/img/viusal-scale/Dog-1-750x375.png">
+<meta property="og:image" content="https://skystarry.cn/img/viusal-scale/Dog-2.png">
+<meta property="og:image" content="https://skystarry.cn/img/viusal-scale/Dog-3.png">
+<meta property="og:image" content="https://skystarry.cn/img/viusal-scale/Moravec1.png">
+<meta property="og:image" content="https://skystarry.cn/img/viusal-scale/Moravec3.png">
+<meta property="og:image" content="https://skystarry.cn/img/viusal-scale/Moravec5.png">
+<meta property="og:image" content="https://skystarry.cn/img/viusal-scale/harris.png">
+<meta property="og:image" content="https://skystarry.cn/img/viusal-scale/harris-2.png">
+<meta property="og:image" content="https://skystarry.cn/img/viusal-scale/harris4.png">
+<meta property="og:image" content="https://skystarry.cn/img/viusal-scale/harris8-750x270.png">
+<meta property="og:image" content="https://skystarry.cn/img/viusal-scale/harris9-300x292.png">
+<meta property="og:image" content="https://skystarry.cn/img/viusal-scale/susan1.png">
+<meta property="og:image" content="https://skystarry.cn/img/viusal-scale/fast1-1024x519.png">
+<meta property="og:image" content="https://skystarry.cn/img/viusal-scale/log-1024x341.png">
+<meta property="og:image" content="https://skystarry.cn/img/viusal-scale/DoG_tile.jpg">
+<meta property="article:published_time" content="2018-08-01T15:59:38.000Z">
+<meta property="article:modified_time" content="2020-12-09T01:10:09.583Z">
+<meta property="article:author" content="skystarry">
+<meta property="article:tag" content="图像处理">
+<meta property="article:tag" content="数学">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://skystarry.cn/img/viusal-scale/Dog-1.jpg">
+
+
+<link rel="canonical" href="https://skystarry.cn/2018/07.Constant-scale/">
+
+
+<script class="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+<title>图像算子概述 | skystarry</title>
+  
+
+
+
+  <noscript>
+  <style>
+  body { margin-top: 2rem; }
+
+  .use-motion .menu-item,
+  .use-motion .sidebar,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header {
+    visibility: visible;
+  }
+
+  .use-motion .header,
+  .use-motion .site-brand-container .toggle,
+  .use-motion .footer { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle,
+  .use-motion .custom-logo-image {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line {
+    transform: scaleX(1);
+  }
+
+  .search-pop-overlay, .sidebar-nav { display: none; }
+  .sidebar-panel { display: block; }
+  </style>
+</noscript>
+
+<!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+<!-- hexo injector head_end end --><link rel="alternate" href="/rss_skystarry.xml" title="skystarry" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">skystarry</h1>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">我的博客</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <section class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%B0%BA%E5%BA%A6%E7%A9%BA%E9%97%B4%E8%A1%A8%E8%BE%BE%E4%B8%8E%E9%87%91%E5%AD%97%E5%A1%94%E5%A4%9A%E5%88%86%E8%BE%A8%E7%8E%87%E8%A1%A8%E8%BE%BE"><span class="nav-number">1.</span> <span class="nav-text">尺度空间表达与金字塔多分辨率表达</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%87%91%E5%AD%97%E5%A1%94%E5%A4%9A%E5%88%86%E8%BE%A8%E7%8E%87"><span class="nav-number">2.</span> <span class="nav-text">金字塔多分辨率</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%A4%9A%E5%B0%BA%E5%BA%A6%E5%92%8C%E5%A4%9A%E5%88%86%E8%BE%A8%E7%8E%87"><span class="nav-number">3.</span> <span class="nav-text">多尺度和多分辨率</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Moravec%E7%AE%97%E5%AD%90"><span class="nav-number">4.</span> <span class="nav-text">Moravec算子</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%BB%91%E5%8A%A8%E7%AA%97%E5%8F%A3%E8%AE%A1%E7%AE%97%E7%81%B0%E5%BA%A6%E5%8F%98%E5%8C%96%EF%BC%88Calculate-intensity-variantion-from-shifting-windows%EF%BC%89"><span class="nav-number">4.1.</span> <span class="nav-text">滑动窗口计算灰度变化（Calculate intensity variantion from shifting windows）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9E%84%E9%80%A0%E8%A7%92%E7%82%B9%E6%80%A7%E6%98%A0%E5%B0%84%E5%9B%BE%EF%BC%88Construct-the-cornerness-map%EF%BC%89"><span class="nav-number">4.2.</span> <span class="nav-text">构造角点性映射图（Construct the cornerness map）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%80%BB%E7%BB%93"><span class="nav-number">4.3.</span> <span class="nav-text">总结</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Harris%E7%AE%97%E5%AD%90"><span class="nav-number">5.</span> <span class="nav-text">Harris算子</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Moravec%E7%AE%97%E5%AD%90%E5%90%84%E5%90%91%E5%BC%82%E6%80%A7%E5%93%8D%E5%BA%94%EF%BC%88Anisotropic-Response-of-Operator%EF%BC%89"><span class="nav-number">5.1.</span> <span class="nav-text">Moravec算子各向异性响应（Anisotropic Response of Operator）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%99%AA%E5%A3%B0%E5%93%8D%E5%BA%94%EF%BC%88Noise-Response%EF%BC%89"><span class="nav-number">5.2.</span> <span class="nav-text">噪声响应（Noise Response）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%BE%B9%E7%BC%98%E7%9A%84%E5%BC%BA%E5%93%8D%E5%BA%94%EF%BC%88Large-Response-of-Edge%EF%BC%89"><span class="nav-number">5.3.</span> <span class="nav-text">边缘的强响应（Large Response of Edge）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%AE%A1%E7%AE%97%E6%AD%A5%E9%AA%A4"><span class="nav-number">5.4.</span> <span class="nav-text">计算步骤</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%80%BB%E7%BB%93-1"><span class="nav-number">5.5.</span> <span class="nav-text">总结</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#SUSAN%E7%AE%97%E5%AD%90"><span class="nav-number">6.</span> <span class="nav-text">SUSAN算子</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%80%BB%E7%BB%93-2"><span class="nav-number">6.1.</span> <span class="nav-text">总结</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#FAST%E7%AE%97%E5%AD%90"><span class="nav-number">7.</span> <span class="nav-text">FAST算子</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9B%BA%E5%AE%9A%E5%8D%8A%E5%BE%84%E5%9C%86%E4%B8%8A%E7%9A%84%E5%83%8F%E7%B4%A0%E8%BF%9B%E8%A1%8C%E5%88%86%E5%89%B2%E6%B5%8B%E8%AF%95%EF%BC%88Segment-Test%EF%BC%89"><span class="nav-number">7.1.</span> <span class="nav-text">固定半径圆上的像素进行分割测试（Segment Test）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ID3%E5%86%B3%E7%AD%96%E6%A0%91%E7%AE%97%E6%B3%95%E6%9D%A5%E8%AE%AD%E7%BB%83%E8%A7%92%E7%82%B9%E6%A3%80%E6%B5%8B"><span class="nav-number">7.2.</span> <span class="nav-text">ID3决策树算法来训练角点检测</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%9D%9E%E6%9E%81%E5%A4%A7%E5%80%BC%E6%8A%91%E5%88%B6"><span class="nav-number">7.3.</span> <span class="nav-text">非极大值抑制</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%80%BB%E7%BB%93-3"><span class="nav-number">7.4.</span> <span class="nav-text">总结</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#DoG%E7%AE%97%E5%AD%90"><span class="nav-number">8.</span> <span class="nav-text">DoG算子</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%8E%A8%E5%AF%BC"><span class="nav-number">8.1.</span> <span class="nav-text">推导</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%82%E8%80%83"><span class="nav-number">8.2.</span> <span class="nav-text">参考</span></a></li></ol></li></ol></div>
+        </section>
+        <!--/noindex-->
+
+        <section class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="skystarry"
+      src="/img/skystarry.jpg">
+  <p class="site-author-name" itemprop="name">skystarry</p>
+  <div class="site-description" itemprop="description">Seek only light, freedom, and you.</div>
+</div>
+
+   <div class="feed-link motion-element">
+     <a href="/rss_skystarry.xml" rel="alternate">
+       <i class="fa fa-rss"></i>
+       RSS
+     </a>
+   </div>
+ 
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">28</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">8</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">17</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author site-overview-item animated">
+      <span class="links-of-author-item">
+        <span class="exturl" data-url="aHR0cHM6Ly9za3lzdGFycnkuZ2l0ZWUuaW8v" title="Wiki → https:&#x2F;&#x2F;skystarry.gitee.io&#x2F;">Wiki</span>
+      </span>
+      <span class="links-of-author-item">
+        <span class="exturl" data-url="bWFpbHRvOmxpY2h1bnBlbmcyMjAwQG91dGxvb2suY29t" title="E-Mail → mailto:lichunpeng2200@outlook.com">E-Mail</span>
+      </span>
+      <span class="links-of-author-item">
+        <span class="exturl" data-url="aHR0cHM6Ly93d3cuemhpaHUuY29tL3Blb3BsZS9saS1jaHVucGVuZw==" title="知乎 → https:&#x2F;&#x2F;www.zhihu.com&#x2F;people&#x2F;li-chunpeng">知乎</span>
+      </span>
+      <span class="links-of-author-item">
+        <span class="exturl" data-url="aHR0cHM6Ly9zcGFjZS5iaWxpYmlsaS5jb20vMTc5NDE2OTY1" title="B站 → https:&#x2F;&#x2F;space.bilibili.com&#x2F;179416965">B站</span>
+      </span>
+      <span class="links-of-author-item">
+        <span class="exturl" data-url="aHR0cDovL211c2ljLjE2My5jb20vIy91c2VyL2hvbWU/aWQ9MjcyMTA3MDQw" title="网抑云 → http:&#x2F;&#x2F;music.163.com&#x2F;#&#x2F;user&#x2F;home?id&#x3D;272107040">网抑云</span>
+      </span>
+  </div>
+
+
+
+        </section>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+
+  <span class="exturl github-corner" data-url="aHR0cHM6Ly9naXRodWIuY29tL1B1bmtMaQ==" title="Follow me on GitHub" aria-label="Follow me on GitHub"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></span>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://skystarry.cn/2018/07.Constant-scale/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/img/skystarry.jpg">
+      <meta itemprop="name" content="skystarry">
+      <meta itemprop="description" content="Seek only light, freedom, and you.">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="skystarry">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          图像算子概述
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2018-08-01 23:59:38" itemprop="dateCreated datePublished" datetime="2018-08-01T23:59:38+08:00">2018-08-01</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">更新于</span>
+        <time title="修改时间：2020-12-09 09:10:09" itemprop="dateModified" datetime="2020-12-09T09:10:09+08:00">2020-12-09</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E8%A7%86%E8%A7%89/" itemprop="url" rel="index"><span itemprop="name">计算机视觉</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>9.9k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>9 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <p>用机器视觉系统分析未知场景时，计算机并不预先知道图像中物体的尺度。我们需要同时考虑图像在多尺度下的描述，获知感兴趣物体的最佳尺度。如果不同的尺度下都有同样的关键点，那么在不同的尺度的输入图像下就都可以检测出来关键点匹配，也就是尺度不变性。<br><a id="more"></a><br>尺度空间中各尺度图像的模糊程度逐渐变大，能够模拟人在距离目标由近到远时目标在视网膜上的形成过程。<br>尺度越大图像越模糊。</p>
+<h1 id="尺度空间表达与金字塔多分辨率表达"><a href="#尺度空间表达与金字塔多分辨率表达" class="headerlink" title="尺度空间表达与金字塔多分辨率表达"></a>尺度空间表达与金字塔多分辨率表达</h1><p>高斯核是唯一可以产生多尺度空间的核（<span class="exturl" data-url="aHR0cHM6Ly93d3cudGFuZGZvbmxpbmUuY29tL2RvaS9hYnMvMTAuMTA4MC83NTc1ODI5NzY=">Scale-space theory: A basic tool for analysing structures at different scales<i class="fa fa-external-link-alt"></i></span>）。一个图像的尺度空间$L(x,y,σ)$ ,定义为原始图像$I(x,y)$与一个可变尺度的2维高斯函数$G(x,y,σ)$卷积运算。</p>
+<p>二维空间高斯函数：</p>
+<script type="math/tex; mode=display">G(x_{i},y_{i},\sigma)=\frac{1}{2\pi\sigma}\exp\left( -\frac{(x-x_{i})^2+(y-y_{i})^2}{2\sigma^2} \right)</script><p>尺度空间：</p>
+<script type="math/tex; mode=display">L(x,y,\sigma)=G(x,y,\sigma)\ast I(x,y,\sigma)</script><p>尺度是自然客观存在的，不是主观创造的。<code>高斯卷积只是表现尺度空间的一种形式</code>。<br>二维空间高斯函数是等高线从中心成正太分布的同心圆：</p>
+<p><img src="\img\viusal-scale\Dog-1.jpg" alt="连续的高斯函数图">S分布不为零的点组成卷积阵与原始图像做变换，即每个像素值是周围相邻像素值的高斯平均。一个5*5的高斯模版如下所示：</p>
+<p><img src="\img\viusal-scale\Dog-7-300x252.png" alt="离散的高斯"><code>高斯模版是圆对称的</code>，且卷积的结果使原始像素值有最大的权重，距离中心越远的相邻像素值权重也越小。<br>在实际应用中，在计算高斯函数的离散近似时，在大概3σ距离之外的像素都可以看作不起作用，这些像素的计算也就可以忽略。所以，通常程序只计算(6σ+1)*(6σ+1)就可以保证相关像素影响。</p>
+<p>高斯模糊另一个很厉害的性质就是<code>线性可分</code>：使用二维矩阵变换的高斯模糊可以通过在水平和竖直方向各进行一维高斯矩阵变换相加得到。</p>
+<p><img src="\img\viusal-scale\Dog-1-750x375.png" alt="高斯的线性可分">$O(N^2\ast m\ast n)$次乘法就缩减成了$O(N\ast m\ast n)+O(N\ast m\ast n)$次乘法。（N为高斯核大小，m,n为二维图像高和宽）。</p>
+<h1 id="金字塔多分辨率"><a href="#金字塔多分辨率" class="headerlink" title="金字塔多分辨率"></a>金字塔多分辨率</h1><p>金字塔是早期图像多尺度的表示形式。图像金字塔化一般包括两个步骤：使用低通滤波器平滑图像；对平滑图像进行降采样（通常是水平，竖直方向1/2），从而得到一系列尺寸缩小的图像。</p>
+<p><img src="\img\viusal-scale\Dog-2.png" alt="金字塔">上图中（a）是对原始信号进行低通滤波，（b）是降采样得到的信号。<br>而对于二维图像，一个传统的金字塔中，每一层图像由上一层分辨率的长、宽各一半，也就是四分之一的像素组成：</p>
+<p><img src="\img\viusal-scale\Dog-3.png" alt="金字塔的采样"> </p>
+<h1 id="多尺度和多分辨率"><a href="#多尺度和多分辨率" class="headerlink" title="多尺度和多分辨率"></a>多尺度和多分辨率</h1><p>尺度空间表达和金字塔多分辨率表达之间最大的不同是：</p>
+<ul>
+<li>尺度空间表达是由不同高斯核平滑卷积得到，在所有尺度上有相同的分辨率；</li>
+<li>而金字塔多分辨率表达每层分辨率减少固定比率。<br>所以，金字塔多分辨率生成较快，且占用存储空间少；而多尺度表达随着尺度参数的增加冗余信息也变多。<br>多尺度表达的优点在于图像的局部特征可以用简单的形式在不同尺度上描述；而金字塔表达没有理论基础，难以分析图像局部特征。</li>
+</ul>
+<hr>
+<h1 id="Moravec算子"><a href="#Moravec算子" class="headerlink" title="Moravec算子"></a>Moravec算子</h1><p>1977年，Moravec提出了兴趣点（Points of Interests)的概念，并应用于解决Stanford Cart的导航问题。1981年， Moravec在International Joint Conference on Artificial Intelligence发表了篇题为：Obstacle Avoidance and Navigation in the Real World by a Seeing Robot Rover的文章，并将其应用与立体匹配。</p>
+<p>Moravec的原理如果有一句话来说就是：通过滑动二值矩形窗口寻找灰度变化的局部最大值。具体来说主要包括四个过程：</p>
+<h2 id="滑动窗口计算灰度变化（Calculate-intensity-variantion-from-shifting-windows）"><a href="#滑动窗口计算灰度变化（Calculate-intensity-variantion-from-shifting-windows）" class="headerlink" title="滑动窗口计算灰度变化（Calculate intensity variantion from shifting windows）"></a>滑动窗口计算灰度变化（Calculate intensity variantion from shifting windows）</h2><p>滑动窗口在现有的技术中已经有了很多应用，如模板匹配、目标检测（hog特征的行人检测）等。在Moravec算子中，一般窗口的大小取3×3、5×5、7×7等等，但是随着窗口的增大，计算量也就越大。Moravec算子通过对窗口的水平、垂直和对角八个方向进行移动（Horizontally、Vertically and four diagonals），计算原窗口与滑动窗口差的平方和来得到灰度的变化。我们进一步通过下图一个3×3的滑窗来进行说明：</p>
+<p><img src="\img\viusal-scale\Moravec1.png" alt="Moravec的滑动窗口"> 图中，红色框表示的是原始框，而蓝色框表示向右上的滑动框，白色框表示前景255，黑色框表示背景0。那么原始框和滑动框的灰度变化通过对应位置差的平方和来表示，也即通过下式来计算：</p>
+<script type="math/tex; mode=display">\sum_{i=1}^{9}{(A_{i}-B_{2})^2}</script><p>同样，根据上式计算另外七个方向滑动框的灰度变化（水平向左、水平向右、垂直向上、垂直向下以及四个对角）。至此，我们就计算完成了8个方向的灰度变化，我们称此操作位Moravec operator（Moravec算子）。</p>
+<h2 id="构造角点性映射图（Construct-the-cornerness-map）"><a href="#构造角点性映射图（Construct-the-cornerness-map）" class="headerlink" title="构造角点性映射图（Construct the cornerness map）"></a>构造角点性映射图（Construct the cornerness map）</h2><p>在构造角点映射图之前，我们先来分析下，通过上式的我们可以得到角点吗？或者凭什么通过计算两个框对应位置的差的平方和就可以检测到角点？问题问得好，我们来看下面的图：</p>
+<p><img src="\img\viusal-scale\Moravec3.png" alt="Moravec的角点">上面四张图上的四个红色的框表示我们正在处理的窗，第一幅图中的窗在表示在目标内部或者是背景上，该区域灰度分布均与，通过对其在8个方向上灰度，灰度变化很小；第二幅图中的窗跨在图像的边缘处，当垂直于边缘方向滑动窗口时将会导致灰度的很大变化，而沿着边缘滑动窗时，灰度变化较小；第三幅图中的窗在角点处，不管往哪个方向滑动窗口，都会导致灰度的很大变化；而第四幅图中的框内是一个离散点，滑动窗向任意方向滑动也会导致灰度的很大变化。</p>
+<p>因此，通过上面的描述和分析，我们可以知道，Moravec算子可以作为一种角点性的度量，这种度量是通过求8个方向的滑窗来的最小值来表示。用公式表示如下：</p>
+<script type="math/tex; mode=display">C(x,y)=min(V_{u,v}(x,y))</script><p>我们通过下图来描述角点映射图的构造：</p>
+<p><img src="\img\viusal-scale\Moravec5.png" alt="Moravec的角点">上图中的是通过Moravec算子计算得到的，其中1表示$1\times 255^2$，2表示$2\times 255^2$。通过上图可以知道：</p>
+<ol>
+<li>角点位于局部最大值处，我们可以应用非极大值抑制找到局部最大值（non-maximal suppression）。</li>
+<li>离散点（噪声点）与角点有相同的角点性（cornerness），因此Moravec算子对噪声敏感，但是通过增大滑窗的大小可以对噪声起到一定的抑制作用，可同时增加了计算量。另一方面，可以通过设定一个阈值T来对cornerness map进行二值化，小于阈值T的cornerness map设置为0，从而对离散点的局部最大值进行抑制。<br>阈值的选择引用原文的话：<blockquote>
+<p>Choosing this threshold is difficult as it must be set high enough to avoid these false corners(isolated pixel), but low enough to retain as many true corners as possible.</p>
+</blockquote>
+</li>
+<li>Moravec算子不能应用与图像边界的一定区域（标记为X的区域），对于这部分区域，一般直接忽略，在cornerness map中这些区域对应的值置0。</li>
+</ol>
+<p>Moravec算子对角点的检测效果还不错，但是对于对角线上的角点容易出现误检。</p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>Moravec算子作为第一个广泛应用的角点检测算法，开创了角点检测的新纪念，后续的很多角点检测算子都是在其基础上通过扩展得到的。但是Moravec算子也存在诸如方向各异性、噪声敏感、对旋转不具备不变形（角点不具备repeatability）、滑动窗内的各个像素权重同质性（中心像素权重大，离中心越远，权重越小）的缺点，有待改进。<br>三篇参考：<br><span class="exturl" data-url="aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2tlenVuaGFpL2FydGljbGUvZGV0YWlscy8xMTE3NjA2NQ==">https://blog.csdn.net/kezunhai/article/details/11176065<i class="fa fa-external-link-alt"></i></span><br><span class="exturl" data-url="aHR0cHM6Ly9jb2RlLmdvb2dsZS5jb20vYXJjaGl2ZS9wL2pmZWF0dXJlbGliLw==">https://code.google.com/archive/p/jfeaturelib/<i class="fa fa-external-link-alt"></i></span><br><span class="exturl" data-url="aHR0cHM6Ly93d3cucmkuY211LmVkdS9wdWJfZmlsZXMvcHViNC9tb3JhdmVjX2hhbnNfMTk4MF8xL21vcmF2ZWNfaGFuc18xOTgwXzEucGRm">https://www.ri.cmu.edu/pub_files/pub4/moravec_hans_1980_1/moravec_hans_1980_1.pdf<i class="fa fa-external-link-alt"></i></span></p>
+<hr>
+<h1 id="Harris算子"><a href="#Harris算子" class="headerlink" title="Harris算子"></a>Harris算子</h1><p>在前面的博文中，介绍了Moravec算子，并对moravec算子的不足也进行了简单的描述，Harris算子针对Moravec算子的不足，提出了以下的改进……</p>
+<h2 id="Moravec算子各向异性响应（Anisotropic-Response-of-Operator）"><a href="#Moravec算子各向异性响应（Anisotropic-Response-of-Operator）" class="headerlink" title="Moravec算子各向异性响应（Anisotropic Response of Operator）"></a>Moravec算子各向异性响应（Anisotropic Response of Operator）</h2><p>Moravec算子仅仅在8个方向（水平、垂直和四个对角方向）计算灰度变化，为了对其扩展，有必要设计一个可以在任何方向对灰度变化进行测度的函数。1988年，Harris和Stephen通过对Moravec算子进行展开，推导得到了Plessey算子，也即Harris算子。</p>
+<p>我们先来看看与Harris相关的背景知识。通常，Prewitt算子被用来对图像的梯度进行近似。然而，在实际应用中，一阶梯度通过下图中的公式来进行近似：</p>
+<p><img src="\img\viusal-scale\harris.png" alt="Moravec的角点">对Morevec算子进行分析可以得到：Two Morevec windows中对应像素差的和可以作为图像梯度的合理近似。我们再来看下图：</p>
+<p><img src="\img\viusal-scale\harris-2.png" alt="Moravec的角点">通过对上图的分析，我们有可以进一步得到：morevec算子中的灰度变化可以采用图像梯度进行近似。灰度的变化可以表示为图像梯度的函数，公式表示如下：</p>
+<script type="math/tex; mode=display">V_{u,v}(x,y)=\sum_{\forall i \in mask(x,y)}^{}{\left( u\frac{\partial I_{i}}{\partial x} +v\frac{\partial I_{i}}{\partial y}\right)^2}</script><p>其中，（u,v)表示滑动，x方向为（1,0），y方向为（0,1），微分的计算如上图所示。</p>
+<p>到这里，大家非常明了：上式可以对moravec算子中的灰度变化计算进行精确的逼近。但是又与Moravec算子中灰度变化不同的是通过合理的选择（u，v）可以对任何方向的灰度变化进行测度。</p>
+<h2 id="噪声响应（Noise-Response）"><a href="#噪声响应（Noise-Response）" class="headerlink" title="噪声响应（Noise Response）"></a>噪声响应（Noise Response）</h2><p>在Moravec算子中，滑动窗采用的是方形的（square window），方形窗使得不同方向上的中心像素与边界像素的欧式距离是变化的。为了克服这个问题，Harris&amp;Stephen提出只需将方向窗改成圆窗（circle window）。同时，窗中的每个像素是同等地位的，理论上应该是离中心越近的权重越大，而离中心越远，权重越小，因此我们加入高斯权重。因此，灰度变化的新测度方式可以通过下图来表示：</p>
+<p><img src="\img\viusal-scale\harris4.png" alt="Moravec的角点">通过公式表示如下：</p>
+<script type="math/tex; mode=display">V_{u,v}(x,y)=\sum_{\forall i \in mask(x,y)}^{}{W_{i}\left( u\frac{\partial I_{i}}{\partial x} +v\frac{\partial I_{i}}{\partial y}\right)^2}</script><p>其中，wi表示位置i处的高斯权重。</p>
+<h2 id="边缘的强响应（Large-Response-of-Edge）"><a href="#边缘的强响应（Large-Response-of-Edge）" class="headerlink" title="边缘的强响应（Large Response of Edge）"></a>边缘的强响应（Large Response of Edge）</h2><p>因为Moravec算子在边缘处很容易出现误检，Harris&amp;Stephen通过考虑不同方向的灰度度量形成新的角度性测度（cornerness measure）。接着，我们对上面的式子进行变换，如下式：</p>
+<script type="math/tex; mode=display">\begin{equation} \begin{split} V_{u,v}(x,y)&=\sum_{\forall i\in mask(x,y)}^{}{\omega_{i}\left( u\frac{\partial I}{\partial x} +v\frac{\partial I}{\partial y}\right)^2}\\ &=\sum_{\forall i\in mask(x,y)}^{}{\omega_{i}\left( u^2\frac{\partial I^2}{\partial x} +2uv\frac{\partial I}{\partial x}\frac{\partial I}{\partial y}+v^2\frac{\partial I^2}{\partial y}\right)}\\&=Au^2+2Cuv+Bv^2 \end{split} \end{equation}\\
+where A=\left( \frac{\partial I}{\partial x} \right)^2\otimes\omega_{i}，B=\left( \frac{\partial I}{\partial x} \right)^2\otimes\omega_{i}，C=\left(\frac{\partial I}{\partial x}\frac{\partial I}{\partial y}\right)\otimes\omega_{i},</script><p>Harris&amp;Stephen同时也注意到，上式可以写成：</p>
+<script type="math/tex; mode=display">\begin{equation} \begin{split} V_{u,v}(x,y)&=Au^2+2Cuv+Bv^2 \\&=\left[\begin{matrix}u&v\end{matrix}\right]M\left[\begin{matrix}u\\v\end{matrix}\right]\end{split} \end{equation}\\
+where：M=\left[\begin{matrix}A&C\\C&B\end{matrix}\right]</script><p>对上面的矩阵M，其特征值与图像表面的主曲率是成正比的，并且形成了对M的旋转不变的描述（Proportional to the principle curvature of the image surface and form a rotationally invariant description of M）。然后，由于M是通过水平和垂直方向的梯度来近似的，他们不是真正的旋转不变。</p>
+<p>同样，与Moravec算子一样，我们再来看下面的四张张图：</p>
+<p><img src="\img\viusal-scale\harris8-750x270.png" alt="Moravec的角点">图中A表示在一个物体的内部或背景上，窗口内的灰度值相对不变，因此该窗口表面上几乎没有曲率，因此M的特征值相对很小；B窗口在一个边缘处，垂直于边缘的地方将有明显很大的曲率，而平行于边缘的地方几乎没什么曲率，因此该形式下M的特征值一个会比较大，另一个较小；C和D对应于角度和离散点，在两个方向都会有很大的曲率，因此，M的特征值都将会很大。假设r1和r2是M的两个特征值，通过上面的分析，可以将一个平面表示为以下三个可区分的区域：</p>
+<p><img src="\img\viusal-scale\harris9-300x292.png" alt="Moravec的角点">Harris&amp;Stephen提出下面的角点性测度（cornerness measure）</p>
+<script type="math/tex; mode=display">C(x,y)=det(M)-k(trace(M))^2\\
+det(M)=\lambda_{1}\lambda_{2}=AB-C^2\\
+trace(M)=\lambda_{1}+\lambda_{2}=A+B</script><p>k一般取值04~0.6。</p>
+<h2 id="计算步骤"><a href="#计算步骤" class="headerlink" title="计算步骤"></a>计算步骤</h2><ol>
+<li>对每一个像素计算自相关矩阵M<script type="math/tex; mode=display">M=\left[\begin{matrix}A&C\\C&B\end{matrix}\right]\\
+A=\left( \frac{\partial I}{\partial x} \right)^2\otimes\omega_{i}，B=\left( \frac{\partial I}{\partial x} \right)^2\otimes\omega_{i}，C=\left(\frac{\partial I}{\partial x}\frac{\partial I}{\partial y}\right)\otimes\omega_{i}</script></li>
+<li>构造角点性映射图（Construct cornerness map）<script type="math/tex; mode=display">C(x,y)=det(M)-k(trace(M))^2\\
+det(M)=\lambda_{1}\lambda_{2}=AB-C^2\\
+trace(M)=\lambda_{1}+\lambda_{2}=A+B</script></li>
+<li>阈值化，对得到的C(x,y)进行阈值</li>
+<li>非极大值抑制</li>
+</ol>
+<h2 id="总结-1"><a href="#总结-1" class="headerlink" title="总结"></a>总结</h2><p>Harris算子针对Moravec算子的不足进行了改进，提高了特征点的检测率以及Repeatability。但是，Harris算子计算量大，对尺度很敏感，不具有尺度不变形；另外Harris对特征点的定位也不是很精确，而且Harris也是各向异性的，对噪声敏感。<br>两篇参考：<br><span class="exturl" data-url="aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2tlenVuaGFpL2FydGljbGUvZGV0YWlscy8xMTI2NTE2Nw==">https://blog.csdn.net/kezunhai/article/details/11265167<i class="fa fa-external-link-alt"></i></span><br><span class="exturl" data-url="aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3hpYXhpYXpscy9hcnRpY2xlL2RldGFpbHMvODE4NDEyNA==">https://blog.csdn.net/xiaxiazls/article/details/8184124<i class="fa fa-external-link-alt"></i></span></p>
+<hr>
+<h1 id="SUSAN算子"><a href="#SUSAN算子" class="headerlink" title="SUSAN算子"></a>SUSAN算子</h1><p>SUSAN算子（Smallest Univalue Segment Assimilating Nucleus）是一种高效的边缘和角点检测算子，并且具有结构保留的降噪功能（structure preserving noise reduction )。</p>
+<p>SUSAN算子通过用一个圆形模板在图像上移动，一般这个圆形模板的半径是（3.4pixels）的包含37个像素。模板内的每一个像素与中心像素进行比较。</p>
+<p>为了介绍和分析的需要，我们首先来看下面这个图：</p>
+<p><img src="\img\viusal-scale\susan1.png" alt="SUSAN算子">该图是在一个白色的背景上，有一个深度颜色的区域（dark area），用一个圆形模板在图像上移动，若模板内的像素灰度与模板中心的像素（被称为核Nucleus）灰度值小于一定的阈值，则认为该点与核Nucleus具有相同的灰度，满足该条件的像素组成的区域就称为USAN（Univalue Segment Assimilating Nucleus）。</p>
+<p>接下来，我们来分析下上图中的五个圆形模的USAN值。对于上图中的e圆形模板，它完全处于白色的背景中，根据前面对USAN的定义，该模板处的USAN值是最大的；随着模板a到d的移动，USAN值逐渐减少；当圆形模板移动到b处时，其中心位于边缘直线上，此时其USAN值逐渐减少为最大值的一半；而圆形模板运行到角点处a时，此时的USAN值最小。因此通过上面的描述：我们可以推导出：边缘处的点的USAN值小于或等于最大值一半。由此，我们可以得出SUSAN提取边缘和角点算法的基本原理：在边缘或角点处的USAN值最小，可以根据USAN区域的大小来检测边缘、角点等特征的位置和方向信息。</p>
+<p>上面都是口头阐述，文字的力量是单薄的，下面我们进入公式阶段。SUSAN算子通过用一个圆形模板在图像上移动，一般这个圆形模板的半径是（3.4pixels）的包含37个像素。模板内的每一个像素与中心像素进行比较，比较方式如下所示：</p>
+<script type="math/tex; mode=display">C(\overrightarrow{r},\overrightarrow{r_{0}})=
+\begin{equation}
+\left\{
+\begin{array}{lr}
+1&if\left| I(\overrightarrow{r})-I(\overrightarrow{r_{0}}) \right|\leq t \\
+0&if\left| I(\overrightarrow{r})-I(\overrightarrow{r_{0}}) \right|< t \\
+\end{array}
+\right.
+\end{equation}</script><p>其中r0是中心像素，r是掩膜内的其他像素，t是一个像素差异阈值（通常对于对比度比较低的区域，选取较小的t；反之，则t的阈值可以选择大些）。 接着，对上式进行统计，统计方式如下式：</p>
+<script type="math/tex; mode=display">n(\overrightarrow{r_{0}})=\sum_{\overrightarrow{r_{0}}}^{}{C(\overrightarrow{r},\overrightarrow{r_{0}})}</script><p>得到的n值就是USAN的大小。<br>得到USAN值后，通过阈值化就可以得到初步的边缘响应，公式表示如下：</p>
+<script type="math/tex; mode=display">C(\overrightarrow{r},\overrightarrow{r_{0}})=
+\begin{equation}
+\left\{
+\begin{array}{lr}
+g-n(\overrightarrow{r_{0}})&if &n(\overrightarrow{r_{0}}) < g \\
+0 && otherwise
+\end{array}
+\right.
+\end{equation}</script><p>其中，g=3Nmax/4，也即g的取值为USAN最大值的3/4。USAN值越小，边缘的响应就越强。<br>对得出的边缘响应进行非极大值抑制，就可以得到图像的边缘信息了。</p>
+<p>以上完成了SUSAN检测边缘的功能，或许你已经想到了怎么用SUSAN算子来检测角点了。通过上面对a、b、c、d、e等几个圆形模板的USAN值的分析，当模板的中心位于角点处时，USAN的值最小。下面简单叙述下利用SUSAN算子检测角点的步骤：</p>
+<ol>
+<li>利用圆形模板遍历图像，计算每点处的USAN值</li>
+<li>设置一阈值g，一般取值为1/2(Max(n)， 也即取值为USAN最大值的一半，进行阈值化，得到角点响应</li>
+<li>使用非极大值抑制来寻找角点。</li>
+</ol>
+<p>通过上面的方式得到的角点，存在很大伪角点。为了去除伪角点，SUSAN算子可以由以下方法实现：①计算USAN区域的重心，然后计算重心和模板中心的距离，如果距离较小则不是正确的角点；②判断USAN区域的重心和模板中心的连线所经过的像素都是否属于USAN区域的像素，如果属于那么这个模板中心的点就是角点。</p>
+<h2 id="总结-2"><a href="#总结-2" class="headerlink" title="总结"></a>总结</h2><p>SUSAN算子是一个原理简单、易于了解的算子。由于其指数基于对周边象素的 灰度比较，完全不涉及梯度的运算，因此其抗噪声能力很强，运算量也比较小；同时，SUSAN算子还是一个各向同性的算子；最后，通过控制参数t和g，可以根据具体情况很容易地对不同对比度、不同形状的图像通过设置恰当的t和g进行控制。比如图像的对比度较大，则可选取较大的t值，而图像的对比度较小，则可选取较小的t值。总之，SUSAN算子是一个非常难得的算子，不仅具有很好的边缘检测性能；而且对角点检测也具有很好的效果。<br>参考：<br><span class="exturl" data-url="aHR0cDovL2Jsb2cuY3Nkbi5uZXQva2V6dW5oYWkvYXJ0aWNsZS9kZXRhaWxzLzExMjY5Nzkz">http://blog.csdn.net/kezunhai/article/details/11269793<i class="fa fa-external-link-alt"></i></span><br><span class="exturl" data-url="aHR0cDovL3VzZXJzLmZtcmliLm94LmFjLnVrL35zdGV2ZS9zdXNhbi8=">http://users.fmrib.ox.ac.uk/~steve/susan/<i class="fa fa-external-link-alt"></i></span><br><span class="exturl" data-url="aHR0cDovL2Jsb2cuY3Nkbi5uZXQvYXVndXNkaS9hcnRpY2xlL2RldGFpbHMvOTAxMjU1NQ==">http://blog.csdn.net/augusdi/article/details/9012555<i class="fa fa-external-link-alt"></i></span></p>
+<hr>
+<h1 id="FAST算子"><a href="#FAST算子" class="headerlink" title="FAST算子"></a>FAST算子</h1><p>FAST算子是Rosten等人在SUSAN角点特征检测方法的基础上利用机器学习方法提出的。全名是：Features from Accelerated Segment Test。它计算速度快，可以应用与实时场景中。在FAST特征提出之后，实时计算机视觉应用中特征提取性能才有显著改善。</p>
+<p>目前以其高计算效率(computational performance)、高可重复性(high repeatability)成为计算机视觉领域最流行的角点检测方法。<br>FAST算法包含3个主要步骤：</p>
+<ol>
+<li>对固定半径圆上的像素进行分割测试，通过逻辑测试可以去处大量的非特征候选点；</li>
+<li>基于分类的角点特征检测，利用ID3 分类器根据16个特征判决候选点是否为角点特征，每个特征的状态为-1，0，1。</li>
+<li>利用非极大值抑制进行角点特征的验证。</li>
+</ol>
+<p>下面我们对这3个步骤进行分析。</p>
+<h2 id="固定半径圆上的像素进行分割测试（Segment-Test）"><a href="#固定半径圆上的像素进行分割测试（Segment-Test）" class="headerlink" title="固定半径圆上的像素进行分割测试（Segment Test）"></a>固定半径圆上的像素进行分割测试（Segment Test）</h2><p>在分割测试中，可以去除大量的非候选角点，这样就可以把可能的角点筛选出来。分割测试是通过对一固定半径的圆形模板的比较和计算进行的，在FAST角点检测算子中，一般是通过半径为3.4 pixel、外围16个像素的圆的作为模板，通过下图我们来具体分析下分割测试。</p>
+<p><img src="\img\viusal-scale\fast1-1024x519.png" alt="SUSAN算子">在上图中，是12点的分割测试角点检测算法的示意图（还有9点的分割测试角点检测，具体参考后面的参考资料）。12点分割测试角点检测算法是在一个图像块上进行，如上图中的左边方块，其中p是中心像素点，12点取的是图上用弧线连接的12个点的像素值都大于或都小于中心像素值，则认为该点处是候选角点（为什么选择12点，因为通过测试，12点的角点检测性能最稳定、速度更快、效果也很好，当然有些文献指出9点的方式也很好）。分割测试是怎么进行的呢？用下面的公式来说，便可一目了然。</p>
+<script type="math/tex; mode=display">S_{p\rightarrow x}=
+\begin{equation}
+\left\{
+\begin{array}{lr}
+d, I_{p\rightarrow x}<I_p-t & darker\\
+s, I_p-t<I_{p\rightarrow x}<I_p+t& similar\\
+b,I_p+t<I_{p\rightarrow x} & brighter
+\end{array}
+\right.
+\end{equation}</script><p>上式中，t是一个阈值（默认取值为10，不同场景取值有差异），Ip表示的是中心像素的像素值，Ip-&gt;x表示的是圆形模板中的像素值上式的意思是：当中心像素的像素值Ip小于x处的像素值Ip-&gt;x+t时，则该像素属于darker，Sp-&gt;x=d，其他两种情况分别表示亮些和相似。这样一个块（圆形）区域就可以分成d、s和b三种类型。这时候只要统计圆形区域中d或b的次数，只要d或b出现的次数大于n（（当是12点分割测试角点检测时，n=12；当是9点时，则n=9），那么该点就被认为是候选角点。</p>
+<p>在分割测试步骤中，为了加快速度，其实不需要对这些像素进行逐一的比较。简单来说：首先比较1、5、9、13处点的像素值（也即水平方向和垂直方向上的4个点）与中心像素值的大小，如果这四个点中的像素值有3个或3个以上大于Ip+t或小于Ip-t，那么则认为该处是一个候选角点，否则就不可能是角点。</p>
+<h2 id="ID3决策树算法来训练角点检测"><a href="#ID3决策树算法来训练角点检测" class="headerlink" title="ID3决策树算法来训练角点检测"></a>ID3决策树算法来训练角点检测</h2><p>通过上式中比较，可以将模板内的像素分成三部分d、s、b，分别记为：Pd，Ps，Pb。因此对于每个Sp-&gt;x都属于Pd，Ps，Pb中的一个。另外，令Kp为true，如果p为角点，否则为false。通过ID3算法来选择具有最大信息增益的像素来判断一个像素是否为角点。Kp的熵用下式来计算：</p>
+<script type="math/tex; mode=display">c=|\left\{ p|K_{p}=true \right\}|，角点\\
+\bar{c}=|\left\{ p|K_{p}=false \right\}|，非角点</script><p>某一像素的信息增益通过下式来表示：</p>
+<script type="math/tex; mode=display">H(P)-H(P_{d})-H(Ps)-H(P_{b})</script><p>对上述像素依次进行如上处理，选择像素增益最大的像素作为判断角点的依据，生成决策树，从而实现角点的正确分类。</p>
+<h2 id="非极大值抑制"><a href="#非极大值抑制" class="headerlink" title="非极大值抑制"></a>非极大值抑制</h2><p>在上面的分割测试中，没有计算角点响应函数（Corner Response Function），非极大值抑制无法直接应用于提取的特征。因此，定义一个角点响应函数V，考虑到分割测试的特征以及计算速度的需要，角点响应函数的定义如下：</p>
+<script type="math/tex; mode=display">V=\max(\sum_{x\in S_{bright}}^{}{|I_{p\rightarrow x}-I_{p}|-t}，\sum_{x\in S_{dark}}^{}{|I_{p}-I_{p\rightarrow x}|-t})</script><p>定义了角点响应函数后，就可以采用常规的非极大值抑制方法对非角点进行排除了。</p>
+<h2 id="总结-3"><a href="#总结-3" class="headerlink" title="总结"></a>总结</h2><p>FAST角点检测算法是一种具有高计算效率(computational performance)、高可重复性(high repeatability)特征提取算子，在立体图像匹配、图像配准、目标识别、目标跟踪、场景重构等领域得到了广泛的应用，成为计算机视觉领域最流行的角点检测方法。但是，噪声对该算子的影响比较大，而且阈值t对算子的影响比较大。<br>参考：<br><span class="exturl" data-url="aHR0cDovL2Jsb2cuY3Nkbi5uZXQva2V6dW5oYWkvYXJ0aWNsZS9kZXRhaWxzLzExMjkwNzQ5">http://blog.csdn.net/kezunhai/article/details/11290749<i class="fa fa-external-link-alt"></i></span><br><span class="exturl" data-url="aHR0cDovL3d3dy5lZHdhcmRyb3N0ZW4uY29tL3dvcmsvZmFzdC5odG1s">FAST Corner Detection — Edward Rosten<i class="fa fa-external-link-alt"></i></span><br><span class="exturl" data-url="aHR0cDovL2Jsb2cuY3Nkbi5uZXQvYW5zaGFuMTk4NC9hcnRpY2xlL2RldGFpbHMvODg2NzY1Mw==">A Brief History of FAST corner detector<i class="fa fa-external-link-alt"></i></span><br><span class="exturl" data-url="aHR0cDovL3d3dzYuaW4udHVtLmRlL01haW4vUmVzZWFyY2hBZ2FzdA==">AGAST Corner Detector: faster than FAST and even FAST-ER<i class="fa fa-external-link-alt"></i></span></p>
+<hr>
+<h1 id="DoG算子"><a href="#DoG算子" class="headerlink" title="DoG算子"></a>DoG算子</h1><p>DoG算子是由Lowe D.G.提出的，对噪声、尺度、仿射变化和旋转等具有很强的鲁棒性，能够提供更丰富的局部特征信息。</p>
+<p>作为一个增强算法，DOG可以被用来增加边缘和其他细节的可见性，大部分的边缘算子使用增强高频信号的方法，但是因为随机噪声也是高频信号，很多锐化算子也增强了噪声。DOG算法去除的高频信号中通常包含了随机噪声，所以这种方法是最适合处理那些有高频噪声的图像。这个算法的一个主要缺点就是在调整图像对比度的过程中信息量会减少。</p>
+<p>当它被用于图像增强时，DOG算法中两个高斯核的半径之比通常为4:1或5:1。当k设为1.6时，即为高斯拉普拉斯算子的近似。高斯拉普拉斯算子在多尺度多分辨率像片中，用于近似高斯拉普拉斯算子两个高斯核的确切大小决定了两个高斯模糊后的影像间的尺度。</p>
+<p>DOG也被用于尺度不变特征变换中的斑点检测。事实上，DOG算法作为两个多元正态分布的差通常总额为零，把它和一个恒定信号进行卷积没有意义。当K约等于1.6时它很好的近似了高斯拉普拉斯变换，当K约等于5时又很好的近似了视网膜上神经节细胞的视野。它可以很好的作为一个实时斑点检测算子和尺度选择算子应用于递归程序。</p>
+<h2 id="推导"><a href="#推导" class="headerlink" title="推导"></a>推导</h2><p>我们这次从数学推导开始，以LoG作为铺垫，再介绍DoG。</p>
+<p>Difference of Gaussian(DOG)是高斯函数的差分。它是可以通过将图像与高斯函数进行卷积得到一幅图像的低通滤波结果，即去噪过程，这里的Gaussian和高斯低通滤波器的高斯一样，是一个函数，即为正态分布函数。同时，它是对Laplacian of Gaussian(LoG)的近似，在某一尺度上的特征检测可以通过对两个相邻高斯尺度空间的图像相减，得到DoG的响应值图像。</p>
+<p>Laplace算子对通过图像进行操作实现边缘检测时，对离散点和噪声比较敏感。于是，首先对图像进行高斯暖卷积滤波进行降噪处理，再采用Laplace算子进行边缘检测，就可以提高算子对噪声和离散点的Robust, 这一个过程中Laplacian of Gaussian(LOG)算子就诞生了。</p>
+<p>高斯卷积函数定义为：</p>
+<script type="math/tex; mode=display">G_{\sigma_{1}}(x,y)=\frac{1}{\sqrt{2\pi\sigma^2}}\exp\left( -\frac{x^2+y^2}{2\sigma^2} \right)</script><p>而原始图像与高斯卷积定义为：</p>
+<script type="math/tex; mode=display">\Delta[G_{\sigma}(x,y)\ast f(x,y)]=[\Delta G_{\sigma}(x,y)]\ast f(x,y)=LoG\ast f(x,y)</script><p>因为：</p>
+<script type="math/tex; mode=display">\frac{d}{dt}[h(t)\ast f(t)] = \frac{d}{dt}\int_{}^{}f(\tau)h(t-\tau)d\tau=\int_{}^{}f(\tau)\frac{d}{dt}h(t-\tau)d\tau=f(t)\ast \frac{d}{dt}h(t)</script><p>所以Laplacian of Gaussian(LOG)</p>
+<script type="math/tex; mode=display">\Delta G_{\sigma}(x,y)</script><p>可以通过先对高斯函数进行偏导操作，然后进行卷积求解。公式表示为：</p>
+<script type="math/tex; mode=display">\frac{\partial}{\partial x}G_{\sigma}(x,y)=\frac{\partial}{\partial x}e^{-(x^2+y^2)/2\sigma^2}=-\frac{1}{\sigma^2}e^{-(x^2+y^2)/2\sigma^2}</script><script type="math/tex; mode=display">\frac{\sigma^2}{\sigma^2x}G_{\sigma}(x,y)=\frac{x^2}{\sigma^4}e^{-(x^2+y^2)/2\sigma^2}-\frac{1}{\sigma^2}e^{-(x^2+y^2)/2\sigma^2}=\frac{x^2-\sigma^2}{\sigma^4}e^{-(x^2+y^2)/2\sigma^2}</script><p>因此，我们可以把LOG核函数定义为：</p>
+<script type="math/tex; mode=display">LoG\stackrel{\Delta}{=}\Delta G_{\sigma}(x,y)=\frac{\sigma^2}{\sigma x^2}G_{\sigma}(x,y)+\frac{\sigma^2}{\sigma y^2}G_{\sigma}(x,y)=\frac{x^2+y^2-2\sigma^2}{\sigma^4}e^{-(x^2+y^2)/2\sigma^2}</script><script type="math/tex; mode=display">\begin{equation}
+\begin{split}
+\nabla^2g(x,y)&=\frac{\partial^2g(x,y,\sigma)}{\partial x^2}U_{x}+\frac{\partial^2g(x,y,\sigma)}{\partial y^2}U_{y} \\&=
+\frac{\partial\nabla g(x,y,\sigma)}{\partial x}U_{x}+\frac{\partial\nabla g(x,y,\sigma)}{\partial y}U_{y} \\&=
+\left( \frac{x^2}{\sigma^2}-1 \right)\frac{e^{-(x^2+y^2)/2\sigma^2}}{\sigma^2}+\left( \frac{y^2}{\sigma^2}-1 \right)\frac{e^{-(x^2+y^2)/2\sigma^2}}{\sigma^2} \\&=
+\frac{1}{\sigma^2}\left( \frac{x^2+y^2}{\sigma^2}-2 \right)e^{-(x^2+y^2)/2\sigma^2}
+\end{split}
+\end{equation}</script><p>高斯函数和一级、二阶导数如下图所示：</p>
+<p><img src="\img\viusal-scale\log-1024x341.png" alt="SUSAN算子">Laplacian of Gaussian计算可以利用高斯差分来近似，其中差分是由两个高斯滤波与不同变量的卷积结果求得的</p>
+<script type="math/tex; mode=display">\sigma\nabla^2g(x,y,\sigma)=\frac{\partial g}{\partial\sigma}\approx\frac{g(x,y,\sigma)-g(x,y,\sigma)}{k\sigma-\sigma}</script><p>Difference of Gaussian(DOG)是高斯函数的差分。它是可以通过将图像与高斯函数进行卷积得到一幅图像的低通滤波结果，即去噪过程，这里的Gaussian和高斯低通滤波器的高斯一样，是一个函数，即为正态分布函数。同时，它对高斯拉普拉斯LoG(博文LOG算子介绍了实现原理)的近似，在某一尺度上的特征检测可以通过对两个相邻高斯尺度空间的图像相减，得到DoG的响应值图像。</p>
+<p>两幅图像的高斯滤波表示为：</p>
+<script type="math/tex; mode=display">g_{1}(x,y)=G_{\sigma_{1}}(x,y)*f(x,y) \\
+g_{2}(x,y)=G_{\sigma_{2}}(x,y)*f(x,y)</script><p>最后，将上面滤波得到的两幅图像g1和g2相减</p>
+<script type="math/tex; mode=display">g_{1}(x,y)-g_{2}(x,y)=G_{\sigma_{1}}*f(x,y) -
+G_{\sigma_{2}}*f(x,y)=(G_{\sigma_{1}}-G_{\sigma_{2}})*f(x,y)=DoG*f(x,y)</script><p>即：可以DOG表示为：</p>
+<script type="math/tex; mode=display">DoG\stackrel{\Delta}{=}G_{\sigma_{1}}-
+G_{\sigma_{2}}=\frac{1}{\sqrt{2\pi}}\left( \frac{1}{\sigma_{1}}e^{-(x^2+y^2)/2\sigma_{1}^2} - \frac{1}{\sigma_{2}}e^{-(x^2+y^2)/2\sigma_{2}^2} \right)</script><p>在具体图像处理中，就是将两幅图像在不同参数下的高斯滤波结果相减，得到DoG图。</p>
+<p><img src="\img\viusal-scale\DoG_tile.jpg" alt="SUSAN算子">标记红色当前像素点，黄色的圈标记邻接像素点，用这个方式，最多检测相邻尺度的26个像素点。如果它是所有邻接像素点的最大值或最小值点，则标记红色被标记为特征点，如此依次进行，则可以完成图像的特征点提取。</p>
+<h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><p><span class="exturl" data-url="aHR0cDovL2ZvdXJpZXIuZW5nLmhtYy5lZHUvZTE2MS9sZWN0dXJlcy9ncmFkaWVudC9ub2RlOS5odG1s">Laplacian of Gaussian<i class="fa fa-external-link-alt"></i></span><br><span class="exturl" data-url="aHR0cDovL2ZvdXJpZXIuZW5nLmhtYy5lZHUvZTE2MS9sZWN0dXJlcy9ncmFkaWVudC9ub2RlMTAuaHRtbA==">Difference of Gaussian(DOG)<i class="fa fa-external-link-alt"></i></span><br><span class="exturl" data-url="aHR0cDovL3d3dy50aGlua2ZhY2UuY24vdGhyZWFkLTYyNi0xLTEuaHRtbA==">http://www.thinkface.cn/thread-626-1-1.html<i class="fa fa-external-link-alt"></i></span><br><span class="exturl" data-url="aHR0cDovL2Jsb2cuY3Nkbi5uZXQveGlhb3dlaV9jcXUvYXJ0aWNsZS9kZXRhaWxzLzgwNjc4ODE=">http://blog.csdn.net/xiaowei_cqu/article/details/8067881<i class="fa fa-external-link-alt"></i></span><br><span class="exturl" data-url="aHR0cDovL2Jsb2cuY3Nkbi5uZXQveGlhb3dlaV9jcXU=">http://blog.csdn.net/xiaowei_cqu<i class="fa fa-external-link-alt"></i></span><br><span class="exturl" data-url="aHR0cDovL2Jsb2cuc2luYS5jb20uY24vcy9ibG9nXzRiZGIxNzBiMDEwMW92aWYuaHRtbA==">http://blog.sina.com.cn/s/blog_4bdb170b0101ovif.html<i class="fa fa-external-link-alt"></i></span><br><span class="exturl" data-url="aHR0cDovL2Jsb2cuY3Nkbi5uZXQvYWJjamVubmlmZXIvYXJ0aWNsZS9kZXRhaWxzLzc2Mzk0ODg=">http://blog.csdn.net/abcjennifer/article/details/7639488<i class="fa fa-external-link-alt"></i></span><br><span class="exturl" data-url="aHR0cDovL3d3dy50YW5kZm9ubGluZS5jb20vZG9pL2Ficy8xMC4xMDgwLzc1NzU4Mjk3Ng==">http://www.tandfonline.com/doi/abs/10.1080/757582976<i class="fa fa-external-link-alt"></i></span><br><span class="exturl" data-url="aHR0cDovL3d3dy52b2lkY24uY29tL2Jsb2cvaGg1NTU4MDAvYXJ0aWNsZS9wLTM1OTc5MjcuaHRtbA==">http://www.voidcn.com/blog/hh555800/article/p-3597927.html<i class="fa fa-external-link-alt"></i></span><br><span class="exturl" data-url="aHR0cDovL2ZvdXJpZXIuZW5nLmhtYy5lZHUvZTE2MS9sZWN0dXJlcy9ncmFkaWVudC9ub2RlOS5odG1s">http://fourier.eng.hmc.edu/e161/lectures/gradient/node9.html<i class="fa fa-external-link-alt"></i></span></p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E5%9B%BE%E5%83%8F%E5%A4%84%E7%90%86/" rel="tag"><i class="fa fa-tag"></i> 图像处理</a>
+              <a href="/tags/%E6%95%B0%E5%AD%A6/" rel="tag"><i class="fa fa-tag"></i> 数学</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2018/06.openmp/" rel="prev" title="OpenMP">
+                  <i class="fa fa-chevron-left"></i> OpenMP
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2018/08.moments/" rel="next" title="图像的矩">
+                  图像的矩 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      const activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      const commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 2016 – 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fab fa-github"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">朋克李PunkLi</span>
+</div>
+<div class="wordcount">
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-line"></i>
+    </span>
+    <span title="站点总字数">163k</span>
+  </span>
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="站点阅读时长">2:28</span>
+  </span>
+</div>
+
+    </div>
+  </footer>
+
+  
+  <script src="//cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js"></script>
+<script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+  
+
+
+
+
+
+  <script>
+  if (typeof MathJax === 'undefined') {
+    window.MathJax = {
+      tex: {
+        inlineMath: {'[+]': [['$', '$']]},
+        tags: 'ams'
+      },
+      options: {
+        renderActions: {
+          findScript: [10, doc => {
+            document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+              const display = !!node.type.match(/; *mode=display/);
+              const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+              const text = document.createTextNode('');
+              node.parentNode.replaceChild(text, node);
+              math.start = {node: text, delim: '', n: 0};
+              math.end = {node: text, delim: '', n: 0};
+              doc.math.push(math);
+            });
+          }, '', false],
+          insertedScript: [200, () => {
+            document.querySelectorAll('mjx-container').forEach(node => {
+              const target = node.parentNode;
+              if (target.nodeName.toLowerCase() === 'li') {
+                target.parentNode.classList.add('has-jax');
+              }
+            });
+          }, '', false]
+        }
+      }
+    };
+    const script = document.createElement('script');
+    script.src = '//cdn.jsdelivr.net/npm/mathjax@3.1.2/es5/tex-mml-chtml.js';
+    script.defer = true;
+    document.head.appendChild(script);
+  } else {
+    MathJax.startup.document.state(0);
+    MathJax.typesetClear();
+    MathJax.texReset();
+    MathJax.typeset();
+  }
+</script>
+
+
+
+</body>
+</html>

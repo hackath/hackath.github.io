@@ -1,0 +1,604 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.3.0">
+
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+  <meta http-equiv="Cache-Control" content="no-transform">
+  <meta http-equiv="Cache-Control" content="no-siteapp">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.1/css/all.min.css">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css">
+
+<script class="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"skystarry.cn","root":"/","images":"/images","scheme":"Mist","version":"8.1.0","exturl":true,"sidebar":{"position":"right","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}};
+  </script>
+<meta name="description" content="AprilTag是一套免费开源的视觉定位系统，他们的主页：https:&#x2F;&#x2F;april.eecs.umich.edu&#x2F;software&#x2F;apriltag&#x2F;根据他们的论文AprilTag - A robust and flexible visual fiducial system, ICRA 2011，AprilTag主要的贡献是：  提出了一种可靠的检测视觉基准的方法：基于图形的图像分割、基于局部梯">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Apriltags">
+<meta property="og:url" content="https://skystarry.cn/2018/09.apriltags/index.html">
+<meta property="og:site_name" content="skystarry">
+<meta property="og:description" content="AprilTag是一套免费开源的视觉定位系统，他们的主页：https:&#x2F;&#x2F;april.eecs.umich.edu&#x2F;software&#x2F;apriltag&#x2F;根据他们的论文AprilTag - A robust and flexible visual fiducial system, ICRA 2011，AprilTag主要的贡献是：  提出了一种可靠的检测视觉基准的方法：基于图形的图像分割、基于局部梯">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://skystarry.cn/img/apriltags/pic3.png">
+<meta property="og:image" content="https://skystarry.cn/img/apriltags/pic4.png">
+<meta property="og:image" content="https://skystarry.cn/img/apriltags/pic5.png">
+<meta property="og:image" content="https://skystarry.cn/img/apriltags/pic6.png">
+<meta property="article:published_time" content="2018-08-06T17:48:09.000Z">
+<meta property="article:modified_time" content="2020-12-09T01:10:09.584Z">
+<meta property="article:author" content="skystarry">
+<meta property="article:tag" content="机器人">
+<meta property="article:tag" content="图像处理">
+<meta property="article:tag" content="Opencv">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://skystarry.cn/img/apriltags/pic3.png">
+
+
+<link rel="canonical" href="https://skystarry.cn/2018/09.apriltags/">
+
+
+<script class="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+<title>Apriltags | skystarry</title>
+  
+
+
+
+  <noscript>
+  <style>
+  body { margin-top: 2rem; }
+
+  .use-motion .menu-item,
+  .use-motion .sidebar,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header {
+    visibility: visible;
+  }
+
+  .use-motion .header,
+  .use-motion .site-brand-container .toggle,
+  .use-motion .footer { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle,
+  .use-motion .custom-logo-image {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line {
+    transform: scaleX(1);
+  }
+
+  .search-pop-overlay, .sidebar-nav { display: none; }
+  .sidebar-panel { display: block; }
+  </style>
+</noscript>
+
+<!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+<!-- hexo injector head_end end --><link rel="alternate" href="/rss_skystarry.xml" title="skystarry" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">skystarry</h1>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">我的博客</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <section class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#ARToolkit"><span class="nav-number">1.</span> <span class="nav-text">ARToolkit</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#ARTag"><span class="nav-number">2.</span> <span class="nav-text">ARTag</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Apriltags"><span class="nav-number">3.</span> <span class="nav-text">Apriltags</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%A3%80%E6%B5%8B%E7%BA%BF%E6%AE%B5-Detecting-line-segments"><span class="nav-number">4.</span> <span class="nav-text">检测线段 Detecting line segments</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%9B%9B%E5%85%83%E6%A3%80%E6%B5%8B-Quad-detection"><span class="nav-number">5.</span> <span class="nav-text">四元检测 Quad detection</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%8D%95%E5%BA%94%E6%80%A7%E4%BB%A5%E5%8F%8A%E5%A4%96%E4%BC%B0%E8%AE%A1-Homography-and-extrinsics-estimation"><span class="nav-number">6.</span> <span class="nav-text">单应性以及外估计 Homography and extrinsics estimation</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E8%A7%A3%E7%A0%81-playload-decoding"><span class="nav-number">7.</span> <span class="nav-text">解码 playload decoding</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%85%B3%E4%BA%8E%E7%BC%96%E7%A0%81-playload-encoding"><span class="nav-number">8.</span> <span class="nav-text">关于编码 playload encoding</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%BA%A0%E9%94%99%E5%88%86%E6%9E%90"><span class="nav-number">9.</span> <span class="nav-text">纠错分析</span></a></li></ol></div>
+        </section>
+        <!--/noindex-->
+
+        <section class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="skystarry"
+      src="/img/skystarry.jpg">
+  <p class="site-author-name" itemprop="name">skystarry</p>
+  <div class="site-description" itemprop="description">Seek only light, freedom, and you.</div>
+</div>
+
+   <div class="feed-link motion-element">
+     <a href="/rss_skystarry.xml" rel="alternate">
+       <i class="fa fa-rss"></i>
+       RSS
+     </a>
+   </div>
+ 
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">28</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">8</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">17</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author site-overview-item animated">
+      <span class="links-of-author-item">
+        <span class="exturl" data-url="aHR0cHM6Ly9za3lzdGFycnkuZ2l0ZWUuaW8v" title="Wiki → https:&#x2F;&#x2F;skystarry.gitee.io&#x2F;">Wiki</span>
+      </span>
+      <span class="links-of-author-item">
+        <span class="exturl" data-url="bWFpbHRvOmxpY2h1bnBlbmcyMjAwQG91dGxvb2suY29t" title="E-Mail → mailto:lichunpeng2200@outlook.com">E-Mail</span>
+      </span>
+      <span class="links-of-author-item">
+        <span class="exturl" data-url="aHR0cHM6Ly93d3cuemhpaHUuY29tL3Blb3BsZS9saS1jaHVucGVuZw==" title="知乎 → https:&#x2F;&#x2F;www.zhihu.com&#x2F;people&#x2F;li-chunpeng">知乎</span>
+      </span>
+      <span class="links-of-author-item">
+        <span class="exturl" data-url="aHR0cHM6Ly9zcGFjZS5iaWxpYmlsaS5jb20vMTc5NDE2OTY1" title="B站 → https:&#x2F;&#x2F;space.bilibili.com&#x2F;179416965">B站</span>
+      </span>
+      <span class="links-of-author-item">
+        <span class="exturl" data-url="aHR0cDovL211c2ljLjE2My5jb20vIy91c2VyL2hvbWU/aWQ9MjcyMTA3MDQw" title="网抑云 → http:&#x2F;&#x2F;music.163.com&#x2F;#&#x2F;user&#x2F;home?id&#x3D;272107040">网抑云</span>
+      </span>
+  </div>
+
+
+
+        </section>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+
+  <span class="exturl github-corner" data-url="aHR0cHM6Ly9naXRodWIuY29tL1B1bmtMaQ==" title="Follow me on GitHub" aria-label="Follow me on GitHub"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></span>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://skystarry.cn/2018/09.apriltags/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/img/skystarry.jpg">
+      <meta itemprop="name" content="skystarry">
+      <meta itemprop="description" content="Seek only light, freedom, and you.">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="skystarry">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Apriltags
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2018-08-07 01:48:09" itemprop="dateCreated datePublished" datetime="2018-08-07T01:48:09+08:00">2018-08-07</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">更新于</span>
+        <time title="修改时间：2020-12-09 09:10:09" itemprop="dateModified" datetime="2020-12-09T09:10:09+08:00">2020-12-09</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E8%A7%86%E8%A7%89/" itemprop="url" rel="index"><span itemprop="name">计算机视觉</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>6.1k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>6 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <p>AprilTag是一套免费开源的视觉定位系统，他们的主页：<span class="exturl" data-url="aHR0cHM6Ly9hcHJpbC5lZWNzLnVtaWNoLmVkdS9zb2Z0d2FyZS9hcHJpbHRhZy8=">https://april.eecs.umich.edu/software/apriltag/<i class="fa fa-external-link-alt"></i></span><br>根据他们的论文<span class="exturl" data-url="aHR0cHM6Ly9hcHJpbC5lZWNzLnVtaWNoLmVkdS9tZWRpYS9wZGZzL29sc29uMjAxMXRhZ3MucGRm">AprilTag - A robust and flexible visual fiducial system, ICRA 2011<i class="fa fa-external-link-alt"></i></span>，AprilTag主要的贡献是：</p>
+<ul>
+<li>提出了一种可靠的检测视觉基准的方法：基于图形的图像分割、基于局部梯度，可以精确估计线条。还描述了一种可以处理重要遮挡的四边形提取方法。</li>
+<li>描述了2D条形码系统独有的特性：旋转的稳健性，以及自然图像产生的误报的稳健性。</li>
+<li>号称比<span class="exturl" data-url="aHR0cHM6Ly9pbnNpZGUubWluZXMuZWR1L353aG9mZi9jb3Vyc2VzL0VFTkc1MTIvbGVjdHVyZXMvb3RoZXIvQVJUYWcucGRm">ARTag<i class="fa fa-external-link-alt"></i></span>和<span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL2FzdGFuaW4vbWlycm9yLXN0dWRpZXJzdHViZQ==">Studierstube Tracker<i class="fa fa-external-link-alt"></i></span>更快更稳定。</li>
+</ul>
+<a id="more"></a> 
+<hr>
+<h1 id="ARToolkit"><a href="#ARToolkit" class="headerlink" title="ARToolkit"></a>ARToolkit</h1><p>ARToolkit的标签包含一个由黑色边框包围，没有用二进制编码，而是使用了诸如拉丁字符“A”之类的符号。主要缺点是计算成本，第二个缺点是难以生成彼此近似正交的模板。 ARToolkit使用的标签检测方案基于用户指定的阈值对输入图像进行简单的二值化。该方案非常快，但对于照明变化不稳健，而且无法处理标签边框的适度遮挡。 </p>
+<hr>
+<h1 id="ARTag"><a href="#ARTag" class="headerlink" title="ARTag"></a>ARTag</h1><p>ARTag是改进的方案，检测机制基于图像梯度，使其对光照变化具有鲁棒性，同时能够检测边界部分被遮挡的标签。ARTag还提供了基于前向纠错的第一个编码系统，使标签更容易生成，更快地相关，并提供标签之间更大的正交性。ARTag是挺有意义的一项工作，不过是不开源的。</p>
+<hr>
+<h1 id="Apriltags"><a href="#Apriltags" class="headerlink" title="Apriltags"></a>Apriltags</h1><p>参考了之前的工作，Apriltags由两个主要部分组成：标签检测器(detector) 和 编码系统(encode/decode)。 </p>
+<h1 id="检测线段-Detecting-line-segments"><a href="#检测线段-Detecting-line-segments" class="headerlink" title="检测线段 Detecting line segments"></a>检测线段 Detecting line segments</h1><p>首先检测图像中的线条。与ARTag探测器的基本方法类似，计算每个像素的梯度方向和幅度，并将像素聚集成具有相似梯度方向和幅度的分量。</p>
+<p><img src="\img\apriltags\pic3.png" alt="早期处理步骤">首先计算每个像素的梯度，计算它们的幅度（图1）和方向（图2）。使用基于图的方法，具有相似梯度方向和幅度的像素被聚类成组件（图3）。使用加权最小值然后，将线段拟合到每个组件中的像素（图四）。</p>
+<p>线段的方向由梯度方向确定，因此，左边是暗段，右边是浅。 线的方向通过其中点处的短垂直“凹口”可视化; 注意这些“缺口”总是指向较轻的区域。<br>聚类算法类似于<span class="exturl" data-url="aHR0cDovL3Blb3BsZS5jcy51Y2hpY2Fnby5lZHUvfnBmZi9wYXBlcnMvc2VnLWlqY3YucGRm">Felzenszwalb的基于图的方法<i class="fa fa-external-link-alt"></i></span>：</p>
+<ol>
+<li>创建了一个图，其中每个节点代表一个像素。在相邻像素之间添加边缘，边缘权重等于像素在梯度方向上的差异。</li>
+<li>然后根据增加的边缘权重对这些边缘进行分类和处理：<br>对于每个边缘，我们测试像素所属的连接分量是否应该连接在一起。给定分量n，我们将梯度方向的范围表示为$D(n)$，将幅度范围表示为$M(n)$。换句话说，$D(n)$和$M(n)$是标量值，分别表示梯度方向和幅度的最大值和最小值之间的差值。在$D()$的情况下，必须小心处理2π环绕。但是，由于有用边缘的跨度远小于π度，因此这很简单。给定$n$和$m$两个分量，如果满足以下两个条件，我们将它们连接在一起：<script type="math/tex; mode=display">D(n\cup m) \leq \min(D(n),D(m))+K_{D}/\left| n\cup m \right| \\
+M(n\cup m) \leq \min(M(n),M(m))+K_{M}/\left| n\cup m \right|</script>$D()$和$M()$的小值表示具有很小的组件内变化的组件。如果它们的结合大致与单独采集的簇一样均匀，则两个簇连接在一起。通过$K_D$和$K_M$参数允许适度增加组件内变化，但随着组件变大，这会迅速缩小。在早期迭代期间，K参数基本上允许每个组件“学习”其簇内变化。在我们的实验中，我们使用$K_D = 100$和$K_M = 1200$，尽管该算法在很宽的范围内都能很好地工作。</li>
+</ol>
+<p>出于性能原因，边缘权重被量化并存储为定点数。这允许使用线性时间计数排序对边进行排序。 <span class="exturl" data-url="aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2RtX3ZpbmNlbnQvYXJ0aWNsZS9kZXRhaWxzLzc2NTU3NjQ=">unionfind算法<i class="fa fa-external-link-alt"></i></span>可以有效地执行实际的合并操作，梯度方向和幅度的上限和下限存储在由每个组件的代表成员索引的简单数组中。</p>
+<p>这种基于梯度的聚类方法对图像中的噪声敏感：<br>即使适量的噪声也会导致局部梯度方向变化，从而抑制组件的生长。解决这个问题的方法是对图像进行低通滤波。与此过滤可能会模糊图像中的有用信息的其他问题域不同，标记的边缘本质上是大规模的特征（特别是与数据字段相比），因此这种过滤不会导致信息丢失。我们建议值$σ= 0.8$。</p>
+<p>聚类操作完成后，使用传统的最小二乘法将线段拟合到每个连接的组件，按梯度幅度对每个点进行加权。我们调整每个线段，使线的暗侧位于其左侧，而光侧位于其右侧。在下一个处理阶段，这允许我们围绕每个四边形强制执行绕线规则。</p>
+<ul>
+<li>分割算法是我们检测方案中最慢的阶段。</li>
+</ul>
+<p>作为一种选择，这种分割可以在图像分辨率的一半下执行，速度提高4倍。子采样操作可以与推荐的低通滤波器有效地组合。这种优化的结果是适度减小的检测范围，因为可能不再检测到非常小的四边形。</p>
+<h1 id="四元检测-Quad-detection"><a href="#四元检测-Quad-detection" class="headerlink" title="四元检测 Quad detection"></a>四元检测 Quad detection</h1><p><img src="\img\apriltags\pic4.png" alt="四元检测和采样">在图像中检测到四个四边形（包含两个标签）。第三个检测到的四边形对应于前景标签的三个边缘加上纸张的边缘。 在较大标签的一个payload field位周围检测到第四个四边形。 这两个无关的检测最终被丢弃，因为它们的payload field无效。 白点对应于标签边界周围的样本，用于拟合“白色”像素强度的线性模型; 模型同样适合黑色像素。 这两个模型用于阈值数据有效负载位，如黄点所示。</p>
+<p>此时，已经为图像计算了一组有向线段。下一个任务是找到形成4边形状的线段序列，即四边形。面临的挑战是尽可能地保持线段中的遮挡和噪声。我们的方法基于深度为4的递归深度优先搜索：<br>搜索树的每个级别为四边形添加边缘。在深度1处，我们考虑所有线段。在深度为2到4的情况下，我们认为所有的线段开始“足够接近”前一个线段结束的位置并且遵循逆时针缠绕顺序。通过调整“足够接近”阈值来处理遮挡和分割误差的稳健性：通过使阈值变大，可以处理边缘周围的显着间隙。<br>我们的“足够接近”的阈值是线的长度加上五个额外像素的两倍。这是一个较大的阈值，导致较低的假阴性率，但也导致较高的假阳性率。我们填充二维查找表以加速对在空间中的点附近开始的线段的查询。通过这种优化，以及不遵守绕组规则的候选四边形的早期拒绝，或者多次使用一个分段，四元检测算法代表总计算要求的一小部分。一旦找到四条线，就会创建一个候选四元检测。这个四边形的角是构成它的线的交叉点。因为使用来自许多像素的数据来拟合线，所以这些角估计精确到像素的一小部分。</p>
+<h1 id="单应性以及外估计-Homography-and-extrinsics-estimation"><a href="#单应性以及外估计-Homography-and-extrinsics-estimation" class="headerlink" title="单应性以及外估计 Homography and extrinsics estimation"></a>单应性以及外估计 Homography and extrinsics estimation</h1><p>我们计算3×3单应矩阵，它从标签的坐标系（其中$[\begin{matrix}0&amp;0&amp;1\end{matrix}]^T$位于标签的中心并且标签在x和y方向上延伸一个单位）在同构坐标中投影2D点到2D图像坐标系。使用直接<span class="exturl" data-url="aHR0cHM6Ly93ZW5rdS5iYWlkdS5jb20vdmlldy8yODYzNWU1ZTgwNGQyYjE2MGI0ZWMwNDguaHRtbA==">线性变换（DLT）算法计算单应性<i class="fa fa-external-link-alt"></i></span>。<br>由于单应性投影指向齐次坐标，因此仅按比例定义。计算标签的位置和方向需要额外的信息：相机的焦距和标签的物理尺寸。<br>3×3单应矩阵（由DLT计算）可以写成3×4相机投影矩阵P（我们假设已知）和4×3截断的外在矩阵E的乘积。外部矩阵通常是4× 4，但标签上的每个位置在标签的坐标系中都是z = 0。因此，我们可以将每个标记坐标重写为2D齐次点，其中z隐式为零，并删除外部矩阵的第三列，形成截断的外部矩阵。我们将P的旋转分量表示为$R_{ij}$，将平移分量表示为$T_k$。我们还将未知比例因子表示为s：</p>
+<script type="math/tex; mode=display">\left[ \begin{matrix}
+h_{00} & h_{01} & h_{02} \\
+h_{10} & h_{11} & h_{12} \\
+h_{20} & h_{21} & h_{22} \\
+ \end{matrix}\right] = sPE=s
+\left[ \begin{matrix}
+f_x & 0 & 0 & 0\\
+0 & f_y & 0 & 0\\
+0 & 0 & 1 & 0 \\
+ \end{matrix}\right] = 
+\left[ \begin{matrix}
+R_{00} & R_{01} & T_{x} \\
+R_{10} & R_{11} & T_{y} \\
+R_{20} & R_{21} & T_{z} \\
+0 & 0 & 1
+ \end{matrix}\right]</script><p>这里不能直接求解E，因为P是秩不足的。 我们可以扩展Eqn的右侧，并将每个$h_{ij}$的表达式写为一组联立方程：</p>
+<script type="math/tex; mode=display">h_{00}=sR_{00}f_x \\
+h_{01}=sR_{01}f_x  \\
+h_{02}=sR_xT_x \\
+...</script><p>除了未知的比例因子s之外，这些都可以很容易地解决$R_{ij}$和{T_k}的元素。但是，由于旋转矩阵的列必须都是单位幅度，我们可以约束s的幅度。我们有两列旋转矩阵，因此我们将s计算为几何平均值的几何平均值。s的符号可以通过要求标签出现在摄像机前面来恢复，即$T_z&lt;0$。旋转矩阵的第三列可以通过计算两个已知列的叉积来恢复，因为旋转矩阵必须是正交的。上面的DLT过程和归一化过程不保证旋转矩阵严格地是正交的。为了纠正这个问题，我们计算了R的<span class="exturl" data-url="aHR0cHM6Ly96aC53aWtpcGVkaWEub3JnL3dpa2kvJUU2JTlFJTgxJUU1JTg4JTg2JUU4JUE3JUEz">极分解<i class="fa fa-external-link-alt"></i></span>，它产生了一个合适的旋转矩阵，同时最小化了误差的Frobenius矩阵范数(F范数：矩阵各项元素的绝对值平方的总和)。</p>
+<h1 id="解码-playload-decoding"><a href="#解码-playload-decoding" class="headerlink" title="解码 playload decoding"></a>解码 playload decoding</h1><p>最后的任务是从payload field中读取位。我们通过计算每个位域的标签相对坐标，使用单应性将它们转换为图像坐标，然后对得到的像素进行阈值处理来完成此操作。为了对照明（不仅可以从标签到标签，也可以在标签内）变化，我们使用空间变化的阈值。<br>具体来说，我们建立了“黑色”像素强度的空间变化模型，以及“白色”模型强度的第二个模型。 我们使用标签的边框来包含白色和黑色像素的已知示例，以学习此模型。我们使用以下强度模型：</p>
+<script type="math/tex; mode=display">I(x,y)=Ax+Bxy+Cy+D</script><p>该模型具有四个参数，可以使用<span class="exturl" data-url="aHR0cHM6Ly96aC53aWtpcGVkaWEub3JnL3poLWhhbnMvJUU2JTlDJTgwJUU1JUIwJThGJUU0JUJBJThDJUU0JUI5JTk4JUU2JUIzJTk1">最小二乘回归轻松计算<i class="fa fa-external-link-alt"></i></span>。 我们建造了两个这样的模型，一个用于黑色，另一个用于白色。 解码数据位时使用的阈值就是黑白模型的预测强度值的平均值。</p>
+<h1 id="关于编码-playload-encoding"><a href="#关于编码-playload-encoding" class="headerlink" title="关于编码 playload encoding"></a>关于编码 playload encoding</h1><p>Apriltags描述了一个新基于 lexicodes 的编码系统, 提供了显著优于以前的方法。程序可以生成具有多种属性的 lexicodes, 允许用户使用符合其需要的代码。</p>
+<p>我们建议使用修改的词典。经典词典由两个量参数化：每个码字中的比特数n和任何两个码字之间的最小汉明距离d。 Lexicodes可以纠正$⌊（d - 1）/2⌋$位错误并检测$d/2$位错误。为方便起见，我们将表示36位编码，最小汉明距离为10（例如）为36h10代码。</p>
+<p>Lexicodes从用于生成有效码字的启发式中得出它们的名称：候选码字以字典顺序（从最小到最大）被考虑，当它们距离先前添加到码本的每个码字至少距离d时，将新码字添加到码本。<br>在视觉基准的情况下，编码方案必须对旋转是鲁棒的。换句话说，当标签旋转90度，180度或270度时，至关重要的是它仍然与其他所有代码的汉明距离为d。标准词典生成算法不保证此属性。但是，标准生成算法可以通过简单的扩展来支持这一点：在测试新的候选码字时，我们可以简单地确保所有四个旋转都具有所需的最小汉明距离。事实上，lexicode算法可以很容易地扩展到包含额外的约束，这是我们的方法的一个优点。</p>
+<p>尽管满足汉明距离约束，一些码字是糟糕的选择。例如，由全零组成的代码字将导致看起来像单个黑色方块的标签。这种简单的几何图案通常出现在自然场景中，导致误报。例如，ARTag编码系统明确禁止两个代码，因为它们很可能偶然发生。我们不是手动识别有问题的标签，而是通过拒绝导致简单几何图案的候选码字来进一步修改词典生成算法。我们的度量标准基于生成标签2D图案所需的矩形数量。例如，实心图案只需要一个矩形，而黑白黑色条纹则需要两个矩形（一个大的黑色矩形，第二个是较小的白色矩形）。我们的假设，在本文后面的实验结果的支持下，具有高复杂性的标签模式（需要重建许多矩形）在自然界中发生的频率较低，因此导致较低的假阳性率。使用这个想法，我们再次修改词典生成算法以拒绝过于简单的候选码字。我们使用简单的贪婪方法来近似生成标签模式所需的矩形数量，该方法重复考虑所有可能的矩形并添加最能减少误差的矩形。由于标签通常非常小，因此该计算不是瓶颈。最小复杂度小于阈值的标签（在我们的实验中通常为10）被拒绝。结果部分演示了此启发式的适当性和有效性。</p>
+<p>最后，我们通过对词典生成算法进行一次修改，凭经验观察到较低的假阳性分数。我们考虑（b，b + 1p，b + 2p，b + 3p，…）而不是按顺序（0,1,2,3 ……）测试码字，其中b是任意数，p是一个大的素数，每一步都保留最低的n位。直观地说，这种方法生成的标签在每个比特位置都有更大的熵;另一方面，词典顺序有利于小值代码。这种方法的缺点是可以创建更少的可区分代码：词典排序倾向于非常密集地打包码字，而更随机的顺序导致码字的打包效率较低。总而言之，我们使用一个词典系统，可以生成任意标签大小（例如，3x3,4x4,5x5,6x6）和最小汉明距离的代码。我们的方法明确保证每个标签的所有四个旋转的最小汉明距离，并消除几何复杂度低的标签。计算标签可能是一项昂贵的操作，但是可以离线完成。小标签（5x5）可以在几秒或几分钟内轻松计算，但较大的标签（6x6）可能需要几天的CPU时间。许多有用的代码系列已经使用我们的软件进行计算和分发;大多数用户不需要生成自己的代码系列。</p>
+<h1 id="纠错分析"><a href="#纠错分析" class="headerlink" title="纠错分析"></a>纠错分析</h1><p>可以容易地估计理论假阳性率。假设识别出错误的四边形并且位模式是随机的。误报的概率是被接受为有效标签的码字的分数与可能的码字的总数，2 n。更积极的纠错会增加此速率，因为它会增加接受的码字数量。下面的36h10和36h15代码说明了这种不可避免的错误率增加：</p>
+<p><img src="\img\apriltags\pic5.png" alt="错误率">当然，36h15编码的更好性能是有代价的：只有27个可区分的代码字，而不是36h10的2221个可区分的代码字。<br>我们的编码方案明显强于以前的方案，包括ARTag使用的方案和ARToolkitPlus使用的两种系统：我们的编码系统在编码大量可区分的ID时实现了所有码字对之间更大的最小汉明距离。最小汉明距离的改进如上图和下表所示：</p>
+<p><img src="\img\apriltags\pic6.png" alt="错误率">为了解码可能损坏的代码字，计算代码字和代码簿中的每个有效代码字之间的汉明距离。如果最佳匹配的汉明距离小于用户指定的阈值，则报告检测。通过指定该阈值，用户能够控制误报和误报之间的权衡。</p>
+<p>这个方法的缺点是该解码过程花费了码本大小的线性时间，因为必须考虑每个有效的码字。<br>然而，该系数非常小，以至于与其他图像处理步骤相比，计算复杂度可以忽略不计。对于给定的编码方案，较大的标签（即，具有36位而不是25位的标签）具有比较小标签明显更好的编码性能，尽管这是有代价的。在所有其他条件相同的情况下，给定摄像机读取36位标签的范围将短于同一摄像机读取16或25位标签的范围。然而，由于边界的4像素开销，较小标签的范围的益处非常适中；通过使用16位标签而不是36位标签，可以预期检测范围仅提高25％。因此，仅在范围最敏感的应用中，较小的标签是有利的。</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E6%9C%BA%E5%99%A8%E4%BA%BA/" rel="tag"><i class="fa fa-tag"></i> 机器人</a>
+              <a href="/tags/%E5%9B%BE%E5%83%8F%E5%A4%84%E7%90%86/" rel="tag"><i class="fa fa-tag"></i> 图像处理</a>
+              <a href="/tags/Opencv/" rel="tag"><i class="fa fa-tag"></i> Opencv</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2018/08.moments/" rel="prev" title="图像的矩">
+                  <i class="fa fa-chevron-left"></i> 图像的矩
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2018/10.Graph-Based-Image-Segmentation/" rel="next" title="基于图的图像分割">
+                  基于图的图像分割 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      const activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      const commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 2016 – 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fab fa-github"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">朋克李PunkLi</span>
+</div>
+<div class="wordcount">
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-line"></i>
+    </span>
+    <span title="站点总字数">163k</span>
+  </span>
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="站点阅读时长">2:28</span>
+  </span>
+</div>
+
+    </div>
+  </footer>
+
+  
+  <script src="//cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js"></script>
+<script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+  
+
+
+
+
+
+  <script>
+  if (typeof MathJax === 'undefined') {
+    window.MathJax = {
+      tex: {
+        inlineMath: {'[+]': [['$', '$']]},
+        tags: 'ams'
+      },
+      options: {
+        renderActions: {
+          findScript: [10, doc => {
+            document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+              const display = !!node.type.match(/; *mode=display/);
+              const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+              const text = document.createTextNode('');
+              node.parentNode.replaceChild(text, node);
+              math.start = {node: text, delim: '', n: 0};
+              math.end = {node: text, delim: '', n: 0};
+              doc.math.push(math);
+            });
+          }, '', false],
+          insertedScript: [200, () => {
+            document.querySelectorAll('mjx-container').forEach(node => {
+              const target = node.parentNode;
+              if (target.nodeName.toLowerCase() === 'li') {
+                target.parentNode.classList.add('has-jax');
+              }
+            });
+          }, '', false]
+        }
+      }
+    };
+    const script = document.createElement('script');
+    script.src = '//cdn.jsdelivr.net/npm/mathjax@3.1.2/es5/tex-mml-chtml.js';
+    script.defer = true;
+    document.head.appendChild(script);
+  } else {
+    MathJax.startup.document.state(0);
+    MathJax.typesetClear();
+    MathJax.texReset();
+    MathJax.typeset();
+  }
+</script>
+
+
+
+</body>
+</html>
