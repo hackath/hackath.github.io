@@ -143,6 +143,55 @@ a=[e_{1},e_{2},e_{3}]\left[\begin{matrix}a_{1} \\ a_{2} \\ a_3\end{matrix}\right
       </tags>
   </entry>
   <entry>
+    <title>基于图的图像分割</title>
+    <url>/2018/08/07/10.Graph-Based-Image-Segmentation/</url>
+    <content><![CDATA[<p>Graph-Based Segmentation 是经典的图像分割算法。论文：<span class="exturl" data-url="aHR0cDovL2NzLmJyb3duLmVkdS9wZW9wbGUvcGZlbHplbnMvcGFwZXJzL3NlZy1pamN2LnBkZg==">Efficient Graph-Based Image Segmentation，IJCV 2004，MIT<i class="fa fa-external-link-alt"></i></span>，作者 Pedro F. Felzenszwalb.</p>
+<a id="more"></a> 
+<h1 id="图"><a href="#图" class="headerlink" title="图"></a>图</h1><p>图是由顶点集$V$（vertices）和边集$E$（edges）组成，表示为$G=(V,E)$，顶点$v \in V$，在本文中即为单个的像素点，连接一对顶点的边$(v_i,v_j)\in E$具有权重$w(v_i,v_j)$，本文中的意义为顶点之间的不相似度，所用的是无向图。</p>
+<p><img src="/img/Graph-Based/g.png" alt="">树：特殊的图，图中任意两个顶点，都有路径相连接，但是没有回路。如上图中加粗的边所连接而成的图。如果看成一团乱连的珠子，只保留树中的珠子和连线，那么随便选个珠子，都能把这棵树中所有的珠子都提起来。如果，i和h这条边也保留下来，那么顶点h,i,c,f,g就构成了一个回路。</p>
+<p>最小生成树（MST, minimum spanning tree）：特殊的树，给定需要连接的顶点，选择边权之和最小的树。上图即是一棵MST<br><img src="/img/Graph-Based/t.png" alt="">本文中，初始化时每一个像素点都是一个顶点，然后逐渐合并得到一个区域，确切地说是连接这个区域中的像素点的一个MST。如图，棕色圆圈为顶点，线段为边，合并棕色顶点所生成的MST，对应的就是一个分割区域。分割后的结果其实就是森林。</p>
+<h1 id="相似性"><a href="#相似性" class="headerlink" title="相似性"></a>相似性</h1><p>既然是聚类算法，那应该依据何种规则判定何时该合二为一，何时该继续划清界限呢？<br>对于孤立的两个像素点，所不同的是颜色，自然就用颜色的距离来衡量两点的相似性，本文中是使用RGB的距离，即</p>
+<script type="math/tex; mode=display">\sqrt{(r_1-r_2)^2+(g_1-g_2)^2+(b_1-b_2)^2}</script><p>当然也可以用perceptually uniform的Luv或者Lab色彩空间，对于灰度图像就只能使用亮度值了，此外，还可以先使用纹理特征滤波，再计算距离，比如，先做Census Transform再计算Hamming distance距离。</p>
+<h1 id="自适应阈值"><a href="#自适应阈值" class="headerlink" title="自适应阈值"></a>自适应阈值</h1><p>上面提到应该用亮度值之差来衡量两个像素点之间的差异性。对于两个区域（子图）或者一个区域和一个像素点的相似性，最简单的方法即只考虑连接二者的边的不相似度。</p>
+<p><img src="/img/Graph-Based/t2.png" alt="">已经形成了棕色和绿色两个区域，现在通过紫色边来判断这两个区域是否合并。那么我们就可以设定一个阈值，当两个像素之间的差异（即不相似度）小于该值时，合二为一。迭代合并，最终就会合并成一个个区域，效果类似于区域生长.</p>
+<p><img src="/img/Graph-Based/pic1.png" alt="">显然，对上面这张图如果设置全局阈值并不合适，那么自然就得用自适应阈值。对于p区该阈值要特别小，s区稍大，h区巨大。</p>
+<blockquote>
+<p>In this section we define a predicate, D, for evaluating whether or not there is evidence for a boundary between two components in a segmentation (two regions of an image).This predicate is based on measuring the dissimilarity between elements along the boundary of the two components relative to a measure of the dissimilarity among neighboring elements within each of the two components. The resulting predicate compares the inter-component differences to the within component differences and is thereby adaptive with respect to the local characteristics of the data.<br>We define the internal difference of a component C ⊆ V to be the largest weight in the minimum spanning tree of the component, MST(C, E). That is,</p>
+<script type="math/tex; mode=display">Int(C)=\max\limits_{e\in MST(C,E)}w(e)</script><p>One intuition underlying this measure is that a given component C only remains connected when edges of weight at least Int(C) are considered.<br>We define the difference between two components C1, C2 ⊆ V to be the minimum weight edge connecting the two components. That is,</p>
+<script type="math/tex; mode=display">Diff(C_1,C_2)=\min\limits_{v_i\in C_1,v_j\in C_2,(v_i,v_j)\in E}w((v_i,v_j))</script><p>If there is no edge connecting C1 and C2 we let Dif(C1, C2) = ∞. This measure of difference could in principle be problematic, because it reflects only the smallest edge weight between two components. In practice we have found that the measure works quite well in spite of this apparent limitation. Moreover, changing the definition to use the median weight, or some other quantile, in order to make it more robust to outliers, makes the problem of finding a good segmentation NP-hard, as discussed in the Appendix. Thus a small change to the segmentation criterion vastly changes the difficulty of the problem.</p>
+<p>The region comparison predicate evaluates if there is evidence for a boundary between a pair or components by checking if the difference between the components, Dif(C1, C2), is large relative to the internal difference within at least one of the components, Int(C1) and Int(C2). A threshold function is used to control the degree to which the difference between components must be larger than minimum internal difference. We define the pairwise comparison predicate as, </p>
+<script type="math/tex; mode=display">D(C_1,C_2)=
+\begin{equation}
+\left\{
+\begin{array}{lr}
+true，diff(C_1,C_2)>MInt(C_1,C_2)
+\\
+flase，otherwise
+\end{array}
+\right.
+\end{equation}</script><p>where the minimum internal difference, MInt, is defined as,</p>
+<script type="math/tex; mode=display">MInt(C_1,C_2)=min(Int(C_1)+\tau(C_1),Int(C_2)+\tau(C_2))</script><p>The threshold function τ controls the degree to which the difference between two components must be greater than their internal differences in order for there to be evidence of a boundary between them (D to be true). For small components, Int(C) is not a good estimate of the local characteristics of the data. In the extreme case, when |C| = 1, Int(C) = 0. Therefore, we use a threshold function based on the size of the component, </p>
+<script type="math/tex; mode=display">\tau (C)=k/|C|</script><p>where |C| denotes the size of C, and k is some constant parameter. That is, for small components we require stronger evidence for a boundary. In practice k sets a scale of observation, in that a larger k causes a preference for larger components. Note, however, that k is not a minimum component size. Smaller components are allowed when there is a sufficiently large difference between neighboring components.</p>
+<p>Any non-negative function of a single component can be used for τ without changing the algorithmic results in Section 4. For instance, it is possible to have the segmentation method prefer components of certain shapes, by defining a τ which is large for components that do not fit some desired shape and small for ones that do. This would cause the segmentation algorithm to aggressively merge components that are not of the desired shape. Such a shape preference could be as weak as preferring components that are not long and thin (e.g., using a ratio of perimeter to area) or as strong as preferring components that match a particular shape model. Note that the result of this would not solely be components of the desired shape, however for any two neighboring components one of them would be of the desired shape. </p>
+</blockquote>
+<h1 id="算法步骤"><a href="#算法步骤" class="headerlink" title="算法步骤"></a>算法步骤</h1><p>Step 1: 计算每一个像素点与其8邻域或4邻域的不相似度。</p>
+<p><img src="/img/Graph-Based/pic3.png" alt="">Step 2: 将边按照不相似度non-decreasing排列（从小到大）排序得到$e_1,e_2,……,e_N$。<br>Step 3: 选择$e_1$<br>Step 4: 对当前选择的边$e_n$进行合并判断。设其所连接的顶点为$(v_i,v_j)$。如果满足合并条件：</p>
+<ol>
+<li>$v_i,v_j$不属于同一个区域$Id(V_i)\ne Id(v_j)$</li>
+<li>不相似度不大于二者内部的不相似度。$w_{i,j}\leq Mint(C_i,C_j)$则执行Step 5，否则执行Step 6。</li>
+</ol>
+<p>Step 5: 更新阈值以及类标号。<br>更新类标号：将$Id(v_i),Id(v_j)$的类标号统一为$Id(v_i)$的标号。<br>更新该类的不相似度阈值为：$w_{i,j}+\frac{k}{|c_i|+|c_j|}$。<br>注意：由于不相似度小的边先合并，所以，$w_{i,j}$即为当前合并后的区域的最大的边，即$Int(C_i\cup C_j)=w_{i,j}$。<br>Step 6: 如果$n\leq N$，则按照排好的顺序，选择下一条边转到Step 4，否则结束。</p>
+<h1 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h1><p><span class="exturl" data-url="aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3R0cmFuc3Bvc2l0aW9uL2FydGljbGUvZGV0YWlscy8zODAyNDU1Nw==">https://blog.csdn.net/ttransposition/article/details/38024557<i class="fa fa-external-link-alt"></i></span></p>
+]]></content>
+      <categories>
+        <category>计算机视觉</category>
+      </categories>
+      <tags>
+        <tag>图像处理</tag>
+        <tag>Opencv</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Kalman Filter</title>
     <url>/2018/08/21/11.Kalman/</url>
     <content><![CDATA[<p>前段时间在知乎上看到的<span class="exturl" data-url="aHR0cHM6Ly96aHVhbmxhbi56aGlodS5jb20vcC8zODc0NTk1MA==">《卡尔曼滤波器及其在云台控制中的应用》<i class="fa fa-external-link-alt"></i></span>这篇文章，中间提到了Estimate的三个境界：smoothing-&gt;filtering-&gt;prediction。为了解决我在机器人比赛中的预测问题，也为了迈入Estimate的大门，就从Kalman Filter开始入手吧。</p>
@@ -274,52 +323,16 @@ P_{k+1}
       </tags>
   </entry>
   <entry>
-    <title>基于图的图像分割</title>
-    <url>/2018/08/07/10.Graph-Based-Image-Segmentation/</url>
-    <content><![CDATA[<p>Graph-Based Segmentation 是经典的图像分割算法。论文：<span class="exturl" data-url="aHR0cDovL2NzLmJyb3duLmVkdS9wZW9wbGUvcGZlbHplbnMvcGFwZXJzL3NlZy1pamN2LnBkZg==">Efficient Graph-Based Image Segmentation，IJCV 2004，MIT<i class="fa fa-external-link-alt"></i></span>，作者 Pedro F. Felzenszwalb.</p>
-<a id="more"></a> 
-<h1 id="图"><a href="#图" class="headerlink" title="图"></a>图</h1><p>图是由顶点集$V$（vertices）和边集$E$（edges）组成，表示为$G=(V,E)$，顶点$v \in V$，在本文中即为单个的像素点，连接一对顶点的边$(v_i,v_j)\in E$具有权重$w(v_i,v_j)$，本文中的意义为顶点之间的不相似度，所用的是无向图。</p>
-<p><img src="/img/Graph-Based/g.png" alt="">树：特殊的图，图中任意两个顶点，都有路径相连接，但是没有回路。如上图中加粗的边所连接而成的图。如果看成一团乱连的珠子，只保留树中的珠子和连线，那么随便选个珠子，都能把这棵树中所有的珠子都提起来。如果，i和h这条边也保留下来，那么顶点h,i,c,f,g就构成了一个回路。</p>
-<p>最小生成树（MST, minimum spanning tree）：特殊的树，给定需要连接的顶点，选择边权之和最小的树。上图即是一棵MST<br><img src="/img/Graph-Based/t.png" alt="">本文中，初始化时每一个像素点都是一个顶点，然后逐渐合并得到一个区域，确切地说是连接这个区域中的像素点的一个MST。如图，棕色圆圈为顶点，线段为边，合并棕色顶点所生成的MST，对应的就是一个分割区域。分割后的结果其实就是森林。</p>
-<h1 id="相似性"><a href="#相似性" class="headerlink" title="相似性"></a>相似性</h1><p>既然是聚类算法，那应该依据何种规则判定何时该合二为一，何时该继续划清界限呢？<br>对于孤立的两个像素点，所不同的是颜色，自然就用颜色的距离来衡量两点的相似性，本文中是使用RGB的距离，即</p>
-<script type="math/tex; mode=display">\sqrt{(r_1-r_2)^2+(g_1-g_2)^2+(b_1-b_2)^2}</script><p>当然也可以用perceptually uniform的Luv或者Lab色彩空间，对于灰度图像就只能使用亮度值了，此外，还可以先使用纹理特征滤波，再计算距离，比如，先做Census Transform再计算Hamming distance距离。</p>
-<h1 id="自适应阈值"><a href="#自适应阈值" class="headerlink" title="自适应阈值"></a>自适应阈值</h1><p>上面提到应该用亮度值之差来衡量两个像素点之间的差异性。对于两个区域（子图）或者一个区域和一个像素点的相似性，最简单的方法即只考虑连接二者的边的不相似度。</p>
-<p><img src="/img/Graph-Based/t2.png" alt="">已经形成了棕色和绿色两个区域，现在通过紫色边来判断这两个区域是否合并。那么我们就可以设定一个阈值，当两个像素之间的差异（即不相似度）小于该值时，合二为一。迭代合并，最终就会合并成一个个区域，效果类似于区域生长.</p>
-<p><img src="/img/Graph-Based/pic1.png" alt="">显然，对上面这张图如果设置全局阈值并不合适，那么自然就得用自适应阈值。对于p区该阈值要特别小，s区稍大，h区巨大。</p>
-<blockquote>
-<p>In this section we define a predicate, D, for evaluating whether or not there is evidence for a boundary between two components in a segmentation (two regions of an image).This predicate is based on measuring the dissimilarity between elements along the boundary of the two components relative to a measure of the dissimilarity among neighboring elements within each of the two components. The resulting predicate compares the inter-component differences to the within component differences and is thereby adaptive with respect to the local characteristics of the data.<br>We define the internal difference of a component C ⊆ V to be the largest weight in the minimum spanning tree of the component, MST(C, E). That is,</p>
-<script type="math/tex; mode=display">Int(C)=\max\limits_{e\in MST(C,E)}w(e)</script><p>One intuition underlying this measure is that a given component C only remains connected when edges of weight at least Int(C) are considered.<br>We define the difference between two components C1, C2 ⊆ V to be the minimum weight edge connecting the two components. That is,</p>
-<script type="math/tex; mode=display">Diff(C_1,C_2)=\min\limits_{v_i\in C_1,v_j\in C_2,(v_i,v_j)\in E}w((v_i,v_j))</script><p>If there is no edge connecting C1 and C2 we let Dif(C1, C2) = ∞. This measure of difference could in principle be problematic, because it reflects only the smallest edge weight between two components. In practice we have found that the measure works quite well in spite of this apparent limitation. Moreover, changing the definition to use the median weight, or some other quantile, in order to make it more robust to outliers, makes the problem of finding a good segmentation NP-hard, as discussed in the Appendix. Thus a small change to the segmentation criterion vastly changes the difficulty of the problem.</p>
-<p>The region comparison predicate evaluates if there is evidence for a boundary between a pair or components by checking if the difference between the components, Dif(C1, C2), is large relative to the internal difference within at least one of the components, Int(C1) and Int(C2). A threshold function is used to control the degree to which the difference between components must be larger than minimum internal difference. We define the pairwise comparison predicate as, </p>
-<script type="math/tex; mode=display">D(C_1,C_2)=
-\begin{equation}
-\left\{
-\begin{array}{lr}
-true，diff(C_1,C_2)>MInt(C_1,C_2)
-\\
-flase，otherwise
-\end{array}
-\right.
-\end{equation}</script><p>where the minimum internal difference, MInt, is defined as,</p>
-<script type="math/tex; mode=display">MInt(C_1,C_2)=min(Int(C_1)+\tau(C_1),Int(C_2)+\tau(C_2))</script><p>The threshold function τ controls the degree to which the difference between two components must be greater than their internal differences in order for there to be evidence of a boundary between them (D to be true). For small components, Int(C) is not a good estimate of the local characteristics of the data. In the extreme case, when |C| = 1, Int(C) = 0. Therefore, we use a threshold function based on the size of the component, </p>
-<script type="math/tex; mode=display">\tau (C)=k/|C|</script><p>where |C| denotes the size of C, and k is some constant parameter. That is, for small components we require stronger evidence for a boundary. In practice k sets a scale of observation, in that a larger k causes a preference for larger components. Note, however, that k is not a minimum component size. Smaller components are allowed when there is a sufficiently large difference between neighboring components.</p>
-<p>Any non-negative function of a single component can be used for τ without changing the algorithmic results in Section 4. For instance, it is possible to have the segmentation method prefer components of certain shapes, by defining a τ which is large for components that do not fit some desired shape and small for ones that do. This would cause the segmentation algorithm to aggressively merge components that are not of the desired shape. Such a shape preference could be as weak as preferring components that are not long and thin (e.g., using a ratio of perimeter to area) or as strong as preferring components that match a particular shape model. Note that the result of this would not solely be components of the desired shape, however for any two neighboring components one of them would be of the desired shape. </p>
-</blockquote>
-<h1 id="算法步骤"><a href="#算法步骤" class="headerlink" title="算法步骤"></a>算法步骤</h1><p>Step 1: 计算每一个像素点与其8邻域或4邻域的不相似度。</p>
-<p><img src="/img/Graph-Based/pic3.png" alt="">Step 2: 将边按照不相似度non-decreasing排列（从小到大）排序得到$e_1,e_2,……,e_N$。<br>Step 3: 选择$e_1$<br>Step 4: 对当前选择的边$e_n$进行合并判断。设其所连接的顶点为$(v_i,v_j)$。如果满足合并条件：</p>
-<ol>
-<li>$v_i,v_j$不属于同一个区域$Id(V_i)\ne Id(v_j)$</li>
-<li>不相似度不大于二者内部的不相似度。$w_{i,j}\leq Mint(C_i,C_j)$则执行Step 5，否则执行Step 6。</li>
-</ol>
-<p>Step 5: 更新阈值以及类标号。<br>更新类标号：将$Id(v_i),Id(v_j)$的类标号统一为$Id(v_i)$的标号。<br>更新该类的不相似度阈值为：$w_{i,j}+\frac{k}{|c_i|+|c_j|}$。<br>注意：由于不相似度小的边先合并，所以，$w_{i,j}$即为当前合并后的区域的最大的边，即$Int(C_i\cup C_j)=w_{i,j}$。<br>Step 6: 如果$n\leq N$，则按照排好的顺序，选择下一条边转到Step 4，否则结束。</p>
-<h1 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h1><p><span class="exturl" data-url="aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3R0cmFuc3Bvc2l0aW9uL2FydGljbGUvZGV0YWlscy8zODAyNDU1Nw==">https://blog.csdn.net/ttransposition/article/details/38024557<i class="fa fa-external-link-alt"></i></span></p>
+    <title>pods_cmake</title>
+    <url>/2018/08/26/13.pods-cmake/</url>
+    <content><![CDATA[<p>Apriltags的CMakeLists.txt中出现了一行pods_install_executables()，这并不是标准的CMake写法，项目中有cmake/pods.cmake文件，里面写道：Macros to simplify compliance with the pods build policies.</p>
+<p>关于pods的资料不多，目前我对它的理解是一组基于CMake语法的宏，本身与CMake并没有任何区别。cmake/pods.cmake的内容可以参考：<br><span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL1JvYm90TG9jb21vdGlvbi9jbWFrZS9ibG9iL21hc3Rlci9wb2RzLmNtYWtl">https://github.com/RobotLocomotion/cmake/blob/master/pods.cmake<i class="fa fa-external-link-alt"></i></span><br><span class="exturl" data-url="aHR0cHM6Ly9zb3VyY2Vmb3JnZS5uZXQvcHJvamVjdHMvcG9kcy8=">https://sourceforge.net/projects/pods/<i class="fa fa-external-link-alt"></i></span><br><span class="exturl" data-url="aHR0cHM6Ly9zb3VyY2Vmb3JnZS5uZXQvcC9wb2RzL3dpa2kvUG9kc1Rvb2wv">https://sourceforge.net/p/pods/wiki/PodsTool/<i class="fa fa-external-link-alt"></i></span></p>
 ]]></content>
       <categories>
-        <category>计算机视觉</category>
+        <category>编程</category>
       </categories>
       <tags>
-        <tag>图像处理</tag>
-        <tag>Opencv</tag>
+        <tag>工具链</tag>
       </tags>
   </entry>
   <entry>
@@ -368,19 +381,6 @@ flase，otherwise
       </categories>
       <tags>
         <tag>数学</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>pods_cmake</title>
-    <url>/2018/08/26/13.pods-cmake/</url>
-    <content><![CDATA[<p>Apriltags的CMakeLists.txt中出现了一行pods_install_executables()，这并不是标准的CMake写法，项目中有cmake/pods.cmake文件，里面写道：Macros to simplify compliance with the pods build policies.</p>
-<p>关于pods的资料不多，目前我对它的理解是一组基于CMake语法的宏，本身与CMake并没有任何区别。cmake/pods.cmake的内容可以参考：<br><span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL1JvYm90TG9jb21vdGlvbi9jbWFrZS9ibG9iL21hc3Rlci9wb2RzLmNtYWtl">https://github.com/RobotLocomotion/cmake/blob/master/pods.cmake<i class="fa fa-external-link-alt"></i></span><br><span class="exturl" data-url="aHR0cHM6Ly9zb3VyY2Vmb3JnZS5uZXQvcHJvamVjdHMvcG9kcy8=">https://sourceforge.net/projects/pods/<i class="fa fa-external-link-alt"></i></span><br><span class="exturl" data-url="aHR0cHM6Ly9zb3VyY2Vmb3JnZS5uZXQvcC9wb2RzL3dpa2kvUG9kc1Rvb2wv">https://sourceforge.net/p/pods/wiki/PodsTool/<i class="fa fa-external-link-alt"></i></span></p>
-]]></content>
-      <categories>
-        <category>编程</category>
-      </categories>
-      <tags>
-        <tag>工具链</tag>
       </tags>
   </entry>
   <entry>
@@ -640,6 +640,85 @@ R(\alpha_i|x)=E(\lambda(\alpha_i,\omega_j)|x)=\sum_{j=1}^{c}\lambda(\alpha_i,\om
       </tags>
   </entry>
   <entry>
+    <title>Normal distribution</title>
+    <url>/2018/10/03/17.Normal-distribution/</url>
+    <content><![CDATA[<p>本blog总结单变量正态分布以及多元正态分布和他们的性质。</p>
+<a id="more"></a>
+<h1 id="单变量正态分布"><a href="#单变量正态分布" class="headerlink" title="单变量正态分布"></a>单变量正态分布</h1><p>概率密度函数：</p>
+<script type="math/tex; mode=display">
+p(x)=\frac{1}{\sqrt{2\pi}\sigma}\exp\left\{ -\frac{1}{2}\left(\frac{x-\mu}{\sigma}\right)^2\right\}</script><p>期望$\mu$和方差$\sigma^2$：</p>
+<script type="math/tex; mode=display">
+\mu = E\{x\}=\int_{-\infty}^{\infty}xp(x)dx \\
+\sigma^2=\int_{-\infty}^{\infty}(x-\mu)^2p(x)dx</script><h1 id="多元正态分布"><a href="#多元正态分布" class="headerlink" title="多元正态分布"></a>多元正态分布</h1><p>概率密度函数：</p>
+<script type="math/tex; mode=display">
+p(x)=\frac{1}{(x\pi)^{d/2}|\Sigma|^{1/2}}\exp\left\{ -\frac{1}{2}(x-\mu)^T\Sigma^{-1}(x-\mu)\right\}</script><ul>
+<li>$x=[x_1,x_2,…,x_d]^T$ 是d维向量</li>
+<li>$\mu=[\mu_1,\mu_2,…,\mu_d]^T$是d维均值向量</li>
+<li>$\Sigma$是dxd维协方差矩阵</li>
+</ul>
+<p>$<br>\mu=E\{x\} \\<br>\Sigma=E\{(x-\mu)(x-\mu)^T\}<br>$<br>$\mu$，$\Sigma$分别是向量$x$和矩阵$(x-\mu)(x-\mu)^T$的期望，若$x_i$是$x$的第$i$个个分量，$\mu_i$是$\mu$的第$i$个分量，$\sigma_{ij}$是$\Sigma$的第$i,j$个元素，则</p>
+<script type="math/tex; mode=display">
+\mu_i=E\{x_i\}=\int_{E^d}x_ip(x)dx=-\int_{-\infty}^{\infty}x_ip(x)dx_i</script><p>其中，$p(x_i)$为边缘分布</p>
+<script type="math/tex; mode=display">
+p(x_i)=\int_{-\infty}^{\infty}...\int_{-\infty}^{\infty}p(x)dx_1dx_2...dx_{x-1}dx_{i+1}...dx_d</script><p>而</p>
+<script type="math/tex; mode=display">
+\begin{equation} 
+\begin{split} 
+\sigma_{ij}&=E[(x_i-\mu_i)(x_j-\mu_j)] \\
+&=\int_{-\infty}^{\infty}...\int_{-\infty}^{\infty}(x_i-\mu_i)(x_j-\mu_j)p(x_i,x_j)dx_idx_j
+\end{split} 
+\end{equation}</script><p>协方差矩阵总是正定or半正定的矩阵，可以表示为</p>
+<script type="math/tex; mode=display">\Sigma = 
+\left[\begin{matrix}
+\sigma_{11} & \sigma_{12} & \dots & \sigma_{1d} \\ 
+\sigma_{21} & \sigma_{22} & \dots & \sigma_{2d} \\ 
+\vdots & \vdots & \ddots & \vdots \\ 
+\sigma_{2d} & \sigma_{2d} & \dots & \sigma_{dd} \\ 
+\end{matrix}\right]</script><h2 id="多元分布性质"><a href="#多元分布性质" class="headerlink" title="多元分布性质"></a>多元分布性质</h2><p>多元正态分布被均值向量$\mu$和协方差矩阵$\Sigma$所完全决定。</p>
+<script type="math/tex; mode=display">
+p(x)\sim N(\mu,\Sigma)</script><p>等密度点的轨迹为以超椭球面，区域中心由均值向量$\mu$决定，区域的大小由协方差矩阵$\Sigma$决定。当指数项为常数时，构成等密度点：</p>
+<script type="math/tex; mode=display">
+(x-\mu)^T\Sigma^{-1}(x-\mu)=C</script><p>该式子的解是一个超椭球面，且它的主轴方向由$\Sigma$阵的特征向量决定，主轴长度与相应的协方差矩阵$\Sigma$的特征值成正比。</p>
+<script type="math/tex; mode=display">
+\gamma^2=(x-\mu)^T\Sigma^{-1}(x-\mu)</script><p>称为由$x$到$\mu$的Mahalanobis距离（马氏距离）的平方，对应于Mahalanobis距离为$\gamma$的超椭圆球体积是</p>
+<script type="math/tex; mode=display">
+V=V_d|\Sigma|^{\frac{1}{2}}\gamma^d</script><p>其中$V_d$是$d$维单位超球体的体积，</p>
+<script type="math/tex; mode=display">
+V_d= 
+\begin{equation} 
+\left\{ 
+\begin{array}{lc} 
+\frac{\pi^{d/2}}{\left( \frac{d}{2} \right)!} & d为偶数\\
+\frac{2^d\pi^{(d-1)/2}\left( \frac{d-1}{2} \right)!}{d!} & d为奇数
+\end{array} 
+\right. 
+\end{equation}</script><p>对于给定的维数，样本离散度直接随$|\Sigma|^{1/2}$而变。</p>
+<h2 id="不相关性-独立性"><a href="#不相关性-独立性" class="headerlink" title="不相关性=独立性"></a>不相关性=独立性</h2><ul>
+<li>不相关：$E\{x_ix_j\}=E\{x_i\}E\{x-j\}$</li>
+<li>独立的：$p\{x_ix_j\}=p\{x_i\}p\{x_j\}$</li>
+</ul>
+<p>独立性比不相关性条件更强，而在多元正态分布中，两者等价。在正态分布中，变量互不相关，则一定独立。</p>
+<p>推论：如果多元正态随机向量的协方差矩阵是对角阵，则x的分量是相互独立的正态分布随机变量。</p>
+<h2 id="边缘分布和条件分布的正态性"><a href="#边缘分布和条件分布的正态性" class="headerlink" title="边缘分布和条件分布的正态性"></a>边缘分布和条件分布的正态性</h2><p>以二元正态分布为例，</p>
+<ul>
+<li>向量$x=[x_1,x_2]^T$</li>
+<li>均值$\mu=[\mu_1,\mu_2]^T$</li>
+<li>协方差矩阵$\Sigma=\left[\begin{matrix}\sigma_{11}^2&amp;\sigma_{12}^2\\\sigma_{21}^2&amp;\sigma_{22}^2\end{matrix}\right]$</li>
+</ul>
+<script type="math/tex; mode=display">
+p(x_1)\sim N(\mu_1,\sigma_{11}^2) \\
+p(x_2)\sim N(\mu_1,\sigma_{22}^2)</script><h2 id="线性变换的正态性"><a href="#线性变换的正态性" class="headerlink" title="线性变换的正态性"></a>线性变换的正态性</h2><p>对于多元正态随机变量$x$，无论是线性变化$y=Ax$还是线性组合$y=\alpha^Tx$，正态分布依然是正态分布。</p>
+<script type="math/tex; mode=display">
+p(y)\sim N(A\mu,A\Sigma A^T)
+p(y)\sim N(\alpha^T\mu,\alpha^T\Sigma\alpha)</script>]]></content>
+      <categories>
+        <category>数学</category>
+      </categories>
+      <tags>
+        <tag>数学</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Fisher</title>
     <url>/2018/10/19/18.Fisher/</url>
     <content><![CDATA[<p>线性判别方法linear discriminant analysis, LDA, R.A.</p>
@@ -722,85 +801,6 @@ J(W)=Tr{(W^TS_WW)^{-1}(W^TS_WW)}</script><p>其中，权值由$\{S_W^{-1}S_B\}$�
       </categories>
       <tags>
         <tag>模式识别</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Normal distribution</title>
-    <url>/2018/10/03/17.Normal-distribution/</url>
-    <content><![CDATA[<p>本blog总结单变量正态分布以及多元正态分布和他们的性质。</p>
-<a id="more"></a>
-<h1 id="单变量正态分布"><a href="#单变量正态分布" class="headerlink" title="单变量正态分布"></a>单变量正态分布</h1><p>概率密度函数：</p>
-<script type="math/tex; mode=display">
-p(x)=\frac{1}{\sqrt{2\pi}\sigma}\exp\left\{ -\frac{1}{2}\left(\frac{x-\mu}{\sigma}\right)^2\right\}</script><p>期望$\mu$和方差$\sigma^2$：</p>
-<script type="math/tex; mode=display">
-\mu = E\{x\}=\int_{-\infty}^{\infty}xp(x)dx \\
-\sigma^2=\int_{-\infty}^{\infty}(x-\mu)^2p(x)dx</script><h1 id="多元正态分布"><a href="#多元正态分布" class="headerlink" title="多元正态分布"></a>多元正态分布</h1><p>概率密度函数：</p>
-<script type="math/tex; mode=display">
-p(x)=\frac{1}{(x\pi)^{d/2}|\Sigma|^{1/2}}\exp\left\{ -\frac{1}{2}(x-\mu)^T\Sigma^{-1}(x-\mu)\right\}</script><ul>
-<li>$x=[x_1,x_2,…,x_d]^T$ 是d维向量</li>
-<li>$\mu=[\mu_1,\mu_2,…,\mu_d]^T$是d维均值向量</li>
-<li>$\Sigma$是dxd维协方差矩阵</li>
-</ul>
-<p>$<br>\mu=E\{x\} \\<br>\Sigma=E\{(x-\mu)(x-\mu)^T\}<br>$<br>$\mu$，$\Sigma$分别是向量$x$和矩阵$(x-\mu)(x-\mu)^T$的期望，若$x_i$是$x$的第$i$个个分量，$\mu_i$是$\mu$的第$i$个分量，$\sigma_{ij}$是$\Sigma$的第$i,j$个元素，则</p>
-<script type="math/tex; mode=display">
-\mu_i=E\{x_i\}=\int_{E^d}x_ip(x)dx=-\int_{-\infty}^{\infty}x_ip(x)dx_i</script><p>其中，$p(x_i)$为边缘分布</p>
-<script type="math/tex; mode=display">
-p(x_i)=\int_{-\infty}^{\infty}...\int_{-\infty}^{\infty}p(x)dx_1dx_2...dx_{x-1}dx_{i+1}...dx_d</script><p>而</p>
-<script type="math/tex; mode=display">
-\begin{equation} 
-\begin{split} 
-\sigma_{ij}&=E[(x_i-\mu_i)(x_j-\mu_j)] \\
-&=\int_{-\infty}^{\infty}...\int_{-\infty}^{\infty}(x_i-\mu_i)(x_j-\mu_j)p(x_i,x_j)dx_idx_j
-\end{split} 
-\end{equation}</script><p>协方差矩阵总是正定or半正定的矩阵，可以表示为</p>
-<script type="math/tex; mode=display">\Sigma = 
-\left[\begin{matrix}
-\sigma_{11} & \sigma_{12} & \dots & \sigma_{1d} \\ 
-\sigma_{21} & \sigma_{22} & \dots & \sigma_{2d} \\ 
-\vdots & \vdots & \ddots & \vdots \\ 
-\sigma_{2d} & \sigma_{2d} & \dots & \sigma_{dd} \\ 
-\end{matrix}\right]</script><h2 id="多元分布性质"><a href="#多元分布性质" class="headerlink" title="多元分布性质"></a>多元分布性质</h2><p>多元正态分布被均值向量$\mu$和协方差矩阵$\Sigma$所完全决定。</p>
-<script type="math/tex; mode=display">
-p(x)\sim N(\mu,\Sigma)</script><p>等密度点的轨迹为以超椭球面，区域中心由均值向量$\mu$决定，区域的大小由协方差矩阵$\Sigma$决定。当指数项为常数时，构成等密度点：</p>
-<script type="math/tex; mode=display">
-(x-\mu)^T\Sigma^{-1}(x-\mu)=C</script><p>该式子的解是一个超椭球面，且它的主轴方向由$\Sigma$阵的特征向量决定，主轴长度与相应的协方差矩阵$\Sigma$的特征值成正比。</p>
-<script type="math/tex; mode=display">
-\gamma^2=(x-\mu)^T\Sigma^{-1}(x-\mu)</script><p>称为由$x$到$\mu$的Mahalanobis距离（马氏距离）的平方，对应于Mahalanobis距离为$\gamma$的超椭圆球体积是</p>
-<script type="math/tex; mode=display">
-V=V_d|\Sigma|^{\frac{1}{2}}\gamma^d</script><p>其中$V_d$是$d$维单位超球体的体积，</p>
-<script type="math/tex; mode=display">
-V_d= 
-\begin{equation} 
-\left\{ 
-\begin{array}{lc} 
-\frac{\pi^{d/2}}{\left( \frac{d}{2} \right)!} & d为偶数\\
-\frac{2^d\pi^{(d-1)/2}\left( \frac{d-1}{2} \right)!}{d!} & d为奇数
-\end{array} 
-\right. 
-\end{equation}</script><p>对于给定的维数，样本离散度直接随$|\Sigma|^{1/2}$而变。</p>
-<h2 id="不相关性-独立性"><a href="#不相关性-独立性" class="headerlink" title="不相关性=独立性"></a>不相关性=独立性</h2><ul>
-<li>不相关：$E\{x_ix_j\}=E\{x_i\}E\{x-j\}$</li>
-<li>独立的：$p\{x_ix_j\}=p\{x_i\}p\{x_j\}$</li>
-</ul>
-<p>独立性比不相关性条件更强，而在多元正态分布中，两者等价。在正态分布中，变量互不相关，则一定独立。</p>
-<p>推论：如果多元正态随机向量的协方差矩阵是对角阵，则x的分量是相互独立的正态分布随机变量。</p>
-<h2 id="边缘分布和条件分布的正态性"><a href="#边缘分布和条件分布的正态性" class="headerlink" title="边缘分布和条件分布的正态性"></a>边缘分布和条件分布的正态性</h2><p>以二元正态分布为例，</p>
-<ul>
-<li>向量$x=[x_1,x_2]^T$</li>
-<li>均值$\mu=[\mu_1,\mu_2]^T$</li>
-<li>协方差矩阵$\Sigma=\left[\begin{matrix}\sigma_{11}^2&amp;\sigma_{12}^2\\\sigma_{21}^2&amp;\sigma_{22}^2\end{matrix}\right]$</li>
-</ul>
-<script type="math/tex; mode=display">
-p(x_1)\sim N(\mu_1,\sigma_{11}^2) \\
-p(x_2)\sim N(\mu_1,\sigma_{22}^2)</script><h2 id="线性变换的正态性"><a href="#线性变换的正态性" class="headerlink" title="线性变换的正态性"></a>线性变换的正态性</h2><p>对于多元正态随机变量$x$，无论是线性变化$y=Ax$还是线性组合$y=\alpha^Tx$，正态分布依然是正态分布。</p>
-<script type="math/tex; mode=display">
-p(y)\sim N(A\mu,A\Sigma A^T)
-p(y)\sim N(\alpha^T\mu,\alpha^T\Sigma\alpha)</script>]]></content>
-      <categories>
-        <category>数学</category>
-      </categories>
-      <tags>
-        <tag>数学</tag>
       </tags>
   </entry>
   <entry>
@@ -1059,6 +1059,59 @@ p(\lambda):=det(A-\lambda I)=0.</script><h1 id="参考"><a href="#参考" class=
       </tags>
   </entry>
   <entry>
+    <title>MLE和MAP</title>
+    <url>/2019/02/03/28.MLE%E5%92%8CMAP/</url>
+    <content><![CDATA[<p>频率学派 - Frequentist - Maximum Likelihood Estimation (MLE，最大似然估计)<br>贝叶斯学派 - Bayesian - Maximum A Posteriori (MAP，最大后验估计)</p>
+<p>频率学派和贝叶斯学派对世界的认知有本质不同：<br>频率学派认为世界是确定的，有一个本体，这个本体的真值是不变的，我们的目标就是要找到这个真值或真值所在的范围；<br>而贝叶斯学派认为世界是不确定的，人们对世界先有一个预判，而后通过观测数据对这个预判做调整，我们的目标是要找到最优的描述这个世界的概率分布。</p>
+<a id="more"></a>
+<h1 id="概率与统计的区别"><a href="#概率与统计的区别" class="headerlink" title="概率与统计的区别"></a>概率与统计的区别</h1><p>概率（probabilty）和统计（statistics）研究的问题刚好相反。</p>
+<p>概率：已知一个模型和参数，怎么去预测这个模型产生的结果的特性（例如均值，方差，协方差等等）。<br>统计：已知有一堆数据，要利用这堆数据去预测模型（什么分布）和参数（分布模型的参数）。</p>
+<p>最大似然估计MLE，最大后验估计MAP，贝叶斯估计来说Bayes，都属于统计的范畴。</p>
+<h1 id="参数估计的方法"><a href="#参数估计的方法" class="headerlink" title="参数估计的方法"></a>参数估计的方法</h1><p>点估计就是用样本统计量的某一具体数值直接推断未知的总体参数。总体参数进行点估计常用的方法有两种：矩估计与最大似然估计，其中最大似然估计就是我们实际中使用非常广泛的一种方法。 </p>
+<p>按这两种方法对总体参数进行点估计，能够得到相对准确的结果。如用样本均值X估计总体均值，或者用样本标准差S估计总体标准差σ。 </p>
+<p>但是，点估计有一个不足之处，即这种估计方法不能提供估计参数的估计误差大小。对于一个总体来说，它的总体参数是一个常数值，而它的样本统计量却是随机变量。当用随机变量去估计常数值时，误差是不可避免的，只用一个样本数值去估计总体参数是要冒很大风险的。因为这种误差风险的存在，并且风险的大小还未知，所以，点估计主要为许多定性研究提供一定的参考数据，或在对总体参数要求不精确时使用，而在需要用精确总体参数的数据进行决策时则很少使用。</p>
+<p>区间估计就是在推断总体参数时，还要根据统计量的抽样分布特征，估计出总体参数的一个区间，而不是一个数值，并同时给出总体参数落在这一区间的可能性大小，概率的保证。</p>
+<h1 id="什么是似然"><a href="#什么是似然" class="headerlink" title="什么是似然"></a>什么是似然</h1><p>The likelihood of something happening is how likely it is to happen.</p>
+<script type="math/tex; mode=display">P(x|\theta)</script><p>输入有两个：$x$表示某一个具体的数据；$\theta$表示模型的参数。</p>
+<ul>
+<li>如果$\theta$是已知确定的，$x$是变量，这个函数叫做概率函数(probability function)，它描述对于不同的样本点$x$，其出现概率是多少。</li>
+<li>如果$x$是已知确定的，$\theta$是变量，这个函数叫做似然函数(likelihood function), 它描述对于不同的模型参数，出现$x$这个样本点的概率是多少。</li>
+</ul>
+<h1 id="最大似然估计（MLE）"><a href="#最大似然估计（MLE）" class="headerlink" title="最大似然估计（MLE）"></a>最大似然估计（MLE）</h1><p>设有一个造币厂生产某种硬币，现在我们拿到了一枚这种硬币，想试试这硬币是不是均匀的。<br>于是我们拿这枚硬币抛了10次，得到的数据是：反正正正正反正正正反。我们想求的正面概率θθ是模型参数，而抛硬币模型我们可以假设是二项分布。<br>这是个只关于$θ$的函数。而最大似然估计，顾名思义，就是要最大化这个函数。</p>
+<script type="math/tex; mode=display">\displaystyle {\hat {\theta }}_{\mathrm {ML} }(x)=\arg \max _{\theta }f(x|\theta )\!</script><h1 id="最大后验概率估计（MAP）"><a href="#最大后验概率估计（MAP）" class="headerlink" title="最大后验概率估计（MAP）"></a>最大后验概率估计（MAP）</h1><p>最大似然估计是求参数$θ$, 使似然函数$P(x_0|θ)$最大。最大后验概率估计则是想求$θ$使$P(x_0|θ)P(θ)$最大。求得的$θ$不单单让似然函数大，$θ$自己出现的先验概率也得大。参数$θ$有一个先验概率。</p>
+<p>这个时候就用到了我们的最大后验概率MAP，基础是贝叶斯公式： </p>
+<script type="math/tex; mode=display">P(\theta|x_0) = \frac{P(x_0|\theta)P(\theta)}{P(x_0)}</script><p>其中，$p(x|θ)$就是之前讲的似然函数，$p(θ)$是先验概率，是指在没有任何实验数据的时候对参数$θ$的经验判断，对于一个硬币，大概率认为他是正常的，正面的概率为0.5的可能性最大。</p>
+<p>MAP优化的就是一个后验概率，即给定了观测值以后使后验概率最大： </p>
+<script type="math/tex; mode=display">
+\begin{align*}
+{\hat {\theta }}_{\mathrm {MAP} }  & = \arg \max _{\theta } p(\theta|x) \\
+ & = \arg \max _{\theta } \frac{p(x|\theta)\times p(\theta)}{P(x)} \\
+ & =  \arg \max _{\theta } p(x|\theta)\times p(\theta)
+\end{align*}</script><p>从上面公式可以看出，$p(x|θ)$是似然函数，而$p(θ)$就是先验概率。对其取对数： </p>
+<script type="math/tex; mode=display">
+\begin{align*}
+\arg \max _{\theta } p(x|\theta) \cdot p(\theta) &= \arg \max _{\theta } log \prod_{i=0}^n p(x_i | \theta) p(\theta) \\
+& = \arg \max _{\theta } \sum_i log (p(x_i | \theta) p(\theta)) \\ 
+& = \arg \max _{\theta } \sum_ilog (p(x_i | \theta) + log(p(\theta))
+\end{align*}</script><h1 id="贝叶斯估计"><a href="#贝叶斯估计" class="headerlink" title="贝叶斯估计"></a>贝叶斯估计</h1><p>贝叶斯估计是在MAP上做进一步拓展，此时不直接估计参数的值，而是允许参数服从一定概率分布。回忆下贝叶斯公式： </p>
+<script type="math/tex; mode=display">p(\theta|x) = \frac{p(x|\theta)\times p(\theta)}{P(x)}</script><p>现在我们不要求后验概率最大，这个时候就需要求$p(X)$，即观察到的$X$的概率。一般来说，用全概率公式可以求$p(X)$</p>
+<script type="math/tex; mode=display">p(X) = \int p(X | \theta)p(\theta)d\theta</script><p>那么如何用贝叶斯估计来预测呢？如果我们想求一个值 $x’$ 的概率，可以用下面的方法 </p>
+<script type="math/tex; mode=display">
+p(\hat{x}|X)=\int_{\theta\in\Theta}p(\hat{x}|\theta)p(\theta|X)d\theta=\int_{\theta\in\Theta}\frac{p(\hat{x}|\theta)p(\theta)}{p(X)}d\theta</script><h1 id="MLE和MAP的区别"><a href="#MLE和MAP的区别" class="headerlink" title="MLE和MAP的区别"></a>MLE和MAP的区别</h1><p>当先验分布均匀之时，MAP与MLE相等。直观讲，它表征了最有可能值的任何先验知识的匮乏。在这一情况中，所有权重分配到似然函数，因此当我们把先验与似然相乘，由此得到的后验极其类似于似然。因此，最大似然方法可被看作一种特殊的MAP。</p>
+<p>如果先验认为这个硬币是概率是均匀分布的，被称为无信息先验( non-informative prior )，通俗的说就是“让数据自己说话”，此时贝叶斯方法等同于频率方法。<br>随着数据的增加，先验的作用越来越弱，数据的作用越来越强，参数的分布会向着最大似然估计靠拢。而且可以证明，最大后验估计的结果是先验和最大似然估计的凸组合。</p>
+<p>重要结论：随着我们观测到越来越多的数据，我们从数据中获取的信息的置信度是越高的，MAP估计逐步逼近MLE，先验信息占的比重将会越来越少。</p>
+<h1 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h1><h3 id="这两篇博客把MLE和MAP的原理讲得很清楚："><a href="#这两篇博客把MLE和MAP的原理讲得很清楚：" class="headerlink" title="这两篇博客把MLE和MAP的原理讲得很清楚："></a>这两篇博客把MLE和MAP的原理讲得很清楚：</h3><p><span class="exturl" data-url="aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3UwMTE1MDg2NDAvYXJ0aWNsZS9kZXRhaWxzLzcyODE1OTgx">详解最大似然估计（MLE）、最大后验概率估计（MAP），以及贝叶斯公式的理解<i class="fa fa-external-link-alt"></i></span><br><span class="exturl" data-url="aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2JpdGNhcm1hbmxlZS9hcnRpY2xlL2RldGFpbHMvODE0MTcxNTE=">最大似然估计，最大后验估计，贝叶斯估计联系与区别<i class="fa fa-external-link-alt"></i></span></p>
+<h3 id="这篇文章还讲了贝叶斯："><a href="#这篇文章还讲了贝叶斯：" class="headerlink" title="这篇文章还讲了贝叶斯："></a>这篇文章还讲了贝叶斯：</h3><p>机器学习中的MLE、MAP、贝叶斯估计：<span class="exturl" data-url="aHR0cHM6Ly96aHVhbmxhbi56aGlodS5jb20vcC8zNzIxNTI3Ng==">https://zhuanlan.zhihu.com/p/37215276<i class="fa fa-external-link-alt"></i></span></p>
+<h3 id="这篇文章把频率学派和贝叶斯学派讲的很清楚："><a href="#这篇文章把频率学派和贝叶斯学派讲的很清楚：" class="headerlink" title="这篇文章把频率学派和贝叶斯学派讲的很清楚："></a>这篇文章把频率学派和贝叶斯学派讲的很清楚：</h3><p>聊一聊机器学习的MLE和MAP：最大似然估计和最大后验估计：<span class="exturl" data-url="aHR0cHM6Ly96aHVhbmxhbi56aGlodS5jb20vcC8zMjQ4MDgxMA==">https://zhuanlan.zhihu.com/p/32480810<i class="fa fa-external-link-alt"></i></span></p>
+]]></content>
+      <categories>
+        <category>数学</category>
+      </categories>
+      <tags>
+        <tag>统计学</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Particle Filter</title>
     <url>/2019/02/03/29.%E7%B2%92%E5%AD%90%E6%BB%A4%E6%B3%A2/</url>
     <content><![CDATA[<p>这篇文章数学公式推得有点儿长。。。。提前预警= =</p>
@@ -1175,59 +1228,6 @@ w_k^{(i)}
       </categories>
       <tags>
         <tag>SLAM</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>MLE和MAP</title>
-    <url>/2019/02/03/28.MLE%E5%92%8CMAP/</url>
-    <content><![CDATA[<p>频率学派 - Frequentist - Maximum Likelihood Estimation (MLE，最大似然估计)<br>贝叶斯学派 - Bayesian - Maximum A Posteriori (MAP，最大后验估计)</p>
-<p>频率学派和贝叶斯学派对世界的认知有本质不同：<br>频率学派认为世界是确定的，有一个本体，这个本体的真值是不变的，我们的目标就是要找到这个真值或真值所在的范围；<br>而贝叶斯学派认为世界是不确定的，人们对世界先有一个预判，而后通过观测数据对这个预判做调整，我们的目标是要找到最优的描述这个世界的概率分布。</p>
-<a id="more"></a>
-<h1 id="概率与统计的区别"><a href="#概率与统计的区别" class="headerlink" title="概率与统计的区别"></a>概率与统计的区别</h1><p>概率（probabilty）和统计（statistics）研究的问题刚好相反。</p>
-<p>概率：已知一个模型和参数，怎么去预测这个模型产生的结果的特性（例如均值，方差，协方差等等）。<br>统计：已知有一堆数据，要利用这堆数据去预测模型（什么分布）和参数（分布模型的参数）。</p>
-<p>最大似然估计MLE，最大后验估计MAP，贝叶斯估计来说Bayes，都属于统计的范畴。</p>
-<h1 id="参数估计的方法"><a href="#参数估计的方法" class="headerlink" title="参数估计的方法"></a>参数估计的方法</h1><p>点估计就是用样本统计量的某一具体数值直接推断未知的总体参数。总体参数进行点估计常用的方法有两种：矩估计与最大似然估计，其中最大似然估计就是我们实际中使用非常广泛的一种方法。 </p>
-<p>按这两种方法对总体参数进行点估计，能够得到相对准确的结果。如用样本均值X估计总体均值，或者用样本标准差S估计总体标准差σ。 </p>
-<p>但是，点估计有一个不足之处，即这种估计方法不能提供估计参数的估计误差大小。对于一个总体来说，它的总体参数是一个常数值，而它的样本统计量却是随机变量。当用随机变量去估计常数值时，误差是不可避免的，只用一个样本数值去估计总体参数是要冒很大风险的。因为这种误差风险的存在，并且风险的大小还未知，所以，点估计主要为许多定性研究提供一定的参考数据，或在对总体参数要求不精确时使用，而在需要用精确总体参数的数据进行决策时则很少使用。</p>
-<p>区间估计就是在推断总体参数时，还要根据统计量的抽样分布特征，估计出总体参数的一个区间，而不是一个数值，并同时给出总体参数落在这一区间的可能性大小，概率的保证。</p>
-<h1 id="什么是似然"><a href="#什么是似然" class="headerlink" title="什么是似然"></a>什么是似然</h1><p>The likelihood of something happening is how likely it is to happen.</p>
-<script type="math/tex; mode=display">P(x|\theta)</script><p>输入有两个：$x$表示某一个具体的数据；$\theta$表示模型的参数。</p>
-<ul>
-<li>如果$\theta$是已知确定的，$x$是变量，这个函数叫做概率函数(probability function)，它描述对于不同的样本点$x$，其出现概率是多少。</li>
-<li>如果$x$是已知确定的，$\theta$是变量，这个函数叫做似然函数(likelihood function), 它描述对于不同的模型参数，出现$x$这个样本点的概率是多少。</li>
-</ul>
-<h1 id="最大似然估计（MLE）"><a href="#最大似然估计（MLE）" class="headerlink" title="最大似然估计（MLE）"></a>最大似然估计（MLE）</h1><p>设有一个造币厂生产某种硬币，现在我们拿到了一枚这种硬币，想试试这硬币是不是均匀的。<br>于是我们拿这枚硬币抛了10次，得到的数据是：反正正正正反正正正反。我们想求的正面概率θθ是模型参数，而抛硬币模型我们可以假设是二项分布。<br>这是个只关于$θ$的函数。而最大似然估计，顾名思义，就是要最大化这个函数。</p>
-<script type="math/tex; mode=display">\displaystyle {\hat {\theta }}_{\mathrm {ML} }(x)=\arg \max _{\theta }f(x|\theta )\!</script><h1 id="最大后验概率估计（MAP）"><a href="#最大后验概率估计（MAP）" class="headerlink" title="最大后验概率估计（MAP）"></a>最大后验概率估计（MAP）</h1><p>最大似然估计是求参数$θ$, 使似然函数$P(x_0|θ)$最大。最大后验概率估计则是想求$θ$使$P(x_0|θ)P(θ)$最大。求得的$θ$不单单让似然函数大，$θ$自己出现的先验概率也得大。参数$θ$有一个先验概率。</p>
-<p>这个时候就用到了我们的最大后验概率MAP，基础是贝叶斯公式： </p>
-<script type="math/tex; mode=display">P(\theta|x_0) = \frac{P(x_0|\theta)P(\theta)}{P(x_0)}</script><p>其中，$p(x|θ)$就是之前讲的似然函数，$p(θ)$是先验概率，是指在没有任何实验数据的时候对参数$θ$的经验判断，对于一个硬币，大概率认为他是正常的，正面的概率为0.5的可能性最大。</p>
-<p>MAP优化的就是一个后验概率，即给定了观测值以后使后验概率最大： </p>
-<script type="math/tex; mode=display">
-\begin{align*}
-{\hat {\theta }}_{\mathrm {MAP} }  & = \arg \max _{\theta } p(\theta|x) \\
- & = \arg \max _{\theta } \frac{p(x|\theta)\times p(\theta)}{P(x)} \\
- & =  \arg \max _{\theta } p(x|\theta)\times p(\theta)
-\end{align*}</script><p>从上面公式可以看出，$p(x|θ)$是似然函数，而$p(θ)$就是先验概率。对其取对数： </p>
-<script type="math/tex; mode=display">
-\begin{align*}
-\arg \max _{\theta } p(x|\theta) \cdot p(\theta) &= \arg \max _{\theta } log \prod_{i=0}^n p(x_i | \theta) p(\theta) \\
-& = \arg \max _{\theta } \sum_i log (p(x_i | \theta) p(\theta)) \\ 
-& = \arg \max _{\theta } \sum_ilog (p(x_i | \theta) + log(p(\theta))
-\end{align*}</script><h1 id="贝叶斯估计"><a href="#贝叶斯估计" class="headerlink" title="贝叶斯估计"></a>贝叶斯估计</h1><p>贝叶斯估计是在MAP上做进一步拓展，此时不直接估计参数的值，而是允许参数服从一定概率分布。回忆下贝叶斯公式： </p>
-<script type="math/tex; mode=display">p(\theta|x) = \frac{p(x|\theta)\times p(\theta)}{P(x)}</script><p>现在我们不要求后验概率最大，这个时候就需要求$p(X)$，即观察到的$X$的概率。一般来说，用全概率公式可以求$p(X)$</p>
-<script type="math/tex; mode=display">p(X) = \int p(X | \theta)p(\theta)d\theta</script><p>那么如何用贝叶斯估计来预测呢？如果我们想求一个值 $x’$ 的概率，可以用下面的方法 </p>
-<script type="math/tex; mode=display">
-p(\hat{x}|X)=\int_{\theta\in\Theta}p(\hat{x}|\theta)p(\theta|X)d\theta=\int_{\theta\in\Theta}\frac{p(\hat{x}|\theta)p(\theta)}{p(X)}d\theta</script><h1 id="MLE和MAP的区别"><a href="#MLE和MAP的区别" class="headerlink" title="MLE和MAP的区别"></a>MLE和MAP的区别</h1><p>当先验分布均匀之时，MAP与MLE相等。直观讲，它表征了最有可能值的任何先验知识的匮乏。在这一情况中，所有权重分配到似然函数，因此当我们把先验与似然相乘，由此得到的后验极其类似于似然。因此，最大似然方法可被看作一种特殊的MAP。</p>
-<p>如果先验认为这个硬币是概率是均匀分布的，被称为无信息先验( non-informative prior )，通俗的说就是“让数据自己说话”，此时贝叶斯方法等同于频率方法。<br>随着数据的增加，先验的作用越来越弱，数据的作用越来越强，参数的分布会向着最大似然估计靠拢。而且可以证明，最大后验估计的结果是先验和最大似然估计的凸组合。</p>
-<p>重要结论：随着我们观测到越来越多的数据，我们从数据中获取的信息的置信度是越高的，MAP估计逐步逼近MLE，先验信息占的比重将会越来越少。</p>
-<h1 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h1><h3 id="这两篇博客把MLE和MAP的原理讲得很清楚："><a href="#这两篇博客把MLE和MAP的原理讲得很清楚：" class="headerlink" title="这两篇博客把MLE和MAP的原理讲得很清楚："></a>这两篇博客把MLE和MAP的原理讲得很清楚：</h3><p><span class="exturl" data-url="aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3UwMTE1MDg2NDAvYXJ0aWNsZS9kZXRhaWxzLzcyODE1OTgx">详解最大似然估计（MLE）、最大后验概率估计（MAP），以及贝叶斯公式的理解<i class="fa fa-external-link-alt"></i></span><br><span class="exturl" data-url="aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2JpdGNhcm1hbmxlZS9hcnRpY2xlL2RldGFpbHMvODE0MTcxNTE=">最大似然估计，最大后验估计，贝叶斯估计联系与区别<i class="fa fa-external-link-alt"></i></span></p>
-<h3 id="这篇文章还讲了贝叶斯："><a href="#这篇文章还讲了贝叶斯：" class="headerlink" title="这篇文章还讲了贝叶斯："></a>这篇文章还讲了贝叶斯：</h3><p>机器学习中的MLE、MAP、贝叶斯估计：<span class="exturl" data-url="aHR0cHM6Ly96aHVhbmxhbi56aGlodS5jb20vcC8zNzIxNTI3Ng==">https://zhuanlan.zhihu.com/p/37215276<i class="fa fa-external-link-alt"></i></span></p>
-<h3 id="这篇文章把频率学派和贝叶斯学派讲的很清楚："><a href="#这篇文章把频率学派和贝叶斯学派讲的很清楚：" class="headerlink" title="这篇文章把频率学派和贝叶斯学派讲的很清楚："></a>这篇文章把频率学派和贝叶斯学派讲的很清楚：</h3><p>聊一聊机器学习的MLE和MAP：最大似然估计和最大后验估计：<span class="exturl" data-url="aHR0cHM6Ly96aHVhbmxhbi56aGlodS5jb20vcC8zMjQ4MDgxMA==">https://zhuanlan.zhihu.com/p/32480810<i class="fa fa-external-link-alt"></i></span></p>
-]]></content>
-      <categories>
-        <category>数学</category>
-      </categories>
-      <tags>
-        <tag>统计学</tag>
       </tags>
   </entry>
   <entry>
