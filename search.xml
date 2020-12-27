@@ -1,42 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
-    <title>旋转表示法</title>
-    <url>/2018/03.%E6%97%8B%E8%BD%AC%E8%A1%A8%E7%A4%BA%E6%B3%95/</url>
-    <content><![CDATA[<h1 id="一、向量和坐标系"><a href="#一、向量和坐标系" class="headerlink" title="一、向量和坐标系"></a>一、向量和坐标系</h1><p>要想确定一个坐标，首先要建立坐标系。在三维空间中建立的坐标系通常都是两两垂直的，坐标系也叫做线性空间中的一组基 $(e_{1},e_{2},e_{3})$ ，向量 $a$ 在这组基的坐标就可以表示成：    </p>
-<script type="math/tex; mode=display">
-a=[e_{1},e_{2},e_{3}]\left[\begin{matrix}a_{1} \\ a_{2} \\ a_3\end{matrix}\right]=a_{1}e_{1}+a_{2}e_{2}+a_{3}e_{3}</script><p>向量有内积和外积之分，<br>内积表示为 $a^Tb$ ，可以描述为两个向量之间的投影关系。<br>外积表示为 $ab^T$ ，外积大小是两个向量张成四边形的有向面积，之所以有向，是因为外积方向垂直于这两个向量构成的平面，且满足右手定理， $ab^T$ 和 $ba^T$ 会得到大小相同，方向相反的结果。</p>
-<a id="more"></a> 
-<h1 id="二、旋转向量"><a href="#二、旋转向量" class="headerlink" title="二、旋转向量"></a>二、旋转向量</h1><p>向量的外积是可以表示旋转的，假设物体从 $a$ 旋转到 $b$ 转过的角度为 $\theta$ ,那么旋转的方向和大小分别可以用有向面积的正负和大小来表示，它们的外积方向垂直于它们构成的平面（右手定律），长度等于张成四边形的面积。<br>于是，我们可以使用一个向量，其方向与旋转轴一致，长度等于旋转角来描述旋转，表示为 $\theta n$ （$\theta$为旋转角， $n$ 为旋转轴）。在三维空间中，只需要三个这样的向量，并且它们可以构成线性空间中的一组基，就可以描述三维空间中任意的刚体旋转。<br>根据3条旋转轴建立空间坐标，可以略去对转轴的描述，因此，通过一个空间中的三维向量就可以描述旋转，这就是旋转向量。<br>旋转向量通过3个参数控制了6个自由度的旋转。其表示非常紧凑。</p>
-<h1 id="三、旋转矩阵"><a href="#三、旋转矩阵" class="headerlink" title="三、旋转矩阵"></a>三、旋转矩阵</h1><p>旋转向量描述的是物体原地做旋转，给人感觉并不关心坐标系，在使用旋转向量的时候，就默认自己是坐标系的中心了。<br>设某个单位正交基 $(e_{1},e_{2},e_{3})$ 经过一次旋转变成了 $(e_{1}’,e_{2}’,e_{3}’)$ ，那么对于同一个向量 $a$ (注意向量并没有跟随坐标系的旋转而发生运动)，它在两个坐标系下的坐标为 $[a_{1},a_{2},a_{3}]^T$ 和 $[a_{1}’,a_{2}’,a_{3}’]^T$ 。根据坐标定义，有：</p>
-<script type="math/tex; mode=display">[e_{1},e_{2},e_{3}]\left[\begin{matrix}a_{1} \\ a_{2}\\ a_3\end{matrix}\right]=[e_{1}',e_{2}',e_{3}']\left[\begin{matrix}a_{1}' \\ a_{2}' \\ a_{3}'\end{matrix}\right]</script><p>可以得到 $a=Ra’$ ，这里的 矩阵$R$ 称为旋转矩阵。可以把旋转矩阵的集合定义为</p>
-<script type="math/tex; mode=display">SO(n)=\{ {\boldsymbol{R}\in\mathbb{R}^{n\times n}|RR^T=I,det(R)=1}\}</script><p>$R^T$ 刻画了一个相反的旋转，这算一个重要性质吧，求逆非常方便。<br>$SO(3)$ 的旋转矩阵有9个量，但一次旋转只有3个自由度，这种表示法是冗余的。<br>旋转矩阵自身带有约束太多：必须是一个单位正交矩阵，且行列式为1。</p>
-<h1 id="四、四元数"><a href="#四、四元数" class="headerlink" title="四、四元数"></a>四、四元数</h1><p>复数由一个实部和一个虚部构成，两个参数可以表示二维平面内所有的旋转，直觉上推广到三个参数就能表示三维旋转，这是错误的，必须4个量才可以表示。<br>在表达三维空间的旋转时，有一种类似复数的代数：四元数。它和复数一样有实部和虚部，表示为</p>
-<script type="math/tex; mode=display">q=[s,v],s=q_{0}\in\mathbb{R}, v=[q_{1},q_{2},q_{3}]^T\in \mathbb{R}^3</script><p>考虑到三维空间需要3个轴，四元数也有3个虚部。三维空间中的点是通过虚四元数来标识的，此时四元数的实部没有任何作用。而在旋转的过程中，这个实部才会起作用，某种意义上来讲，这个四元数的实部不是三维空间的量。<br>更详细的四元数内容可以参考<span class="exturl" data-url="aHR0cHM6Ly93d3cuM2RnZXAuY29tL3VuZGVyc3RhbmRpbmctcXVhdGVybmlvbnMv">https://www.3dgep.com/understanding-quaternions/<i class="fa fa-external-link-alt"></i></span><br>这里关心的只是旋转，旋转向量、旋转矩阵、四元数的相互转化，</p>
-<script type="math/tex; mode=display">q=[cos\frac{\theta}{2},\boldsymbol{n}sin\frac{\theta}{2}]</script><p>这里的 $n$ 表示旋转轴，和旋转向量的轴是一根轴，而这跟轴所表示的向量正是旋转矩阵的特征向量。<br>从旋转向量到旋转矩阵由著名的<code>Rodrigues公式</code>表示。</p>
-<h1 id="五、李群李代数"><a href="#五、李群李代数" class="headerlink" title="五、李群李代数"></a>五、李群李代数</h1><p>$R$ 是旋转矩阵，设$\phi$ 为 $R$ 的导数，反应了 $R$ 的导数性质，故它在 $SO(3)$ 原点附近的正切空间上。同时在 $t_{0}$ 附近，设 $\phi(t_{0})=\phi_{0}$ ，所以有</p>
-<script type="math/tex; mode=display">R(t)=\exp(\phi_{0}^{\wedge}t)
-\Phi=\phi^\wedge=\left[\begin{matrix}0&-\phi_{3}&\phi_{2}\\ \phi_{3}&0&-\phi_{1}\\ -\phi_{2}&\phi_{1}&0\end{matrix}\right]\in\mathbb{R}^{3\times3} （反对称矩阵）</script><script type="math/tex; mode=display">\mathfrak{s}\mathfrak{o}(3)=\{ {\phi\in\mathbb{R}^3,\Phi=\phi^\wedge\in\mathbb{R}^{3\times3}}\}</script><p>李代数对应的反对称矩阵正是李群的导数，而李群李代数存在指数映射，这意味这求导很方便。<br>李群李代数的关系，正是旋转矩阵与旋转向量的关系。旋转向量其实就是李代数，而旋转矩阵构成的集合就是李群。指数映射即是Rodrigues公式。</p>
-<p>任意矩阵的指数映射可以写成一个泰勒展开，但是只有在收敛的情况下才会有结果，其结果仍是一个矩阵。<br>$\exp(\phi^\wedge)=\sum_{n=0}^{\infty}\frac{1}{n!}(\phi^\wedge)^n$ 公式展开，可以证明<code>Rodrigues公式</code>。</p>
-<p>$\mathfrak{s}\mathfrak{o}(3)$ 是由一个三维向量组成的集合，每一个向量对应到一个反对成矩阵，可以表达旋转矩阵的倒导数。每个 $SO(3)$ 中的元素都可以对应一个 $\mathfrak{s}\mathfrak{o}(3)$ 的元素，但是可能存在多个 $\mathfrak{s}\mathfrak{o}(3)$ 中的元素对应到同一个 SO(3) 中的元素。</p>
-<h1 id="六、李代数求导与扰动模型"><a href="#六、李代数求导与扰动模型" class="headerlink" title="六、李代数求导与扰动模型"></a>六、李代数求导与扰动模型</h1><p>BCH公式（Baker-Campbell-Hausdorff）给出</p>
-<script type="math/tex; mode=display">\ln{(\exp(\phi_{1}^\wedge)\exp((\phi_{2}^\wedge))^\vee}= \begin{equation} \left\{ \begin{array}{lc} J_{l} (\phi_{2})^{-1}\phi_{1}+\phi_{2} \\ J_{l} (\phi_{1})^{-1}\phi_{2}+\phi_{1} \end{array} \right. \end{equation}</script><p>左乘与右乘情况不同。<br>其中</p>
-<script type="math/tex; mode=display">\boldsymbol{J}_{l}=\boldsymbol{J}=\frac{sin\theta}{\theta}\boldsymbol{I}+(\frac{1-sin\theta}{\theta})\boldsymbol{a}\boldsymbol{a}^T+\frac{1-cos\theta}{\theta}\boldsymbol{a}^\wedge.</script><p>它的逆</p>
-<script type="math/tex; mode=display">\boldsymbol{J}^{-1}=\frac{\theta}{2}cot\frac{\theta}{2}\boldsymbol{I}+(1-\frac{\theta}{2}cot\frac{\theta}{2})\boldsymbol{a}\boldsymbol{a}^T-\frac{\theta}{2}\boldsymbol{a}^\wedge.</script><p>右乘雅可比仅需要取负号</p>
-<script type="math/tex; mode=display">\boldsymbol{J}_{r}(\phi)=\boldsymbol{J}_{l}(-\phi).</script><p>假设对某一个旋转 $\boldsymbol{R}$ 对应的李代数是 $\phi$ ，给它左乘一个微小的旋转，记作 $ \Delta\boldsymbol{R}$ ，对应的李代数为 $\Delta\phi$ 。那么在李群上得到的结果为 $\Delta\boldsymbol{R}·\boldsymbol{R}$ ，而在李代数上根据BCH近似，为 $\boldsymbol{J}^{-1}(\phi)\Delta\phi+\phi$ ，合并起来可以写成：</p>
-<script type="math/tex; mode=display">\exp(\Delta\phi)\exp(\phi)=\exp\left( \left( \phi+\boldsymbol{J}^{-1}\left( \phi \right)\Delta\phi \right)^\wedge \right)</script><p>李代数求导，因为太菜了，照着书没推下来。还是直接上结论吧。</p>
-<script type="math/tex; mode=display">\frac{\partial(\boldsymbol{R}p)}{\partial\boldsymbol{R}}=\frac{\partial(\exp(\phi^\wedge)p)}{\partial\phi}=-(\boldsymbol{R}p)^\wedge\boldsymbol{J}_{l}</script><p>扰动模型，左乘</p>
-<script type="math/tex; mode=display">\begin{equation} \begin{split} \frac{\partial(\boldsymbol{R}p)}{\partial\boldsymbol{R}}&=\lim\limits_{\varphi\rightarrow0}\frac{\exp(\varphi^\wedge)\exp(\phi^\wedge)\boldsymbol{p}-\exp(\phi^\wedge)\boldsymbol{p}}{\varphi}\\\\ &=\lim\limits_{\varphi\rightarrow0}\frac{(1+\varphi^\wedge)\exp(\phi^\wedge)\boldsymbol{p}-\exp(\phi^\wedge)\boldsymbol{p}}{\varphi}\\\\ &=\lim\limits_{\varphi\rightarrow0}\frac{\varphi^\wedge\boldsymbol{Rp}}{\varphi}=\lim\limits_{\varphi\rightarrow0}\frac{-(\boldsymbol{Rp})^\wedge\varphi}{\varphi}=-(\boldsymbol{Rp})^\wedge. \end{split} \end{equation}</script><p>写在最后：<br>以前学习都是先学习理论，后学习实践。现在顺序倒过来才发现数学作为工具存在的意义。看高博的书更像看综述，能很快建立知识的闭环，对系统有个了解，然后情不自禁地查更多资料，看更多书来填充知识的框架。<br>最后推荐一本好书《旋量代数与李群、李代数》，系统学习一波再来补充这篇文章。</p>
-]]></content>
-      <categories>
-        <category>数学</category>
-      </categories>
-      <tags>
-        <tag>线性代数</tag>
-        <tag>机器人</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>配置我的linux</title>
     <url>/2018/02.%E9%85%8D%E7%BD%AE%E6%88%91%E7%9A%84linux/</url>
     <content><![CDATA[<p>这篇博客从我以前的博客搬运过来，备份系统可以使用Remastersys，网上的教程一搜一大把。为了省心，我一直坚持使用ubuntu16.04，以下是系统环境的配置。</p>
@@ -96,6 +60,42 @@ a=[e_{1},e_{2},e_{3}]\left[\begin{matrix}a_{1} \\ a_{2} \\ a_3\end{matrix}\right
       </categories>
       <tags>
         <tag>环境配置</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>旋转表示法</title>
+    <url>/2018/03.%E6%97%8B%E8%BD%AC%E8%A1%A8%E7%A4%BA%E6%B3%95/</url>
+    <content><![CDATA[<h1 id="一、向量和坐标系"><a href="#一、向量和坐标系" class="headerlink" title="一、向量和坐标系"></a>一、向量和坐标系</h1><p>要想确定一个坐标，首先要建立坐标系。在三维空间中建立的坐标系通常都是两两垂直的，坐标系也叫做线性空间中的一组基 $(e_{1},e_{2},e_{3})$ ，向量 $a$ 在这组基的坐标就可以表示成：    </p>
+<script type="math/tex; mode=display">
+a=[e_{1},e_{2},e_{3}]\left[\begin{matrix}a_{1} \\ a_{2} \\ a_3\end{matrix}\right]=a_{1}e_{1}+a_{2}e_{2}+a_{3}e_{3}</script><p>向量有内积和外积之分，<br>内积表示为 $a^Tb$ ，可以描述为两个向量之间的投影关系。<br>外积表示为 $ab^T$ ，外积大小是两个向量张成四边形的有向面积，之所以有向，是因为外积方向垂直于这两个向量构成的平面，且满足右手定理， $ab^T$ 和 $ba^T$ 会得到大小相同，方向相反的结果。</p>
+<a id="more"></a> 
+<h1 id="二、旋转向量"><a href="#二、旋转向量" class="headerlink" title="二、旋转向量"></a>二、旋转向量</h1><p>向量的外积是可以表示旋转的，假设物体从 $a$ 旋转到 $b$ 转过的角度为 $\theta$ ,那么旋转的方向和大小分别可以用有向面积的正负和大小来表示，它们的外积方向垂直于它们构成的平面（右手定律），长度等于张成四边形的面积。<br>于是，我们可以使用一个向量，其方向与旋转轴一致，长度等于旋转角来描述旋转，表示为 $\theta n$ （$\theta$为旋转角， $n$ 为旋转轴）。在三维空间中，只需要三个这样的向量，并且它们可以构成线性空间中的一组基，就可以描述三维空间中任意的刚体旋转。<br>根据3条旋转轴建立空间坐标，可以略去对转轴的描述，因此，通过一个空间中的三维向量就可以描述旋转，这就是旋转向量。<br>旋转向量通过3个参数控制了6个自由度的旋转。其表示非常紧凑。</p>
+<h1 id="三、旋转矩阵"><a href="#三、旋转矩阵" class="headerlink" title="三、旋转矩阵"></a>三、旋转矩阵</h1><p>旋转向量描述的是物体原地做旋转，给人感觉并不关心坐标系，在使用旋转向量的时候，就默认自己是坐标系的中心了。<br>设某个单位正交基 $(e_{1},e_{2},e_{3})$ 经过一次旋转变成了 $(e_{1}’,e_{2}’,e_{3}’)$ ，那么对于同一个向量 $a$ (注意向量并没有跟随坐标系的旋转而发生运动)，它在两个坐标系下的坐标为 $[a_{1},a_{2},a_{3}]^T$ 和 $[a_{1}’,a_{2}’,a_{3}’]^T$ 。根据坐标定义，有：</p>
+<script type="math/tex; mode=display">[e_{1},e_{2},e_{3}]\left[\begin{matrix}a_{1} \\ a_{2}\\ a_3\end{matrix}\right]=[e_{1}',e_{2}',e_{3}']\left[\begin{matrix}a_{1}' \\ a_{2}' \\ a_{3}'\end{matrix}\right]</script><p>可以得到 $a=Ra’$ ，这里的 矩阵$R$ 称为旋转矩阵。可以把旋转矩阵的集合定义为</p>
+<script type="math/tex; mode=display">SO(n)=\{ {\boldsymbol{R}\in\mathbb{R}^{n\times n}|RR^T=I,det(R)=1}\}</script><p>$R^T$ 刻画了一个相反的旋转，这算一个重要性质吧，求逆非常方便。<br>$SO(3)$ 的旋转矩阵有9个量，但一次旋转只有3个自由度，这种表示法是冗余的。<br>旋转矩阵自身带有约束太多：必须是一个单位正交矩阵，且行列式为1。</p>
+<h1 id="四、四元数"><a href="#四、四元数" class="headerlink" title="四、四元数"></a>四、四元数</h1><p>复数由一个实部和一个虚部构成，两个参数可以表示二维平面内所有的旋转，直觉上推广到三个参数就能表示三维旋转，这是错误的，必须4个量才可以表示。<br>在表达三维空间的旋转时，有一种类似复数的代数：四元数。它和复数一样有实部和虚部，表示为</p>
+<script type="math/tex; mode=display">q=[s,v],s=q_{0}\in\mathbb{R}, v=[q_{1},q_{2},q_{3}]^T\in \mathbb{R}^3</script><p>考虑到三维空间需要3个轴，四元数也有3个虚部。三维空间中的点是通过虚四元数来标识的，此时四元数的实部没有任何作用。而在旋转的过程中，这个实部才会起作用，某种意义上来讲，这个四元数的实部不是三维空间的量。<br>更详细的四元数内容可以参考<span class="exturl" data-url="aHR0cHM6Ly93d3cuM2RnZXAuY29tL3VuZGVyc3RhbmRpbmctcXVhdGVybmlvbnMv">https://www.3dgep.com/understanding-quaternions/<i class="fa fa-external-link-alt"></i></span><br>这里关心的只是旋转，旋转向量、旋转矩阵、四元数的相互转化，</p>
+<script type="math/tex; mode=display">q=[cos\frac{\theta}{2},\boldsymbol{n}sin\frac{\theta}{2}]</script><p>这里的 $n$ 表示旋转轴，和旋转向量的轴是一根轴，而这跟轴所表示的向量正是旋转矩阵的特征向量。<br>从旋转向量到旋转矩阵由著名的<code>Rodrigues公式</code>表示。</p>
+<h1 id="五、李群李代数"><a href="#五、李群李代数" class="headerlink" title="五、李群李代数"></a>五、李群李代数</h1><p>$R$ 是旋转矩阵，设$\phi$ 为 $R$ 的导数，反应了 $R$ 的导数性质，故它在 $SO(3)$ 原点附近的正切空间上。同时在 $t_{0}$ 附近，设 $\phi(t_{0})=\phi_{0}$ ，所以有</p>
+<script type="math/tex; mode=display">R(t)=\exp(\phi_{0}^{\wedge}t)
+\Phi=\phi^\wedge=\left[\begin{matrix}0&-\phi_{3}&\phi_{2}\\ \phi_{3}&0&-\phi_{1}\\ -\phi_{2}&\phi_{1}&0\end{matrix}\right]\in\mathbb{R}^{3\times3} （反对称矩阵）</script><script type="math/tex; mode=display">\mathfrak{s}\mathfrak{o}(3)=\{ {\phi\in\mathbb{R}^3,\Phi=\phi^\wedge\in\mathbb{R}^{3\times3}}\}</script><p>李代数对应的反对称矩阵正是李群的导数，而李群李代数存在指数映射，这意味这求导很方便。<br>李群李代数的关系，正是旋转矩阵与旋转向量的关系。旋转向量其实就是李代数，而旋转矩阵构成的集合就是李群。指数映射即是Rodrigues公式。</p>
+<p>任意矩阵的指数映射可以写成一个泰勒展开，但是只有在收敛的情况下才会有结果，其结果仍是一个矩阵。<br>$\exp(\phi^\wedge)=\sum_{n=0}^{\infty}\frac{1}{n!}(\phi^\wedge)^n$ 公式展开，可以证明<code>Rodrigues公式</code>。</p>
+<p>$\mathfrak{s}\mathfrak{o}(3)$ 是由一个三维向量组成的集合，每一个向量对应到一个反对成矩阵，可以表达旋转矩阵的倒导数。每个 $SO(3)$ 中的元素都可以对应一个 $\mathfrak{s}\mathfrak{o}(3)$ 的元素，但是可能存在多个 $\mathfrak{s}\mathfrak{o}(3)$ 中的元素对应到同一个 SO(3) 中的元素。</p>
+<h1 id="六、李代数求导与扰动模型"><a href="#六、李代数求导与扰动模型" class="headerlink" title="六、李代数求导与扰动模型"></a>六、李代数求导与扰动模型</h1><p>BCH公式（Baker-Campbell-Hausdorff）给出</p>
+<script type="math/tex; mode=display">\ln{(\exp(\phi_{1}^\wedge)\exp((\phi_{2}^\wedge))^\vee}= \begin{equation} \left\{ \begin{array}{lc} J_{l} (\phi_{2})^{-1}\phi_{1}+\phi_{2} \\ J_{l} (\phi_{1})^{-1}\phi_{2}+\phi_{1} \end{array} \right. \end{equation}</script><p>左乘与右乘情况不同。<br>其中</p>
+<script type="math/tex; mode=display">\boldsymbol{J}_{l}=\boldsymbol{J}=\frac{sin\theta}{\theta}\boldsymbol{I}+(\frac{1-sin\theta}{\theta})\boldsymbol{a}\boldsymbol{a}^T+\frac{1-cos\theta}{\theta}\boldsymbol{a}^\wedge.</script><p>它的逆</p>
+<script type="math/tex; mode=display">\boldsymbol{J}^{-1}=\frac{\theta}{2}cot\frac{\theta}{2}\boldsymbol{I}+(1-\frac{\theta}{2}cot\frac{\theta}{2})\boldsymbol{a}\boldsymbol{a}^T-\frac{\theta}{2}\boldsymbol{a}^\wedge.</script><p>右乘雅可比仅需要取负号</p>
+<script type="math/tex; mode=display">\boldsymbol{J}_{r}(\phi)=\boldsymbol{J}_{l}(-\phi).</script><p>假设对某一个旋转 $\boldsymbol{R}$ 对应的李代数是 $\phi$ ，给它左乘一个微小的旋转，记作 $ \Delta\boldsymbol{R}$ ，对应的李代数为 $\Delta\phi$ 。那么在李群上得到的结果为 $\Delta\boldsymbol{R}·\boldsymbol{R}$ ，而在李代数上根据BCH近似，为 $\boldsymbol{J}^{-1}(\phi)\Delta\phi+\phi$ ，合并起来可以写成：</p>
+<script type="math/tex; mode=display">\exp(\Delta\phi)\exp(\phi)=\exp\left( \left( \phi+\boldsymbol{J}^{-1}\left( \phi \right)\Delta\phi \right)^\wedge \right)</script><p>李代数求导，因为太菜了，照着书没推下来。还是直接上结论吧。</p>
+<script type="math/tex; mode=display">\frac{\partial(\boldsymbol{R}p)}{\partial\boldsymbol{R}}=\frac{\partial(\exp(\phi^\wedge)p)}{\partial\phi}=-(\boldsymbol{R}p)^\wedge\boldsymbol{J}_{l}</script><p>扰动模型，左乘</p>
+<script type="math/tex; mode=display">\begin{equation} \begin{split} \frac{\partial(\boldsymbol{R}p)}{\partial\boldsymbol{R}}&=\lim\limits_{\varphi\rightarrow0}\frac{\exp(\varphi^\wedge)\exp(\phi^\wedge)\boldsymbol{p}-\exp(\phi^\wedge)\boldsymbol{p}}{\varphi}\\\\ &=\lim\limits_{\varphi\rightarrow0}\frac{(1+\varphi^\wedge)\exp(\phi^\wedge)\boldsymbol{p}-\exp(\phi^\wedge)\boldsymbol{p}}{\varphi}\\\\ &=\lim\limits_{\varphi\rightarrow0}\frac{\varphi^\wedge\boldsymbol{Rp}}{\varphi}=\lim\limits_{\varphi\rightarrow0}\frac{-(\boldsymbol{Rp})^\wedge\varphi}{\varphi}=-(\boldsymbol{Rp})^\wedge. \end{split} \end{equation}</script><p>写在最后：<br>以前学习都是先学习理论，后学习实践。现在顺序倒过来才发现数学作为工具存在的意义。看高博的书更像看综述，能很快建立知识的闭环，对系统有个了解，然后情不自禁地查更多资料，看更多书来填充知识的框架。<br>最后推荐一本好书《旋量代数与李群、李代数》，系统学习一波再来补充这篇文章。</p>
+]]></content>
+      <categories>
+        <category>数学</category>
+      </categories>
+      <tags>
+        <tag>线性代数</tag>
+        <tag>机器人</tag>
       </tags>
   </entry>
   <entry>
@@ -323,19 +323,6 @@ P_{k+1}
       </tags>
   </entry>
   <entry>
-    <title>pods_cmake</title>
-    <url>/2018/13.pods-cmake/</url>
-    <content><![CDATA[<p>Apriltags的CMakeLists.txt中出现了一行pods_install_executables()，这并不是标准的CMake写法，项目中有cmake/pods.cmake文件，里面写道：Macros to simplify compliance with the pods build policies.</p>
-<p>关于pods的资料不多，目前我对它的理解是一组基于CMake语法的宏，本身与CMake并没有任何区别。cmake/pods.cmake的内容可以参考：<br><span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL1JvYm90TG9jb21vdGlvbi9jbWFrZS9ibG9iL21hc3Rlci9wb2RzLmNtYWtl">https://github.com/RobotLocomotion/cmake/blob/master/pods.cmake<i class="fa fa-external-link-alt"></i></span><br><span class="exturl" data-url="aHR0cHM6Ly9zb3VyY2Vmb3JnZS5uZXQvcHJvamVjdHMvcG9kcy8=">https://sourceforge.net/projects/pods/<i class="fa fa-external-link-alt"></i></span><br><span class="exturl" data-url="aHR0cHM6Ly9zb3VyY2Vmb3JnZS5uZXQvcC9wb2RzL3dpa2kvUG9kc1Rvb2wv">https://sourceforge.net/p/pods/wiki/PodsTool/<i class="fa fa-external-link-alt"></i></span></p>
-]]></content>
-      <categories>
-        <category>编程</category>
-      </categories>
-      <tags>
-        <tag>工具链</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>Kalman with eigen</title>
     <url>/2018/12.matrix-decomposition/</url>
     <content><![CDATA[<p><span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL21oZXJiL2thbG1hblQ=">https://github.com/mherb/kalmanT<i class="fa fa-external-link-alt"></i></span> 是一个基于eigin3的Kalman-Filter，包含了Extended Kalman Filter (EKF)、Square Root Extended Kalman Filter (SR-EKF)、Unscented Kalman Filter (UKF)、Square Root Unscented Kalman Filter (SR-UKF)，4种Kalman filter。</p>
@@ -358,6 +345,19 @@ P_{k+1}
       </tags>
   </entry>
   <entry>
+    <title>pods_cmake</title>
+    <url>/2018/13.pods-cmake/</url>
+    <content><![CDATA[<p>Apriltags的CMakeLists.txt中出现了一行pods_install_executables()，这并不是标准的CMake写法，项目中有cmake/pods.cmake文件，里面写道：Macros to simplify compliance with the pods build policies.</p>
+<p>关于pods的资料不多，目前我对它的理解是一组基于CMake语法的宏，本身与CMake并没有任何区别。cmake/pods.cmake的内容可以参考：<br><span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL1JvYm90TG9jb21vdGlvbi9jbWFrZS9ibG9iL21hc3Rlci9wb2RzLmNtYWtl">https://github.com/RobotLocomotion/cmake/blob/master/pods.cmake<i class="fa fa-external-link-alt"></i></span><br><span class="exturl" data-url="aHR0cHM6Ly9zb3VyY2Vmb3JnZS5uZXQvcHJvamVjdHMvcG9kcy8=">https://sourceforge.net/projects/pods/<i class="fa fa-external-link-alt"></i></span><br><span class="exturl" data-url="aHR0cHM6Ly9zb3VyY2Vmb3JnZS5uZXQvcC9wb2RzL3dpa2kvUG9kc1Rvb2wv">https://sourceforge.net/p/pods/wiki/PodsTool/<i class="fa fa-external-link-alt"></i></span></p>
+]]></content>
+      <categories>
+        <category>编程</category>
+      </categories>
+      <tags>
+        <tag>工具链</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Lipschitz Condition</title>
     <url>/2018/14.Lipschitz/</url>
     <content><![CDATA[<p>L-lipschitz连续性是最近优化课程经常提到的一个基础内容，老师人很nice，讲课也很有开放性，每次都需要做大量的预习和课后复习才能完全消化。所以最近的Blog基本上都离不开数学主题了。<br>课堂引出L-lipschitz是为了衡量一个凸函数是否容易优化，通过函数光滑的程度和凸的程度来判断，原文是：$\nabla f$ is L-lipschitz and $f$ $\mu$-strongly convex.</p>
@@ -375,75 +375,6 @@ P_{k+1}
 <p>通过对函数求导，可以构造出更高阶的Lipschitz continuous condition。其中，gradient是一阶导数，Hessian是二阶导数。</p>
 <p>Lipschitz continuous 用在函数值上是为了不让函数值变化的太快；用在导函数上，是为了不让导函数变化的太快；用在Hessian上，是为了让Hessian不变化的太快。但他们都导致了一个很有意思的结果：这个Lipschitz continuous不管用在什么上，都使的函数被多项式上下夹逼，一方面便于我们处理，另一方面至少我们能控制一下函数的包络信息。</p>
 <h1 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h1><p><span class="exturl" data-url="aHR0cHM6Ly96aHVhbmxhbi56aGlodS5jb20vcC8yNzU1NDE5MQ==">https://zhuanlan.zhihu.com/p/27554191<i class="fa fa-external-link-alt"></i></span><br><span class="exturl" data-url="aHR0cHM6Ly9lbi53aWtpcGVkaWEub3JnL3dpa2kvQ2F1Y2h5JUUyJTgwJTkzU2Nod2Fyel9pbmVxdWFsaXR5">https://en.wikipedia.org/wiki/Cauchy%E2%80%93Schwarz_inequality<i class="fa fa-external-link-alt"></i></span><br><span class="exturl" data-url="aHR0cHM6Ly96aC53aWtpcGVkaWEub3JnL3dpa2kvJUU1JTg4JUE5JUU2JTk5JUFFJUU1JUI4JThDJUU4JThDJUE4JUU5JTgwJUEzJUU3JUJBJThD">https://zh.wikipedia.org/wiki/%E5%88%A9%E6%99%AE%E5%B8%8C%E8%8C%A8%E9%80%A3%E7%BA%8C<i class="fa fa-external-link-alt"></i></span><br><span class="exturl" data-url="aHR0cHM6Ly91c2Vycy53cGkuZWR1L353YWxrZXIvTUE1MDAvSEFORE9VVFMvTGlwc2NoaXR6Q29udGludWl0eS5wZGY=">https://users.wpi.edu/~walker/MA500/HANDOUTS/LipschitzContinuity.pdf<i class="fa fa-external-link-alt"></i></span><br><span class="exturl" data-url="aHR0cDovL3d3dy53aW4udHVlLm5sL35ydmhhc3NlbC9PbmRlcndpanMvT2xkLU9uZGVyd2lqcy8yV0EyMy0yMDExL0hPLTAzLnBkZg==">http://www.win.tue.nl/~rvhassel/Onderwijs/Old-Onderwijs/2WA23-2011/HO-03.pdf<i class="fa fa-external-link-alt"></i></span></p>
-]]></content>
-      <categories>
-        <category>数学</category>
-      </categories>
-      <tags>
-        <tag>数学</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Bayesian Theorem</title>
-    <url>/2018/16.Bayesian-Theorem/</url>
-    <content><![CDATA[<p>根据概率论中的贝叶斯公式，有：</p>
-<script type="math/tex; mode=display">
-P(\omega_i|x)=\frac{p(x,\omega_i)}{p(x)}=\frac{p(x|\omega_i)p(\omega_i)}{p(x)},i=1,2,...</script><ul>
-<li>$p(\omega_i)$是先验概率</li>
-<li>$p(x,\omega_i)$是联合概率分布</li>
-<li>$p(x)$是总体密度</li>
-<li>$p(x|\omega_i)$是第$i$类x的概率密度，即类条件概率</li>
-</ul>
-<p>这样，后验概率就转换成先验概率与类条件概率密度的乘积，再用总体密度进行归一化。这就是贝叶斯决策。</p>
-<a id="more"></a>
-<hr>
-<h1 id="最小错误率准则"><a href="#最小错误率准则" class="headerlink" title="最小错误率准则"></a>最小错误率准则</h1><p>使错误率最小的分类决策，就是使后验概率最大。默认情况下，贝叶斯决策就是最小错误率决策。其中，后验概率用贝叶斯公式求得：</p>
-<script type="math/tex; mode=display">
-P(\omega_i|x)=\frac{p(x|\omega_i)p(\omega_i)}{p(x)}=\frac{p(x|\omega_i)p(\omega_i)}{\sum_{j=1}^{2}{p(x|\omega_i)p(\omega_i)}},i=1,2</script><p>最小错误率可以表示多种形式，比如：</p>
-<script type="math/tex; mode=display">
-minP(e)=\int_{}^{}P(e)p(x)dx \\ 
-P(\omega_i|x)=\max P(\omega_j|x),j=1,2</script><p>如果$p(x|\omega_1)p(\omega_1)P(\omega_1)&gt;p(x|\omega_2)p(\omega_2)P(\omega_2)$,则$x\in\omega_1$;反之，则$x\in\omega_2$</p>
-<h2 id="似然比"><a href="#似然比" class="headerlink" title="似然比"></a>似然比</h2><p>先验概率$p(\omega_i)$是事先确定的，与当前样本$x$无关，这样可以实现计算似然比$\lambda$，对每一个样本计算$l(x)$作比较</p>
-<script type="math/tex; mode=display">
-l(x)=p(x|\omega_1)/p(x|\omega_2)，\lambda=P(\omega_2)/P(\omega_1) \\
-l(x) > \lambda, x\in \omega_1 \\ 
-l(x) < \lambda, x\in \omega_2</script><p>为了计算，有时候使用对数似然比</p>
-<script type="math/tex; mode=display">
-h(x)=-\ln [l(x)]=-\ln p(x|\omega_1)+\ln p(x|\omega_2)</script><h2 id="错误率"><a href="#错误率" class="headerlink" title="错误率"></a>错误率</h2><p>不同类的分界线称作决策边界，在多维情况下称为决策面，它把特征空间划分成属于各类的区域。<br>对二分类问题的错误率分析：</p>
-<script type="math/tex; mode=display">
-\begin{equation} 
-\begin{split} 
-P(e)&= \int_{-\infty}^{t}P(\omega_2|x)p(x)dx+\int_{t}^{\infty}P(\omega_1|x)p(x)dx \\
-&=\int_{-\infty}^{t}p(x|\omega_2)P(\omega_2)dx+\int_{t}^{\infty}p(x|\omega_1)P(\omega_1)dx \\
-&=P(\omega_2)\int_{-\infty}^{t}p(x|\omega_2)dx+P(\omega_1)\int_{t}^{\infty}p(x|\omega_1)dx \\ 
-&=P(\omega_2)P_2(e)+P(\omega_1)P_1(e)
-\end{split} 
-\end{equation}</script><p>其中，$P_1(e)$是把第一类错判成第二类的错误率，$P_2(e)$是把第二类错判成第一类的错误类。</p>
-<h2 id="多决策"><a href="#多决策" class="headerlink" title="多决策"></a>多决策</h2><p>假如不是二分类，就要把特征空间分割成$\mathcal{R_1}，\mathcal{R_2}，…，\mathcal{R_n}$个区域，可能错分的情况就很多，平均错误率$P(e)$将有$c(c-1)$项，一共$c$行，每行$c-1$列。</p>
-<script type="math/tex; mode=display">
-P(e)=\sum_{i=1}^{c}\sum_{j=1}^{c}{[P(x\in \mathcal{R_j}|\omega_i)]P(\omega_i)}</script><p>可以通过计算平均正确率$P(c)$来降低计算量：</p>
-<script type="math/tex; mode=display">
-P(c)=\sum_{j=1}^{c}{P(x\in\mathcal{R}|\omega_i)P(\omega_j)}=\sum_{j=1}^{c}{\int_{\mathcal{R_j}}p(x|\omega_j)P(\omega_j)}dx \\
-P(e)=1-P(c)</script><hr>
-<h1 id="最小风险准则"><a href="#最小风险准则" class="headerlink" title="最小风险准则"></a>最小风险准则</h1><p>所谓最小风险准则，就是考虑各种错误造成损失不同时的一种最优决策。</p>
-<ul>
-<li>样本$x$看作$d$维随机向量：$x=[x_1,x_2,…,x_d]^T$</li>
-<li>状态空间$\Omega$由$c$个可能的状态（$c$类）组成：$\Omega=\{\omega_1,\omega_2,…,\omega_c\}$</li>
-<li>对$x$可能采取的决策组成决策空间，由$k$个决策组成：$\mathcal{A}=\{\alpha_1,\alpha_2,…,\alpha_k\}$</li>
-<li>对实际为$\omega_j$的x采取决策$\alpha_i$所带来的损失为$\lambda(\alpha_i,\omega_j),i=1,…,k， j=1,…,c$</li>
-</ul>
-<p>这里没有假定$k=c$，是因为允许拒绝决策，比如不属于任何一类，这是更一般的情况。决策损失可以列出一个$k$行$c$列的决策表。</p>
-<p>对于某一个样本属于各个状态的后验概率是$P(\omega_j|x),j=1,…,c$，对它采取决策$\alpha_i,i=1,…,k$ 的期望损失是：</p>
-<script type="math/tex; mode=display">
-R(\alpha_i|x)=E(\lambda(\alpha_i,\omega_j)|x)=\sum_{j=1}^{c}\lambda(\alpha_i,\omega_j)P(\omega_j|x)，i=1,...,k</script><p>设某一个决策$\alpha(x)$，它对特征空间中所有可能的样本采用决策所造成的期望损失是$R(\alpha)$，称为平均/期望风险，令它最小就是最小风险准则。</p>
-<script type="math/tex; mode=display">
-\min R(\alpha)=\int R(\alpha(x)|x)p(x)dx</script><p>以二分类为例，</p>
-<script type="math/tex; mode=display">
-\lambda_{11}P(\omega_1|x)+\lambda_{12}P(\omega_2|x) < \lambda_{21}P(\omega_1|x)+\lambda_{22}P(\omega_2|x)，x\in \omega_1 \\
-\lambda_{11}P(\omega_1|x)+\lambda_{12}P(\omega_2|x) > \lambda_{21}P(\omega_1|x)+\lambda_{22}P(\omega_2|x)，x\in \omega_2</script><p>关于决策表，可以写成矩阵吧，对角线一般都是0，最小错误率准则就是0-1决策表，而最小风险准则就是有了不同的参数.</p>
-<script type="math/tex; mode=display">
-\left[\begin{matrix}\lambda_{11} & \lambda_{12} \\ \lambda_{21} & \lambda_{22}\end{matrix}\right]=\left[\begin{matrix}0 & 1 \\ 1 & 0\end{matrix}\right]</script><hr>
-<h1 id="两类错误率、Neyman-Pearson决策与ROC曲线"><a href="#两类错误率、Neyman-Pearson决策与ROC曲线" class="headerlink" title="两类错误率、Neyman-Pearson决策与ROC曲线"></a>两类错误率、Neyman-Pearson决策与ROC曲线</h1><p>待续</p>
 ]]></content>
       <categories>
         <category>数学</category>
@@ -640,6 +571,154 @@ R(\alpha_i|x)=E(\lambda(\alpha_i,\omega_j)|x)=\sum_{j=1}^{c}\lambda(\alpha_i,\om
       </tags>
   </entry>
   <entry>
+    <title>Bayesian Theorem</title>
+    <url>/2018/16.Bayesian-Theorem/</url>
+    <content><![CDATA[<p>根据概率论中的贝叶斯公式，有：</p>
+<script type="math/tex; mode=display">
+P(\omega_i|x)=\frac{p(x,\omega_i)}{p(x)}=\frac{p(x|\omega_i)p(\omega_i)}{p(x)},i=1,2,...</script><ul>
+<li>$p(\omega_i)$是先验概率</li>
+<li>$p(x,\omega_i)$是联合概率分布</li>
+<li>$p(x)$是总体密度</li>
+<li>$p(x|\omega_i)$是第$i$类x的概率密度，即类条件概率</li>
+</ul>
+<p>这样，后验概率就转换成先验概率与类条件概率密度的乘积，再用总体密度进行归一化。这就是贝叶斯决策。</p>
+<a id="more"></a>
+<hr>
+<h1 id="最小错误率准则"><a href="#最小错误率准则" class="headerlink" title="最小错误率准则"></a>最小错误率准则</h1><p>使错误率最小的分类决策，就是使后验概率最大。默认情况下，贝叶斯决策就是最小错误率决策。其中，后验概率用贝叶斯公式求得：</p>
+<script type="math/tex; mode=display">
+P(\omega_i|x)=\frac{p(x|\omega_i)p(\omega_i)}{p(x)}=\frac{p(x|\omega_i)p(\omega_i)}{\sum_{j=1}^{2}{p(x|\omega_i)p(\omega_i)}},i=1,2</script><p>最小错误率可以表示多种形式，比如：</p>
+<script type="math/tex; mode=display">
+minP(e)=\int_{}^{}P(e)p(x)dx \\ 
+P(\omega_i|x)=\max P(\omega_j|x),j=1,2</script><p>如果$p(x|\omega_1)p(\omega_1)P(\omega_1)&gt;p(x|\omega_2)p(\omega_2)P(\omega_2)$,则$x\in\omega_1$;反之，则$x\in\omega_2$</p>
+<h2 id="似然比"><a href="#似然比" class="headerlink" title="似然比"></a>似然比</h2><p>先验概率$p(\omega_i)$是事先确定的，与当前样本$x$无关，这样可以实现计算似然比$\lambda$，对每一个样本计算$l(x)$作比较</p>
+<script type="math/tex; mode=display">
+l(x)=p(x|\omega_1)/p(x|\omega_2)，\lambda=P(\omega_2)/P(\omega_1) \\
+l(x) > \lambda, x\in \omega_1 \\ 
+l(x) < \lambda, x\in \omega_2</script><p>为了计算，有时候使用对数似然比</p>
+<script type="math/tex; mode=display">
+h(x)=-\ln [l(x)]=-\ln p(x|\omega_1)+\ln p(x|\omega_2)</script><h2 id="错误率"><a href="#错误率" class="headerlink" title="错误率"></a>错误率</h2><p>不同类的分界线称作决策边界，在多维情况下称为决策面，它把特征空间划分成属于各类的区域。<br>对二分类问题的错误率分析：</p>
+<script type="math/tex; mode=display">
+\begin{equation} 
+\begin{split} 
+P(e)&= \int_{-\infty}^{t}P(\omega_2|x)p(x)dx+\int_{t}^{\infty}P(\omega_1|x)p(x)dx \\
+&=\int_{-\infty}^{t}p(x|\omega_2)P(\omega_2)dx+\int_{t}^{\infty}p(x|\omega_1)P(\omega_1)dx \\
+&=P(\omega_2)\int_{-\infty}^{t}p(x|\omega_2)dx+P(\omega_1)\int_{t}^{\infty}p(x|\omega_1)dx \\ 
+&=P(\omega_2)P_2(e)+P(\omega_1)P_1(e)
+\end{split} 
+\end{equation}</script><p>其中，$P_1(e)$是把第一类错判成第二类的错误率，$P_2(e)$是把第二类错判成第一类的错误类。</p>
+<h2 id="多决策"><a href="#多决策" class="headerlink" title="多决策"></a>多决策</h2><p>假如不是二分类，就要把特征空间分割成$\mathcal{R_1}，\mathcal{R_2}，…，\mathcal{R_n}$个区域，可能错分的情况就很多，平均错误率$P(e)$将有$c(c-1)$项，一共$c$行，每行$c-1$列。</p>
+<script type="math/tex; mode=display">
+P(e)=\sum_{i=1}^{c}\sum_{j=1}^{c}{[P(x\in \mathcal{R_j}|\omega_i)]P(\omega_i)}</script><p>可以通过计算平均正确率$P(c)$来降低计算量：</p>
+<script type="math/tex; mode=display">
+P(c)=\sum_{j=1}^{c}{P(x\in\mathcal{R}|\omega_i)P(\omega_j)}=\sum_{j=1}^{c}{\int_{\mathcal{R_j}}p(x|\omega_j)P(\omega_j)}dx \\
+P(e)=1-P(c)</script><hr>
+<h1 id="最小风险准则"><a href="#最小风险准则" class="headerlink" title="最小风险准则"></a>最小风险准则</h1><p>所谓最小风险准则，就是考虑各种错误造成损失不同时的一种最优决策。</p>
+<ul>
+<li>样本$x$看作$d$维随机向量：$x=[x_1,x_2,…,x_d]^T$</li>
+<li>状态空间$\Omega$由$c$个可能的状态（$c$类）组成：$\Omega=\{\omega_1,\omega_2,…,\omega_c\}$</li>
+<li>对$x$可能采取的决策组成决策空间，由$k$个决策组成：$\mathcal{A}=\{\alpha_1,\alpha_2,…,\alpha_k\}$</li>
+<li>对实际为$\omega_j$的x采取决策$\alpha_i$所带来的损失为$\lambda(\alpha_i,\omega_j),i=1,…,k， j=1,…,c$</li>
+</ul>
+<p>这里没有假定$k=c$，是因为允许拒绝决策，比如不属于任何一类，这是更一般的情况。决策损失可以列出一个$k$行$c$列的决策表。</p>
+<p>对于某一个样本属于各个状态的后验概率是$P(\omega_j|x),j=1,…,c$，对它采取决策$\alpha_i,i=1,…,k$ 的期望损失是：</p>
+<script type="math/tex; mode=display">
+R(\alpha_i|x)=E(\lambda(\alpha_i,\omega_j)|x)=\sum_{j=1}^{c}\lambda(\alpha_i,\omega_j)P(\omega_j|x)，i=1,...,k</script><p>设某一个决策$\alpha(x)$，它对特征空间中所有可能的样本采用决策所造成的期望损失是$R(\alpha)$，称为平均/期望风险，令它最小就是最小风险准则。</p>
+<script type="math/tex; mode=display">
+\min R(\alpha)=\int R(\alpha(x)|x)p(x)dx</script><p>以二分类为例，</p>
+<script type="math/tex; mode=display">
+\lambda_{11}P(\omega_1|x)+\lambda_{12}P(\omega_2|x) < \lambda_{21}P(\omega_1|x)+\lambda_{22}P(\omega_2|x)，x\in \omega_1 \\
+\lambda_{11}P(\omega_1|x)+\lambda_{12}P(\omega_2|x) > \lambda_{21}P(\omega_1|x)+\lambda_{22}P(\omega_2|x)，x\in \omega_2</script><p>关于决策表，可以写成矩阵吧，对角线一般都是0，最小错误率准则就是0-1决策表，而最小风险准则就是有了不同的参数.</p>
+<script type="math/tex; mode=display">
+\left[\begin{matrix}\lambda_{11} & \lambda_{12} \\ \lambda_{21} & \lambda_{22}\end{matrix}\right]=\left[\begin{matrix}0 & 1 \\ 1 & 0\end{matrix}\right]</script><hr>
+<h1 id="两类错误率、Neyman-Pearson决策与ROC曲线"><a href="#两类错误率、Neyman-Pearson决策与ROC曲线" class="headerlink" title="两类错误率、Neyman-Pearson决策与ROC曲线"></a>两类错误率、Neyman-Pearson决策与ROC曲线</h1><p>待续</p>
+]]></content>
+      <categories>
+        <category>数学</category>
+      </categories>
+      <tags>
+        <tag>数学</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Normal distribution</title>
+    <url>/2018/17.Normal-distribution/</url>
+    <content><![CDATA[<p>本blog总结单变量正态分布以及多元正态分布和他们的性质。</p>
+<a id="more"></a>
+<h1 id="单变量正态分布"><a href="#单变量正态分布" class="headerlink" title="单变量正态分布"></a>单变量正态分布</h1><p>概率密度函数：</p>
+<script type="math/tex; mode=display">
+p(x)=\frac{1}{\sqrt{2\pi}\sigma}\exp\left\{ -\frac{1}{2}\left(\frac{x-\mu}{\sigma}\right)^2\right\}</script><p>期望$\mu$和方差$\sigma^2$：</p>
+<script type="math/tex; mode=display">
+\mu = E\{x\}=\int_{-\infty}^{\infty}xp(x)dx \\
+\sigma^2=\int_{-\infty}^{\infty}(x-\mu)^2p(x)dx</script><h1 id="多元正态分布"><a href="#多元正态分布" class="headerlink" title="多元正态分布"></a>多元正态分布</h1><p>概率密度函数：</p>
+<script type="math/tex; mode=display">
+p(x)=\frac{1}{(x\pi)^{d/2}|\Sigma|^{1/2}}\exp\left\{ -\frac{1}{2}(x-\mu)^T\Sigma^{-1}(x-\mu)\right\}</script><ul>
+<li>$x=[x_1,x_2,…,x_d]^T$ 是d维向量</li>
+<li>$\mu=[\mu_1,\mu_2,…,\mu_d]^T$是d维均值向量</li>
+<li>$\Sigma$是dxd维协方差矩阵</li>
+</ul>
+<p>$<br>\mu=E\{x\} \\<br>\Sigma=E\{(x-\mu)(x-\mu)^T\}<br>$<br>$\mu$，$\Sigma$分别是向量$x$和矩阵$(x-\mu)(x-\mu)^T$的期望，若$x_i$是$x$的第$i$个个分量，$\mu_i$是$\mu$的第$i$个分量，$\sigma_{ij}$是$\Sigma$的第$i,j$个元素，则</p>
+<script type="math/tex; mode=display">
+\mu_i=E\{x_i\}=\int_{E^d}x_ip(x)dx=-\int_{-\infty}^{\infty}x_ip(x)dx_i</script><p>其中，$p(x_i)$为边缘分布</p>
+<script type="math/tex; mode=display">
+p(x_i)=\int_{-\infty}^{\infty}...\int_{-\infty}^{\infty}p(x)dx_1dx_2...dx_{x-1}dx_{i+1}...dx_d</script><p>而</p>
+<script type="math/tex; mode=display">
+\begin{equation} 
+\begin{split} 
+\sigma_{ij}&=E[(x_i-\mu_i)(x_j-\mu_j)] \\
+&=\int_{-\infty}^{\infty}...\int_{-\infty}^{\infty}(x_i-\mu_i)(x_j-\mu_j)p(x_i,x_j)dx_idx_j
+\end{split} 
+\end{equation}</script><p>协方差矩阵总是正定or半正定的矩阵，可以表示为</p>
+<script type="math/tex; mode=display">\Sigma = 
+\left[\begin{matrix}
+\sigma_{11} & \sigma_{12} & \dots & \sigma_{1d} \\ 
+\sigma_{21} & \sigma_{22} & \dots & \sigma_{2d} \\ 
+\vdots & \vdots & \ddots & \vdots \\ 
+\sigma_{2d} & \sigma_{2d} & \dots & \sigma_{dd} \\ 
+\end{matrix}\right]</script><h2 id="多元分布性质"><a href="#多元分布性质" class="headerlink" title="多元分布性质"></a>多元分布性质</h2><p>多元正态分布被均值向量$\mu$和协方差矩阵$\Sigma$所完全决定。</p>
+<script type="math/tex; mode=display">
+p(x)\sim N(\mu,\Sigma)</script><p>等密度点的轨迹为以超椭球面，区域中心由均值向量$\mu$决定，区域的大小由协方差矩阵$\Sigma$决定。当指数项为常数时，构成等密度点：</p>
+<script type="math/tex; mode=display">
+(x-\mu)^T\Sigma^{-1}(x-\mu)=C</script><p>该式子的解是一个超椭球面，且它的主轴方向由$\Sigma$阵的特征向量决定，主轴长度与相应的协方差矩阵$\Sigma$的特征值成正比。</p>
+<script type="math/tex; mode=display">
+\gamma^2=(x-\mu)^T\Sigma^{-1}(x-\mu)</script><p>称为由$x$到$\mu$的Mahalanobis距离（马氏距离）的平方，对应于Mahalanobis距离为$\gamma$的超椭圆球体积是</p>
+<script type="math/tex; mode=display">
+V=V_d|\Sigma|^{\frac{1}{2}}\gamma^d</script><p>其中$V_d$是$d$维单位超球体的体积，</p>
+<script type="math/tex; mode=display">
+V_d= 
+\begin{equation} 
+\left\{ 
+\begin{array}{lc} 
+\frac{\pi^{d/2}}{\left( \frac{d}{2} \right)!} & d为偶数\\
+\frac{2^d\pi^{(d-1)/2}\left( \frac{d-1}{2} \right)!}{d!} & d为奇数
+\end{array} 
+\right. 
+\end{equation}</script><p>对于给定的维数，样本离散度直接随$|\Sigma|^{1/2}$而变。</p>
+<h2 id="不相关性-独立性"><a href="#不相关性-独立性" class="headerlink" title="不相关性=独立性"></a>不相关性=独立性</h2><ul>
+<li>不相关：$E\{x_ix_j\}=E\{x_i\}E\{x-j\}$</li>
+<li>独立的：$p\{x_ix_j\}=p\{x_i\}p\{x_j\}$</li>
+</ul>
+<p>独立性比不相关性条件更强，而在多元正态分布中，两者等价。在正态分布中，变量互不相关，则一定独立。</p>
+<p>推论：如果多元正态随机向量的协方差矩阵是对角阵，则x的分量是相互独立的正态分布随机变量。</p>
+<h2 id="边缘分布和条件分布的正态性"><a href="#边缘分布和条件分布的正态性" class="headerlink" title="边缘分布和条件分布的正态性"></a>边缘分布和条件分布的正态性</h2><p>以二元正态分布为例，</p>
+<ul>
+<li>向量$x=[x_1,x_2]^T$</li>
+<li>均值$\mu=[\mu_1,\mu_2]^T$</li>
+<li>协方差矩阵$\Sigma=\left[\begin{matrix}\sigma_{11}^2&amp;\sigma_{12}^2\\\sigma_{21}^2&amp;\sigma_{22}^2\end{matrix}\right]$</li>
+</ul>
+<script type="math/tex; mode=display">
+p(x_1)\sim N(\mu_1,\sigma_{11}^2) \\
+p(x_2)\sim N(\mu_1,\sigma_{22}^2)</script><h2 id="线性变换的正态性"><a href="#线性变换的正态性" class="headerlink" title="线性变换的正态性"></a>线性变换的正态性</h2><p>对于多元正态随机变量$x$，无论是线性变化$y=Ax$还是线性组合$y=\alpha^Tx$，正态分布依然是正态分布。</p>
+<script type="math/tex; mode=display">
+p(y)\sim N(A\mu,A\Sigma A^T)
+p(y)\sim N(\alpha^T\mu,\alpha^T\Sigma\alpha)</script>]]></content>
+      <categories>
+        <category>数学</category>
+      </categories>
+      <tags>
+        <tag>数学</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Fisher</title>
     <url>/2018/18.Fisher/</url>
     <content><![CDATA[<p>线性判别方法linear discriminant analysis, LDA, R.A.</p>
@@ -725,85 +804,6 @@ J(W)=Tr{(W^TS_WW)^{-1}(W^TS_WW)}</script><p>其中，权值由$\{S_W^{-1}S_B\}$�
       </tags>
   </entry>
   <entry>
-    <title>Normal distribution</title>
-    <url>/2018/17.Normal-distribution/</url>
-    <content><![CDATA[<p>本blog总结单变量正态分布以及多元正态分布和他们的性质。</p>
-<a id="more"></a>
-<h1 id="单变量正态分布"><a href="#单变量正态分布" class="headerlink" title="单变量正态分布"></a>单变量正态分布</h1><p>概率密度函数：</p>
-<script type="math/tex; mode=display">
-p(x)=\frac{1}{\sqrt{2\pi}\sigma}\exp\left\{ -\frac{1}{2}\left(\frac{x-\mu}{\sigma}\right)^2\right\}</script><p>期望$\mu$和方差$\sigma^2$：</p>
-<script type="math/tex; mode=display">
-\mu = E\{x\}=\int_{-\infty}^{\infty}xp(x)dx \\
-\sigma^2=\int_{-\infty}^{\infty}(x-\mu)^2p(x)dx</script><h1 id="多元正态分布"><a href="#多元正态分布" class="headerlink" title="多元正态分布"></a>多元正态分布</h1><p>概率密度函数：</p>
-<script type="math/tex; mode=display">
-p(x)=\frac{1}{(x\pi)^{d/2}|\Sigma|^{1/2}}\exp\left\{ -\frac{1}{2}(x-\mu)^T\Sigma^{-1}(x-\mu)\right\}</script><ul>
-<li>$x=[x_1,x_2,…,x_d]^T$ 是d维向量</li>
-<li>$\mu=[\mu_1,\mu_2,…,\mu_d]^T$是d维均值向量</li>
-<li>$\Sigma$是dxd维协方差矩阵</li>
-</ul>
-<p>$<br>\mu=E\{x\} \\<br>\Sigma=E\{(x-\mu)(x-\mu)^T\}<br>$<br>$\mu$，$\Sigma$分别是向量$x$和矩阵$(x-\mu)(x-\mu)^T$的期望，若$x_i$是$x$的第$i$个个分量，$\mu_i$是$\mu$的第$i$个分量，$\sigma_{ij}$是$\Sigma$的第$i,j$个元素，则</p>
-<script type="math/tex; mode=display">
-\mu_i=E\{x_i\}=\int_{E^d}x_ip(x)dx=-\int_{-\infty}^{\infty}x_ip(x)dx_i</script><p>其中，$p(x_i)$为边缘分布</p>
-<script type="math/tex; mode=display">
-p(x_i)=\int_{-\infty}^{\infty}...\int_{-\infty}^{\infty}p(x)dx_1dx_2...dx_{x-1}dx_{i+1}...dx_d</script><p>而</p>
-<script type="math/tex; mode=display">
-\begin{equation} 
-\begin{split} 
-\sigma_{ij}&=E[(x_i-\mu_i)(x_j-\mu_j)] \\
-&=\int_{-\infty}^{\infty}...\int_{-\infty}^{\infty}(x_i-\mu_i)(x_j-\mu_j)p(x_i,x_j)dx_idx_j
-\end{split} 
-\end{equation}</script><p>协方差矩阵总是正定or半正定的矩阵，可以表示为</p>
-<script type="math/tex; mode=display">\Sigma = 
-\left[\begin{matrix}
-\sigma_{11} & \sigma_{12} & \dots & \sigma_{1d} \\ 
-\sigma_{21} & \sigma_{22} & \dots & \sigma_{2d} \\ 
-\vdots & \vdots & \ddots & \vdots \\ 
-\sigma_{2d} & \sigma_{2d} & \dots & \sigma_{dd} \\ 
-\end{matrix}\right]</script><h2 id="多元分布性质"><a href="#多元分布性质" class="headerlink" title="多元分布性质"></a>多元分布性质</h2><p>多元正态分布被均值向量$\mu$和协方差矩阵$\Sigma$所完全决定。</p>
-<script type="math/tex; mode=display">
-p(x)\sim N(\mu,\Sigma)</script><p>等密度点的轨迹为以超椭球面，区域中心由均值向量$\mu$决定，区域的大小由协方差矩阵$\Sigma$决定。当指数项为常数时，构成等密度点：</p>
-<script type="math/tex; mode=display">
-(x-\mu)^T\Sigma^{-1}(x-\mu)=C</script><p>该式子的解是一个超椭球面，且它的主轴方向由$\Sigma$阵的特征向量决定，主轴长度与相应的协方差矩阵$\Sigma$的特征值成正比。</p>
-<script type="math/tex; mode=display">
-\gamma^2=(x-\mu)^T\Sigma^{-1}(x-\mu)</script><p>称为由$x$到$\mu$的Mahalanobis距离（马氏距离）的平方，对应于Mahalanobis距离为$\gamma$的超椭圆球体积是</p>
-<script type="math/tex; mode=display">
-V=V_d|\Sigma|^{\frac{1}{2}}\gamma^d</script><p>其中$V_d$是$d$维单位超球体的体积，</p>
-<script type="math/tex; mode=display">
-V_d= 
-\begin{equation} 
-\left\{ 
-\begin{array}{lc} 
-\frac{\pi^{d/2}}{\left( \frac{d}{2} \right)!} & d为偶数\\
-\frac{2^d\pi^{(d-1)/2}\left( \frac{d-1}{2} \right)!}{d!} & d为奇数
-\end{array} 
-\right. 
-\end{equation}</script><p>对于给定的维数，样本离散度直接随$|\Sigma|^{1/2}$而变。</p>
-<h2 id="不相关性-独立性"><a href="#不相关性-独立性" class="headerlink" title="不相关性=独立性"></a>不相关性=独立性</h2><ul>
-<li>不相关：$E\{x_ix_j\}=E\{x_i\}E\{x-j\}$</li>
-<li>独立的：$p\{x_ix_j\}=p\{x_i\}p\{x_j\}$</li>
-</ul>
-<p>独立性比不相关性条件更强，而在多元正态分布中，两者等价。在正态分布中，变量互不相关，则一定独立。</p>
-<p>推论：如果多元正态随机向量的协方差矩阵是对角阵，则x的分量是相互独立的正态分布随机变量。</p>
-<h2 id="边缘分布和条件分布的正态性"><a href="#边缘分布和条件分布的正态性" class="headerlink" title="边缘分布和条件分布的正态性"></a>边缘分布和条件分布的正态性</h2><p>以二元正态分布为例，</p>
-<ul>
-<li>向量$x=[x_1,x_2]^T$</li>
-<li>均值$\mu=[\mu_1,\mu_2]^T$</li>
-<li>协方差矩阵$\Sigma=\left[\begin{matrix}\sigma_{11}^2&amp;\sigma_{12}^2\\\sigma_{21}^2&amp;\sigma_{22}^2\end{matrix}\right]$</li>
-</ul>
-<script type="math/tex; mode=display">
-p(x_1)\sim N(\mu_1,\sigma_{11}^2) \\
-p(x_2)\sim N(\mu_1,\sigma_{22}^2)</script><h2 id="线性变换的正态性"><a href="#线性变换的正态性" class="headerlink" title="线性变换的正态性"></a>线性变换的正态性</h2><p>对于多元正态随机变量$x$，无论是线性变化$y=Ax$还是线性组合$y=\alpha^Tx$，正态分布依然是正态分布。</p>
-<script type="math/tex; mode=display">
-p(y)\sim N(A\mu,A\Sigma A^T)
-p(y)\sim N(\alpha^T\mu,\alpha^T\Sigma\alpha)</script>]]></content>
-      <categories>
-        <category>数学</category>
-      </categories>
-      <tags>
-        <tag>数学</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>Cpp-Taskflow</title>
     <url>/2018/20.cpp-taskflow/</url>
     <content><![CDATA[<p>A fast C++ header-only library to help you quickly write parallel programs with complex task dependencies.<br><span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL2NwcC10YXNrZmxvdy9jcHAtdGFza2Zsb3c=">https://github.com/cpp-taskflow/cpp-taskflow<i class="fa fa-external-link-alt"></i></span></p>
@@ -816,73 +816,6 @@ p(y)\sim N(\alpha^T\mu,\alpha^T\Sigma\alpha)</script>]]></content>
       <tags>
         <tag>编程</tag>
       </tags>
-  </entry>
-  <entry>
-    <title>博弈论</title>
-    <url>/2018/24.game/</url>
-    <content><![CDATA[<h1 id="纳什均衡"><a href="#纳什均衡" class="headerlink" title="纳什均衡"></a>纳什均衡</h1><p>纳什均衡指的是这样一种策略组合，即在给定别人策略的情况下，没有人愿意单方面改变自己的策略，从而打破这种均衡。<br>数学表示：</p>
-<p>// 公式太长了，下次补上</p>
-<p>纳什均衡的一致预测性质:<br>一致预测：<br>如果所有博弈方都预测一个特定博弈结果会出现，所有博弈方都不会选择与预测结果不一致的策略，即没有哪个博弈方有偏离这个预测结果的愿望，因此预测结果会成为博弈的最终结果。<br>只有纳什均衡才具有一致预测的性质。一致预测性是纳什均衡的本质属性。<br>一致预测并不意味着一定能准确预测，因为有多重均衡， 预测不一致的可能。</p>
-<a id="more"></a>
-<h1 id="什么是博弈论"><a href="#什么是博弈论" class="headerlink" title="什么是博弈论"></a>什么是博弈论</h1><p>博弈论又称对策论，它使用严谨的数学模型研究 冲突对抗条件下的最优决策问题、是研究竞争的 逻辑和规律的数学分支。</p>
-<p>简单的说，博弈论是研究决策主体在给定信息结 构条件下，如何决策以使自己的效用最大化，以及不同决策主体之间决策的均衡。</p>
-<h1 id="博弈的要素"><a href="#博弈的要素" class="headerlink" title="博弈的要素"></a>博弈的要素</h1><h2 id="参与人（玩家-Player-Agent）"><a href="#参与人（玩家-Player-Agent）" class="headerlink" title="参与人（玩家, Player, Agent）:"></a>参与人（玩家, Player, Agent）:</h2><p>是博弈的参与主体，他通过选择自己的行动 （策略）来使自己的 收益最大化。参与人可以是 自然人，企业，国家等。在基于博弈的优化算法中，参与人代表算法中的某个元素。</p>
-<h2 id="参与人的策略集："><a href="#参与人的策略集：" class="headerlink" title="参与人的策略集："></a>参与人的策略集：</h2><p>是参与人可供选择的策略的集合。比如囚徒困境中的欺骗和合作。</p>
-<h2 id="收益-（效用，支付）："><a href="#收益-（效用，支付）：" class="headerlink" title="收益 （效用，支付）："></a>收益 （效用，支付）：</h2><p>在给定的策略组合下，参与人得到的确定的效用水平，或是参与人得到的期望效用水平。收益由收益函数来计算。</p>
-<h2 id="行动："><a href="#行动：" class="headerlink" title="行动："></a>行动：</h2><p>参与人在博弈的某个时间点的策略变量。</p>
-<h2 id="行动的顺序："><a href="#行动的顺序：" class="headerlink" title="行动的顺序："></a>行动的顺序：</h2><p>在动态博弈中，行动的顺序对博弈的结果有重要影响。同样的策略集，行动的顺序不同，每个人的最优策略就不同，博弈的结果就不同。尤其在不完全信息博弈中，后行动者根据先行动者的行动来获取信息。</p>
-<h2 id="信息"><a href="#信息" class="headerlink" title="信息"></a>信息</h2><p>参与人有关博弈的知识，特别是关于其它参与人的特征和行动的知识，以及自然的选择。<br>完美信息是指参与人对其它参与人的行动选择有准确的掌握。</p>
-<h2 id="共同知识："><a href="#共同知识：" class="headerlink" title="共同知识："></a>共同知识：</h2><p>所有参与人知道的每一步的信息集。</p>
-<h2 id="策略（战略）"><a href="#策略（战略）" class="headerlink" title="策略（战略）"></a>策略（战略）</h2><ul>
-<li>参与人在给定信息集情况下的行动规则，它规定参与人在 什么情况下选择什么行动。</li>
-<li>策略与行动：策略是行动的规则而不是行动本身。</li>
-<li>在静态博弈中，策略和行动是相同的。</li>
-<li>策略必须是完备的：必须给出参与人在每一种可能的情况下的行动选择。</li>
-</ul>
-<h2 id="均衡："><a href="#均衡：" class="headerlink" title="均衡："></a>均衡：</h2><p>指所有参与人的最优策略组合</p>
-<h1 id="基于博弈的控制"><a href="#基于博弈的控制" class="headerlink" title="基于博弈的控制"></a>基于博弈的控制</h1><ol>
-<li>合作博弈与非合作博弈 </li>
-<li>完全信息博弈与不完全信息博弈 </li>
-<li>静态博弈与动态博弈<br>相互组合：完全信息静态博弈、完全信息动态博弈、不完全信息静态博弈、不完全信息动态博弈。</li>
-<li>纯策略博弈与混合策略博弈</li>
-</ol>
-<p>特征函数。。。。。。。。。。。。。</p>
-<h2 id="合作博弈"><a href="#合作博弈" class="headerlink" title="合作博弈"></a>合作博弈</h2><p>合作博弈亦称为正和博弈，是指博弈双方的利益都有所增加，或者至少是一方的利益增加，而另一方的利益不受损害，因而整个集体的利益有所<br>增加。<br>合作博弈研究人们达成合作时如何分配合作得到的收益，即收益分配问题。合作博弈采取的是一种合作的方式，或者说是一种妥协。<br>至于收益在博弈各方之间如何分配，取决于博弈各方的力量对比和技巧运用。因此，妥协必须经过博弈各方的讨价还价，达成共识，进行合作。</p>
-<p>合作博弈存在的两个基本条件是：</p>
-<ol>
-<li>对联盟来说，整体收益大于其每个成员单 独经营时的收益之和。</li>
-<li>对联盟内部而言，应存在具有帕累托改进 性质的分配规则，即每个成员都能获得比不加入联盟时多一些的收益。</li>
-</ol>
-<h2 id="非合作博弈"><a href="#非合作博弈" class="headerlink" title="非合作博弈"></a>非合作博弈</h2><p>在参与人利益相互冲突中如何选择策略使自己的收益最大，即策略选择问题。是一种不可能达成具有约束力的 协议的博弈类型。<br>零和博弈、负和博弈是非合作博弈。<br>囚徒困境是非合作博弈。</p>
-<h2 id="完全信息博弈："><a href="#完全信息博弈：" class="headerlink" title="完全信息博弈："></a>完全信息博弈：</h2><p>是指每一参与者都拥有所有其他参与者的特征、策略及收益函数等方面的准确信息的博弈。<br>不完全信息博弈，参与人并不完全清楚有关博弈的一些信息。</p>
-<h2 id="静态博弈："><a href="#静态博弈：" class="headerlink" title="静态博弈："></a>静态博弈：</h2><p>是指博弈中参与者同时采取行动，或者尽管参与者行动的采取有先后顺序，但后行动的人不知道先采取行动的人采取的是什么行动。</p>
-<h2 id="动态博弈："><a href="#动态博弈：" class="headerlink" title="动态博弈："></a>动态博弈：</h2><p>动态博弈(dynamic game)是指参与人的行动有先后顺序，而且行动在后者可以观察到行动在先者的选择，并据此作出相应的选择。<br>不同的参与人在不同时间点行动，先行动者的选择影响后行动者的选择空间，后行动者可以观察到先行动者做了什么选择，因此，为了做最优的行动选择，每个参与人都必须这样思考问题：如果我如此选择，对方将如何应对？如果我是他，我将会如何行动？给定他的应对，什么是我的最优选择？</p>
-<p>动态博弈的困难在于，在前一刻最优的决策在下一刻可能不再为最优，因此在求解上发生很大的困难。</p>
-<ul>
-<li>动态博弈的先动优势与后动优势</li>
-<li>在动态博弈中，行动总 有先后顺序。有些博弈具有先动优势(first-mover advantage), 但有些博弈具有后动优势(second-mover advantage)。例如日常我们所说的：“先下手为强，后下手遭殃”；“捷足先登”；“后发制人”、“后发优势”，等等。</li>
-</ul>
-<h2 id="纯策略博弈与混合策略博弈"><a href="#纯策略博弈与混合策略博弈" class="headerlink" title="纯策略博弈与混合策略博弈"></a>纯策略博弈与混合策略博弈</h2><p>在完全信息博弈中，如果在每个给定信息下，只能选择一种特定策略，这个策略为纯策略（purestrategy）。<br>如果在每个给定信息下只以某种概率选择不同策略，称为混合策略（mixed strategy）。混合策略是纯策略在空间上的概率分布，纯策略是混合策略的特例。纯策略的收益可以用效用表示，混合策略的收益只能以期望效用表示。</p>
-<hr>
-<h1 id="多重均衡与优化"><a href="#多重均衡与优化" class="headerlink" title="多重均衡与优化"></a>多重均衡与优化</h1><ol>
-<li>占优策略与智猪博弈</li>
-<li>博弈的多重纳什均衡</li>
-<li>帕累托最优均衡</li>
-<li>帕累托最优均衡与纳什均衡的关系</li>
-<li>如何得到帕累托最优均衡 </li>
-</ol>
-<h2 id="占优策略与智猪博弈"><a href="#占优策略与智猪博弈" class="headerlink" title="占优策略与智猪博弈"></a>占优策略与智猪博弈</h2><p>在参与人各自的策略集中，如果存在一个与其他竞争对手可能采取的策略无关的最优选择，则称其为占优策略(Dominant Strategy)，与之相对的其他策略则为劣势策略。占优策略是博弈论（game theory）中的专业术语, 所谓的占优策略就是指无论博弈对手如何行动都属于本人最佳选择的策略。</p>
-<h3 id="占优策略和纳什均衡的比较"><a href="#占优策略和纳什均衡的比较" class="headerlink" title="占优策略和纳什均衡的比较"></a>占优策略和纳什均衡的比较</h3><ul>
-<li>占优策略:“不管你怎么做，我所做的都是我能做得最好的。”</li>
-<li>纳什均衡:<ul>
-<li>“给定你的做法后，我所做的是我能做得最好的。”</li>
-<li>如果你有占优策略, 你可以使用此策略, 以不变应万变;</li>
-<li>如果你没有占优策略, 你必须随机应变。在达到了纳什均衡之后, 所有参与者都没有动机想再变了。</li>
-</ul>
-</li>
-</ul>
-<p>许多博弈可能有多个纳什均衡。</p>
-]]></content>
   </entry>
   <entry>
     <title>特征提取与选择</title>
@@ -966,6 +899,73 @@ J_d(x) = tr(\tilde{S_w}+\tilde{S_b})</script><p>优点：<br>定义直观、易�
       <tags>
         <tag>模式识别</tag>
       </tags>
+  </entry>
+  <entry>
+    <title>博弈论</title>
+    <url>/2018/24.game/</url>
+    <content><![CDATA[<h1 id="纳什均衡"><a href="#纳什均衡" class="headerlink" title="纳什均衡"></a>纳什均衡</h1><p>纳什均衡指的是这样一种策略组合，即在给定别人策略的情况下，没有人愿意单方面改变自己的策略，从而打破这种均衡。<br>数学表示：</p>
+<p>// 公式太长了，下次补上</p>
+<p>纳什均衡的一致预测性质:<br>一致预测：<br>如果所有博弈方都预测一个特定博弈结果会出现，所有博弈方都不会选择与预测结果不一致的策略，即没有哪个博弈方有偏离这个预测结果的愿望，因此预测结果会成为博弈的最终结果。<br>只有纳什均衡才具有一致预测的性质。一致预测性是纳什均衡的本质属性。<br>一致预测并不意味着一定能准确预测，因为有多重均衡， 预测不一致的可能。</p>
+<a id="more"></a>
+<h1 id="什么是博弈论"><a href="#什么是博弈论" class="headerlink" title="什么是博弈论"></a>什么是博弈论</h1><p>博弈论又称对策论，它使用严谨的数学模型研究 冲突对抗条件下的最优决策问题、是研究竞争的 逻辑和规律的数学分支。</p>
+<p>简单的说，博弈论是研究决策主体在给定信息结 构条件下，如何决策以使自己的效用最大化，以及不同决策主体之间决策的均衡。</p>
+<h1 id="博弈的要素"><a href="#博弈的要素" class="headerlink" title="博弈的要素"></a>博弈的要素</h1><h2 id="参与人（玩家-Player-Agent）"><a href="#参与人（玩家-Player-Agent）" class="headerlink" title="参与人（玩家, Player, Agent）:"></a>参与人（玩家, Player, Agent）:</h2><p>是博弈的参与主体，他通过选择自己的行动 （策略）来使自己的 收益最大化。参与人可以是 自然人，企业，国家等。在基于博弈的优化算法中，参与人代表算法中的某个元素。</p>
+<h2 id="参与人的策略集："><a href="#参与人的策略集：" class="headerlink" title="参与人的策略集："></a>参与人的策略集：</h2><p>是参与人可供选择的策略的集合。比如囚徒困境中的欺骗和合作。</p>
+<h2 id="收益-（效用，支付）："><a href="#收益-（效用，支付）：" class="headerlink" title="收益 （效用，支付）："></a>收益 （效用，支付）：</h2><p>在给定的策略组合下，参与人得到的确定的效用水平，或是参与人得到的期望效用水平。收益由收益函数来计算。</p>
+<h2 id="行动："><a href="#行动：" class="headerlink" title="行动："></a>行动：</h2><p>参与人在博弈的某个时间点的策略变量。</p>
+<h2 id="行动的顺序："><a href="#行动的顺序：" class="headerlink" title="行动的顺序："></a>行动的顺序：</h2><p>在动态博弈中，行动的顺序对博弈的结果有重要影响。同样的策略集，行动的顺序不同，每个人的最优策略就不同，博弈的结果就不同。尤其在不完全信息博弈中，后行动者根据先行动者的行动来获取信息。</p>
+<h2 id="信息"><a href="#信息" class="headerlink" title="信息"></a>信息</h2><p>参与人有关博弈的知识，特别是关于其它参与人的特征和行动的知识，以及自然的选择。<br>完美信息是指参与人对其它参与人的行动选择有准确的掌握。</p>
+<h2 id="共同知识："><a href="#共同知识：" class="headerlink" title="共同知识："></a>共同知识：</h2><p>所有参与人知道的每一步的信息集。</p>
+<h2 id="策略（战略）"><a href="#策略（战略）" class="headerlink" title="策略（战略）"></a>策略（战略）</h2><ul>
+<li>参与人在给定信息集情况下的行动规则，它规定参与人在 什么情况下选择什么行动。</li>
+<li>策略与行动：策略是行动的规则而不是行动本身。</li>
+<li>在静态博弈中，策略和行动是相同的。</li>
+<li>策略必须是完备的：必须给出参与人在每一种可能的情况下的行动选择。</li>
+</ul>
+<h2 id="均衡："><a href="#均衡：" class="headerlink" title="均衡："></a>均衡：</h2><p>指所有参与人的最优策略组合</p>
+<h1 id="基于博弈的控制"><a href="#基于博弈的控制" class="headerlink" title="基于博弈的控制"></a>基于博弈的控制</h1><ol>
+<li>合作博弈与非合作博弈 </li>
+<li>完全信息博弈与不完全信息博弈 </li>
+<li>静态博弈与动态博弈<br>相互组合：完全信息静态博弈、完全信息动态博弈、不完全信息静态博弈、不完全信息动态博弈。</li>
+<li>纯策略博弈与混合策略博弈</li>
+</ol>
+<p>特征函数。。。。。。。。。。。。。</p>
+<h2 id="合作博弈"><a href="#合作博弈" class="headerlink" title="合作博弈"></a>合作博弈</h2><p>合作博弈亦称为正和博弈，是指博弈双方的利益都有所增加，或者至少是一方的利益增加，而另一方的利益不受损害，因而整个集体的利益有所<br>增加。<br>合作博弈研究人们达成合作时如何分配合作得到的收益，即收益分配问题。合作博弈采取的是一种合作的方式，或者说是一种妥协。<br>至于收益在博弈各方之间如何分配，取决于博弈各方的力量对比和技巧运用。因此，妥协必须经过博弈各方的讨价还价，达成共识，进行合作。</p>
+<p>合作博弈存在的两个基本条件是：</p>
+<ol>
+<li>对联盟来说，整体收益大于其每个成员单 独经营时的收益之和。</li>
+<li>对联盟内部而言，应存在具有帕累托改进 性质的分配规则，即每个成员都能获得比不加入联盟时多一些的收益。</li>
+</ol>
+<h2 id="非合作博弈"><a href="#非合作博弈" class="headerlink" title="非合作博弈"></a>非合作博弈</h2><p>在参与人利益相互冲突中如何选择策略使自己的收益最大，即策略选择问题。是一种不可能达成具有约束力的 协议的博弈类型。<br>零和博弈、负和博弈是非合作博弈。<br>囚徒困境是非合作博弈。</p>
+<h2 id="完全信息博弈："><a href="#完全信息博弈：" class="headerlink" title="完全信息博弈："></a>完全信息博弈：</h2><p>是指每一参与者都拥有所有其他参与者的特征、策略及收益函数等方面的准确信息的博弈。<br>不完全信息博弈，参与人并不完全清楚有关博弈的一些信息。</p>
+<h2 id="静态博弈："><a href="#静态博弈：" class="headerlink" title="静态博弈："></a>静态博弈：</h2><p>是指博弈中参与者同时采取行动，或者尽管参与者行动的采取有先后顺序，但后行动的人不知道先采取行动的人采取的是什么行动。</p>
+<h2 id="动态博弈："><a href="#动态博弈：" class="headerlink" title="动态博弈："></a>动态博弈：</h2><p>动态博弈(dynamic game)是指参与人的行动有先后顺序，而且行动在后者可以观察到行动在先者的选择，并据此作出相应的选择。<br>不同的参与人在不同时间点行动，先行动者的选择影响后行动者的选择空间，后行动者可以观察到先行动者做了什么选择，因此，为了做最优的行动选择，每个参与人都必须这样思考问题：如果我如此选择，对方将如何应对？如果我是他，我将会如何行动？给定他的应对，什么是我的最优选择？</p>
+<p>动态博弈的困难在于，在前一刻最优的决策在下一刻可能不再为最优，因此在求解上发生很大的困难。</p>
+<ul>
+<li>动态博弈的先动优势与后动优势</li>
+<li>在动态博弈中，行动总 有先后顺序。有些博弈具有先动优势(first-mover advantage), 但有些博弈具有后动优势(second-mover advantage)。例如日常我们所说的：“先下手为强，后下手遭殃”；“捷足先登”；“后发制人”、“后发优势”，等等。</li>
+</ul>
+<h2 id="纯策略博弈与混合策略博弈"><a href="#纯策略博弈与混合策略博弈" class="headerlink" title="纯策略博弈与混合策略博弈"></a>纯策略博弈与混合策略博弈</h2><p>在完全信息博弈中，如果在每个给定信息下，只能选择一种特定策略，这个策略为纯策略（purestrategy）。<br>如果在每个给定信息下只以某种概率选择不同策略，称为混合策略（mixed strategy）。混合策略是纯策略在空间上的概率分布，纯策略是混合策略的特例。纯策略的收益可以用效用表示，混合策略的收益只能以期望效用表示。</p>
+<hr>
+<h1 id="多重均衡与优化"><a href="#多重均衡与优化" class="headerlink" title="多重均衡与优化"></a>多重均衡与优化</h1><ol>
+<li>占优策略与智猪博弈</li>
+<li>博弈的多重纳什均衡</li>
+<li>帕累托最优均衡</li>
+<li>帕累托最优均衡与纳什均衡的关系</li>
+<li>如何得到帕累托最优均衡 </li>
+</ol>
+<h2 id="占优策略与智猪博弈"><a href="#占优策略与智猪博弈" class="headerlink" title="占优策略与智猪博弈"></a>占优策略与智猪博弈</h2><p>在参与人各自的策略集中，如果存在一个与其他竞争对手可能采取的策略无关的最优选择，则称其为占优策略(Dominant Strategy)，与之相对的其他策略则为劣势策略。占优策略是博弈论（game theory）中的专业术语, 所谓的占优策略就是指无论博弈对手如何行动都属于本人最佳选择的策略。</p>
+<h3 id="占优策略和纳什均衡的比较"><a href="#占优策略和纳什均衡的比较" class="headerlink" title="占优策略和纳什均衡的比较"></a>占优策略和纳什均衡的比较</h3><ul>
+<li>占优策略:“不管你怎么做，我所做的都是我能做得最好的。”</li>
+<li>纳什均衡:<ul>
+<li>“给定你的做法后，我所做的是我能做得最好的。”</li>
+<li>如果你有占优策略, 你可以使用此策略, 以不变应万变;</li>
+<li>如果你没有占优策略, 你必须随机应变。在达到了纳什均衡之后, 所有参与者都没有动机想再变了。</li>
+</ul>
+</li>
+</ul>
+<p>许多博弈可能有多个纳什均衡。</p>
+]]></content>
   </entry>
   <entry>
     <title>矩阵分解</title>
