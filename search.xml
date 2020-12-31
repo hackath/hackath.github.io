@@ -384,6 +384,154 @@ P_{k+1}
       </tags>
   </entry>
   <entry>
+    <title>Bayesian Theorem</title>
+    <url>/2018/16.Bayesian-Theorem/</url>
+    <content><![CDATA[<p>根据概率论中的贝叶斯公式，有：</p>
+<script type="math/tex; mode=display">
+P(\omega_i|x)=\frac{p(x,\omega_i)}{p(x)}=\frac{p(x|\omega_i)p(\omega_i)}{p(x)},i=1,2,...</script><ul>
+<li>$p(\omega_i)$是先验概率</li>
+<li>$p(x,\omega_i)$是联合概率分布</li>
+<li>$p(x)$是总体密度</li>
+<li>$p(x|\omega_i)$是第$i$类x的概率密度，即类条件概率</li>
+</ul>
+<p>这样，后验概率就转换成先验概率与类条件概率密度的乘积，再用总体密度进行归一化。这就是贝叶斯决策。</p>
+<a id="more"></a>
+<hr>
+<h1 id="最小错误率准则"><a href="#最小错误率准则" class="headerlink" title="最小错误率准则"></a>最小错误率准则</h1><p>使错误率最小的分类决策，就是使后验概率最大。默认情况下，贝叶斯决策就是最小错误率决策。其中，后验概率用贝叶斯公式求得：</p>
+<script type="math/tex; mode=display">
+P(\omega_i|x)=\frac{p(x|\omega_i)p(\omega_i)}{p(x)}=\frac{p(x|\omega_i)p(\omega_i)}{\sum_{j=1}^{2}{p(x|\omega_i)p(\omega_i)}},i=1,2</script><p>最小错误率可以表示多种形式，比如：</p>
+<script type="math/tex; mode=display">
+minP(e)=\int_{}^{}P(e)p(x)dx \\ 
+P(\omega_i|x)=\max P(\omega_j|x),j=1,2</script><p>如果$p(x|\omega_1)p(\omega_1)P(\omega_1)&gt;p(x|\omega_2)p(\omega_2)P(\omega_2)$,则$x\in\omega_1$;反之，则$x\in\omega_2$</p>
+<h2 id="似然比"><a href="#似然比" class="headerlink" title="似然比"></a>似然比</h2><p>先验概率$p(\omega_i)$是事先确定的，与当前样本$x$无关，这样可以实现计算似然比$\lambda$，对每一个样本计算$l(x)$作比较</p>
+<script type="math/tex; mode=display">
+l(x)=p(x|\omega_1)/p(x|\omega_2)，\lambda=P(\omega_2)/P(\omega_1) \\
+l(x) > \lambda, x\in \omega_1 \\ 
+l(x) < \lambda, x\in \omega_2</script><p>为了计算，有时候使用对数似然比</p>
+<script type="math/tex; mode=display">
+h(x)=-\ln [l(x)]=-\ln p(x|\omega_1)+\ln p(x|\omega_2)</script><h2 id="错误率"><a href="#错误率" class="headerlink" title="错误率"></a>错误率</h2><p>不同类的分界线称作决策边界，在多维情况下称为决策面，它把特征空间划分成属于各类的区域。<br>对二分类问题的错误率分析：</p>
+<script type="math/tex; mode=display">
+\begin{equation} 
+\begin{split} 
+P(e)&= \int_{-\infty}^{t}P(\omega_2|x)p(x)dx+\int_{t}^{\infty}P(\omega_1|x)p(x)dx \\
+&=\int_{-\infty}^{t}p(x|\omega_2)P(\omega_2)dx+\int_{t}^{\infty}p(x|\omega_1)P(\omega_1)dx \\
+&=P(\omega_2)\int_{-\infty}^{t}p(x|\omega_2)dx+P(\omega_1)\int_{t}^{\infty}p(x|\omega_1)dx \\ 
+&=P(\omega_2)P_2(e)+P(\omega_1)P_1(e)
+\end{split} 
+\end{equation}</script><p>其中，$P_1(e)$是把第一类错判成第二类的错误率，$P_2(e)$是把第二类错判成第一类的错误类。</p>
+<h2 id="多决策"><a href="#多决策" class="headerlink" title="多决策"></a>多决策</h2><p>假如不是二分类，就要把特征空间分割成$\mathcal{R_1}，\mathcal{R_2}，…，\mathcal{R_n}$个区域，可能错分的情况就很多，平均错误率$P(e)$将有$c(c-1)$项，一共$c$行，每行$c-1$列。</p>
+<script type="math/tex; mode=display">
+P(e)=\sum_{i=1}^{c}\sum_{j=1}^{c}{[P(x\in \mathcal{R_j}|\omega_i)]P(\omega_i)}</script><p>可以通过计算平均正确率$P(c)$来降低计算量：</p>
+<script type="math/tex; mode=display">
+P(c)=\sum_{j=1}^{c}{P(x\in\mathcal{R}|\omega_i)P(\omega_j)}=\sum_{j=1}^{c}{\int_{\mathcal{R_j}}p(x|\omega_j)P(\omega_j)}dx \\
+P(e)=1-P(c)</script><hr>
+<h1 id="最小风险准则"><a href="#最小风险准则" class="headerlink" title="最小风险准则"></a>最小风险准则</h1><p>所谓最小风险准则，就是考虑各种错误造成损失不同时的一种最优决策。</p>
+<ul>
+<li>样本$x$看作$d$维随机向量：$x=[x_1,x_2,…,x_d]^T$</li>
+<li>状态空间$\Omega$由$c$个可能的状态（$c$类）组成：$\Omega=\{\omega_1,\omega_2,…,\omega_c\}$</li>
+<li>对$x$可能采取的决策组成决策空间，由$k$个决策组成：$\mathcal{A}=\{\alpha_1,\alpha_2,…,\alpha_k\}$</li>
+<li>对实际为$\omega_j$的x采取决策$\alpha_i$所带来的损失为$\lambda(\alpha_i,\omega_j),i=1,…,k， j=1,…,c$</li>
+</ul>
+<p>这里没有假定$k=c$，是因为允许拒绝决策，比如不属于任何一类，这是更一般的情况。决策损失可以列出一个$k$行$c$列的决策表。</p>
+<p>对于某一个样本属于各个状态的后验概率是$P(\omega_j|x),j=1,…,c$，对它采取决策$\alpha_i,i=1,…,k$ 的期望损失是：</p>
+<script type="math/tex; mode=display">
+R(\alpha_i|x)=E(\lambda(\alpha_i,\omega_j)|x)=\sum_{j=1}^{c}\lambda(\alpha_i,\omega_j)P(\omega_j|x)，i=1,...,k</script><p>设某一个决策$\alpha(x)$，它对特征空间中所有可能的样本采用决策所造成的期望损失是$R(\alpha)$，称为平均/期望风险，令它最小就是最小风险准则。</p>
+<script type="math/tex; mode=display">
+\min R(\alpha)=\int R(\alpha(x)|x)p(x)dx</script><p>以二分类为例，</p>
+<script type="math/tex; mode=display">
+\lambda_{11}P(\omega_1|x)+\lambda_{12}P(\omega_2|x) < \lambda_{21}P(\omega_1|x)+\lambda_{22}P(\omega_2|x)，x\in \omega_1 \\
+\lambda_{11}P(\omega_1|x)+\lambda_{12}P(\omega_2|x) > \lambda_{21}P(\omega_1|x)+\lambda_{22}P(\omega_2|x)，x\in \omega_2</script><p>关于决策表，可以写成矩阵吧，对角线一般都是0，最小错误率准则就是0-1决策表，而最小风险准则就是有了不同的参数.</p>
+<script type="math/tex; mode=display">
+\left[\begin{matrix}\lambda_{11} & \lambda_{12} \\ \lambda_{21} & \lambda_{22}\end{matrix}\right]=\left[\begin{matrix}0 & 1 \\ 1 & 0\end{matrix}\right]</script><hr>
+<h1 id="两类错误率、Neyman-Pearson决策与ROC曲线"><a href="#两类错误率、Neyman-Pearson决策与ROC曲线" class="headerlink" title="两类错误率、Neyman-Pearson决策与ROC曲线"></a>两类错误率、Neyman-Pearson决策与ROC曲线</h1><p>待续</p>
+]]></content>
+      <categories>
+        <category>数学</category>
+      </categories>
+      <tags>
+        <tag>数学</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Normal distribution</title>
+    <url>/2018/17.Normal-distribution/</url>
+    <content><![CDATA[<p>本blog总结单变量正态分布以及多元正态分布和他们的性质。</p>
+<a id="more"></a>
+<h1 id="单变量正态分布"><a href="#单变量正态分布" class="headerlink" title="单变量正态分布"></a>单变量正态分布</h1><p>概率密度函数：</p>
+<script type="math/tex; mode=display">
+p(x)=\frac{1}{\sqrt{2\pi}\sigma}\exp\left\{ -\frac{1}{2}\left(\frac{x-\mu}{\sigma}\right)^2\right\}</script><p>期望$\mu$和方差$\sigma^2$：</p>
+<script type="math/tex; mode=display">
+\mu = E\{x\}=\int_{-\infty}^{\infty}xp(x)dx \\
+\sigma^2=\int_{-\infty}^{\infty}(x-\mu)^2p(x)dx</script><h1 id="多元正态分布"><a href="#多元正态分布" class="headerlink" title="多元正态分布"></a>多元正态分布</h1><p>概率密度函数：</p>
+<script type="math/tex; mode=display">
+p(x)=\frac{1}{(x\pi)^{d/2}|\Sigma|^{1/2}}\exp\left\{ -\frac{1}{2}(x-\mu)^T\Sigma^{-1}(x-\mu)\right\}</script><ul>
+<li>$x=[x_1,x_2,…,x_d]^T$ 是d维向量</li>
+<li>$\mu=[\mu_1,\mu_2,…,\mu_d]^T$是d维均值向量</li>
+<li>$\Sigma$是dxd维协方差矩阵</li>
+</ul>
+<p>$<br>\mu=E\{x\} \\<br>\Sigma=E\{(x-\mu)(x-\mu)^T\}<br>$<br>$\mu$，$\Sigma$分别是向量$x$和矩阵$(x-\mu)(x-\mu)^T$的期望，若$x_i$是$x$的第$i$个个分量，$\mu_i$是$\mu$的第$i$个分量，$\sigma_{ij}$是$\Sigma$的第$i,j$个元素，则</p>
+<script type="math/tex; mode=display">
+\mu_i=E\{x_i\}=\int_{E^d}x_ip(x)dx=-\int_{-\infty}^{\infty}x_ip(x)dx_i</script><p>其中，$p(x_i)$为边缘分布</p>
+<script type="math/tex; mode=display">
+p(x_i)=\int_{-\infty}^{\infty}...\int_{-\infty}^{\infty}p(x)dx_1dx_2...dx_{x-1}dx_{i+1}...dx_d</script><p>而</p>
+<script type="math/tex; mode=display">
+\begin{equation} 
+\begin{split} 
+\sigma_{ij}&=E[(x_i-\mu_i)(x_j-\mu_j)] \\
+&=\int_{-\infty}^{\infty}...\int_{-\infty}^{\infty}(x_i-\mu_i)(x_j-\mu_j)p(x_i,x_j)dx_idx_j
+\end{split} 
+\end{equation}</script><p>协方差矩阵总是正定or半正定的矩阵，可以表示为</p>
+<script type="math/tex; mode=display">\Sigma = 
+\left[\begin{matrix}
+\sigma_{11} & \sigma_{12} & \dots & \sigma_{1d} \\ 
+\sigma_{21} & \sigma_{22} & \dots & \sigma_{2d} \\ 
+\vdots & \vdots & \ddots & \vdots \\ 
+\sigma_{2d} & \sigma_{2d} & \dots & \sigma_{dd} \\ 
+\end{matrix}\right]</script><h2 id="多元分布性质"><a href="#多元分布性质" class="headerlink" title="多元分布性质"></a>多元分布性质</h2><p>多元正态分布被均值向量$\mu$和协方差矩阵$\Sigma$所完全决定。</p>
+<script type="math/tex; mode=display">
+p(x)\sim N(\mu,\Sigma)</script><p>等密度点的轨迹为以超椭球面，区域中心由均值向量$\mu$决定，区域的大小由协方差矩阵$\Sigma$决定。当指数项为常数时，构成等密度点：</p>
+<script type="math/tex; mode=display">
+(x-\mu)^T\Sigma^{-1}(x-\mu)=C</script><p>该式子的解是一个超椭球面，且它的主轴方向由$\Sigma$阵的特征向量决定，主轴长度与相应的协方差矩阵$\Sigma$的特征值成正比。</p>
+<script type="math/tex; mode=display">
+\gamma^2=(x-\mu)^T\Sigma^{-1}(x-\mu)</script><p>称为由$x$到$\mu$的Mahalanobis距离（马氏距离）的平方，对应于Mahalanobis距离为$\gamma$的超椭圆球体积是</p>
+<script type="math/tex; mode=display">
+V=V_d|\Sigma|^{\frac{1}{2}}\gamma^d</script><p>其中$V_d$是$d$维单位超球体的体积，</p>
+<script type="math/tex; mode=display">
+V_d= 
+\begin{equation} 
+\left\{ 
+\begin{array}{lc} 
+\frac{\pi^{d/2}}{\left( \frac{d}{2} \right)!} & d为偶数\\
+\frac{2^d\pi^{(d-1)/2}\left( \frac{d-1}{2} \right)!}{d!} & d为奇数
+\end{array} 
+\right. 
+\end{equation}</script><p>对于给定的维数，样本离散度直接随$|\Sigma|^{1/2}$而变。</p>
+<h2 id="不相关性-独立性"><a href="#不相关性-独立性" class="headerlink" title="不相关性=独立性"></a>不相关性=独立性</h2><ul>
+<li>不相关：$E\{x_ix_j\}=E\{x_i\}E\{x-j\}$</li>
+<li>独立的：$p\{x_ix_j\}=p\{x_i\}p\{x_j\}$</li>
+</ul>
+<p>独立性比不相关性条件更强，而在多元正态分布中，两者等价。在正态分布中，变量互不相关，则一定独立。</p>
+<p>推论：如果多元正态随机向量的协方差矩阵是对角阵，则x的分量是相互独立的正态分布随机变量。</p>
+<h2 id="边缘分布和条件分布的正态性"><a href="#边缘分布和条件分布的正态性" class="headerlink" title="边缘分布和条件分布的正态性"></a>边缘分布和条件分布的正态性</h2><p>以二元正态分布为例，</p>
+<ul>
+<li>向量$x=[x_1,x_2]^T$</li>
+<li>均值$\mu=[\mu_1,\mu_2]^T$</li>
+<li>协方差矩阵$\Sigma=\left[\begin{matrix}\sigma_{11}^2&amp;\sigma_{12}^2\\\sigma_{21}^2&amp;\sigma_{22}^2\end{matrix}\right]$</li>
+</ul>
+<script type="math/tex; mode=display">
+p(x_1)\sim N(\mu_1,\sigma_{11}^2) \\
+p(x_2)\sim N(\mu_1,\sigma_{22}^2)</script><h2 id="线性变换的正态性"><a href="#线性变换的正态性" class="headerlink" title="线性变换的正态性"></a>线性变换的正态性</h2><p>对于多元正态随机变量$x$，无论是线性变化$y=Ax$还是线性组合$y=\alpha^Tx$，正态分布依然是正态分布。</p>
+<script type="math/tex; mode=display">
+p(y)\sim N(A\mu,A\Sigma A^T)
+p(y)\sim N(\alpha^T\mu,\alpha^T\Sigma\alpha)</script>]]></content>
+      <categories>
+        <category>数学</category>
+      </categories>
+      <tags>
+        <tag>数学</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>google tools</title>
     <url>/2018/15.google/</url>
     <content><![CDATA[<p>本blog整理google自家的工具链，包括glags、glog、gtest、protocol-buffers</p>
@@ -571,253 +719,6 @@ P_{k+1}
       </tags>
   </entry>
   <entry>
-    <title>Bayesian Theorem</title>
-    <url>/2018/16.Bayesian-Theorem/</url>
-    <content><![CDATA[<p>根据概率论中的贝叶斯公式，有：</p>
-<script type="math/tex; mode=display">
-P(\omega_i|x)=\frac{p(x,\omega_i)}{p(x)}=\frac{p(x|\omega_i)p(\omega_i)}{p(x)},i=1,2,...</script><ul>
-<li>$p(\omega_i)$是先验概率</li>
-<li>$p(x,\omega_i)$是联合概率分布</li>
-<li>$p(x)$是总体密度</li>
-<li>$p(x|\omega_i)$是第$i$类x的概率密度，即类条件概率</li>
-</ul>
-<p>这样，后验概率就转换成先验概率与类条件概率密度的乘积，再用总体密度进行归一化。这就是贝叶斯决策。</p>
-<a id="more"></a>
-<hr>
-<h1 id="最小错误率准则"><a href="#最小错误率准则" class="headerlink" title="最小错误率准则"></a>最小错误率准则</h1><p>使错误率最小的分类决策，就是使后验概率最大。默认情况下，贝叶斯决策就是最小错误率决策。其中，后验概率用贝叶斯公式求得：</p>
-<script type="math/tex; mode=display">
-P(\omega_i|x)=\frac{p(x|\omega_i)p(\omega_i)}{p(x)}=\frac{p(x|\omega_i)p(\omega_i)}{\sum_{j=1}^{2}{p(x|\omega_i)p(\omega_i)}},i=1,2</script><p>最小错误率可以表示多种形式，比如：</p>
-<script type="math/tex; mode=display">
-minP(e)=\int_{}^{}P(e)p(x)dx \\ 
-P(\omega_i|x)=\max P(\omega_j|x),j=1,2</script><p>如果$p(x|\omega_1)p(\omega_1)P(\omega_1)&gt;p(x|\omega_2)p(\omega_2)P(\omega_2)$,则$x\in\omega_1$;反之，则$x\in\omega_2$</p>
-<h2 id="似然比"><a href="#似然比" class="headerlink" title="似然比"></a>似然比</h2><p>先验概率$p(\omega_i)$是事先确定的，与当前样本$x$无关，这样可以实现计算似然比$\lambda$，对每一个样本计算$l(x)$作比较</p>
-<script type="math/tex; mode=display">
-l(x)=p(x|\omega_1)/p(x|\omega_2)，\lambda=P(\omega_2)/P(\omega_1) \\
-l(x) > \lambda, x\in \omega_1 \\ 
-l(x) < \lambda, x\in \omega_2</script><p>为了计算，有时候使用对数似然比</p>
-<script type="math/tex; mode=display">
-h(x)=-\ln [l(x)]=-\ln p(x|\omega_1)+\ln p(x|\omega_2)</script><h2 id="错误率"><a href="#错误率" class="headerlink" title="错误率"></a>错误率</h2><p>不同类的分界线称作决策边界，在多维情况下称为决策面，它把特征空间划分成属于各类的区域。<br>对二分类问题的错误率分析：</p>
-<script type="math/tex; mode=display">
-\begin{equation} 
-\begin{split} 
-P(e)&= \int_{-\infty}^{t}P(\omega_2|x)p(x)dx+\int_{t}^{\infty}P(\omega_1|x)p(x)dx \\
-&=\int_{-\infty}^{t}p(x|\omega_2)P(\omega_2)dx+\int_{t}^{\infty}p(x|\omega_1)P(\omega_1)dx \\
-&=P(\omega_2)\int_{-\infty}^{t}p(x|\omega_2)dx+P(\omega_1)\int_{t}^{\infty}p(x|\omega_1)dx \\ 
-&=P(\omega_2)P_2(e)+P(\omega_1)P_1(e)
-\end{split} 
-\end{equation}</script><p>其中，$P_1(e)$是把第一类错判成第二类的错误率，$P_2(e)$是把第二类错判成第一类的错误类。</p>
-<h2 id="多决策"><a href="#多决策" class="headerlink" title="多决策"></a>多决策</h2><p>假如不是二分类，就要把特征空间分割成$\mathcal{R_1}，\mathcal{R_2}，…，\mathcal{R_n}$个区域，可能错分的情况就很多，平均错误率$P(e)$将有$c(c-1)$项，一共$c$行，每行$c-1$列。</p>
-<script type="math/tex; mode=display">
-P(e)=\sum_{i=1}^{c}\sum_{j=1}^{c}{[P(x\in \mathcal{R_j}|\omega_i)]P(\omega_i)}</script><p>可以通过计算平均正确率$P(c)$来降低计算量：</p>
-<script type="math/tex; mode=display">
-P(c)=\sum_{j=1}^{c}{P(x\in\mathcal{R}|\omega_i)P(\omega_j)}=\sum_{j=1}^{c}{\int_{\mathcal{R_j}}p(x|\omega_j)P(\omega_j)}dx \\
-P(e)=1-P(c)</script><hr>
-<h1 id="最小风险准则"><a href="#最小风险准则" class="headerlink" title="最小风险准则"></a>最小风险准则</h1><p>所谓最小风险准则，就是考虑各种错误造成损失不同时的一种最优决策。</p>
-<ul>
-<li>样本$x$看作$d$维随机向量：$x=[x_1,x_2,…,x_d]^T$</li>
-<li>状态空间$\Omega$由$c$个可能的状态（$c$类）组成：$\Omega=\{\omega_1,\omega_2,…,\omega_c\}$</li>
-<li>对$x$可能采取的决策组成决策空间，由$k$个决策组成：$\mathcal{A}=\{\alpha_1,\alpha_2,…,\alpha_k\}$</li>
-<li>对实际为$\omega_j$的x采取决策$\alpha_i$所带来的损失为$\lambda(\alpha_i,\omega_j),i=1,…,k， j=1,…,c$</li>
-</ul>
-<p>这里没有假定$k=c$，是因为允许拒绝决策，比如不属于任何一类，这是更一般的情况。决策损失可以列出一个$k$行$c$列的决策表。</p>
-<p>对于某一个样本属于各个状态的后验概率是$P(\omega_j|x),j=1,…,c$，对它采取决策$\alpha_i,i=1,…,k$ 的期望损失是：</p>
-<script type="math/tex; mode=display">
-R(\alpha_i|x)=E(\lambda(\alpha_i,\omega_j)|x)=\sum_{j=1}^{c}\lambda(\alpha_i,\omega_j)P(\omega_j|x)，i=1,...,k</script><p>设某一个决策$\alpha(x)$，它对特征空间中所有可能的样本采用决策所造成的期望损失是$R(\alpha)$，称为平均/期望风险，令它最小就是最小风险准则。</p>
-<script type="math/tex; mode=display">
-\min R(\alpha)=\int R(\alpha(x)|x)p(x)dx</script><p>以二分类为例，</p>
-<script type="math/tex; mode=display">
-\lambda_{11}P(\omega_1|x)+\lambda_{12}P(\omega_2|x) < \lambda_{21}P(\omega_1|x)+\lambda_{22}P(\omega_2|x)，x\in \omega_1 \\
-\lambda_{11}P(\omega_1|x)+\lambda_{12}P(\omega_2|x) > \lambda_{21}P(\omega_1|x)+\lambda_{22}P(\omega_2|x)，x\in \omega_2</script><p>关于决策表，可以写成矩阵吧，对角线一般都是0，最小错误率准则就是0-1决策表，而最小风险准则就是有了不同的参数.</p>
-<script type="math/tex; mode=display">
-\left[\begin{matrix}\lambda_{11} & \lambda_{12} \\ \lambda_{21} & \lambda_{22}\end{matrix}\right]=\left[\begin{matrix}0 & 1 \\ 1 & 0\end{matrix}\right]</script><hr>
-<h1 id="两类错误率、Neyman-Pearson决策与ROC曲线"><a href="#两类错误率、Neyman-Pearson决策与ROC曲线" class="headerlink" title="两类错误率、Neyman-Pearson决策与ROC曲线"></a>两类错误率、Neyman-Pearson决策与ROC曲线</h1><p>待续</p>
-]]></content>
-      <categories>
-        <category>数学</category>
-      </categories>
-      <tags>
-        <tag>数学</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Normal distribution</title>
-    <url>/2018/17.Normal-distribution/</url>
-    <content><![CDATA[<p>本blog总结单变量正态分布以及多元正态分布和他们的性质。</p>
-<a id="more"></a>
-<h1 id="单变量正态分布"><a href="#单变量正态分布" class="headerlink" title="单变量正态分布"></a>单变量正态分布</h1><p>概率密度函数：</p>
-<script type="math/tex; mode=display">
-p(x)=\frac{1}{\sqrt{2\pi}\sigma}\exp\left\{ -\frac{1}{2}\left(\frac{x-\mu}{\sigma}\right)^2\right\}</script><p>期望$\mu$和方差$\sigma^2$：</p>
-<script type="math/tex; mode=display">
-\mu = E\{x\}=\int_{-\infty}^{\infty}xp(x)dx \\
-\sigma^2=\int_{-\infty}^{\infty}(x-\mu)^2p(x)dx</script><h1 id="多元正态分布"><a href="#多元正态分布" class="headerlink" title="多元正态分布"></a>多元正态分布</h1><p>概率密度函数：</p>
-<script type="math/tex; mode=display">
-p(x)=\frac{1}{(x\pi)^{d/2}|\Sigma|^{1/2}}\exp\left\{ -\frac{1}{2}(x-\mu)^T\Sigma^{-1}(x-\mu)\right\}</script><ul>
-<li>$x=[x_1,x_2,…,x_d]^T$ 是d维向量</li>
-<li>$\mu=[\mu_1,\mu_2,…,\mu_d]^T$是d维均值向量</li>
-<li>$\Sigma$是dxd维协方差矩阵</li>
-</ul>
-<p>$<br>\mu=E\{x\} \\<br>\Sigma=E\{(x-\mu)(x-\mu)^T\}<br>$<br>$\mu$，$\Sigma$分别是向量$x$和矩阵$(x-\mu)(x-\mu)^T$的期望，若$x_i$是$x$的第$i$个个分量，$\mu_i$是$\mu$的第$i$个分量，$\sigma_{ij}$是$\Sigma$的第$i,j$个元素，则</p>
-<script type="math/tex; mode=display">
-\mu_i=E\{x_i\}=\int_{E^d}x_ip(x)dx=-\int_{-\infty}^{\infty}x_ip(x)dx_i</script><p>其中，$p(x_i)$为边缘分布</p>
-<script type="math/tex; mode=display">
-p(x_i)=\int_{-\infty}^{\infty}...\int_{-\infty}^{\infty}p(x)dx_1dx_2...dx_{x-1}dx_{i+1}...dx_d</script><p>而</p>
-<script type="math/tex; mode=display">
-\begin{equation} 
-\begin{split} 
-\sigma_{ij}&=E[(x_i-\mu_i)(x_j-\mu_j)] \\
-&=\int_{-\infty}^{\infty}...\int_{-\infty}^{\infty}(x_i-\mu_i)(x_j-\mu_j)p(x_i,x_j)dx_idx_j
-\end{split} 
-\end{equation}</script><p>协方差矩阵总是正定or半正定的矩阵，可以表示为</p>
-<script type="math/tex; mode=display">\Sigma = 
-\left[\begin{matrix}
-\sigma_{11} & \sigma_{12} & \dots & \sigma_{1d} \\ 
-\sigma_{21} & \sigma_{22} & \dots & \sigma_{2d} \\ 
-\vdots & \vdots & \ddots & \vdots \\ 
-\sigma_{2d} & \sigma_{2d} & \dots & \sigma_{dd} \\ 
-\end{matrix}\right]</script><h2 id="多元分布性质"><a href="#多元分布性质" class="headerlink" title="多元分布性质"></a>多元分布性质</h2><p>多元正态分布被均值向量$\mu$和协方差矩阵$\Sigma$所完全决定。</p>
-<script type="math/tex; mode=display">
-p(x)\sim N(\mu,\Sigma)</script><p>等密度点的轨迹为以超椭球面，区域中心由均值向量$\mu$决定，区域的大小由协方差矩阵$\Sigma$决定。当指数项为常数时，构成等密度点：</p>
-<script type="math/tex; mode=display">
-(x-\mu)^T\Sigma^{-1}(x-\mu)=C</script><p>该式子的解是一个超椭球面，且它的主轴方向由$\Sigma$阵的特征向量决定，主轴长度与相应的协方差矩阵$\Sigma$的特征值成正比。</p>
-<script type="math/tex; mode=display">
-\gamma^2=(x-\mu)^T\Sigma^{-1}(x-\mu)</script><p>称为由$x$到$\mu$的Mahalanobis距离（马氏距离）的平方，对应于Mahalanobis距离为$\gamma$的超椭圆球体积是</p>
-<script type="math/tex; mode=display">
-V=V_d|\Sigma|^{\frac{1}{2}}\gamma^d</script><p>其中$V_d$是$d$维单位超球体的体积，</p>
-<script type="math/tex; mode=display">
-V_d= 
-\begin{equation} 
-\left\{ 
-\begin{array}{lc} 
-\frac{\pi^{d/2}}{\left( \frac{d}{2} \right)!} & d为偶数\\
-\frac{2^d\pi^{(d-1)/2}\left( \frac{d-1}{2} \right)!}{d!} & d为奇数
-\end{array} 
-\right. 
-\end{equation}</script><p>对于给定的维数，样本离散度直接随$|\Sigma|^{1/2}$而变。</p>
-<h2 id="不相关性-独立性"><a href="#不相关性-独立性" class="headerlink" title="不相关性=独立性"></a>不相关性=独立性</h2><ul>
-<li>不相关：$E\{x_ix_j\}=E\{x_i\}E\{x-j\}$</li>
-<li>独立的：$p\{x_ix_j\}=p\{x_i\}p\{x_j\}$</li>
-</ul>
-<p>独立性比不相关性条件更强，而在多元正态分布中，两者等价。在正态分布中，变量互不相关，则一定独立。</p>
-<p>推论：如果多元正态随机向量的协方差矩阵是对角阵，则x的分量是相互独立的正态分布随机变量。</p>
-<h2 id="边缘分布和条件分布的正态性"><a href="#边缘分布和条件分布的正态性" class="headerlink" title="边缘分布和条件分布的正态性"></a>边缘分布和条件分布的正态性</h2><p>以二元正态分布为例，</p>
-<ul>
-<li>向量$x=[x_1,x_2]^T$</li>
-<li>均值$\mu=[\mu_1,\mu_2]^T$</li>
-<li>协方差矩阵$\Sigma=\left[\begin{matrix}\sigma_{11}^2&amp;\sigma_{12}^2\\\sigma_{21}^2&amp;\sigma_{22}^2\end{matrix}\right]$</li>
-</ul>
-<script type="math/tex; mode=display">
-p(x_1)\sim N(\mu_1,\sigma_{11}^2) \\
-p(x_2)\sim N(\mu_1,\sigma_{22}^2)</script><h2 id="线性变换的正态性"><a href="#线性变换的正态性" class="headerlink" title="线性变换的正态性"></a>线性变换的正态性</h2><p>对于多元正态随机变量$x$，无论是线性变化$y=Ax$还是线性组合$y=\alpha^Tx$，正态分布依然是正态分布。</p>
-<script type="math/tex; mode=display">
-p(y)\sim N(A\mu,A\Sigma A^T)
-p(y)\sim N(\alpha^T\mu,\alpha^T\Sigma\alpha)</script>]]></content>
-      <categories>
-        <category>数学</category>
-      </categories>
-      <tags>
-        <tag>数学</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Fisher</title>
-    <url>/2018/18.Fisher/</url>
-    <content><![CDATA[<p>线性判别方法linear discriminant analysis, LDA, R.A.</p>
-<a id="more"></a> 
-<h1 id="线性判别函数"><a href="#线性判别函数" class="headerlink" title="线性判别函数"></a>线性判别函数</h1><ul>
-<li>线性判别函数：$y = Wx$</li>
-<li>样本向量：$W$</li>
-<li>权值向量：$x$</li>
-<li>决策面：$g(x) = g_1(x) - g_2(x) = 0$</li>
-<li>$x$到决策面$H$的距离：$g(x) / ||W||$</li>
-</ul>
-<hr>
-<h2 id="涉及多分类"><a href="#涉及多分类" class="headerlink" title="涉及多分类"></a>涉及多分类</h2><ol>
-<li><p>每一类别可用单个判别边界与其它类别相分开，各自确定边界：</p>
-<script type="math/tex; mode=display">y = A*x，->solve</script></li>
-<li><p>每个模式类和其它模式类间可分别用判别平面分开，这样，有$M(M - 1)/2$个判别平面：</p>
-<ul>
-<li>判别函数： $g_{ij}(X) = w_{ij}^Tx$</li>
-<li>判别边界： $g_{ij}(x) = 0$</li>
-<li><script type="math/tex; mode=display">g_{ij}(x)>0, x\in \omega_1 \\  g_{ij}(x)<0, x \in \omega_2</script></li>
-<li><strong>结论</strong>：判别区间增大，不确定区间减少，比第一种情况小得多。</li>
-</ul>
-</li>
-<li><p>每类都有一个判别函数, 存在M个判别函数</p>
-<ul>
-<li>判别函数：$g(x)=W_K^TX ,k=1,2,…,M$</li>
-<li>判别规则：$g_i(x)=W_i^TX , Max: x\in\omega_1 , samll other$</li>
-<li>判别边界：$g_i(x)=g_j(x) 或者 g_i(x)-g_j(x)=0$  </li>
-<li><strong>优点</strong>：考虑了相邻的判别函数，可以保证交于一点，不确定区间没有了，所以这种是最好情况。</li>
-</ul>
-</li>
-</ol>
-<hr>
-<h2 id="广义线性判别函数"><a href="#广义线性判别函数" class="headerlink" title="广义线性判别函数"></a>广义线性判别函数</h2><script type="math/tex; mode=display">
-g(x) = w1f1+w2f2+w3f3+......+wk</script><ol>
-<li>这样一个非线性判别函数通过映射，变换成线性判别函数。</li>
-<li>原始的特征空间是非线性，</li>
-<li>但通过某种映射，在新的空间 能保证是线性函数</li>
-</ol>
-<h2 id="引入Fisher"><a href="#引入Fisher" class="headerlink" title="引入Fisher"></a>引入Fisher</h2><ol>
-<li>为了降维，降低计算复杂度</li>
-<li>易于分类</li>
-<li>使两类样本在该轴上投影之间的距离尽可能远，</li>
-<li>而每一类 样本的投影尽可能紧凑。</li>
-<li>评价标准<ul>
-<li>类内离散度矩阵$S_w$</li>
-<li>类间离散度矩阵$S_b$</li>
-</ul>
-</li>
-</ol>
-<hr>
-<h1 id="Fisher"><a href="#Fisher" class="headerlink" title="Fisher"></a>Fisher</h1><h2 id="Step"><a href="#Step" class="headerlink" title="Step"></a>Step</h2><ul>
-<li>step1：计算均值向量 $mean_1、mean_2、mean_3、…$</li>
-<li>step2：计算类内离散度矩阵$Si_1、Si_2、Si_3、…$</li>
-<li>step3：计算总样本类内离散度矩阵$S_w$<ul>
-<li>$S_w=Si_1+Si_2+Si_3+…$</li>
-</ul>
-</li>
-<li>step4：计算样本类间离散度矩阵$S_b$，$Sb_{12}、Sb_{13}、Sb_{23}、…$</li>
-<li>step5：最佳投影方向</li>
-<li>step6：判别函数求阈值 $W_0$</li>
-</ul>
-<h2 id="缺点："><a href="#缺点：" class="headerlink" title="缺点："></a>缺点：</h2><p>Fisher并没有考虑到数据的分布，假如数据不是正态分布的，甚至是多峰分布的，Fisher就瞎了，我认为这才是Fisher最大的问题。</p>
-<h2 id="改进-amp-多分类"><a href="#改进-amp-多分类" class="headerlink" title="改进 &amp; 多分类"></a>改进 &amp; 多分类</h2><p>通过看书和查阅各种资料，改进/分类的核心思想其实就2点：</p>
-<p>类间协方差矩阵的推广，Duda and Hart，1973</p>
-<blockquote>
-<p>Pattern Classification and Scene Analysis by Richard O. Duda and Peter E. Hart<br>Michael Thompson<br>Leonardo<br>The MIT Press<br>Volume 7, Number 4, Autumn 1974<br>p. 370</p>
-</blockquote>
-<p>判别准则选择，Fukunage，1990</p>
-<blockquote>
-<p>Introduction to Statistical Pattern Recognition Second Edition，1990.<br>Keinosuke Fukunaga<br>0327.F85 1990. 006.4 - dc20. 89-18195. CIP.</p>
-<script type="math/tex; mode=display">
-J(W)=Tr{S_W^{-1}S_B} \\
-J(W)=Tr{(W^TS_WW)^{-1}(W^TS_WW)}</script><p>其中，权值由$\{S_W^{-1}S_B\}$的d个特征值决定（降序，$d&lt;D$）。</p>
-</blockquote>
-<p>取d个最大的标准，D阶方阵的可以算出D个特征值，大多数都是复数，默认取为实数的特征值，再排序。</p>
-]]></content>
-      <categories>
-        <category>模式识别</category>
-      </categories>
-      <tags>
-        <tag>模式识别</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Cpp-Taskflow</title>
-    <url>/2018/20.cpp-taskflow/</url>
-    <content><![CDATA[<p>A fast C++ header-only library to help you quickly write parallel programs with complex task dependencies.<br><span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL2NwcC10YXNrZmxvdy9jcHAtdGFza2Zsb3c=">https://github.com/cpp-taskflow/cpp-taskflow<i class="fa fa-external-link-alt"></i></span></p>
-<a id="more"></a>
-<h2 id="升级Cmake"><a href="#升级Cmake" class="headerlink" title="升级Cmake"></a>升级Cmake</h2><p>指定安装路径进行安装<br><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">cd /user/bin/cmake-3.8/cmake-x.xx.x</span><br><span class="line">./bootstrap --prefix=/user/bin/cmake-x.x/cmake-x.xx.x</span><br><span class="line">make</span><br><span class="line">make install</span><br></pre></td></tr></table></figure><br>另一种安装方案：不使用./bootstrap，而通过 ./configure执行<br><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">./configure</span><br><span class="line">make</span><br><span class="line">make install</span><br><span class="line">sudo ln -sf /....../....../cmake-3.12.4/bin/*  /usr/bin/</span><br></pre></td></tr></table></figure></p>
-<h2 id="升级编译器gcc-g"><a href="#升级编译器gcc-g" class="headerlink" title="升级编译器gcc/g++"></a>升级编译器gcc/g++</h2><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">sudo add-apt-repository ppa:ubuntu-toolchain-r/test</span><br><span class="line">sudo apt-get update </span><br><span class="line">sudo apt-get install gcc-7</span><br><span class="line">sudo apt-get install g++-7</span><br><span class="line"></span><br><span class="line">sudo update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-7 100</span><br><span class="line">sudo update-alternatives --config gcc</span><br><span class="line"></span><br><span class="line">sudo update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-7 100</span><br><span class="line">sudo update-alternatives --config g++</span><br><span class="line"></span><br><span class="line">gcc -v</span><br><span class="line">g++ -v</span><br></pre></td></tr></table></figure>]]></content>
-      <categories>
-        <category>编程</category>
-      </categories>
-      <tags>
-        <tag>编程</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>特征提取与选择</title>
     <url>/2018/22.feature-select/</url>
     <content><![CDATA[<p>对分类器设计来说，使用什么样的特征描述事物，也就是说使用什么样的特征空间是个很重要的问题。这个问题称之为描述量的选择问题，意思是指保留哪些描述量，删除哪些描述量的问题。<br>本章节研究对特征空间进行改造,目的在于提高其某方面的性能，因此又称特征的优化问题。</p>
@@ -968,30 +869,102 @@ J_d(x) = tr(\tilde{S_w}+\tilde{S_b})</script><p>优点：<br>定义直观、易�
 ]]></content>
   </entry>
   <entry>
-    <title>矩阵分解</title>
-    <url>/2019/25.matrix/</url>
-    <content><![CDATA[<p>开个专题，研究矩阵分解的方法。</p>
-<a id="more"></a>
-<h1 id="Cholesky分解"><a href="#Cholesky分解" class="headerlink" title="Cholesky分解"></a>Cholesky分解</h1><p><span class="exturl" data-url="aHR0cHM6Ly96aC53aWtpcGVkaWEub3JnL3dpa2kvJUU1JTlGJTgzJUU1JUIwJTk0JUU3JUIxJUIzJUU3JTg5JUI5JUU3JTlGJUE5JUU5JTk4JUI1">Hermitian matrix（埃尔米特矩阵，厄米矩阵，自伴随矩阵）<i class="fa fa-external-link-alt"></i></span>，是共轭对称的方阵。</p>
-<script type="math/tex; mode=display">\left[\begin{matrix} 3 & 2+i \\ 2-i & 1 \end{matrix}\right]</script><p><span class="exturl" data-url="aHR0cHM6Ly96aC53aWtpcGVkaWEub3JnL3dpa2kvJUU2JUFEJUEzJUU1JUFFJTlBJUU3JTlGJUE5JUU5JTk4JUI1">正定矩阵<i class="fa fa-external-link-alt"></i></span>是Hermitian matrix的一种。<br>设A是一个n阶厄米特正定矩阵(Hermitian positive-definite matrix)。Cholesky分解的目标是：<br>设$A = LL^{T}$，得到：（其中$A_{21}$是一个列向量，$A_{22}$是一个n-1阶的方阵）</p>
-<script type="math/tex; mode=display">\left[ \begin{matrix} a_{11}&A_{21}^{T}\\ A_{21}&A_{22}\\ \end{matrix} \right] =  \left[ \begin{matrix} l_{11}&0\\ L_{21}&L_{22}\\ \end{matrix} \right] \left[ \begin{matrix} l_{11}&L_{21}^{T}\\ 0&L_{22}^{T}\\ \end{matrix} \right]=  \left[ \begin{matrix} l_{11}^{2}&l_{11}L_{21}^{T}\\ l_{11}L_{21}&L_{21}L_{21}^{T}+L_{22}L_{22}^{T}\\ \end{matrix} \right]</script><p>其中，未知量$l_{11},L_{21},L_{22}$，这3个未知量的求解公式是：</p>
-<script type="math/tex; mode=display">l_{11} = \sqrt {a_{11}}，L_{21} = \frac {1}{l_{11}}A_{21}，L_{22}L_{22}^{T} =  A_{22} - L_{21}L_{21}^{T}</script><p>设$A_{22}’ = A_{22} - L_{21}L_{21}^{T}$，则化简为$A_{22}’ = L_{22}L_{22}^{T}$，可以继续Cholesky分解，被分解的矩阵是A的右下角的n-1阶子方阵。所以这个算法具有递归性质。</p>
-<p>举个例子：</p>
-<script type="math/tex; mode=display">A =  \left[ \begin{matrix} 25&15&-5\\ 15&18&0\\ -5&0&11\\ \end{matrix} \right] =  \left[ \begin{matrix} l_{11}&0&0\\ l_{21}&l_{22}&0\\ l_{31}&l_{32}&l_{33}\\ \end{matrix} \right] \left[ \begin{matrix} l_{11}&l_{21}&l_{31}\\ 0&l_{22}&l_{32}\\ 0&0&l_{33}\\ \end{matrix} \right]</script><p>根据公式，有：</p>
-<script type="math/tex; mode=display">l_{11} = \sqrt { a_{11} } = 5</script><script type="math/tex; mode=display">L_{21} = \frac {1}{l_{11}}A_{21} = \frac {1}{5} \left[ \begin{matrix} 15\\ -5\\ \end{matrix} \right] =  \left[ \begin{matrix} 3\\ -1\\ \end{matrix} \right]</script><script type="math/tex; mode=display">A_{22} - L_{21}L_{21}^{T}  =  L_{22}L_{22}^{T}</script><script type="math/tex; mode=display">A_{22} - L_{21}L_{21}^{T}  =  L_{22}L_{22}^{T}</script><script type="math/tex; mode=display">\left[ \begin{matrix} 18&0\\ 0&11\\ \end{matrix} \right] -  \left[ \begin{matrix} 3\\ -1\\ \end{matrix} \right] \left[ \begin{matrix} 3&-1\\ \end{matrix} \right] =   \left[ \begin{matrix} l_{22}&0\\ l_{32}&l_{33}\\ \end{matrix} \right]   \left[ \begin{matrix} l_{22}&l_{32}\\ 0&l_{33}\\ \end{matrix} \right]</script><script type="math/tex; mode=display">\left[ \begin{matrix} 9&3\\ 3&10\\ \end{matrix} \right] =  \left[ \begin{matrix} l_{22}&0\\ l_{32}&l_{33}\\ \end{matrix} \right]   \left[ \begin{matrix} l_{22}&l_{32}\\ 0&l_{33}\\ \end{matrix} \right]</script><p>(注意，这里已经是n-1阶的Cholesky分解)</p>
-<script type="math/tex; mode=display">l_{22} = \sqrt { 9 } = 3</script><script type="math/tex; mode=display">l_{32} = \frac {1}{3}3 = 1</script><script type="math/tex; mode=display">10 = l_{32}^{2} + l_{33}^{2} = 1 + l_{33}^{2}</script><script type="math/tex; mode=display">l_{33} = \sqrt {10 - 1} = 3</script><p>综上</p>
-<script type="math/tex; mode=display">A =  \left[ \begin{matrix} 25&15&-5\\ 15&18&0\\ -5&0&11\\ \end{matrix} \right] =  \left[ \begin{matrix} 5&0&0\\ 3&3&0\\ -1&1&3\\ \end{matrix} \right] \left[ \begin{matrix} 5&3&-1\\ 0&3&1\\ 0&0&3\\ \end{matrix} \right]</script><p>对矩阵的Cholesky分解，就像对实数的求平方根。根据协方差矩阵的定义，Cholesky分解可以反求期望。</p>
-<h1 id="特征分解"><a href="#特征分解" class="headerlink" title="特征分解"></a>特征分解</h1><p>N维非零向量$v$是N×N的矩阵$A$的特征向量，当且仅当下式成立：</p>
+    <title>Fisher</title>
+    <url>/2018/18.Fisher/</url>
+    <content><![CDATA[<p>线性判别方法linear discriminant analysis, LDA, R.A.</p>
+<a id="more"></a> 
+<h1 id="线性判别函数"><a href="#线性判别函数" class="headerlink" title="线性判别函数"></a>线性判别函数</h1><ul>
+<li>线性判别函数：$y = Wx$</li>
+<li>样本向量：$W$</li>
+<li>权值向量：$x$</li>
+<li>决策面：$g(x) = g_1(x) - g_2(x) = 0$</li>
+<li>$x$到决策面$H$的距离：$g(x) / ||W||$</li>
+</ul>
+<hr>
+<h2 id="涉及多分类"><a href="#涉及多分类" class="headerlink" title="涉及多分类"></a>涉及多分类</h2><ol>
+<li><p>每一类别可用单个判别边界与其它类别相分开，各自确定边界：</p>
+<script type="math/tex; mode=display">y = A*x，->solve</script></li>
+<li><p>每个模式类和其它模式类间可分别用判别平面分开，这样，有$M(M - 1)/2$个判别平面：</p>
+<ul>
+<li>判别函数： $g_{ij}(X) = w_{ij}^Tx$</li>
+<li>判别边界： $g_{ij}(x) = 0$</li>
+<li><script type="math/tex; mode=display">g_{ij}(x)>0, x\in \omega_1 \\  g_{ij}(x)<0, x \in \omega_2</script></li>
+<li><strong>结论</strong>：判别区间增大，不确定区间减少，比第一种情况小得多。</li>
+</ul>
+</li>
+<li><p>每类都有一个判别函数, 存在M个判别函数</p>
+<ul>
+<li>判别函数：$g(x)=W_K^TX ,k=1,2,…,M$</li>
+<li>判别规则：$g_i(x)=W_i^TX , Max: x\in\omega_1 , samll other$</li>
+<li>判别边界：$g_i(x)=g_j(x) 或者 g_i(x)-g_j(x)=0$  </li>
+<li><strong>优点</strong>：考虑了相邻的判别函数，可以保证交于一点，不确定区间没有了，所以这种是最好情况。</li>
+</ul>
+</li>
+</ol>
+<hr>
+<h2 id="广义线性判别函数"><a href="#广义线性判别函数" class="headerlink" title="广义线性判别函数"></a>广义线性判别函数</h2><script type="math/tex; mode=display">
+g(x) = w1f1+w2f2+w3f3+......+wk</script><ol>
+<li>这样一个非线性判别函数通过映射，变换成线性判别函数。</li>
+<li>原始的特征空间是非线性，</li>
+<li>但通过某种映射，在新的空间 能保证是线性函数</li>
+</ol>
+<h2 id="引入Fisher"><a href="#引入Fisher" class="headerlink" title="引入Fisher"></a>引入Fisher</h2><ol>
+<li>为了降维，降低计算复杂度</li>
+<li>易于分类</li>
+<li>使两类样本在该轴上投影之间的距离尽可能远，</li>
+<li>而每一类 样本的投影尽可能紧凑。</li>
+<li>评价标准<ul>
+<li>类内离散度矩阵$S_w$</li>
+<li>类间离散度矩阵$S_b$</li>
+</ul>
+</li>
+</ol>
+<hr>
+<h1 id="Fisher"><a href="#Fisher" class="headerlink" title="Fisher"></a>Fisher</h1><h2 id="Step"><a href="#Step" class="headerlink" title="Step"></a>Step</h2><ul>
+<li>step1：计算均值向量 $mean_1、mean_2、mean_3、…$</li>
+<li>step2：计算类内离散度矩阵$Si_1、Si_2、Si_3、…$</li>
+<li>step3：计算总样本类内离散度矩阵$S_w$<ul>
+<li>$S_w=Si_1+Si_2+Si_3+…$</li>
+</ul>
+</li>
+<li>step4：计算样本类间离散度矩阵$S_b$，$Sb_{12}、Sb_{13}、Sb_{23}、…$</li>
+<li>step5：最佳投影方向</li>
+<li>step6：判别函数求阈值 $W_0$</li>
+</ul>
+<h2 id="缺点："><a href="#缺点：" class="headerlink" title="缺点："></a>缺点：</h2><p>Fisher并没有考虑到数据的分布，假如数据不是正态分布的，甚至是多峰分布的，Fisher就瞎了，我认为这才是Fisher最大的问题。</p>
+<h2 id="改进-amp-多分类"><a href="#改进-amp-多分类" class="headerlink" title="改进 &amp; 多分类"></a>改进 &amp; 多分类</h2><p>通过看书和查阅各种资料，改进/分类的核心思想其实就2点：</p>
+<p>类间协方差矩阵的推广，Duda and Hart，1973</p>
+<blockquote>
+<p>Pattern Classification and Scene Analysis by Richard O. Duda and Peter E. Hart<br>Michael Thompson<br>Leonardo<br>The MIT Press<br>Volume 7, Number 4, Autumn 1974<br>p. 370</p>
+</blockquote>
+<p>判别准则选择，Fukunage，1990</p>
+<blockquote>
+<p>Introduction to Statistical Pattern Recognition Second Edition，1990.<br>Keinosuke Fukunaga<br>0327.F85 1990. 006.4 - dc20. 89-18195. CIP.</p>
 <script type="math/tex; mode=display">
-Av=\lambda v</script><p>其中$λ$为一标量，称为$v$对应的特征值。也称$v$为特征值$λ$对应的特征向量。也即特征向量被施以线性变换$A$只会使向量伸长或缩短而其方向不被改变。<br>由上式可得</p>
-<script type="math/tex; mode=display">
-p(\lambda):=det(A-\lambda I)=0.</script><h1 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h1><p><span class="exturl" data-url="aHR0cHM6Ly96aC53aWtpcGVkaWEub3JnL3dpa2kvJUU1JThGJUFGJUU1JUFGJUI5JUU4JUE3JTkyJUU1JThDJTk2JUU3JTlGJUE5JUU5JTk4JUI1">可对角化矩阵<i class="fa fa-external-link-alt"></i></span><br><span class="exturl" data-url="aHR0cHM6Ly96aC53aWtpcGVkaWEub3JnL3dpa2kvJUU4JThCJUE1JUU1JUIwJTk0JUU1JUJEJTkzJUU2JUEwJTg3JUU1JTg3JTg2JUU1JTlFJThC">若尔当标准型<i class="fa fa-external-link-alt"></i></span><br><span class="exturl" data-url="aHR0cHM6Ly96aC53aWtpcGVkaWEub3JnL3dpa2kvJUU1JUI4JThDJUU1JUIwJTk0JUU0JUJDJUFGJUU3JTg5JUI5JUU3JUE5JUJBJUU5JTk3JUI0">希尔伯特空间<i class="fa fa-external-link-alt"></i></span><br><span class="exturl" data-url="aHR0cHM6Ly96aC53aWtpcGVkaWEub3JnL3dpa2kvJUU3JTg5JUI5JUU1JUJFJTgxJUU1JTg4JTg2JUU4JUE3JUEz">特征分解<i class="fa fa-external-link-alt"></i></span><br><span class="exturl" data-url="aHR0cHM6Ly96aC53aWtpcGVkaWEub3JnL3dpa2kvJUU1JUE1JTg3JUU1JUJDJTgyJUU1JTgwJUJDJUU1JTg4JTg2JUU4JUE3JUEz">奇异值分解<i class="fa fa-external-link-alt"></i></span></p>
+J(W)=Tr{S_W^{-1}S_B} \\
+J(W)=Tr{(W^TS_WW)^{-1}(W^TS_WW)}</script><p>其中，权值由$\{S_W^{-1}S_B\}$的d个特征值决定（降序，$d&lt;D$）。</p>
+</blockquote>
+<p>取d个最大的标准，D阶方阵的可以算出D个特征值，大多数都是复数，默认取为实数的特征值，再排序。</p>
 ]]></content>
       <categories>
-        <category>数学</category>
+        <category>模式识别</category>
       </categories>
       <tags>
-        <tag>线性代数</tag>
+        <tag>模式识别</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Cpp-Taskflow</title>
+    <url>/2018/20.cpp-taskflow/</url>
+    <content><![CDATA[<p>A fast C++ header-only library to help you quickly write parallel programs with complex task dependencies.<br><span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL2NwcC10YXNrZmxvdy9jcHAtdGFza2Zsb3c=">https://github.com/cpp-taskflow/cpp-taskflow<i class="fa fa-external-link-alt"></i></span></p>
+<a id="more"></a>
+<h2 id="升级Cmake"><a href="#升级Cmake" class="headerlink" title="升级Cmake"></a>升级Cmake</h2><p>指定安装路径进行安装<br><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">cd /user/bin/cmake-3.8/cmake-x.xx.x</span><br><span class="line">./bootstrap --prefix=/user/bin/cmake-x.x/cmake-x.xx.x</span><br><span class="line">make</span><br><span class="line">make install</span><br></pre></td></tr></table></figure><br>另一种安装方案：不使用./bootstrap，而通过 ./configure执行<br><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">./configure</span><br><span class="line">make</span><br><span class="line">make install</span><br><span class="line">sudo ln -sf /....../....../cmake-3.12.4/bin/*  /usr/bin/</span><br></pre></td></tr></table></figure></p>
+<h2 id="升级编译器gcc-g"><a href="#升级编译器gcc-g" class="headerlink" title="升级编译器gcc/g++"></a>升级编译器gcc/g++</h2><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">sudo add-apt-repository ppa:ubuntu-toolchain-r/test</span><br><span class="line">sudo apt-get update </span><br><span class="line">sudo apt-get install gcc-7</span><br><span class="line">sudo apt-get install g++-7</span><br><span class="line"></span><br><span class="line">sudo update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-7 100</span><br><span class="line">sudo update-alternatives --config gcc</span><br><span class="line"></span><br><span class="line">sudo update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-7 100</span><br><span class="line">sudo update-alternatives --config g++</span><br><span class="line"></span><br><span class="line">gcc -v</span><br><span class="line">g++ -v</span><br></pre></td></tr></table></figure>]]></content>
+      <categories>
+        <category>编程</category>
+      </categories>
+      <tags>
+        <tag>编程</tag>
       </tags>
   </entry>
   <entry>
@@ -1059,56 +1032,30 @@ p(\lambda):=det(A-\lambda I)=0.</script><h1 id="参考"><a href="#参考" class=
       </tags>
   </entry>
   <entry>
-    <title>MLE和MAP</title>
-    <url>/2019/28.MLE%E5%92%8CMAP/</url>
-    <content><![CDATA[<p>频率学派 - Frequentist - Maximum Likelihood Estimation (MLE，最大似然估计)<br>贝叶斯学派 - Bayesian - Maximum A Posteriori (MAP，最大后验估计)</p>
-<p>频率学派和贝叶斯学派对世界的认知有本质不同：<br>频率学派认为世界是确定的，有一个本体，这个本体的真值是不变的，我们的目标就是要找到这个真值或真值所在的范围；<br>而贝叶斯学派认为世界是不确定的，人们对世界先有一个预判，而后通过观测数据对这个预判做调整，我们的目标是要找到最优的描述这个世界的概率分布。</p>
+    <title>矩阵分解</title>
+    <url>/2019/25.matrix/</url>
+    <content><![CDATA[<p>开个专题，研究矩阵分解的方法。</p>
 <a id="more"></a>
-<h1 id="概率与统计的区别"><a href="#概率与统计的区别" class="headerlink" title="概率与统计的区别"></a>概率与统计的区别</h1><p>概率（probabilty）和统计（statistics）研究的问题刚好相反。</p>
-<p>概率：已知一个模型和参数，怎么去预测这个模型产生的结果的特性（例如均值，方差，协方差等等）。<br>统计：已知有一堆数据，要利用这堆数据去预测模型（什么分布）和参数（分布模型的参数）。</p>
-<p>最大似然估计MLE，最大后验估计MAP，贝叶斯估计来说Bayes，都属于统计的范畴。</p>
-<h1 id="参数估计的方法"><a href="#参数估计的方法" class="headerlink" title="参数估计的方法"></a>参数估计的方法</h1><p>点估计就是用样本统计量的某一具体数值直接推断未知的总体参数。总体参数进行点估计常用的方法有两种：矩估计与最大似然估计，其中最大似然估计就是我们实际中使用非常广泛的一种方法。 </p>
-<p>按这两种方法对总体参数进行点估计，能够得到相对准确的结果。如用样本均值X估计总体均值，或者用样本标准差S估计总体标准差σ。 </p>
-<p>但是，点估计有一个不足之处，即这种估计方法不能提供估计参数的估计误差大小。对于一个总体来说，它的总体参数是一个常数值，而它的样本统计量却是随机变量。当用随机变量去估计常数值时，误差是不可避免的，只用一个样本数值去估计总体参数是要冒很大风险的。因为这种误差风险的存在，并且风险的大小还未知，所以，点估计主要为许多定性研究提供一定的参考数据，或在对总体参数要求不精确时使用，而在需要用精确总体参数的数据进行决策时则很少使用。</p>
-<p>区间估计就是在推断总体参数时，还要根据统计量的抽样分布特征，估计出总体参数的一个区间，而不是一个数值，并同时给出总体参数落在这一区间的可能性大小，概率的保证。</p>
-<h1 id="什么是似然"><a href="#什么是似然" class="headerlink" title="什么是似然"></a>什么是似然</h1><p>The likelihood of something happening is how likely it is to happen.</p>
-<script type="math/tex; mode=display">P(x|\theta)</script><p>输入有两个：$x$表示某一个具体的数据；$\theta$表示模型的参数。</p>
-<ul>
-<li>如果$\theta$是已知确定的，$x$是变量，这个函数叫做概率函数(probability function)，它描述对于不同的样本点$x$，其出现概率是多少。</li>
-<li>如果$x$是已知确定的，$\theta$是变量，这个函数叫做似然函数(likelihood function), 它描述对于不同的模型参数，出现$x$这个样本点的概率是多少。</li>
-</ul>
-<h1 id="最大似然估计（MLE）"><a href="#最大似然估计（MLE）" class="headerlink" title="最大似然估计（MLE）"></a>最大似然估计（MLE）</h1><p>设有一个造币厂生产某种硬币，现在我们拿到了一枚这种硬币，想试试这硬币是不是均匀的。<br>于是我们拿这枚硬币抛了10次，得到的数据是：反正正正正反正正正反。我们想求的正面概率θθ是模型参数，而抛硬币模型我们可以假设是二项分布。<br>这是个只关于$θ$的函数。而最大似然估计，顾名思义，就是要最大化这个函数。</p>
-<script type="math/tex; mode=display">\displaystyle {\hat {\theta }}_{\mathrm {ML} }(x)=\arg \max _{\theta }f(x|\theta )\!</script><h1 id="最大后验概率估计（MAP）"><a href="#最大后验概率估计（MAP）" class="headerlink" title="最大后验概率估计（MAP）"></a>最大后验概率估计（MAP）</h1><p>最大似然估计是求参数$θ$, 使似然函数$P(x_0|θ)$最大。最大后验概率估计则是想求$θ$使$P(x_0|θ)P(θ)$最大。求得的$θ$不单单让似然函数大，$θ$自己出现的先验概率也得大。参数$θ$有一个先验概率。</p>
-<p>这个时候就用到了我们的最大后验概率MAP，基础是贝叶斯公式： </p>
-<script type="math/tex; mode=display">P(\theta|x_0) = \frac{P(x_0|\theta)P(\theta)}{P(x_0)}</script><p>其中，$p(x|θ)$就是之前讲的似然函数，$p(θ)$是先验概率，是指在没有任何实验数据的时候对参数$θ$的经验判断，对于一个硬币，大概率认为他是正常的，正面的概率为0.5的可能性最大。</p>
-<p>MAP优化的就是一个后验概率，即给定了观测值以后使后验概率最大： </p>
+<h1 id="Cholesky分解"><a href="#Cholesky分解" class="headerlink" title="Cholesky分解"></a>Cholesky分解</h1><p><span class="exturl" data-url="aHR0cHM6Ly96aC53aWtpcGVkaWEub3JnL3dpa2kvJUU1JTlGJTgzJUU1JUIwJTk0JUU3JUIxJUIzJUU3JTg5JUI5JUU3JTlGJUE5JUU5JTk4JUI1">Hermitian matrix（埃尔米特矩阵，厄米矩阵，自伴随矩阵）<i class="fa fa-external-link-alt"></i></span>，是共轭对称的方阵。</p>
+<script type="math/tex; mode=display">\left[\begin{matrix} 3 & 2+i \\ 2-i & 1 \end{matrix}\right]</script><p><span class="exturl" data-url="aHR0cHM6Ly96aC53aWtpcGVkaWEub3JnL3dpa2kvJUU2JUFEJUEzJUU1JUFFJTlBJUU3JTlGJUE5JUU5JTk4JUI1">正定矩阵<i class="fa fa-external-link-alt"></i></span>是Hermitian matrix的一种。<br>设A是一个n阶厄米特正定矩阵(Hermitian positive-definite matrix)。Cholesky分解的目标是：<br>设$A = LL^{T}$，得到：（其中$A_{21}$是一个列向量，$A_{22}$是一个n-1阶的方阵）</p>
+<script type="math/tex; mode=display">\left[ \begin{matrix} a_{11}&A_{21}^{T}\\ A_{21}&A_{22}\\ \end{matrix} \right] =  \left[ \begin{matrix} l_{11}&0\\ L_{21}&L_{22}\\ \end{matrix} \right] \left[ \begin{matrix} l_{11}&L_{21}^{T}\\ 0&L_{22}^{T}\\ \end{matrix} \right]=  \left[ \begin{matrix} l_{11}^{2}&l_{11}L_{21}^{T}\\ l_{11}L_{21}&L_{21}L_{21}^{T}+L_{22}L_{22}^{T}\\ \end{matrix} \right]</script><p>其中，未知量$l_{11},L_{21},L_{22}$，这3个未知量的求解公式是：</p>
+<script type="math/tex; mode=display">l_{11} = \sqrt {a_{11}}，L_{21} = \frac {1}{l_{11}}A_{21}，L_{22}L_{22}^{T} =  A_{22} - L_{21}L_{21}^{T}</script><p>设$A_{22}’ = A_{22} - L_{21}L_{21}^{T}$，则化简为$A_{22}’ = L_{22}L_{22}^{T}$，可以继续Cholesky分解，被分解的矩阵是A的右下角的n-1阶子方阵。所以这个算法具有递归性质。</p>
+<p>举个例子：</p>
+<script type="math/tex; mode=display">A =  \left[ \begin{matrix} 25&15&-5\\ 15&18&0\\ -5&0&11\\ \end{matrix} \right] =  \left[ \begin{matrix} l_{11}&0&0\\ l_{21}&l_{22}&0\\ l_{31}&l_{32}&l_{33}\\ \end{matrix} \right] \left[ \begin{matrix} l_{11}&l_{21}&l_{31}\\ 0&l_{22}&l_{32}\\ 0&0&l_{33}\\ \end{matrix} \right]</script><p>根据公式，有：</p>
+<script type="math/tex; mode=display">l_{11} = \sqrt { a_{11} } = 5</script><script type="math/tex; mode=display">L_{21} = \frac {1}{l_{11}}A_{21} = \frac {1}{5} \left[ \begin{matrix} 15\\ -5\\ \end{matrix} \right] =  \left[ \begin{matrix} 3\\ -1\\ \end{matrix} \right]</script><script type="math/tex; mode=display">A_{22} - L_{21}L_{21}^{T}  =  L_{22}L_{22}^{T}</script><script type="math/tex; mode=display">A_{22} - L_{21}L_{21}^{T}  =  L_{22}L_{22}^{T}</script><script type="math/tex; mode=display">\left[ \begin{matrix} 18&0\\ 0&11\\ \end{matrix} \right] -  \left[ \begin{matrix} 3\\ -1\\ \end{matrix} \right] \left[ \begin{matrix} 3&-1\\ \end{matrix} \right] =   \left[ \begin{matrix} l_{22}&0\\ l_{32}&l_{33}\\ \end{matrix} \right]   \left[ \begin{matrix} l_{22}&l_{32}\\ 0&l_{33}\\ \end{matrix} \right]</script><script type="math/tex; mode=display">\left[ \begin{matrix} 9&3\\ 3&10\\ \end{matrix} \right] =  \left[ \begin{matrix} l_{22}&0\\ l_{32}&l_{33}\\ \end{matrix} \right]   \left[ \begin{matrix} l_{22}&l_{32}\\ 0&l_{33}\\ \end{matrix} \right]</script><p>(注意，这里已经是n-1阶的Cholesky分解)</p>
+<script type="math/tex; mode=display">l_{22} = \sqrt { 9 } = 3</script><script type="math/tex; mode=display">l_{32} = \frac {1}{3}3 = 1</script><script type="math/tex; mode=display">10 = l_{32}^{2} + l_{33}^{2} = 1 + l_{33}^{2}</script><script type="math/tex; mode=display">l_{33} = \sqrt {10 - 1} = 3</script><p>综上</p>
+<script type="math/tex; mode=display">A =  \left[ \begin{matrix} 25&15&-5\\ 15&18&0\\ -5&0&11\\ \end{matrix} \right] =  \left[ \begin{matrix} 5&0&0\\ 3&3&0\\ -1&1&3\\ \end{matrix} \right] \left[ \begin{matrix} 5&3&-1\\ 0&3&1\\ 0&0&3\\ \end{matrix} \right]</script><p>对矩阵的Cholesky分解，就像对实数的求平方根。根据协方差矩阵的定义，Cholesky分解可以反求期望。</p>
+<h1 id="特征分解"><a href="#特征分解" class="headerlink" title="特征分解"></a>特征分解</h1><p>N维非零向量$v$是N×N的矩阵$A$的特征向量，当且仅当下式成立：</p>
 <script type="math/tex; mode=display">
-\begin{align*}
-{\hat {\theta }}_{\mathrm {MAP} }  & = \arg \max _{\theta } p(\theta|x) \\
- & = \arg \max _{\theta } \frac{p(x|\theta)\times p(\theta)}{P(x)} \\
- & =  \arg \max _{\theta } p(x|\theta)\times p(\theta)
-\end{align*}</script><p>从上面公式可以看出，$p(x|θ)$是似然函数，而$p(θ)$就是先验概率。对其取对数： </p>
+Av=\lambda v</script><p>其中$λ$为一标量，称为$v$对应的特征值。也称$v$为特征值$λ$对应的特征向量。也即特征向量被施以线性变换$A$只会使向量伸长或缩短而其方向不被改变。<br>由上式可得</p>
 <script type="math/tex; mode=display">
-\begin{align*}
-\arg \max _{\theta } p(x|\theta) \cdot p(\theta) &= \arg \max _{\theta } log \prod_{i=0}^n p(x_i | \theta) p(\theta) \\
-& = \arg \max _{\theta } \sum_i log (p(x_i | \theta) p(\theta)) \\ 
-& = \arg \max _{\theta } \sum_ilog (p(x_i | \theta) + log(p(\theta))
-\end{align*}</script><h1 id="贝叶斯估计"><a href="#贝叶斯估计" class="headerlink" title="贝叶斯估计"></a>贝叶斯估计</h1><p>贝叶斯估计是在MAP上做进一步拓展，此时不直接估计参数的值，而是允许参数服从一定概率分布。回忆下贝叶斯公式： </p>
-<script type="math/tex; mode=display">p(\theta|x) = \frac{p(x|\theta)\times p(\theta)}{P(x)}</script><p>现在我们不要求后验概率最大，这个时候就需要求$p(X)$，即观察到的$X$的概率。一般来说，用全概率公式可以求$p(X)$</p>
-<script type="math/tex; mode=display">p(X) = \int p(X | \theta)p(\theta)d\theta</script><p>那么如何用贝叶斯估计来预测呢？如果我们想求一个值 $x’$ 的概率，可以用下面的方法 </p>
-<script type="math/tex; mode=display">
-p(\hat{x}|X)=\int_{\theta\in\Theta}p(\hat{x}|\theta)p(\theta|X)d\theta=\int_{\theta\in\Theta}\frac{p(\hat{x}|\theta)p(\theta)}{p(X)}d\theta</script><h1 id="MLE和MAP的区别"><a href="#MLE和MAP的区别" class="headerlink" title="MLE和MAP的区别"></a>MLE和MAP的区别</h1><p>当先验分布均匀之时，MAP与MLE相等。直观讲，它表征了最有可能值的任何先验知识的匮乏。在这一情况中，所有权重分配到似然函数，因此当我们把先验与似然相乘，由此得到的后验极其类似于似然。因此，最大似然方法可被看作一种特殊的MAP。</p>
-<p>如果先验认为这个硬币是概率是均匀分布的，被称为无信息先验( non-informative prior )，通俗的说就是“让数据自己说话”，此时贝叶斯方法等同于频率方法。<br>随着数据的增加，先验的作用越来越弱，数据的作用越来越强，参数的分布会向着最大似然估计靠拢。而且可以证明，最大后验估计的结果是先验和最大似然估计的凸组合。</p>
-<p>重要结论：随着我们观测到越来越多的数据，我们从数据中获取的信息的置信度是越高的，MAP估计逐步逼近MLE，先验信息占的比重将会越来越少。</p>
-<h1 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h1><h3 id="这两篇博客把MLE和MAP的原理讲得很清楚："><a href="#这两篇博客把MLE和MAP的原理讲得很清楚：" class="headerlink" title="这两篇博客把MLE和MAP的原理讲得很清楚："></a>这两篇博客把MLE和MAP的原理讲得很清楚：</h3><p><span class="exturl" data-url="aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3UwMTE1MDg2NDAvYXJ0aWNsZS9kZXRhaWxzLzcyODE1OTgx">详解最大似然估计（MLE）、最大后验概率估计（MAP），以及贝叶斯公式的理解<i class="fa fa-external-link-alt"></i></span><br><span class="exturl" data-url="aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2JpdGNhcm1hbmxlZS9hcnRpY2xlL2RldGFpbHMvODE0MTcxNTE=">最大似然估计，最大后验估计，贝叶斯估计联系与区别<i class="fa fa-external-link-alt"></i></span></p>
-<h3 id="这篇文章还讲了贝叶斯："><a href="#这篇文章还讲了贝叶斯：" class="headerlink" title="这篇文章还讲了贝叶斯："></a>这篇文章还讲了贝叶斯：</h3><p>机器学习中的MLE、MAP、贝叶斯估计：<span class="exturl" data-url="aHR0cHM6Ly96aHVhbmxhbi56aGlodS5jb20vcC8zNzIxNTI3Ng==">https://zhuanlan.zhihu.com/p/37215276<i class="fa fa-external-link-alt"></i></span></p>
-<h3 id="这篇文章把频率学派和贝叶斯学派讲的很清楚："><a href="#这篇文章把频率学派和贝叶斯学派讲的很清楚：" class="headerlink" title="这篇文章把频率学派和贝叶斯学派讲的很清楚："></a>这篇文章把频率学派和贝叶斯学派讲的很清楚：</h3><p>聊一聊机器学习的MLE和MAP：最大似然估计和最大后验估计：<span class="exturl" data-url="aHR0cHM6Ly96aHVhbmxhbi56aGlodS5jb20vcC8zMjQ4MDgxMA==">https://zhuanlan.zhihu.com/p/32480810<i class="fa fa-external-link-alt"></i></span></p>
+p(\lambda):=det(A-\lambda I)=0.</script><h1 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h1><p><span class="exturl" data-url="aHR0cHM6Ly96aC53aWtpcGVkaWEub3JnL3dpa2kvJUU1JThGJUFGJUU1JUFGJUI5JUU4JUE3JTkyJUU1JThDJTk2JUU3JTlGJUE5JUU5JTk4JUI1">可对角化矩阵<i class="fa fa-external-link-alt"></i></span><br><span class="exturl" data-url="aHR0cHM6Ly96aC53aWtpcGVkaWEub3JnL3dpa2kvJUU4JThCJUE1JUU1JUIwJTk0JUU1JUJEJTkzJUU2JUEwJTg3JUU1JTg3JTg2JUU1JTlFJThC">若尔当标准型<i class="fa fa-external-link-alt"></i></span><br><span class="exturl" data-url="aHR0cHM6Ly96aC53aWtpcGVkaWEub3JnL3dpa2kvJUU1JUI4JThDJUU1JUIwJTk0JUU0JUJDJUFGJUU3JTg5JUI5JUU3JUE5JUJBJUU5JTk3JUI0">希尔伯特空间<i class="fa fa-external-link-alt"></i></span><br><span class="exturl" data-url="aHR0cHM6Ly96aC53aWtpcGVkaWEub3JnL3dpa2kvJUU3JTg5JUI5JUU1JUJFJTgxJUU1JTg4JTg2JUU4JUE3JUEz">特征分解<i class="fa fa-external-link-alt"></i></span><br><span class="exturl" data-url="aHR0cHM6Ly96aC53aWtpcGVkaWEub3JnL3dpa2kvJUU1JUE1JTg3JUU1JUJDJTgyJUU1JTgwJUJDJUU1JTg4JTg2JUU4JUE3JUEz">奇异值分解<i class="fa fa-external-link-alt"></i></span></p>
 ]]></content>
       <categories>
         <category>数学</category>
       </categories>
       <tags>
-        <tag>统计学</tag>
+        <tag>线性代数</tag>
       </tags>
   </entry>
   <entry>
@@ -1231,6 +1178,59 @@ w_k^{(i)}
       </tags>
   </entry>
   <entry>
+    <title>MLE和MAP</title>
+    <url>/2019/28.MLE%E5%92%8CMAP/</url>
+    <content><![CDATA[<p>频率学派 - Frequentist - Maximum Likelihood Estimation (MLE，最大似然估计)<br>贝叶斯学派 - Bayesian - Maximum A Posteriori (MAP，最大后验估计)</p>
+<p>频率学派和贝叶斯学派对世界的认知有本质不同：<br>频率学派认为世界是确定的，有一个本体，这个本体的真值是不变的，我们的目标就是要找到这个真值或真值所在的范围；<br>而贝叶斯学派认为世界是不确定的，人们对世界先有一个预判，而后通过观测数据对这个预判做调整，我们的目标是要找到最优的描述这个世界的概率分布。</p>
+<a id="more"></a>
+<h1 id="概率与统计的区别"><a href="#概率与统计的区别" class="headerlink" title="概率与统计的区别"></a>概率与统计的区别</h1><p>概率（probabilty）和统计（statistics）研究的问题刚好相反。</p>
+<p>概率：已知一个模型和参数，怎么去预测这个模型产生的结果的特性（例如均值，方差，协方差等等）。<br>统计：已知有一堆数据，要利用这堆数据去预测模型（什么分布）和参数（分布模型的参数）。</p>
+<p>最大似然估计MLE，最大后验估计MAP，贝叶斯估计来说Bayes，都属于统计的范畴。</p>
+<h1 id="参数估计的方法"><a href="#参数估计的方法" class="headerlink" title="参数估计的方法"></a>参数估计的方法</h1><p>点估计就是用样本统计量的某一具体数值直接推断未知的总体参数。总体参数进行点估计常用的方法有两种：矩估计与最大似然估计，其中最大似然估计就是我们实际中使用非常广泛的一种方法。 </p>
+<p>按这两种方法对总体参数进行点估计，能够得到相对准确的结果。如用样本均值X估计总体均值，或者用样本标准差S估计总体标准差σ。 </p>
+<p>但是，点估计有一个不足之处，即这种估计方法不能提供估计参数的估计误差大小。对于一个总体来说，它的总体参数是一个常数值，而它的样本统计量却是随机变量。当用随机变量去估计常数值时，误差是不可避免的，只用一个样本数值去估计总体参数是要冒很大风险的。因为这种误差风险的存在，并且风险的大小还未知，所以，点估计主要为许多定性研究提供一定的参考数据，或在对总体参数要求不精确时使用，而在需要用精确总体参数的数据进行决策时则很少使用。</p>
+<p>区间估计就是在推断总体参数时，还要根据统计量的抽样分布特征，估计出总体参数的一个区间，而不是一个数值，并同时给出总体参数落在这一区间的可能性大小，概率的保证。</p>
+<h1 id="什么是似然"><a href="#什么是似然" class="headerlink" title="什么是似然"></a>什么是似然</h1><p>The likelihood of something happening is how likely it is to happen.</p>
+<script type="math/tex; mode=display">P(x|\theta)</script><p>输入有两个：$x$表示某一个具体的数据；$\theta$表示模型的参数。</p>
+<ul>
+<li>如果$\theta$是已知确定的，$x$是变量，这个函数叫做概率函数(probability function)，它描述对于不同的样本点$x$，其出现概率是多少。</li>
+<li>如果$x$是已知确定的，$\theta$是变量，这个函数叫做似然函数(likelihood function), 它描述对于不同的模型参数，出现$x$这个样本点的概率是多少。</li>
+</ul>
+<h1 id="最大似然估计（MLE）"><a href="#最大似然估计（MLE）" class="headerlink" title="最大似然估计（MLE）"></a>最大似然估计（MLE）</h1><p>设有一个造币厂生产某种硬币，现在我们拿到了一枚这种硬币，想试试这硬币是不是均匀的。<br>于是我们拿这枚硬币抛了10次，得到的数据是：反正正正正反正正正反。我们想求的正面概率θθ是模型参数，而抛硬币模型我们可以假设是二项分布。<br>这是个只关于$θ$的函数。而最大似然估计，顾名思义，就是要最大化这个函数。</p>
+<script type="math/tex; mode=display">\displaystyle {\hat {\theta }}_{\mathrm {ML} }(x)=\arg \max _{\theta }f(x|\theta )\!</script><h1 id="最大后验概率估计（MAP）"><a href="#最大后验概率估计（MAP）" class="headerlink" title="最大后验概率估计（MAP）"></a>最大后验概率估计（MAP）</h1><p>最大似然估计是求参数$θ$, 使似然函数$P(x_0|θ)$最大。最大后验概率估计则是想求$θ$使$P(x_0|θ)P(θ)$最大。求得的$θ$不单单让似然函数大，$θ$自己出现的先验概率也得大。参数$θ$有一个先验概率。</p>
+<p>这个时候就用到了我们的最大后验概率MAP，基础是贝叶斯公式： </p>
+<script type="math/tex; mode=display">P(\theta|x_0) = \frac{P(x_0|\theta)P(\theta)}{P(x_0)}</script><p>其中，$p(x|θ)$就是之前讲的似然函数，$p(θ)$是先验概率，是指在没有任何实验数据的时候对参数$θ$的经验判断，对于一个硬币，大概率认为他是正常的，正面的概率为0.5的可能性最大。</p>
+<p>MAP优化的就是一个后验概率，即给定了观测值以后使后验概率最大： </p>
+<script type="math/tex; mode=display">
+\begin{align*}
+{\hat {\theta }}_{\mathrm {MAP} }  & = \arg \max _{\theta } p(\theta|x) \\
+ & = \arg \max _{\theta } \frac{p(x|\theta)\times p(\theta)}{P(x)} \\
+ & =  \arg \max _{\theta } p(x|\theta)\times p(\theta)
+\end{align*}</script><p>从上面公式可以看出，$p(x|θ)$是似然函数，而$p(θ)$就是先验概率。对其取对数： </p>
+<script type="math/tex; mode=display">
+\begin{align*}
+\arg \max _{\theta } p(x|\theta) \cdot p(\theta) &= \arg \max _{\theta } log \prod_{i=0}^n p(x_i | \theta) p(\theta) \\
+& = \arg \max _{\theta } \sum_i log (p(x_i | \theta) p(\theta)) \\ 
+& = \arg \max _{\theta } \sum_ilog (p(x_i | \theta) + log(p(\theta))
+\end{align*}</script><h1 id="贝叶斯估计"><a href="#贝叶斯估计" class="headerlink" title="贝叶斯估计"></a>贝叶斯估计</h1><p>贝叶斯估计是在MAP上做进一步拓展，此时不直接估计参数的值，而是允许参数服从一定概率分布。回忆下贝叶斯公式： </p>
+<script type="math/tex; mode=display">p(\theta|x) = \frac{p(x|\theta)\times p(\theta)}{P(x)}</script><p>现在我们不要求后验概率最大，这个时候就需要求$p(X)$，即观察到的$X$的概率。一般来说，用全概率公式可以求$p(X)$</p>
+<script type="math/tex; mode=display">p(X) = \int p(X | \theta)p(\theta)d\theta</script><p>那么如何用贝叶斯估计来预测呢？如果我们想求一个值 $x’$ 的概率，可以用下面的方法 </p>
+<script type="math/tex; mode=display">
+p(\hat{x}|X)=\int_{\theta\in\Theta}p(\hat{x}|\theta)p(\theta|X)d\theta=\int_{\theta\in\Theta}\frac{p(\hat{x}|\theta)p(\theta)}{p(X)}d\theta</script><h1 id="MLE和MAP的区别"><a href="#MLE和MAP的区别" class="headerlink" title="MLE和MAP的区别"></a>MLE和MAP的区别</h1><p>当先验分布均匀之时，MAP与MLE相等。直观讲，它表征了最有可能值的任何先验知识的匮乏。在这一情况中，所有权重分配到似然函数，因此当我们把先验与似然相乘，由此得到的后验极其类似于似然。因此，最大似然方法可被看作一种特殊的MAP。</p>
+<p>如果先验认为这个硬币是概率是均匀分布的，被称为无信息先验( non-informative prior )，通俗的说就是“让数据自己说话”，此时贝叶斯方法等同于频率方法。<br>随着数据的增加，先验的作用越来越弱，数据的作用越来越强，参数的分布会向着最大似然估计靠拢。而且可以证明，最大后验估计的结果是先验和最大似然估计的凸组合。</p>
+<p>重要结论：随着我们观测到越来越多的数据，我们从数据中获取的信息的置信度是越高的，MAP估计逐步逼近MLE，先验信息占的比重将会越来越少。</p>
+<h1 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h1><h3 id="这两篇博客把MLE和MAP的原理讲得很清楚："><a href="#这两篇博客把MLE和MAP的原理讲得很清楚：" class="headerlink" title="这两篇博客把MLE和MAP的原理讲得很清楚："></a>这两篇博客把MLE和MAP的原理讲得很清楚：</h3><p><span class="exturl" data-url="aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3UwMTE1MDg2NDAvYXJ0aWNsZS9kZXRhaWxzLzcyODE1OTgx">详解最大似然估计（MLE）、最大后验概率估计（MAP），以及贝叶斯公式的理解<i class="fa fa-external-link-alt"></i></span><br><span class="exturl" data-url="aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2JpdGNhcm1hbmxlZS9hcnRpY2xlL2RldGFpbHMvODE0MTcxNTE=">最大似然估计，最大后验估计，贝叶斯估计联系与区别<i class="fa fa-external-link-alt"></i></span></p>
+<h3 id="这篇文章还讲了贝叶斯："><a href="#这篇文章还讲了贝叶斯：" class="headerlink" title="这篇文章还讲了贝叶斯："></a>这篇文章还讲了贝叶斯：</h3><p>机器学习中的MLE、MAP、贝叶斯估计：<span class="exturl" data-url="aHR0cHM6Ly96aHVhbmxhbi56aGlodS5jb20vcC8zNzIxNTI3Ng==">https://zhuanlan.zhihu.com/p/37215276<i class="fa fa-external-link-alt"></i></span></p>
+<h3 id="这篇文章把频率学派和贝叶斯学派讲的很清楚："><a href="#这篇文章把频率学派和贝叶斯学派讲的很清楚：" class="headerlink" title="这篇文章把频率学派和贝叶斯学派讲的很清楚："></a>这篇文章把频率学派和贝叶斯学派讲的很清楚：</h3><p>聊一聊机器学习的MLE和MAP：最大似然估计和最大后验估计：<span class="exturl" data-url="aHR0cHM6Ly96aHVhbmxhbi56aGlodS5jb20vcC8zMjQ4MDgxMA==">https://zhuanlan.zhihu.com/p/32480810<i class="fa fa-external-link-alt"></i></span></p>
+]]></content>
+      <categories>
+        <category>数学</category>
+      </categories>
+      <tags>
+        <tag>统计学</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>getting started ros</title>
     <url>/2019/30.ros/</url>
     <content><![CDATA[<p>ROS之前看过一遍，但是过于复杂，我就很快忘记了；现在重新梳理一遍。<br><span class="exturl" data-url="aHR0cDovL3dpa2kucm9zLm9yZy9jbi9ST1MvVHV0b3JpYWxz">http://wiki.ros.org/cn/ROS/Tutorials<i class="fa fa-external-link-alt"></i></span></p>
@@ -1303,128 +1303,6 @@ w_k^{(i)}
       </categories>
       <tags>
         <tag>工具链</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>OpenMP</title>
-    <url>/2018/06.openmp/</url>
-    <content><![CDATA[<p>OpenMP（Open Multi-Processing）是一套支持跨平台共享内存方式的多线程并发的编程API，使用C,C++和Fortran语言，可以在大多数的处理器体系和操作系统中运行。</p>
-<a id="more"></a> 
-<hr>
-<h1 id="摘录"><a href="#摘录" class="headerlink" title="摘录"></a>摘录</h1><p><span class="exturl" data-url="aHR0cDovL3dkeHR1Yi5jb20vMjAxNi8wMy8yMC9vcGVubXAtZ3VpZGUv">http://wdxtub.com/2016/03/20/openmp-guide/<i class="fa fa-external-link-alt"></i></span><br><span class="exturl" data-url="aHR0cHM6Ly93d3cuaWJtLmNvbS9kZXZlbG9wZXJ3b3Jrcy9jbi9haXgvbGlicmFyeS9hdS1haXgtb3Blbm1wLWZyYW1ld29yay9pbmRleC5odG1s">https://www.ibm.com/developerworks/cn/aix/library/au-aix-openmp-framework/index.html<i class="fa fa-external-link-alt"></i></span><br><span class="exturl" data-url="aHR0cDovL2Jsb2cuY3Nkbi5uZXQvZHJ6aG91d2VpbWluZy9hcnRpY2xlL2RldGFpbHMvNDA5MzYyNA==">http://blog.csdn.net/drzhouweiming/article/details/4093624<i class="fa fa-external-link-alt"></i></span><br><span class="exturl" data-url="aHR0cDovL2Jsb2cuY3Nkbi5uZXQvZHJ6aG91d2VpbWluZy9hcnRpY2xlL2RldGFpbHMvMTEzMTUzNw==">http://blog.csdn.net/drzhouweiming/article/details/1131537<i class="fa fa-external-link-alt"></i></span><br><span class="exturl" data-url="aHR0cDovL2Jsb2cuY3Nkbi5uZXQvZHJ6aG91d2VpbWluZy9hcnRpY2xlL2RldGFpbHMvMjAzMzI3Ng==">http://blog.csdn.net/drzhouweiming/article/details/2033276<i class="fa fa-external-link-alt"></i></span><br><span class="exturl" data-url="aHR0cDovL2Jsb2cuY3Nkbi5uZXQvZHJ6aG91d2VpbWluZy9hcnRpY2xlL2RldGFpbHMvMjAzMzI3Ng==">http://blog.csdn.net/drzhouweiming/article/details/2033276<i class="fa fa-external-link-alt"></i></span><br><span class="exturl" data-url="aHR0cDovL2Jsb2cuY3Nkbi5uZXQvZHJ6aG91d2VpbWluZy9hcnRpY2xlL2RldGFpbHMvMTY4OTg1Mw==">http://blog.csdn.net/drzhouweiming/article/details/1689853<i class="fa fa-external-link-alt"></i></span><br><span class="exturl" data-url="aHR0cDovL2Jsb2cuY3Nkbi5uZXQvZHJ6aG91d2VpbWluZy9hcnRpY2xlL2RldGFpbHMvMjQ3MjQ1NA==">http://blog.csdn.net/drzhouweiming/article/details/2472454<i class="fa fa-external-link-alt"></i></span></p>
-<hr>
-<h1 id="配置"><a href="#配置" class="headerlink" title="配置"></a>配置</h1><p>在gcc编译器下，条件编译选项<code>-fopenmp</code>就可以开启openMP支持。<br>在Visual Studio下，<code>项目属性</code> —&gt; <code>C/C++</code> —&gt; <code>语言</code> —&gt; <code>OpenMP支持</code> —&gt; <code>Yes</code> 就可以开启OpenMP支持。</p>
-<hr>
-<h1 id="OpenMP指令和库函数介绍"><a href="#OpenMP指令和库函数介绍" class="headerlink" title="OpenMP指令和库函数介绍"></a>OpenMP指令和库函数介绍</h1><p>在C/C++中，OpenMP指令使用的格式为：<br><figure class="highlight c++"><table><tr><td class="code"><pre><span class="line">＃pragma omp 指令 [子句[子句]…]</span><br></pre></td></tr></table></figure><br>OpenMP的指令有以下一些：<br><figure class="highlight c++"><table><tr><td class="code"><pre><span class="line">parallel          <span class="comment">// 用在一个代码段之前，表示这段代码将被多个线程并行执行</span></span><br><span class="line"><span class="keyword">for</span>               <span class="comment">// 用于for循环之前将循环并行，必须保证每次循环之间无相关性。</span></span><br><span class="line">parallel <span class="keyword">for</span>      <span class="comment">// 用在一个for循环之前，表示for循环的代码将被多个线程并行执行。</span></span><br><span class="line">sections          <span class="comment">// 用在可能会被并行执行的代码段之前</span></span><br><span class="line">parallel sections <span class="comment">// parallel和sections两个语句的结合</span></span><br><span class="line">critical          <span class="comment">// 用在一段代码临界区之前</span></span><br><span class="line">single            <span class="comment">// 用在一段只被单个线程执行的代码段之前，表示后面的代码段将被单线程执行。</span></span><br><span class="line">barrier           <span class="comment">// 用于并行区内代码的线程同步，所有线程执行到barrier时要停止，</span></span><br><span class="line">                  <span class="comment">// 直到所有线程都执行到barrier时才继续往下执行。</span></span><br><span class="line">atomic            <span class="comment">// 用于指定一块内存区域被制动更新</span></span><br><span class="line">master            <span class="comment">// 用于指定一段代码块由主线程执行</span></span><br><span class="line">ordered           <span class="comment">// 用于指定并行区域的循环按顺序执行</span></span><br><span class="line">threadprivate     <span class="comment">// 用于指定一个变量是线程私有的。</span></span><br></pre></td></tr></table></figure><br>OpenMP除上述指令外，还有一些库函数，下面列出几个常用的库函数：<br><figure class="highlight c++"><table><tr><td class="code"><pre><span class="line">omp_get_num_procs()     <span class="comment">// 返回运行本线程的多处理机的处理器个数</span></span><br><span class="line">omp_get_num_threads()   <span class="comment">// 返回当前并行区域中的活动线程个数</span></span><br><span class="line">omp_get_thread_num()    <span class="comment">// 返回线程号</span></span><br><span class="line">omp_set_num_threads()   <span class="comment">// 设置并行执行代码时的线程个数</span></span><br><span class="line">omp_init_lock()         <span class="comment">// 初始化一个简单锁</span></span><br><span class="line">omp_set_lock()          <span class="comment">// 上锁操作</span></span><br><span class="line">omp_unset_lock()        <span class="comment">// 解锁操作，要和omp_set_lock函数配对使用。</span></span><br><span class="line">omp_destroy_lock()      <span class="comment">// omp_init_lock函数的配对操作函数，关闭一个锁</span></span><br></pre></td></tr></table></figure><br>OpenMP的子句有以下一些：<br><figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="keyword">private</span>       <span class="comment">// 指定每个线程都有它自己的变量私有副本</span></span><br><span class="line">firstprivate  <span class="comment">// 指定每个线程都有它自己的变量私有副本，并且变量要被继承主线程中的初值</span></span><br><span class="line">lastprivate   <span class="comment">// 主要是用来指定将线程中的私有变量的值在并行处理结束后复制回主线程中的对应变量</span></span><br><span class="line">reduce        <span class="comment">// 用来指定一个或多个变量是私有的，并且在并行处理结束后这些变量要执行指定的运算</span></span><br><span class="line">nowait        <span class="comment">// 忽略指定中暗含的等待</span></span><br><span class="line">num_threads   <span class="comment">// 指定线程的个数</span></span><br><span class="line">schedule      <span class="comment">// 指定如何调度for循环迭代</span></span><br><span class="line">shared        <span class="comment">// 指定一个或多个变量为多个线程间的共享变量</span></span><br><span class="line">ordered       <span class="comment">// 用来指定for循环的执行要按顺序执行</span></span><br><span class="line">copyprivate   <span class="comment">// 用于single指令中的指定变量为多个线程的共享变量</span></span><br><span class="line">copyin        <span class="comment">// 用来指定一个threadprivate的变量的值要用主线程的值进行初始化。</span></span><br><span class="line"><span class="keyword">default</span>       <span class="comment">// 用来指定并行处理区域内的变量的使用方式，缺省是shared</span></span><br></pre></td></tr></table></figure><br>第一个程序：<br><figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">pragma</span> omp parallel</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="built_in">std</span>::<span class="built_in">cout</span> &lt;&lt; <span class="string">&quot;Hello World!\n&quot;</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><br>发生了什么？<code>#pragma omp parallel</code> 仅在指定了<code>-fopenmp编译器选项</code>后才会发挥作用。在编译期间， 会根据硬件和操作系统配置在运行时生成代码，创建尽可能多的线程。每个线程的起始例程为代码块中位于指令之后的代码。这种行为是<code>隐式的并行化</code>，而OpenMP本质上由一组功能强大的编译指示组成，省去了编写大量样本文件的工作。<br>在电脑上输出了4行”Hello World”，说明创建了4个线程。<br>使用编译命令的<code>num_threads参数</code>控制线程的数量非常简单。如下，可用线程的数量被指定为 5<br><figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">pragma</span> omp parallel num_threads(5)</span></span><br></pre></td></tr></table></figure><br>这里没有使用<code>num_threads</code>方法，而是使用另一种方法来修改运行代码的线程的数量。这还使用的第一个<code>OpenMP API：omp_set_num_threads</code>。在<code>omp.h</code>头文件中定义该函数。不需要链接到额外的库就可以运行。<br><figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;omp.h&gt;</span></span></span><br><span class="line">omp_set_num_threads(<span class="number">5</span>); </span><br><span class="line"><span class="comment">// ...</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">pragma</span> omp parallel </span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="built_in">std</span>::<span class="built_in">cout</span> &lt;&lt; <span class="string">&quot;Hello World!\n&quot;</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><br>OpenMP使用<code>隐式并行化</code>技术，可以使用编译指示、显式函数和环境变量来指导编译器的行为。例如，可以将 for 循环分为几个部分，在不同的核心中运行它们。<code>parallel for</code>编译指示可以将 for 循环工作负载划分到多个线程中，每个线程都可以在不同的核心上运行，这显著减少了总的计算时间。</p>
-<h2 id=""><a href="#" class="headerlink" title=""></a><figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="keyword">int</span> a[<span class="number">1000000</span>], b[<span class="number">1000000</span>]; </span><br><span class="line"><span class="keyword">int</span> c[<span class="number">1000000</span>];</span><br><span class="line"><span class="meta">#<span class="meta-keyword">pragma</span> omp parallel for </span></span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; <span class="number">1000000</span>; ++i)</span><br><span class="line">        c[i] = a[i] * b[i] + a[i<span class="number">-1</span>] * b[i+<span class="number">1</span>];</span><br></pre></td></tr></table></figure></h2><h1 id="fork-join并行执行模式"><a href="#fork-join并行执行模式" class="headerlink" title="fork / join并行执行模式"></a>fork / join并行执行模式</h1><p>OpenMP是一个编译器指令和库函数的集合，主要是为共享式存储计算机上的并行程序设计使用的。OpenMP并行执行的程序要全部结束后才能执行后面的非并行部分的代码。这就是标准的并行模式：fork/join式并行模式，共享存储式并行程序就是使用fork / join式并行的。<br>标准并行模式执行代码的基本思想是：程序开始时只有一个主线程，程序中的串行部分都由主线程执行，并行的部分是通过派生其他线程来执行，但是如果并行部分没有结束时是不会执行串行部分的。</p>
-<hr>
-<h1 id="parallel-指令的用法"><a href="#parallel-指令的用法" class="headerlink" title="parallel 指令的用法"></a>parallel 指令的用法</h1><p>parallel 是用来构造一个并行块的，可以使用其他指令如<code>for</code>、<code>sections</code>等和它配合使用。<br>在C/C++中，<code>parallel</code>的使用方法如下：<br><figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">pragma</span> omp parallel [for | sections] [子句[子句]…]</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="comment">// 多个线程并行的代码</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><br><code>parallel块</code>中的每行代码都被多个线程重复执行，等于给一个线程入口函数重复调用创建线程函数来创建线程并等待线程执行完。<br>for指令则是用来将一个for循环分配到多个线程中执行。for指令一般和parallel指令合起来形成<code>parallel for</code>使用，也可以单独用在parallel语句的并行块中。<br>for指令要和parallel指令结合起来使用才有效果，单纯的<code>#pragma omp for</code>是没有用的，来一个例子：<br><figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">pragma</span> omp parallel for</span></span><br><span class="line">	<span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">0</span>; j &lt; <span class="number">4</span>; j++) &#123;</span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">&quot;j = %d, ThreadId = %d \n&quot;</span>, j, omp_get_thread_num());</span><br><span class="line">	&#125;</span><br></pre></td></tr></table></figure><br>上面这段代码也可以改写成以下形式：<br><figure class="highlight c++"><table><tr><td class="code"><pre><span class="line">	<span class="keyword">int</span> j = <span class="number">0</span>; <span class="comment">// 变量 j 只定义一次，不要放在parallel块里面</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">pragma</span> omp parallel</span></span><br><span class="line">	&#123;</span><br><span class="line"><span class="meta">#<span class="meta-keyword">pragma</span> omp for</span></span><br><span class="line">	<span class="keyword">for</span> (j = <span class="number">0</span>; j &lt; <span class="number">4</span>; j++) &#123;</span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">&quot;j = %d, ThreadId = %d \n&quot;</span>, j, omp_get_thread_num());</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><br>值得一提的是，在一个<code>parallel块</code>中也可以有多个for语句</p>
-<h2 id="-1"><a href="#-1" class="headerlink" title=""></a><figure class="highlight c++"><table><tr><td class="code"><pre><span class="line">    <span class="keyword">int</span> j;  <span class="comment">// 并行外定义j</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">pragma</span> omp parallel</span></span><br><span class="line">&#123;</span><br><span class="line"><span class="meta">#<span class="meta-keyword">pragma</span> omp for</span></span><br><span class="line">     <span class="keyword">for</span> ( j = <span class="number">0</span>; j &lt; <span class="number">100</span>; j++ )&#123; <span class="comment">// j赋值0</span></span><br><span class="line">         <span class="comment">// 循环体1 …</span></span><br><span class="line">     &#125;</span><br><span class="line"><span class="meta">#<span class="meta-keyword">pragma</span> omp for</span></span><br><span class="line">     <span class="keyword">for</span> (  j = <span class="number">0</span>; j &lt; <span class="number">100</span>; j++ )&#123; <span class="comment">// j重新赋值0</span></span><br><span class="line">         <span class="comment">// 循环体2 …</span></span><br><span class="line">     &#125;</span><br><span class="line">…</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></h2><h1 id="for-循环并行化的约束条件"><a href="#for-循环并行化的约束条件" class="headerlink" title="for 循环并行化的约束条件"></a>for 循环并行化的约束条件</h1><p>尽管OpenMP可以方便地对for循环进行并行化，但并不是所有的for循环都可以进行并行化。以下几种情况不能进行并行化：</p>
-<ol>
-<li>for循环中的循环变量必须是有符号整形。例如，for (unsigned int i = 0; i &lt; 10; ++i){}会编译不通过</li>
-<li>for循环中比较操作符必须是&lt;, &lt;=, &gt;, &gt;=。例如for (int i = 0; i != 10; ++i){}会编译不通过</li>
-<li>for循环中的第三个表达式，必须是整数的加减，并且加减的值必须是一个循环不变量。例如for (int i = 0; i != 10; i = i + 1){}会编译不通过；感觉只能++i; i++; –i; 或i–</li>
-<li>如果for循环中的比较操作为&lt;或&lt;=，那么循环变量只能增加；反之亦然。例如for (int i = 0; i != 10; –i)会编译不通过<br>循环必须是单入口、单出口，也就是说循环内部不允许能够达到循环以外的跳转语句，exit除外。异常的处理也必须在循环体内处理。例如：若循环体内的break或goto会跳转到循环体外，那么会编译不通过</li>
-</ol>
-<hr>
-<h1 id="sections和section指令"><a href="#sections和section指令" class="headerlink" title="sections和section指令"></a>sections和section指令</h1><p>section语句是用在sections语句里用来将sections语句里的代码划分成几个不同的段，每段都并行执行。用法如下：<br><figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">pragma</span> omp [parallel] sections [子句]</span></span><br><span class="line">&#123;</span><br><span class="line">   <span class="meta">#<span class="meta-keyword">pragma</span> omp section</span></span><br><span class="line">   &#123;</span><br><span class="line">       <span class="comment">// 并行代码块1</span></span><br><span class="line">   &#125; </span><br><span class="line">   <span class="meta">#<span class="meta-keyword">pragma</span> omp section</span></span><br><span class="line">   &#123;</span><br><span class="line">       <span class="comment">// 并行代码块2</span></span><br><span class="line">   &#125; </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><br>使用section语句时，需要注意的是这种方式需要保证各个section里的代码执行时间相差不大，否则某个section执行时间比其他section过长就达不到并行执行的效果了。<br>用for语句来分摊是由系统自动进行，只要每次循环间没有时间上的差距，那么分摊是很均匀的，使用section来划分线程是一种手工划分线程的方式，最终并行性的好坏得依赖于程序员。<br>再看一种写法：<br><figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">pragma</span> omp parallel </span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="meta">#<span class="meta-keyword">pragma</span> omp sections</span></span><br><span class="line">    &#123;</span><br><span class="line">	<span class="meta">#<span class="meta-keyword">pragma</span> omp section</span></span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">&quot;section 1 ThreadId = %d \n&quot;</span>, omp_get_thread_num());</span><br><span class="line">	<span class="meta">#<span class="meta-keyword">pragma</span> omp section</span></span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">&quot;section 2 ThreadId = %d \n&quot;</span>, omp_get_thread_num());</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="meta">#<span class="meta-keyword">pragma</span> omp sections</span></span><br><span class="line">    &#123;</span><br><span class="line"> 	<span class="meta">#<span class="meta-keyword">pragma</span> omp section</span></span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">&quot;section 3 ThreadId = %d \n&quot;</span>, omp_get_thread_num());</span><br><span class="line">	<span class="meta">#<span class="meta-keyword">pragma</span> omp section</span></span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">&quot;section 4 ThreadId = %d \n&quot;</span>, omp_get_thread_num());</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><br>这种方式和前面那种方式的区别是，两个sections语句是串行执行的，即第二个sections语句里的代码要等第一个sections语句里的代码执行完后才能执行。</p>
-<hr>
-<h1 id="数据的共享与私有化"><a href="#数据的共享与私有化" class="headerlink" title="数据的共享与私有化"></a>数据的共享与私有化</h1><p>在并行区域中，若多个线程共同访问同一存储单元，并且至少会有一个线程更新数据单元中的内容时，会发送数据竞争。<br>除了以下三种情况外，并行区域中的所有变量都是共享的：</p>
-<ol>
-<li>并行区域中定义的变量</li>
-<li>多个线程用来完成循环的循环变量</li>
-<li>private、firstprivate、lastprivate或reduction字句修饰的变量</li>
-</ol>
-<p>并行区域中变量val是私有的，即每个线程拥有该变量的一个拷贝<br><figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="keyword">private</span>(val1, val2, ...)</span><br></pre></td></tr></table></figure><br>与private不同的是，每个线程在开始的时候都会对该变量进行一次初始化。<br><figure class="highlight c++"><table><tr><td class="code"><pre><span class="line">firstprivate(val1, val2, ...)</span><br></pre></td></tr></table></figure><br>与private不同的是，并发执行的最后一次循环的私有变量将会拷贝到val<br><figure class="highlight c++"><table><tr><td class="code"><pre><span class="line">lastprivate(val1, val2, ...)</span><br></pre></td></tr></table></figure><br>声明val是共享的<br><figure class="highlight c++"><table><tr><td class="code"><pre><span class="line">shared(val1, val2, ...)</span><br></pre></td></tr></table></figure><br>如果使用private，无论该变量在并行区域外是否初始化，在进入并行区域后，该变量均不会初始化。</p>
-<h2 id="private子句"><a href="#private子句" class="headerlink" title="private子句"></a>private子句</h2><p>private子句用于将一个或多个变量声明成线程私有的变量，变量声明成私有变量后，指定每个线程都有它自己的变量私有副本，其他线程无法访问私有副本。即使在并行区域外有同名的共享变量，共享变量在并行区域内不起任何作用，并且并行区域内不会操作到外面的共享变量。<br><figure class="highlight c++"><table><tr><td class="code"><pre><span class="line">    <span class="keyword">int</span> k = <span class="number">100</span>;</span><br><span class="line"><span class="meta">#<span class="meta-keyword">pragma</span> omp parallel for private(k)</span></span><br><span class="line">    <span class="keyword">for</span> (k = <span class="number">0</span>; k &lt; <span class="number">10</span>; k++)</span><br><span class="line">    &#123;</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">&quot;k=%d \n&quot;</span>, k);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;last k=%d \n&quot;</span>, k);</span><br></pre></td></tr></table></figure><br>从打印结果可以看出，for循环前的变量k和循环区域内的变量k其实是两个不同的变量。<br>用private子句声明的私有变量的初始值在并行区域的入口处是未定义的，它并不会继承同名共享变量的值。<br>出现在reduction子句中的参数不能出现在private子句中。</p>
-<h2 id="firstprivate子句"><a href="#firstprivate子句" class="headerlink" title="firstprivate子句"></a>firstprivate子句</h2><p>private声明的私有变量不能继承同名变量的值，但实际情况中有时需要继承原有共享变量的值，OpenMP提供了firstprivate子句来实现这个功能。<br>以下的代码例子：<br><figure class="highlight c++"><table><tr><td class="code"><pre><span class="line">    <span class="keyword">int</span> k = <span class="number">100</span>, i=<span class="number">0</span>;</span><br><span class="line"><span class="meta">#<span class="meta-keyword">pragma</span> omp parallel for firstprivate(k)</span></span><br><span class="line">    <span class="keyword">for</span> (i = <span class="number">0</span>; i &lt; <span class="number">4</span>; i++)</span><br><span class="line">    &#123;</span><br><span class="line">	k += i;</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">&quot;k=%d \n&quot;</span>, k);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;last k=%d \n&quot;</span>, k);</span><br></pre></td></tr></table></figure><br>从打印结果可以看出，并行区域内的私有变量k继承了外面共享变量k的值100作为初始值，并且在退出并行区域后，共享变量k的值保持为100未变。</p>
-<h2 id="lastprivate子句"><a href="#lastprivate子句" class="headerlink" title="lastprivate子句"></a>lastprivate子句</h2><p>有时在并行区域内的私有变量的值经过计算后，在退出并行区域时，需要将它的值赋给同名的共享变量，前面的private和firstprivate子句在退出并行区域时都没有将私有变量的最后取值赋给对应的共享变量，lastprivate子句就是用来实现在退出并行区域时将私有变量的值赋给共享变量。<br><figure class="highlight c++"><table><tr><td class="code"><pre><span class="line">    <span class="keyword">int</span> k = <span class="number">100</span>, i=<span class="number">0</span>;</span><br><span class="line"><span class="meta">#<span class="meta-keyword">pragma</span> omp parallel for firstprivate(k),lastprivate(k)</span></span><br><span class="line">    <span class="keyword">for</span> (i = <span class="number">0</span>; i &lt; <span class="number">4</span>; i++)</span><br><span class="line">    &#123;</span><br><span class="line">	k += i;</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">&quot;k=%d \n&quot;</span>, k);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;last k=%d \n&quot;</span>, k);</span><br></pre></td></tr></table></figure><br>从打印结果可以看出，退出for循环的并行区域后，共享变量k的值变成了103，而不是保持原来的100不变。<br>由于在并行区域内是多个线程并行执行的，最后到底是将那个线程的最终计算结果赋给了对应的共享变量呢？OpenMP规范中指出，如果是循环迭代，那么是将最后一次循环迭代中的值赋给对应的共享变量；如果是section构造，那么是最后一个section语句中的值赋给对应的共享变量。注意这里说的最后一个section是指程序语法上的最后一个，而不是实际运行时的最后一个运行完的。<br>如果是类（class）类型的变量使用在lastprivate参数中，那么使用时有些限制，需要一个可访问的，明确的缺省构造函数，除非变量也被使用作为firstprivate子句的参数；还需要一个拷贝赋值操作符，并且这个拷贝赋值操作符对于不同对象的操作顺序是未指定的，依赖于编译器的定义。</p>
-<h2 id="threadprivate子句"><a href="#threadprivate子句" class="headerlink" title="threadprivate子句"></a>threadprivate子句</h2><p>threadprivate子句用来指定全局的对象被各个线程各自复制了一个私有的拷贝，即各个线程具有各自私有的全局对象。<br>用法如下：<br><figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">pragma</span> omp threadprivate(list) new-<span class="meta-keyword">line</span></span></span><br></pre></td></tr></table></figure><br>下面用threadprivate命令来实现一个各个线程私有的计数器，各个线程使用同一个函数来实现自己的计数。计数器代码如下：<br><figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="keyword">int</span> counter = <span class="number">0</span>;</span><br><span class="line"><span class="meta">#<span class="meta-keyword">pragma</span> omp threadprivate(counter)</span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">increment_counter</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    counter++;</span><br><span class="line">    <span class="keyword">return</span> counter;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><br>如果对于静态变量也同样可以使用threadprivate声明成线程私有的，上面的counter变量如改成用static类型来实现时，代码如下：<br><figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">increment_counter2</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">static</span> <span class="keyword">int</span> counter = <span class="number">0</span>;</span><br><span class="line"><span class="meta">#<span class="meta-keyword">pragma</span> omp threadprivate(counter)</span></span><br><span class="line">    counter++;</span><br><span class="line">    <span class="keyword">return</span> counter;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><br>threadprivate和private的区别在于threadprivate声明的变量通常是全局范围内有效的，而private声明的变量只在它所属的并行构造中有效。<br>threadprivate的对应只能用于copyin，copyprivate，schedule，num_threads和if子句中，不能用于任何其他子句中。<br>用作threadprivate的变量的地址不能是常数。<br>对于C++的类（class）类型变量，用作threadprivate的参数时有些限制，当定义时带有外部初始化时，必须具有明确的拷贝构造函数。<br>对于windows系统，threadprivate不能用于动态装载（使用LoadLibrary装载）的DLL中，可以用于静态装载的DLL中，关于windows系统中的更多限制，请参阅MSDN中有关threadprivate子句的帮助材料。<br>有关threadprivate命令的更多限制方面的信息，详情请参阅OpenMP2.5规范。</p>
-<hr>
-<h1 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h1><h2 id="shared子句"><a href="#shared子句" class="headerlink" title="shared子句"></a>shared子句</h2><p>shared子句用来声明一个或多个变量是共享变量。<br><figure class="highlight c++"><table><tr><td class="code"><pre><span class="line">shared(<span class="built_in">list</span>)</span><br></pre></td></tr></table></figure><br>需要注意的是，在并行区域内使用共享变量时，如果存在写操作，必须对共享变量加以保护，否则不要轻易使用共享变量，尽量将共享变量的访问转化为私有变量的访问。<br>循环迭代变量在循环构造区域里是私有的。声明在循环构造区域内的自动变量都是私有的。</p>
-<h2 id="default子句"><a href="#default子句" class="headerlink" title="default子句"></a>default子句</h2><p>default子句用来允许用户控制并行区域中变量的共享属性。<br><figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="keyword">default</span>(shared | none)</span><br></pre></td></tr></table></figure><br>使用shared时，缺省情况下，传入并行区域内的同名变量被当作共享变量来处理，不会产生线程私有副本，除非使用private等子句来指定某些变量为私有的才会产生副本。<br>如果使用none作为参数，那么线程中用到的变量必须显示指定是共享的还是私有的，除了那些由明确定义的除外。</p>
-<h2 id="reduction子句"><a href="#reduction子句" class="headerlink" title="reduction子句"></a>reduction子句</h2><p>reduction子句主要用来对一个或多个参数条目指定一个操作符，每个线程将创建参数条目的一个私有拷贝，在区域的结束处，将用私有拷贝的值通过指定的运行符运算，原始的参数条目被运算结果的值更新。<br><figure class="highlight c++"><table><tr><td class="code"><pre><span class="line">reduction(<span class="keyword">operator</span>:<span class="built_in">list</span>)</span><br></pre></td></tr></table></figure><br>下表列出了可以用于reduction子句的一些操作符以及对应私有拷贝变量缺省的初始值，私有拷贝变量的实际初始值依赖于redtucion变量的数据类型。</p>
-<div class="table-container">
-<table>
-<thead>
-<tr>
-<th>运算符</th>
-<th>数据类型</th>
-<th>默认初始值</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>+</td>
-<td>整数、浮点</td>
-<td>0</td>
-</tr>
-<tr>
-<td>-</td>
-<td>整数、浮点</td>
-<td>0</td>
-</tr>
-<tr>
-<td>*</td>
-<td>整数、浮点</td>
-<td>1</td>
-</tr>
-<tr>
-<td>&amp;</td>
-<td>整数</td>
-<td>所有位均为1</td>
-</tr>
-<tr>
-<td>&#124;</td>
-<td>整数</td>
-<td>0</td>
-</tr>
-<tr>
-<td>^</td>
-<td>整数</td>
-<td>0</td>
-</tr>
-<tr>
-<td>&amp;&amp;</td>
-<td>整数</td>
-<td>1</td>
-</tr>
-<tr>
-<td>&#124;&#x7C;</td>
-<td>整数</td>
-<td>0</td>
-</tr>
-</tbody>
-</table>
-</div>
-<p>例如一个整数求和的程序如下：<br><figure class="highlight c++"><table><tr><td class="code"><pre><span class="line">    <span class="keyword">int</span> i, sum = <span class="number">0</span>;</span><br><span class="line"><span class="meta">#<span class="meta-keyword">pragma</span> omp parallel for reduction(+: sum)</span></span><br><span class="line">    <span class="keyword">for</span> (i = <span class="number">0</span>; i &lt; <span class="number">100</span>; i++) sum += i;</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;sum = %ld \n&quot;</span>, sum);</span><br></pre></td></tr></table></figure><br>其中sum是共享的，采用reduction之后，每个线程根据reduction（+: sum）的声明算出自己的sum，然后再将每个线程的sum加起来。<br>reduction声明可以看作：</p>
-<ol>
-<li>保证了对sum的原则操作</li>
-<li>多个线程的执行结果通过reduction中声明的操作符进行计算</li>
-</ol>
-<p>以加法操作符为例：<br>假设sum的初始值为10，<code>reduction（+: sum）</code>声明的并行区域中每个线程的sum初始值为0（规定），并行处理结束之后，会将sum的初始化值10以及每个线程所计算的sum值相加。<br>注意：<br>如果在并行区域内不加锁保护就直接对共享变量进行写操作，存在数据竞争问题，会导致不可预测的异常结果。共享数据作为private、firstprivate、lastprivate、threadprivate、reduction子句的参数进入并行区域后，就变成线程私有了，不需要加锁保护了。</p>
-<h2 id="copyin子句"><a href="#copyin子句" class="headerlink" title="copyin子句"></a>copyin子句</h2><p>copyin子句用来将主线程中threadprivate变量的值拷贝到执行并行区域的各个线程的threadprivate变量中，便于线程可以访问主线程中的变量值<br><figure class="highlight c++"><table><tr><td class="code"><pre><span class="line">copyin(<span class="built_in">list</span>)</span><br></pre></td></tr></table></figure><br>copyin中的参数必须被声明成threadprivate的，对于类类型的变量，必须带有明确的拷贝赋值操作符。<br>对于前面threadprivate中讲过的计数器函数，如果多个线程使用时，各个线程都需要对全局变量counter的副本进行初始化，可以使用copyin子句来实现，示例代码如下：<br><figure class="highlight c++"><table><tr><td class="code"><pre><span class="line">    <span class="keyword">int</span> iterator;</span><br><span class="line"><span class="meta">#<span class="meta-keyword">pragma</span> omp parallel sections copyin(counter)</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="meta">#<span class="meta-keyword">pragma</span> omp section</span></span><br><span class="line">	&#123;</span><br><span class="line">	    <span class="keyword">int</span> count1;</span><br><span class="line">            <span class="keyword">for</span> (iterator = <span class="number">0</span>; iterator &lt; <span class="number">100</span>; iterator++)</span><br><span class="line">	    &#123;</span><br><span class="line">                count1 = increment_counter();</span><br><span class="line">	    &#125;</span><br><span class="line">	    <span class="built_in">printf</span>(<span class="string">&quot;count1 = %ld \n&quot;</span>, count1);</span><br><span class="line">	&#125;</span><br><span class="line">        <span class="meta">#<span class="meta-keyword">pragma</span> omp section</span></span><br><span class="line">	&#123;</span><br><span class="line">	    <span class="keyword">int</span> count2;</span><br><span class="line">	    <span class="keyword">for</span> (iterator = <span class="number">0</span>; iterator &lt; <span class="number">200</span>; iterator++)</span><br><span class="line">	    &#123;</span><br><span class="line">		count2 = increment_counter();</span><br><span class="line">	    &#125;</span><br><span class="line">	    <span class="built_in">printf</span>(<span class="string">&quot;count2 = %ld \n&quot;</span>, count2);</span><br><span class="line">	&#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;counter = %ld \n&quot;</span>, counter);</span><br></pre></td></tr></table></figure><br>从打印结果可以看出，两个线程都正确实现了各自的计数。</p>
-<h2 id="copyprivate子句"><a href="#copyprivate子句" class="headerlink" title="copyprivate子句"></a>copyprivate子句</h2><p>copyprivate子句提供了一种机制用一个私有变量将一个值从一个线程广播到执行同一并行区域的其他线程。<br><figure class="highlight c++"><table><tr><td class="code"><pre><span class="line">copyprivate(<span class="built_in">list</span>)</span><br></pre></td></tr></table></figure><br>copyprivate子句可以关联single构造，在single构造的barrier到达之前就完成了广播工作。copyprivate可以对private和threadprivate子句中的变量进行操作，但是当使用single构造时，copyprivate的变量不能用于private和firstprivate子句中。<br><figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="keyword">int</span> counter = <span class="number">0</span>;</span><br><span class="line"><span class="meta">#<span class="meta-keyword">pragma</span> omp threadprivate(counter)</span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">increment_counter</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    counter++;</span><br><span class="line">    <span class="keyword">return</span> counter;</span><br><span class="line">&#125;</span><br><span class="line"><span class="meta">#<span class="meta-keyword">pragma</span> omp parallel</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">int</span> count;</span><br><span class="line">    <span class="meta">#<span class="meta-keyword">pragma</span> omp single copyprivate(counter)</span></span><br><span class="line">    &#123;</span><br><span class="line">        counter = <span class="number">50</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    count = increment_counter();</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;ThreadId: %ld, count = %ld \n&quot;</span>, omp_get_thread_num(), count);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><br>从打印结果可以看出，使用copyprivate子句后，single构造内给counter赋的值被广播到了其他线程里，但没有使用copyprivate子句时，只有一个线程获得了single构造内的赋值，其他线程没有获取single构造内的赋值。</p>
-<hr>
-<h1 id="OpenMP中的任务调度"><a href="#OpenMP中的任务调度" class="headerlink" title="OpenMP中的任务调度"></a>OpenMP中的任务调度</h1><p>OpenMP中，任务调度主要用于并行的for循环中，当循环中每次迭代的计算量不相等时，如果简单地给各个线程分配相同次数的迭代的话，会造成各个线程计算负载不均衡，这会使得有些线程先执行完，有些后执行完，造成某些CPU核空闲，影响程序性能。<br>为了解决这些问题，OpenMP中提供了几种对for循环并行化的任务调度方案。</p>
-<h2 id="Schedule子句用法"><a href="#Schedule子句用法" class="headerlink" title="Schedule子句用法"></a>Schedule子句用法</h2><figure class="highlight c++"><table><tr><td class="code"><pre><span class="line">schedule(type[,size])  <span class="comment">// size参数是可选的</span></span><br></pre></td></tr></table></figure>
-<h3 id="type参数"><a href="#type参数" class="headerlink" title="type参数"></a>type参数</h3><p>表示调度类型，有四种调度类型如下：</p>
-<ul>
-<li>dynamic</li>
-<li>guided</li>
-<li>runtime</li>
-<li>static<br>这四种调度类型实际上只有static、dynamic、guided三种调度方式，runtime实际上是根据环境变量来选择前三种中的某中类型。<h3 id="size参数-可选"><a href="#size参数-可选" class="headerlink" title="size参数 (可选)"></a>size参数 (可选)</h3>size参数表示循环迭代次数，size参数必须是整数。static、dynamic、guided三种调度方式都可以使用size参数，也可以不使用size参数。当type参数类型为runtime时，size参数是非法的（不需要使用，如果使用的话编译器会报错）。</li>
-</ul>
-<h2 id="静态调度-static"><a href="#静态调度-static" class="headerlink" title="静态调度(static)"></a>静态调度(static)</h2><p>当<code>parallel for</code>编译指导语句没有带schedule子句时，大部分系统中默认采用static调度方式，这种调度方式非常简单。假设有n次循环迭代，t个线程，那么给每个线程静态分配大约n/t次迭代计算。这里为什么说大约分配n/t次呢？因为n/t不一定是整数，因此实际分配的迭代次数可能存在差1的情况，如果指定了size参数的话，那么可能相差一个size。<br>静态调度时可以不使用size参数，也可以使用size参数。<br>不使用size参数时，分配给每个线程的是n/t次连续的迭代。使用size参数时，分配给每个线程的size次连续的迭代计算。<br><figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="keyword">int</span> i = <span class="number">0</span>;</span><br><span class="line"><span class="meta">#<span class="meta-keyword">pragma</span> omp parallel for schedule(static,5)</span></span><br><span class="line"><span class="keyword">for</span> (i = <span class="number">0</span>; i &lt; <span class="number">10</span>; i++)</span><br><span class="line">&#123;</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;i=%d, thread_id=%d \n&quot;</span>, i, omp_get_thread_num());</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<h2 id="动态调度-dynamic"><a href="#动态调度-dynamic" class="headerlink" title="动态调度(dynamic)"></a>动态调度(dynamic)</h2><p>动态调度是动态地将迭代分配到各个线程，动态调度可以使用size参数也可以不使用size参数，不使用size参数时是将迭代逐个地分配到各个线程，使用size参数时，每次分配给线程的迭代次数为指定的size次。<br><figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">pragma</span> omp parallel for schedule(dynamic,size)</span></span><br></pre></td></tr></table></figure></p>
-<h2 id="guided调度（guided）"><a href="#guided调度（guided）" class="headerlink" title="guided调度（guided）"></a>guided调度（guided）</h2><p>guided调度是一种采用指导性的启发式自调度方法。开始时每个线程会分配到较大的迭代块，之后分配到的迭代块会逐渐递减。迭代块的大小会按指数级下降到指定的size大小，如果没有指定size参数，那么迭代块大小最小会降到1。<br><figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">pragma</span> omp parallel for schedule(guided,size)</span></span><br></pre></td></tr></table></figure></p>
-<h2 id="runtime调度（rumtime）"><a href="#runtime调度（rumtime）" class="headerlink" title="runtime调度（rumtime）"></a>runtime调度（rumtime）</h2><p>runtime调度并不是和前面三种调度方式似的真实调度方式，它是在运行时根据环境变量OMP_SCHEDULE来确定调度类型，最终使用的调度类型仍然是上述三种调度方式中的某种。<br>例如在unix系统中，可以使用setenv命令来设置<code>OMP_SCHEDULE</code>环境变量：<br><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">setenv OMP_SCHEDULE “dynamic, 2”</span><br></pre></td></tr></table></figure><br>上述命令设置调度类型为动态调度，动态调度的迭代次数为2。<br>在windows环境中，可以在 “系统属性 | 高级 | 环境变量” 对话框中进行设置环境变量。</p>
-]]></content>
-      <categories>
-        <category>编程</category>
-      </categories>
-      <tags>
-        <tag>优化加速</tag>
       </tags>
   </entry>
   <entry>
@@ -1603,6 +1481,128 @@ G_{\sigma_{2}}=\frac{1}{\sqrt{2\pi}}\left( \frac{1}{\sigma_{1}}e^{-(x^2+y^2)/2\s
       <tags>
         <tag>图像处理</tag>
         <tag>数学</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>OpenMP</title>
+    <url>/2018/06.openmp/</url>
+    <content><![CDATA[<p>OpenMP（Open Multi-Processing）是一套支持跨平台共享内存方式的多线程并发的编程API，使用C,C++和Fortran语言，可以在大多数的处理器体系和操作系统中运行。</p>
+<a id="more"></a> 
+<hr>
+<h1 id="摘录"><a href="#摘录" class="headerlink" title="摘录"></a>摘录</h1><p><span class="exturl" data-url="aHR0cDovL3dkeHR1Yi5jb20vMjAxNi8wMy8yMC9vcGVubXAtZ3VpZGUv">http://wdxtub.com/2016/03/20/openmp-guide/<i class="fa fa-external-link-alt"></i></span><br><span class="exturl" data-url="aHR0cHM6Ly93d3cuaWJtLmNvbS9kZXZlbG9wZXJ3b3Jrcy9jbi9haXgvbGlicmFyeS9hdS1haXgtb3Blbm1wLWZyYW1ld29yay9pbmRleC5odG1s">https://www.ibm.com/developerworks/cn/aix/library/au-aix-openmp-framework/index.html<i class="fa fa-external-link-alt"></i></span><br><span class="exturl" data-url="aHR0cDovL2Jsb2cuY3Nkbi5uZXQvZHJ6aG91d2VpbWluZy9hcnRpY2xlL2RldGFpbHMvNDA5MzYyNA==">http://blog.csdn.net/drzhouweiming/article/details/4093624<i class="fa fa-external-link-alt"></i></span><br><span class="exturl" data-url="aHR0cDovL2Jsb2cuY3Nkbi5uZXQvZHJ6aG91d2VpbWluZy9hcnRpY2xlL2RldGFpbHMvMTEzMTUzNw==">http://blog.csdn.net/drzhouweiming/article/details/1131537<i class="fa fa-external-link-alt"></i></span><br><span class="exturl" data-url="aHR0cDovL2Jsb2cuY3Nkbi5uZXQvZHJ6aG91d2VpbWluZy9hcnRpY2xlL2RldGFpbHMvMjAzMzI3Ng==">http://blog.csdn.net/drzhouweiming/article/details/2033276<i class="fa fa-external-link-alt"></i></span><br><span class="exturl" data-url="aHR0cDovL2Jsb2cuY3Nkbi5uZXQvZHJ6aG91d2VpbWluZy9hcnRpY2xlL2RldGFpbHMvMjAzMzI3Ng==">http://blog.csdn.net/drzhouweiming/article/details/2033276<i class="fa fa-external-link-alt"></i></span><br><span class="exturl" data-url="aHR0cDovL2Jsb2cuY3Nkbi5uZXQvZHJ6aG91d2VpbWluZy9hcnRpY2xlL2RldGFpbHMvMTY4OTg1Mw==">http://blog.csdn.net/drzhouweiming/article/details/1689853<i class="fa fa-external-link-alt"></i></span><br><span class="exturl" data-url="aHR0cDovL2Jsb2cuY3Nkbi5uZXQvZHJ6aG91d2VpbWluZy9hcnRpY2xlL2RldGFpbHMvMjQ3MjQ1NA==">http://blog.csdn.net/drzhouweiming/article/details/2472454<i class="fa fa-external-link-alt"></i></span></p>
+<hr>
+<h1 id="配置"><a href="#配置" class="headerlink" title="配置"></a>配置</h1><p>在gcc编译器下，条件编译选项<code>-fopenmp</code>就可以开启openMP支持。<br>在Visual Studio下，<code>项目属性</code> —&gt; <code>C/C++</code> —&gt; <code>语言</code> —&gt; <code>OpenMP支持</code> —&gt; <code>Yes</code> 就可以开启OpenMP支持。</p>
+<hr>
+<h1 id="OpenMP指令和库函数介绍"><a href="#OpenMP指令和库函数介绍" class="headerlink" title="OpenMP指令和库函数介绍"></a>OpenMP指令和库函数介绍</h1><p>在C/C++中，OpenMP指令使用的格式为：<br><figure class="highlight c++"><table><tr><td class="code"><pre><span class="line">＃pragma omp 指令 [子句[子句]…]</span><br></pre></td></tr></table></figure><br>OpenMP的指令有以下一些：<br><figure class="highlight c++"><table><tr><td class="code"><pre><span class="line">parallel          <span class="comment">// 用在一个代码段之前，表示这段代码将被多个线程并行执行</span></span><br><span class="line"><span class="keyword">for</span>               <span class="comment">// 用于for循环之前将循环并行，必须保证每次循环之间无相关性。</span></span><br><span class="line">parallel <span class="keyword">for</span>      <span class="comment">// 用在一个for循环之前，表示for循环的代码将被多个线程并行执行。</span></span><br><span class="line">sections          <span class="comment">// 用在可能会被并行执行的代码段之前</span></span><br><span class="line">parallel sections <span class="comment">// parallel和sections两个语句的结合</span></span><br><span class="line">critical          <span class="comment">// 用在一段代码临界区之前</span></span><br><span class="line">single            <span class="comment">// 用在一段只被单个线程执行的代码段之前，表示后面的代码段将被单线程执行。</span></span><br><span class="line">barrier           <span class="comment">// 用于并行区内代码的线程同步，所有线程执行到barrier时要停止，</span></span><br><span class="line">                  <span class="comment">// 直到所有线程都执行到barrier时才继续往下执行。</span></span><br><span class="line">atomic            <span class="comment">// 用于指定一块内存区域被制动更新</span></span><br><span class="line">master            <span class="comment">// 用于指定一段代码块由主线程执行</span></span><br><span class="line">ordered           <span class="comment">// 用于指定并行区域的循环按顺序执行</span></span><br><span class="line">threadprivate     <span class="comment">// 用于指定一个变量是线程私有的。</span></span><br></pre></td></tr></table></figure><br>OpenMP除上述指令外，还有一些库函数，下面列出几个常用的库函数：<br><figure class="highlight c++"><table><tr><td class="code"><pre><span class="line">omp_get_num_procs()     <span class="comment">// 返回运行本线程的多处理机的处理器个数</span></span><br><span class="line">omp_get_num_threads()   <span class="comment">// 返回当前并行区域中的活动线程个数</span></span><br><span class="line">omp_get_thread_num()    <span class="comment">// 返回线程号</span></span><br><span class="line">omp_set_num_threads()   <span class="comment">// 设置并行执行代码时的线程个数</span></span><br><span class="line">omp_init_lock()         <span class="comment">// 初始化一个简单锁</span></span><br><span class="line">omp_set_lock()          <span class="comment">// 上锁操作</span></span><br><span class="line">omp_unset_lock()        <span class="comment">// 解锁操作，要和omp_set_lock函数配对使用。</span></span><br><span class="line">omp_destroy_lock()      <span class="comment">// omp_init_lock函数的配对操作函数，关闭一个锁</span></span><br></pre></td></tr></table></figure><br>OpenMP的子句有以下一些：<br><figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="keyword">private</span>       <span class="comment">// 指定每个线程都有它自己的变量私有副本</span></span><br><span class="line">firstprivate  <span class="comment">// 指定每个线程都有它自己的变量私有副本，并且变量要被继承主线程中的初值</span></span><br><span class="line">lastprivate   <span class="comment">// 主要是用来指定将线程中的私有变量的值在并行处理结束后复制回主线程中的对应变量</span></span><br><span class="line">reduce        <span class="comment">// 用来指定一个或多个变量是私有的，并且在并行处理结束后这些变量要执行指定的运算</span></span><br><span class="line">nowait        <span class="comment">// 忽略指定中暗含的等待</span></span><br><span class="line">num_threads   <span class="comment">// 指定线程的个数</span></span><br><span class="line">schedule      <span class="comment">// 指定如何调度for循环迭代</span></span><br><span class="line">shared        <span class="comment">// 指定一个或多个变量为多个线程间的共享变量</span></span><br><span class="line">ordered       <span class="comment">// 用来指定for循环的执行要按顺序执行</span></span><br><span class="line">copyprivate   <span class="comment">// 用于single指令中的指定变量为多个线程的共享变量</span></span><br><span class="line">copyin        <span class="comment">// 用来指定一个threadprivate的变量的值要用主线程的值进行初始化。</span></span><br><span class="line"><span class="keyword">default</span>       <span class="comment">// 用来指定并行处理区域内的变量的使用方式，缺省是shared</span></span><br></pre></td></tr></table></figure><br>第一个程序：<br><figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">pragma</span> omp parallel</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="built_in">std</span>::<span class="built_in">cout</span> &lt;&lt; <span class="string">&quot;Hello World!\n&quot;</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><br>发生了什么？<code>#pragma omp parallel</code> 仅在指定了<code>-fopenmp编译器选项</code>后才会发挥作用。在编译期间， 会根据硬件和操作系统配置在运行时生成代码，创建尽可能多的线程。每个线程的起始例程为代码块中位于指令之后的代码。这种行为是<code>隐式的并行化</code>，而OpenMP本质上由一组功能强大的编译指示组成，省去了编写大量样本文件的工作。<br>在电脑上输出了4行”Hello World”，说明创建了4个线程。<br>使用编译命令的<code>num_threads参数</code>控制线程的数量非常简单。如下，可用线程的数量被指定为 5<br><figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">pragma</span> omp parallel num_threads(5)</span></span><br></pre></td></tr></table></figure><br>这里没有使用<code>num_threads</code>方法，而是使用另一种方法来修改运行代码的线程的数量。这还使用的第一个<code>OpenMP API：omp_set_num_threads</code>。在<code>omp.h</code>头文件中定义该函数。不需要链接到额外的库就可以运行。<br><figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;omp.h&gt;</span></span></span><br><span class="line">omp_set_num_threads(<span class="number">5</span>); </span><br><span class="line"><span class="comment">// ...</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">pragma</span> omp parallel </span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="built_in">std</span>::<span class="built_in">cout</span> &lt;&lt; <span class="string">&quot;Hello World!\n&quot;</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><br>OpenMP使用<code>隐式并行化</code>技术，可以使用编译指示、显式函数和环境变量来指导编译器的行为。例如，可以将 for 循环分为几个部分，在不同的核心中运行它们。<code>parallel for</code>编译指示可以将 for 循环工作负载划分到多个线程中，每个线程都可以在不同的核心上运行，这显著减少了总的计算时间。</p>
+<h2 id=""><a href="#" class="headerlink" title=""></a><figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="keyword">int</span> a[<span class="number">1000000</span>], b[<span class="number">1000000</span>]; </span><br><span class="line"><span class="keyword">int</span> c[<span class="number">1000000</span>];</span><br><span class="line"><span class="meta">#<span class="meta-keyword">pragma</span> omp parallel for </span></span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; <span class="number">1000000</span>; ++i)</span><br><span class="line">        c[i] = a[i] * b[i] + a[i<span class="number">-1</span>] * b[i+<span class="number">1</span>];</span><br></pre></td></tr></table></figure></h2><h1 id="fork-join并行执行模式"><a href="#fork-join并行执行模式" class="headerlink" title="fork / join并行执行模式"></a>fork / join并行执行模式</h1><p>OpenMP是一个编译器指令和库函数的集合，主要是为共享式存储计算机上的并行程序设计使用的。OpenMP并行执行的程序要全部结束后才能执行后面的非并行部分的代码。这就是标准的并行模式：fork/join式并行模式，共享存储式并行程序就是使用fork / join式并行的。<br>标准并行模式执行代码的基本思想是：程序开始时只有一个主线程，程序中的串行部分都由主线程执行，并行的部分是通过派生其他线程来执行，但是如果并行部分没有结束时是不会执行串行部分的。</p>
+<hr>
+<h1 id="parallel-指令的用法"><a href="#parallel-指令的用法" class="headerlink" title="parallel 指令的用法"></a>parallel 指令的用法</h1><p>parallel 是用来构造一个并行块的，可以使用其他指令如<code>for</code>、<code>sections</code>等和它配合使用。<br>在C/C++中，<code>parallel</code>的使用方法如下：<br><figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">pragma</span> omp parallel [for | sections] [子句[子句]…]</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="comment">// 多个线程并行的代码</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><br><code>parallel块</code>中的每行代码都被多个线程重复执行，等于给一个线程入口函数重复调用创建线程函数来创建线程并等待线程执行完。<br>for指令则是用来将一个for循环分配到多个线程中执行。for指令一般和parallel指令合起来形成<code>parallel for</code>使用，也可以单独用在parallel语句的并行块中。<br>for指令要和parallel指令结合起来使用才有效果，单纯的<code>#pragma omp for</code>是没有用的，来一个例子：<br><figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">pragma</span> omp parallel for</span></span><br><span class="line">	<span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">0</span>; j &lt; <span class="number">4</span>; j++) &#123;</span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">&quot;j = %d, ThreadId = %d \n&quot;</span>, j, omp_get_thread_num());</span><br><span class="line">	&#125;</span><br></pre></td></tr></table></figure><br>上面这段代码也可以改写成以下形式：<br><figure class="highlight c++"><table><tr><td class="code"><pre><span class="line">	<span class="keyword">int</span> j = <span class="number">0</span>; <span class="comment">// 变量 j 只定义一次，不要放在parallel块里面</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">pragma</span> omp parallel</span></span><br><span class="line">	&#123;</span><br><span class="line"><span class="meta">#<span class="meta-keyword">pragma</span> omp for</span></span><br><span class="line">	<span class="keyword">for</span> (j = <span class="number">0</span>; j &lt; <span class="number">4</span>; j++) &#123;</span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">&quot;j = %d, ThreadId = %d \n&quot;</span>, j, omp_get_thread_num());</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><br>值得一提的是，在一个<code>parallel块</code>中也可以有多个for语句</p>
+<h2 id="-1"><a href="#-1" class="headerlink" title=""></a><figure class="highlight c++"><table><tr><td class="code"><pre><span class="line">    <span class="keyword">int</span> j;  <span class="comment">// 并行外定义j</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">pragma</span> omp parallel</span></span><br><span class="line">&#123;</span><br><span class="line"><span class="meta">#<span class="meta-keyword">pragma</span> omp for</span></span><br><span class="line">     <span class="keyword">for</span> ( j = <span class="number">0</span>; j &lt; <span class="number">100</span>; j++ )&#123; <span class="comment">// j赋值0</span></span><br><span class="line">         <span class="comment">// 循环体1 …</span></span><br><span class="line">     &#125;</span><br><span class="line"><span class="meta">#<span class="meta-keyword">pragma</span> omp for</span></span><br><span class="line">     <span class="keyword">for</span> (  j = <span class="number">0</span>; j &lt; <span class="number">100</span>; j++ )&#123; <span class="comment">// j重新赋值0</span></span><br><span class="line">         <span class="comment">// 循环体2 …</span></span><br><span class="line">     &#125;</span><br><span class="line">…</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></h2><h1 id="for-循环并行化的约束条件"><a href="#for-循环并行化的约束条件" class="headerlink" title="for 循环并行化的约束条件"></a>for 循环并行化的约束条件</h1><p>尽管OpenMP可以方便地对for循环进行并行化，但并不是所有的for循环都可以进行并行化。以下几种情况不能进行并行化：</p>
+<ol>
+<li>for循环中的循环变量必须是有符号整形。例如，for (unsigned int i = 0; i &lt; 10; ++i){}会编译不通过</li>
+<li>for循环中比较操作符必须是&lt;, &lt;=, &gt;, &gt;=。例如for (int i = 0; i != 10; ++i){}会编译不通过</li>
+<li>for循环中的第三个表达式，必须是整数的加减，并且加减的值必须是一个循环不变量。例如for (int i = 0; i != 10; i = i + 1){}会编译不通过；感觉只能++i; i++; –i; 或i–</li>
+<li>如果for循环中的比较操作为&lt;或&lt;=，那么循环变量只能增加；反之亦然。例如for (int i = 0; i != 10; –i)会编译不通过<br>循环必须是单入口、单出口，也就是说循环内部不允许能够达到循环以外的跳转语句，exit除外。异常的处理也必须在循环体内处理。例如：若循环体内的break或goto会跳转到循环体外，那么会编译不通过</li>
+</ol>
+<hr>
+<h1 id="sections和section指令"><a href="#sections和section指令" class="headerlink" title="sections和section指令"></a>sections和section指令</h1><p>section语句是用在sections语句里用来将sections语句里的代码划分成几个不同的段，每段都并行执行。用法如下：<br><figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">pragma</span> omp [parallel] sections [子句]</span></span><br><span class="line">&#123;</span><br><span class="line">   <span class="meta">#<span class="meta-keyword">pragma</span> omp section</span></span><br><span class="line">   &#123;</span><br><span class="line">       <span class="comment">// 并行代码块1</span></span><br><span class="line">   &#125; </span><br><span class="line">   <span class="meta">#<span class="meta-keyword">pragma</span> omp section</span></span><br><span class="line">   &#123;</span><br><span class="line">       <span class="comment">// 并行代码块2</span></span><br><span class="line">   &#125; </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><br>使用section语句时，需要注意的是这种方式需要保证各个section里的代码执行时间相差不大，否则某个section执行时间比其他section过长就达不到并行执行的效果了。<br>用for语句来分摊是由系统自动进行，只要每次循环间没有时间上的差距，那么分摊是很均匀的，使用section来划分线程是一种手工划分线程的方式，最终并行性的好坏得依赖于程序员。<br>再看一种写法：<br><figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">pragma</span> omp parallel </span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="meta">#<span class="meta-keyword">pragma</span> omp sections</span></span><br><span class="line">    &#123;</span><br><span class="line">	<span class="meta">#<span class="meta-keyword">pragma</span> omp section</span></span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">&quot;section 1 ThreadId = %d \n&quot;</span>, omp_get_thread_num());</span><br><span class="line">	<span class="meta">#<span class="meta-keyword">pragma</span> omp section</span></span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">&quot;section 2 ThreadId = %d \n&quot;</span>, omp_get_thread_num());</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="meta">#<span class="meta-keyword">pragma</span> omp sections</span></span><br><span class="line">    &#123;</span><br><span class="line"> 	<span class="meta">#<span class="meta-keyword">pragma</span> omp section</span></span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">&quot;section 3 ThreadId = %d \n&quot;</span>, omp_get_thread_num());</span><br><span class="line">	<span class="meta">#<span class="meta-keyword">pragma</span> omp section</span></span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">&quot;section 4 ThreadId = %d \n&quot;</span>, omp_get_thread_num());</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><br>这种方式和前面那种方式的区别是，两个sections语句是串行执行的，即第二个sections语句里的代码要等第一个sections语句里的代码执行完后才能执行。</p>
+<hr>
+<h1 id="数据的共享与私有化"><a href="#数据的共享与私有化" class="headerlink" title="数据的共享与私有化"></a>数据的共享与私有化</h1><p>在并行区域中，若多个线程共同访问同一存储单元，并且至少会有一个线程更新数据单元中的内容时，会发送数据竞争。<br>除了以下三种情况外，并行区域中的所有变量都是共享的：</p>
+<ol>
+<li>并行区域中定义的变量</li>
+<li>多个线程用来完成循环的循环变量</li>
+<li>private、firstprivate、lastprivate或reduction字句修饰的变量</li>
+</ol>
+<p>并行区域中变量val是私有的，即每个线程拥有该变量的一个拷贝<br><figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="keyword">private</span>(val1, val2, ...)</span><br></pre></td></tr></table></figure><br>与private不同的是，每个线程在开始的时候都会对该变量进行一次初始化。<br><figure class="highlight c++"><table><tr><td class="code"><pre><span class="line">firstprivate(val1, val2, ...)</span><br></pre></td></tr></table></figure><br>与private不同的是，并发执行的最后一次循环的私有变量将会拷贝到val<br><figure class="highlight c++"><table><tr><td class="code"><pre><span class="line">lastprivate(val1, val2, ...)</span><br></pre></td></tr></table></figure><br>声明val是共享的<br><figure class="highlight c++"><table><tr><td class="code"><pre><span class="line">shared(val1, val2, ...)</span><br></pre></td></tr></table></figure><br>如果使用private，无论该变量在并行区域外是否初始化，在进入并行区域后，该变量均不会初始化。</p>
+<h2 id="private子句"><a href="#private子句" class="headerlink" title="private子句"></a>private子句</h2><p>private子句用于将一个或多个变量声明成线程私有的变量，变量声明成私有变量后，指定每个线程都有它自己的变量私有副本，其他线程无法访问私有副本。即使在并行区域外有同名的共享变量，共享变量在并行区域内不起任何作用，并且并行区域内不会操作到外面的共享变量。<br><figure class="highlight c++"><table><tr><td class="code"><pre><span class="line">    <span class="keyword">int</span> k = <span class="number">100</span>;</span><br><span class="line"><span class="meta">#<span class="meta-keyword">pragma</span> omp parallel for private(k)</span></span><br><span class="line">    <span class="keyword">for</span> (k = <span class="number">0</span>; k &lt; <span class="number">10</span>; k++)</span><br><span class="line">    &#123;</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">&quot;k=%d \n&quot;</span>, k);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;last k=%d \n&quot;</span>, k);</span><br></pre></td></tr></table></figure><br>从打印结果可以看出，for循环前的变量k和循环区域内的变量k其实是两个不同的变量。<br>用private子句声明的私有变量的初始值在并行区域的入口处是未定义的，它并不会继承同名共享变量的值。<br>出现在reduction子句中的参数不能出现在private子句中。</p>
+<h2 id="firstprivate子句"><a href="#firstprivate子句" class="headerlink" title="firstprivate子句"></a>firstprivate子句</h2><p>private声明的私有变量不能继承同名变量的值，但实际情况中有时需要继承原有共享变量的值，OpenMP提供了firstprivate子句来实现这个功能。<br>以下的代码例子：<br><figure class="highlight c++"><table><tr><td class="code"><pre><span class="line">    <span class="keyword">int</span> k = <span class="number">100</span>, i=<span class="number">0</span>;</span><br><span class="line"><span class="meta">#<span class="meta-keyword">pragma</span> omp parallel for firstprivate(k)</span></span><br><span class="line">    <span class="keyword">for</span> (i = <span class="number">0</span>; i &lt; <span class="number">4</span>; i++)</span><br><span class="line">    &#123;</span><br><span class="line">	k += i;</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">&quot;k=%d \n&quot;</span>, k);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;last k=%d \n&quot;</span>, k);</span><br></pre></td></tr></table></figure><br>从打印结果可以看出，并行区域内的私有变量k继承了外面共享变量k的值100作为初始值，并且在退出并行区域后，共享变量k的值保持为100未变。</p>
+<h2 id="lastprivate子句"><a href="#lastprivate子句" class="headerlink" title="lastprivate子句"></a>lastprivate子句</h2><p>有时在并行区域内的私有变量的值经过计算后，在退出并行区域时，需要将它的值赋给同名的共享变量，前面的private和firstprivate子句在退出并行区域时都没有将私有变量的最后取值赋给对应的共享变量，lastprivate子句就是用来实现在退出并行区域时将私有变量的值赋给共享变量。<br><figure class="highlight c++"><table><tr><td class="code"><pre><span class="line">    <span class="keyword">int</span> k = <span class="number">100</span>, i=<span class="number">0</span>;</span><br><span class="line"><span class="meta">#<span class="meta-keyword">pragma</span> omp parallel for firstprivate(k),lastprivate(k)</span></span><br><span class="line">    <span class="keyword">for</span> (i = <span class="number">0</span>; i &lt; <span class="number">4</span>; i++)</span><br><span class="line">    &#123;</span><br><span class="line">	k += i;</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">&quot;k=%d \n&quot;</span>, k);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;last k=%d \n&quot;</span>, k);</span><br></pre></td></tr></table></figure><br>从打印结果可以看出，退出for循环的并行区域后，共享变量k的值变成了103，而不是保持原来的100不变。<br>由于在并行区域内是多个线程并行执行的，最后到底是将那个线程的最终计算结果赋给了对应的共享变量呢？OpenMP规范中指出，如果是循环迭代，那么是将最后一次循环迭代中的值赋给对应的共享变量；如果是section构造，那么是最后一个section语句中的值赋给对应的共享变量。注意这里说的最后一个section是指程序语法上的最后一个，而不是实际运行时的最后一个运行完的。<br>如果是类（class）类型的变量使用在lastprivate参数中，那么使用时有些限制，需要一个可访问的，明确的缺省构造函数，除非变量也被使用作为firstprivate子句的参数；还需要一个拷贝赋值操作符，并且这个拷贝赋值操作符对于不同对象的操作顺序是未指定的，依赖于编译器的定义。</p>
+<h2 id="threadprivate子句"><a href="#threadprivate子句" class="headerlink" title="threadprivate子句"></a>threadprivate子句</h2><p>threadprivate子句用来指定全局的对象被各个线程各自复制了一个私有的拷贝，即各个线程具有各自私有的全局对象。<br>用法如下：<br><figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">pragma</span> omp threadprivate(list) new-<span class="meta-keyword">line</span></span></span><br></pre></td></tr></table></figure><br>下面用threadprivate命令来实现一个各个线程私有的计数器，各个线程使用同一个函数来实现自己的计数。计数器代码如下：<br><figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="keyword">int</span> counter = <span class="number">0</span>;</span><br><span class="line"><span class="meta">#<span class="meta-keyword">pragma</span> omp threadprivate(counter)</span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">increment_counter</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    counter++;</span><br><span class="line">    <span class="keyword">return</span> counter;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><br>如果对于静态变量也同样可以使用threadprivate声明成线程私有的，上面的counter变量如改成用static类型来实现时，代码如下：<br><figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">increment_counter2</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">static</span> <span class="keyword">int</span> counter = <span class="number">0</span>;</span><br><span class="line"><span class="meta">#<span class="meta-keyword">pragma</span> omp threadprivate(counter)</span></span><br><span class="line">    counter++;</span><br><span class="line">    <span class="keyword">return</span> counter;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><br>threadprivate和private的区别在于threadprivate声明的变量通常是全局范围内有效的，而private声明的变量只在它所属的并行构造中有效。<br>threadprivate的对应只能用于copyin，copyprivate，schedule，num_threads和if子句中，不能用于任何其他子句中。<br>用作threadprivate的变量的地址不能是常数。<br>对于C++的类（class）类型变量，用作threadprivate的参数时有些限制，当定义时带有外部初始化时，必须具有明确的拷贝构造函数。<br>对于windows系统，threadprivate不能用于动态装载（使用LoadLibrary装载）的DLL中，可以用于静态装载的DLL中，关于windows系统中的更多限制，请参阅MSDN中有关threadprivate子句的帮助材料。<br>有关threadprivate命令的更多限制方面的信息，详情请参阅OpenMP2.5规范。</p>
+<hr>
+<h1 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h1><h2 id="shared子句"><a href="#shared子句" class="headerlink" title="shared子句"></a>shared子句</h2><p>shared子句用来声明一个或多个变量是共享变量。<br><figure class="highlight c++"><table><tr><td class="code"><pre><span class="line">shared(<span class="built_in">list</span>)</span><br></pre></td></tr></table></figure><br>需要注意的是，在并行区域内使用共享变量时，如果存在写操作，必须对共享变量加以保护，否则不要轻易使用共享变量，尽量将共享变量的访问转化为私有变量的访问。<br>循环迭代变量在循环构造区域里是私有的。声明在循环构造区域内的自动变量都是私有的。</p>
+<h2 id="default子句"><a href="#default子句" class="headerlink" title="default子句"></a>default子句</h2><p>default子句用来允许用户控制并行区域中变量的共享属性。<br><figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="keyword">default</span>(shared | none)</span><br></pre></td></tr></table></figure><br>使用shared时，缺省情况下，传入并行区域内的同名变量被当作共享变量来处理，不会产生线程私有副本，除非使用private等子句来指定某些变量为私有的才会产生副本。<br>如果使用none作为参数，那么线程中用到的变量必须显示指定是共享的还是私有的，除了那些由明确定义的除外。</p>
+<h2 id="reduction子句"><a href="#reduction子句" class="headerlink" title="reduction子句"></a>reduction子句</h2><p>reduction子句主要用来对一个或多个参数条目指定一个操作符，每个线程将创建参数条目的一个私有拷贝，在区域的结束处，将用私有拷贝的值通过指定的运行符运算，原始的参数条目被运算结果的值更新。<br><figure class="highlight c++"><table><tr><td class="code"><pre><span class="line">reduction(<span class="keyword">operator</span>:<span class="built_in">list</span>)</span><br></pre></td></tr></table></figure><br>下表列出了可以用于reduction子句的一些操作符以及对应私有拷贝变量缺省的初始值，私有拷贝变量的实际初始值依赖于redtucion变量的数据类型。</p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th>运算符</th>
+<th>数据类型</th>
+<th>默认初始值</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>+</td>
+<td>整数、浮点</td>
+<td>0</td>
+</tr>
+<tr>
+<td>-</td>
+<td>整数、浮点</td>
+<td>0</td>
+</tr>
+<tr>
+<td>*</td>
+<td>整数、浮点</td>
+<td>1</td>
+</tr>
+<tr>
+<td>&amp;</td>
+<td>整数</td>
+<td>所有位均为1</td>
+</tr>
+<tr>
+<td>&#124;</td>
+<td>整数</td>
+<td>0</td>
+</tr>
+<tr>
+<td>^</td>
+<td>整数</td>
+<td>0</td>
+</tr>
+<tr>
+<td>&amp;&amp;</td>
+<td>整数</td>
+<td>1</td>
+</tr>
+<tr>
+<td>&#124;&#x7C;</td>
+<td>整数</td>
+<td>0</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>例如一个整数求和的程序如下：<br><figure class="highlight c++"><table><tr><td class="code"><pre><span class="line">    <span class="keyword">int</span> i, sum = <span class="number">0</span>;</span><br><span class="line"><span class="meta">#<span class="meta-keyword">pragma</span> omp parallel for reduction(+: sum)</span></span><br><span class="line">    <span class="keyword">for</span> (i = <span class="number">0</span>; i &lt; <span class="number">100</span>; i++) sum += i;</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;sum = %ld \n&quot;</span>, sum);</span><br></pre></td></tr></table></figure><br>其中sum是共享的，采用reduction之后，每个线程根据reduction（+: sum）的声明算出自己的sum，然后再将每个线程的sum加起来。<br>reduction声明可以看作：</p>
+<ol>
+<li>保证了对sum的原则操作</li>
+<li>多个线程的执行结果通过reduction中声明的操作符进行计算</li>
+</ol>
+<p>以加法操作符为例：<br>假设sum的初始值为10，<code>reduction（+: sum）</code>声明的并行区域中每个线程的sum初始值为0（规定），并行处理结束之后，会将sum的初始化值10以及每个线程所计算的sum值相加。<br>注意：<br>如果在并行区域内不加锁保护就直接对共享变量进行写操作，存在数据竞争问题，会导致不可预测的异常结果。共享数据作为private、firstprivate、lastprivate、threadprivate、reduction子句的参数进入并行区域后，就变成线程私有了，不需要加锁保护了。</p>
+<h2 id="copyin子句"><a href="#copyin子句" class="headerlink" title="copyin子句"></a>copyin子句</h2><p>copyin子句用来将主线程中threadprivate变量的值拷贝到执行并行区域的各个线程的threadprivate变量中，便于线程可以访问主线程中的变量值<br><figure class="highlight c++"><table><tr><td class="code"><pre><span class="line">copyin(<span class="built_in">list</span>)</span><br></pre></td></tr></table></figure><br>copyin中的参数必须被声明成threadprivate的，对于类类型的变量，必须带有明确的拷贝赋值操作符。<br>对于前面threadprivate中讲过的计数器函数，如果多个线程使用时，各个线程都需要对全局变量counter的副本进行初始化，可以使用copyin子句来实现，示例代码如下：<br><figure class="highlight c++"><table><tr><td class="code"><pre><span class="line">    <span class="keyword">int</span> iterator;</span><br><span class="line"><span class="meta">#<span class="meta-keyword">pragma</span> omp parallel sections copyin(counter)</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="meta">#<span class="meta-keyword">pragma</span> omp section</span></span><br><span class="line">	&#123;</span><br><span class="line">	    <span class="keyword">int</span> count1;</span><br><span class="line">            <span class="keyword">for</span> (iterator = <span class="number">0</span>; iterator &lt; <span class="number">100</span>; iterator++)</span><br><span class="line">	    &#123;</span><br><span class="line">                count1 = increment_counter();</span><br><span class="line">	    &#125;</span><br><span class="line">	    <span class="built_in">printf</span>(<span class="string">&quot;count1 = %ld \n&quot;</span>, count1);</span><br><span class="line">	&#125;</span><br><span class="line">        <span class="meta">#<span class="meta-keyword">pragma</span> omp section</span></span><br><span class="line">	&#123;</span><br><span class="line">	    <span class="keyword">int</span> count2;</span><br><span class="line">	    <span class="keyword">for</span> (iterator = <span class="number">0</span>; iterator &lt; <span class="number">200</span>; iterator++)</span><br><span class="line">	    &#123;</span><br><span class="line">		count2 = increment_counter();</span><br><span class="line">	    &#125;</span><br><span class="line">	    <span class="built_in">printf</span>(<span class="string">&quot;count2 = %ld \n&quot;</span>, count2);</span><br><span class="line">	&#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;counter = %ld \n&quot;</span>, counter);</span><br></pre></td></tr></table></figure><br>从打印结果可以看出，两个线程都正确实现了各自的计数。</p>
+<h2 id="copyprivate子句"><a href="#copyprivate子句" class="headerlink" title="copyprivate子句"></a>copyprivate子句</h2><p>copyprivate子句提供了一种机制用一个私有变量将一个值从一个线程广播到执行同一并行区域的其他线程。<br><figure class="highlight c++"><table><tr><td class="code"><pre><span class="line">copyprivate(<span class="built_in">list</span>)</span><br></pre></td></tr></table></figure><br>copyprivate子句可以关联single构造，在single构造的barrier到达之前就完成了广播工作。copyprivate可以对private和threadprivate子句中的变量进行操作，但是当使用single构造时，copyprivate的变量不能用于private和firstprivate子句中。<br><figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="keyword">int</span> counter = <span class="number">0</span>;</span><br><span class="line"><span class="meta">#<span class="meta-keyword">pragma</span> omp threadprivate(counter)</span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">increment_counter</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    counter++;</span><br><span class="line">    <span class="keyword">return</span> counter;</span><br><span class="line">&#125;</span><br><span class="line"><span class="meta">#<span class="meta-keyword">pragma</span> omp parallel</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">int</span> count;</span><br><span class="line">    <span class="meta">#<span class="meta-keyword">pragma</span> omp single copyprivate(counter)</span></span><br><span class="line">    &#123;</span><br><span class="line">        counter = <span class="number">50</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    count = increment_counter();</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;ThreadId: %ld, count = %ld \n&quot;</span>, omp_get_thread_num(), count);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><br>从打印结果可以看出，使用copyprivate子句后，single构造内给counter赋的值被广播到了其他线程里，但没有使用copyprivate子句时，只有一个线程获得了single构造内的赋值，其他线程没有获取single构造内的赋值。</p>
+<hr>
+<h1 id="OpenMP中的任务调度"><a href="#OpenMP中的任务调度" class="headerlink" title="OpenMP中的任务调度"></a>OpenMP中的任务调度</h1><p>OpenMP中，任务调度主要用于并行的for循环中，当循环中每次迭代的计算量不相等时，如果简单地给各个线程分配相同次数的迭代的话，会造成各个线程计算负载不均衡，这会使得有些线程先执行完，有些后执行完，造成某些CPU核空闲，影响程序性能。<br>为了解决这些问题，OpenMP中提供了几种对for循环并行化的任务调度方案。</p>
+<h2 id="Schedule子句用法"><a href="#Schedule子句用法" class="headerlink" title="Schedule子句用法"></a>Schedule子句用法</h2><figure class="highlight c++"><table><tr><td class="code"><pre><span class="line">schedule(type[,size])  <span class="comment">// size参数是可选的</span></span><br></pre></td></tr></table></figure>
+<h3 id="type参数"><a href="#type参数" class="headerlink" title="type参数"></a>type参数</h3><p>表示调度类型，有四种调度类型如下：</p>
+<ul>
+<li>dynamic</li>
+<li>guided</li>
+<li>runtime</li>
+<li>static<br>这四种调度类型实际上只有static、dynamic、guided三种调度方式，runtime实际上是根据环境变量来选择前三种中的某中类型。<h3 id="size参数-可选"><a href="#size参数-可选" class="headerlink" title="size参数 (可选)"></a>size参数 (可选)</h3>size参数表示循环迭代次数，size参数必须是整数。static、dynamic、guided三种调度方式都可以使用size参数，也可以不使用size参数。当type参数类型为runtime时，size参数是非法的（不需要使用，如果使用的话编译器会报错）。</li>
+</ul>
+<h2 id="静态调度-static"><a href="#静态调度-static" class="headerlink" title="静态调度(static)"></a>静态调度(static)</h2><p>当<code>parallel for</code>编译指导语句没有带schedule子句时，大部分系统中默认采用static调度方式，这种调度方式非常简单。假设有n次循环迭代，t个线程，那么给每个线程静态分配大约n/t次迭代计算。这里为什么说大约分配n/t次呢？因为n/t不一定是整数，因此实际分配的迭代次数可能存在差1的情况，如果指定了size参数的话，那么可能相差一个size。<br>静态调度时可以不使用size参数，也可以使用size参数。<br>不使用size参数时，分配给每个线程的是n/t次连续的迭代。使用size参数时，分配给每个线程的size次连续的迭代计算。<br><figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="keyword">int</span> i = <span class="number">0</span>;</span><br><span class="line"><span class="meta">#<span class="meta-keyword">pragma</span> omp parallel for schedule(static,5)</span></span><br><span class="line"><span class="keyword">for</span> (i = <span class="number">0</span>; i &lt; <span class="number">10</span>; i++)</span><br><span class="line">&#123;</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;i=%d, thread_id=%d \n&quot;</span>, i, omp_get_thread_num());</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h2 id="动态调度-dynamic"><a href="#动态调度-dynamic" class="headerlink" title="动态调度(dynamic)"></a>动态调度(dynamic)</h2><p>动态调度是动态地将迭代分配到各个线程，动态调度可以使用size参数也可以不使用size参数，不使用size参数时是将迭代逐个地分配到各个线程，使用size参数时，每次分配给线程的迭代次数为指定的size次。<br><figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">pragma</span> omp parallel for schedule(dynamic,size)</span></span><br></pre></td></tr></table></figure></p>
+<h2 id="guided调度（guided）"><a href="#guided调度（guided）" class="headerlink" title="guided调度（guided）"></a>guided调度（guided）</h2><p>guided调度是一种采用指导性的启发式自调度方法。开始时每个线程会分配到较大的迭代块，之后分配到的迭代块会逐渐递减。迭代块的大小会按指数级下降到指定的size大小，如果没有指定size参数，那么迭代块大小最小会降到1。<br><figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">pragma</span> omp parallel for schedule(guided,size)</span></span><br></pre></td></tr></table></figure></p>
+<h2 id="runtime调度（rumtime）"><a href="#runtime调度（rumtime）" class="headerlink" title="runtime调度（rumtime）"></a>runtime调度（rumtime）</h2><p>runtime调度并不是和前面三种调度方式似的真实调度方式，它是在运行时根据环境变量OMP_SCHEDULE来确定调度类型，最终使用的调度类型仍然是上述三种调度方式中的某种。<br>例如在unix系统中，可以使用setenv命令来设置<code>OMP_SCHEDULE</code>环境变量：<br><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">setenv OMP_SCHEDULE “dynamic, 2”</span><br></pre></td></tr></table></figure><br>上述命令设置调度类型为动态调度，动态调度的迭代次数为2。<br>在windows环境中，可以在 “系统属性 | 高级 | 环境变量” 对话框中进行设置环境变量。</p>
+]]></content>
+      <categories>
+        <category>编程</category>
+      </categories>
+      <tags>
+        <tag>优化加速</tag>
       </tags>
   </entry>
   <entry>
